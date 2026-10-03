@@ -31,6 +31,25 @@
     .chart-key .orange{background:var(--orange)}
     .research-status{margin-top:14px}
     .privacy-note{margin:9px 0 0;color:var(--muted);font-size:10px}
+    .forms-summary-section{margin:32px 0}
+    .forms-summary-section>.page-header{margin-bottom:15px}
+    .forms-summary-overview{display:grid;grid-template-columns:minmax(180px,.3fr) 1fr;gap:12px;margin-bottom:14px}
+    .forms-response-card{padding:16px;background:var(--forest);color:white;border-radius:5px}
+    .forms-response-card span{display:block;color:#d2dfd6;font-size:10px}
+    .forms-response-card strong{display:block;margin-top:5px;color:var(--lime);font:700 30px "Space Grotesk",sans-serif}
+    .forms-summary-status{align-self:stretch;margin:0;display:flex;align-items:center}
+    .forms-summary-status.is-error{border-left-color:#c84f36;background:#fff1ed;color:#8d2e1d}
+    .forms-summary-note{margin:0 0 14px;color:var(--muted);font-size:10px}
+    .forms-question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+    .forms-question-card{min-width:0;padding:16px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:5px}
+    .forms-question-title{margin:0 0 6px;color:var(--forest);font:700 13px/1.5 "Be Vietnam Pro",sans-serif;overflow-wrap:anywhere}
+    .forms-question-meta,.forms-question-empty{margin:0 0 12px;color:var(--muted);font-size:10px}
+    .forms-option-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+    .forms-option-labels{display:flex;justify-content:space-between;gap:12px;margin-bottom:4px;font-size:10px}
+    .forms-option-name{min-width:0;overflow-wrap:anywhere}
+    .forms-option-value{flex:none;color:var(--forest);font:700 10px "Space Grotesk",sans-serif}
+    .forms-option-track{height:6px;overflow:hidden;background:#e8eee7;border-radius:5px}
+    .forms-option-track span{display:block;height:100%;background:linear-gradient(90deg,#5b9b72,#b9d86a);border-radius:inherit}
     .research-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
     .fact{padding:14px;background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:4px}
     .fact b{display:block;margin-bottom:5px;color:var(--leaf);font-size:9px;text-transform:uppercase}
@@ -38,19 +57,28 @@
     .qr-row{display:flex;align-items:center;gap:13px;margin-top:15px}
     .qr-row img{width:84px;height:84px;background:white}
     .qr-row small{color:var(--muted);font-size:9px}
-    @media(max-width:700px){.research-grid,.research-facts{grid-template-columns:1fr}.stage-card{padding:15px}.chart{gap:45px}}
+    @media(max-width:700px){.research-grid,.research-facts,.forms-question-grid{grid-template-columns:1fr}.forms-summary-overview{grid-template-columns:1fr}.stage-card{padding:15px}.chart{gap:45px}}
   </style>
 </head>
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng"><a href="../index.html">Trang chủ</a><a href="knowledge.html">Kiến thức</a><a href="practice.html">Thực hành</a><a href="assessment.html">Đánh giá</a><a href="leaderboard.html">BXH</a><a href="research.html" aria-current="page">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
   <main class="page-shell">
-    <header class="page-header"><div><p class="eyebrow">05 / NGHIÊN CỨU</p><h1 class="page-title">Kết quả khảo sát tự động.</h1><p class="page-lead">Số người tham gia và điểm được tổng hợp từ bài đánh giá trước/sau can thiệp; không cần nhập tay.</p></div><span class="page-count">DỮ LIỆU TỪ BÀI ĐÁNH GIÁ</span></header>
+    <header class="page-header"><div><p class="eyebrow">05 / NGHIÊN CỨU</p><h1 class="page-title">Kết quả khảo sát tự động.</h1><p class="page-lead">Theo dõi kết quả bài đánh giá và phân bố câu trả lời Google Forms; dữ liệu Form được làm mới định kỳ.</p></div><span class="page-count">DỮ LIỆU TỔNG HỢP</span></header>
     <div class="research-grid">
       <article class="stage-card"><p class="eyebrow">LẦN ĐO 01</p><h2>Trước can thiệp</h2><div class="stage-main"><div class="metric"><span>Người tham gia</span><strong id="preCount">—</strong></div><div class="metric"><span>Điểm trung bình</span><strong id="preAverage">—</strong></div><div class="metric"><span>Đạt mức Khá/Giỏi</span><strong id="preGoodCount">—</strong><span id="preGoodRate"></span></div><div class="metric"><span>Lượt làm</span><strong id="preAttempts">—</strong></div></div></article>
       <article class="stage-card"><p class="eyebrow">LẦN ĐO 02</p><h2>Sau can thiệp</h2><div class="stage-main"><div class="metric"><span>Người tham gia</span><strong id="postCount">—</strong></div><div class="metric"><span>Điểm trung bình</span><strong id="postAverage">—</strong></div><div class="metric"><span>Đạt mức Khá/Giỏi</span><strong id="postGoodCount">—</strong><span id="postGoodRate"></span></div><div class="metric"><span>Lượt làm</span><strong id="postAttempts">—</strong></div></div></article>
     </div>
     <section class="chart-box"><h2>So sánh điểm trung bình</h2><p class="chart-note" id="scoreChange">Đang tải kết quả khảo sát…</p><div class="chart" role="img" aria-label="Biểu đồ so sánh điểm trung bình trước và sau can thiệp"><div class="bar" id="preBar"><span>Trước</span></div><div class="bar after" id="postBar"><span>Sau</span></div></div><div class="chart-key"><span><i></i>Trước can thiệp</span><span><i class="orange"></i>Sau can thiệp</span></div></section>
     <p class="callout research-status" id="researchStatus" aria-live="polite">Đang kết nối dữ liệu…</p>
+    <section class="forms-summary-section" aria-labelledby="formsSummaryTitle">
+      <header class="page-header"><div><p class="eyebrow">GOOGLE FORMS</p><h2 class="page-title" id="formsSummaryTitle">Thống kê phản hồi khảo sát.</h2><p class="page-lead">Tổng số phản hồi và phân bố lựa chọn được tổng hợp từ Google Sheets.</p></div><span class="page-count">LÀM MỚI MỖI 30 GIÂY</span></header>
+      <div class="forms-summary-overview">
+        <article class="forms-response-card"><span>Tổng phản hồi</span><strong id="formResponseTotal">—</strong></article>
+        <p class="callout forms-summary-status" id="formSummaryStatus" role="status" aria-live="polite">Đang kiểm tra kết nối Google Sheets…</p>
+      </div>
+      <p class="forms-summary-note">Chỉ hiển thị số liệu tổng hợp. Tên, thông tin nhận diện và câu trả lời tự do không được công khai; với câu chọn nhiều, tỷ lệ các lựa chọn có thể cộng vượt 100%.</p>
+      <div class="forms-question-grid" id="formQuestionStats"></div>
+    </section>
     <p class="privacy-note">Mỗi người tham gia được nhận diện bằng một mã ngẫu nhiên lưu trên trình duyệt, không lưu tên thật. Dùng cùng trình duyệt cho cả hai lần đo; đổi thiết bị hoặc xóa dữ liệu trình duyệt có thể được tính thành người mới. Chỉ chọn “Sau can thiệp” sau khi đã tham gia giải pháp.</p>
     <h2 class="section-label">Thông tin đề tài</h2><div class="research-facts">
       <article class="fact"><b>Tên đề tài</b><p>“Thực trạng và giải pháp nâng cao năng lực kiểm chứng thông tin do trí tuệ nhân tạo (AI) cung cấp cho học sinh Trường THPT Trần Hưng Đạo”.</p></article>
@@ -132,5 +160,7 @@
       document.getElementById("qrCaption").textContent = "Quét để mở trang chủ AI CHECK THĐ.";
     }
   </script>
+  <script src="../forms-summary-config.js"></script>
+  <script src="../forms-summary.js"></script>
 </body>
 </html>
