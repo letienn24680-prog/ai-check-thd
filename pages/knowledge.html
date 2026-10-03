@@ -11,31 +11,41 @@
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
   <style>
-    .risk-card{min-height:155px;padding:16px;background:rgba(255,255,255,.84);border:1px solid var(--line);border-radius:4px}.risk-card small,.step-card small{color:var(--leaf);font-size:9px;font-weight:800}.risk-card h2,.step-card h2{margin:12px 0 6px;font:700 16px "Space Grotesk",sans-serif}.risk-card p,.step-card p{margin:0;color:var(--muted);font-size:11px}.step-card{min-height:196px;padding:17px;background:#fff;border:1px solid var(--line);border-radius:4px}.step-card h2{font-size:20px}.step-card strong{display:block;margin-top:12px;padding-top:9px;border-top:1px solid var(--line);color:var(--leaf);font-size:9px}.resource-link{display:inline-flex;margin-top:15px;color:var(--leaf);font-size:10px;font-weight:800;text-decoration:none}
-    @media(max-width:680px){.risk-card{min-height:0}.step-card{min-height:0}}
+    .knowledge-hero{position:relative;overflow:hidden;margin:0 0 27px;padding:27px 30px;border-radius:8px;background:linear-gradient(120deg,#123c34,#1d5c49 70%,#24724f);color:#fff}.knowledge-hero::after{position:absolute;right:-55px;bottom:-155px;width:360px;height:360px;border:1px solid #ffffff24;border-radius:50%;box-shadow:0 0 0 34px #ffffff0a,0 0 0 70px #ffffff08;content:"";pointer-events:none}.knowledge-hero .page-header{position:relative;z-index:1;margin:0}.knowledge-hero .eyebrow{color:#d9f26c}.knowledge-hero .page-title{font-size:clamp(32px,5vw,50px)}.knowledge-hero .page-lead{max-width:650px;color:#d9e7dd}.knowledge-hero .page-count{color:#d9f26c}
+    .knowledge-section{margin-top:28px}.knowledge-section-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:13px}.knowledge-section-heading .section-label{margin:0 0 4px}.knowledge-section-heading p{margin:0;color:var(--muted);font-size:11px}.risk-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.risk-card{position:relative;grid-column:span 2;min-height:154px;overflow:hidden;padding:17px;background:#fff;border:1px solid var(--line);border-radius:6px}.risk-card:nth-child(4){grid-column:2/span 2}.risk-card:nth-child(5){grid-column:4/span 2}.risk-card small,.step-card small{color:var(--leaf);font-size:9px;font-weight:800}.risk-card h2,.step-card h2{margin:10px 0 6px;font:700 16px "Space Grotesk",sans-serif}.risk-card p,.step-card p{margin:0;color:var(--muted);font-size:11px}.risk-card:nth-child(2n){background:#f7faf5}.resource-link{display:inline-flex;align-items:center;gap:8px;margin-top:13px;padding:9px 13px;border:1px solid #b8d0bd;border-radius:4px;background:#fff;color:var(--forest);font-size:10px;font-weight:800;text-decoration:none;transition:background .18s,transform .18s}.resource-link:hover{transform:translateY(-2px);background:#eaf3e8}
+    .step-grid{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}.step-card{position:relative;min-height:228px;padding:17px;background:#fff;border:1px solid var(--line);border-radius:6px}.step-card::before{position:absolute;top:22px;right:17px;color:#e2ebe1;font:700 25px "Space Grotesk",sans-serif;content:attr(data-number)}.step-card h2{margin-top:25px;font-size:20px}.step-card p{min-height:92px}.step-card strong{display:block;margin-top:12px;padding-top:9px;border-top:1px solid var(--line);color:var(--leaf);font-size:9px}.step-card:nth-child(2){border-top:3px solid #93b972}.step-card:nth-child(3){border-top:3px solid #5e9f78}.step-card:nth-child(4){border-top:3px solid #39826b}.step-card:nth-child(5){border-top:3px solid var(--forest)}.knowledge-note{margin-top:18px;padding:15px 18px;border-left:4px solid #e97850;border-radius:0 5px 5px 0;background:#fff7e8;color:#555b4c;font-size:11px}
+    @media(max-width:900px){.risk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.risk-card,.risk-card:nth-child(4),.risk-card:nth-child(5){grid-column:auto}.risk-card:last-child{grid-column:1/-1}.step-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.step-card{min-height:0}.step-card p{min-height:0}}
+    @media(max-width:680px){.knowledge-hero{padding:22px 19px}.knowledge-hero .page-header{align-items:start;flex-direction:column}.knowledge-hero::after{right:-220px;opacity:.6}.knowledge-section-heading{align-items:start;flex-direction:column;gap:3px}.risk-grid,.step-grid{grid-template-columns:1fr}.risk-card,.risk-card:last-child{grid-column:auto;min-height:0}.step-card{padding:15px}.step-card h2{margin-top:17px}}
   </style>
 </head>
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng"><a href="../index.html">Trang chủ</a><a href="knowledge.html" aria-current="page">Kiến thức</a><a href="practice.html">Thực hành</a><a href="assessment.html">Đánh giá</a><a href="leaderboard.html">BXH</a><a href="research.html">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
   <main class="page-shell">
-    <header class="page-header"><div><p class="eyebrow">01 / HỌC</p><h1 class="page-title">AI có thể sai không?</h1><p class="page-lead">Có. Câu trả lời trôi chảy chưa phải bằng chứng. Nhận diện năm rủi ro, rồi dùng quy trình năm bước để kiểm tra thông tin quan trọng.</p></div><span class="page-count">KIẾN THỨC · QUY TRÌNH</span></header>
-    <div class="grid-5">
-      <article class="risk-card"><small>01 · BỊA ĐẶT</small><h2>Nghe thật, không có thật</h2><p>AI có thể tạo tên nghiên cứu, số liệu hoặc trích dẫn không tồn tại.</p></article>
-      <article class="risk-card"><small>02 · SAI SỰ THẬT</small><h2>Chi tiết không chính xác</h2><p>Mốc thời gian, phép tính hay quan hệ nguyên nhân có thể bị nhầm.</p></article>
-      <article class="risk-card"><small>03 · LỖI THỜI</small><h2>Thông tin đã cũ</h2><p>Câu trả lời có thể không cập nhật quy định, số liệu hoặc sự kiện mới.</p></article>
-      <article class="risk-card"><small>04 · NGUỒN ẢO</small><h2>Nguồn khó xác minh</h2><p>Tác giả, đường dẫn hay tài liệu AI nêu có thể không phù hợp hoặc không tồn tại.</p></article>
-      <article class="risk-card"><small>05 · PHA TRỘN</small><h2>Đúng một phần</h2><p>Một đoạn có thể trộn dữ kiện đúng với kết luận sai hoặc thiếu căn cứ.</p></article>
-    </div>
-    <a class="resource-link" id="infographicLink" href="resources.html">↗ Mở infographic “AI có thể sai không?”</a>
-    <h2 class="section-label">Quy trình 5 bước kiểm chứng thông tin AI</h2>
-    <div class="grid-5">
-      <article class="step-card"><small>BƯỚC 01</small><h2>DỪNG</h2><p>Chưa vội tin, chia sẻ hay sao chép. Câu trả lời AI là điểm bắt đầu, chưa phải bằng chứng.</p><strong>TẠM HOÃN KẾT LUẬN</strong></article>
-      <article class="step-card"><small>BƯỚC 02</small><h2>XÁC ĐỊNH</h2><p>Gạch chân điều cần kiểm tra: con số, tên người, trích dẫn, mốc thời gian hoặc lời khuyên quan trọng.</p><strong>KHOANH VÙNG KHẲNG ĐỊNH</strong></article>
-      <article class="step-card"><small>BƯỚC 03</small><h2>TÌM NGUỒN</h2><p>Tìm tài liệu gốc và nguồn có trách nhiệm như cơ quan chuyên môn, văn bản chính thức hoặc nghiên cứu rõ tác giả.</p><strong>TRUY VẾT XUẤT XỨ</strong></article>
-      <article class="step-card"><small>BƯỚC 04</small><h2>ĐỐI CHIẾU</h2><p>So sánh nội dung, ngày công bố, phương pháp và ngữ cảnh với nguồn độc lập; xem các nguồn có cùng trích một nơi không.</p><strong>KIỂM TRA BẰNG CHỨNG</strong></article>
-      <article class="step-card"><small>BƯỚC 05</small><h2>KẾT LUẬN</h2><p>Chọn Đúng, Sai, Chưa đủ căn cứ hoặc Cần kiểm chứng thêm; nêu bằng chứng và giới hạn của nó.</p><strong>KẾT LUẬN CÓ CĂN CỨ</strong></article>
-    </div>
-    <p class="callout" style="margin-top:18px">Không tìm thấy bằng chứng chưa đủ để khẳng định thông tin sai. Hãy kết luận đúng với chất lượng và phạm vi nguồn đã kiểm tra.</p>
+    <section class="knowledge-hero">
+      <header class="page-header"><div><p class="eyebrow">01 / HỌC</p><h1 class="page-title">AI có thể sai không?</h1><p class="page-lead">Có. Câu trả lời trôi chảy chưa phải bằng chứng. Nhận diện năm rủi ro, rồi dùng quy trình năm bước để kiểm tra thông tin quan trọng.</p></div><span class="page-count">KIẾN THỨC · QUY TRÌNH</span></header>
+    </section>
+    <section class="knowledge-section" aria-labelledby="risksHeading">
+      <div class="knowledge-section-heading"><div><p class="eyebrow">NHẬN DIỆN</p><h2 class="section-label" id="risksHeading">5 rủi ro thường gặp</h2></div><p>Nghe có vẻ hợp lý không đồng nghĩa với chính xác.</p></div>
+      <div class="risk-grid">
+        <article class="risk-card" data-number="01"><small>01 · BỊA ĐẶT</small><h2>Nghe thật, không có thật</h2><p>AI có thể tạo tên nghiên cứu, số liệu hoặc trích dẫn không tồn tại.</p></article>
+        <article class="risk-card" data-number="02"><small>02 · SAI SỰ THẬT</small><h2>Chi tiết không chính xác</h2><p>Mốc thời gian, phép tính hay quan hệ nguyên nhân có thể bị nhầm.</p></article>
+        <article class="risk-card" data-number="03"><small>03 · LỖI THỜI</small><h2>Thông tin đã cũ</h2><p>Câu trả lời có thể không cập nhật quy định, số liệu hoặc sự kiện mới.</p></article>
+        <article class="risk-card" data-number="04"><small>04 · NGUỒN ẢO</small><h2>Nguồn khó xác minh</h2><p>Tác giả, đường dẫn hay tài liệu AI nêu có thể không phù hợp hoặc không tồn tại.</p></article>
+        <article class="risk-card" data-number="05"><small>05 · PHA TRỘN</small><h2>Đúng một phần</h2><p>Một đoạn có thể trộn dữ kiện đúng với kết luận sai hoặc thiếu căn cứ.</p></article>
+      </div>
+      <a class="resource-link" id="infographicLink" href="resources.html">↗ Mở infographic “AI có thể sai không?”</a>
+    </section>
+    <section class="knowledge-section" aria-labelledby="processHeading">
+      <div class="knowledge-section-heading"><div><p class="eyebrow">QUY TRÌNH</p><h2 class="section-label" id="processHeading">5 bước kiểm chứng thông tin AI</h2></div><p>Làm lần lượt trước khi tin hoặc chia sẻ.</p></div>
+      <div class="step-grid">
+        <article class="step-card" data-number="01"><small>BƯỚC 01</small><h2>DỪNG</h2><p>Chưa vội tin, chia sẻ hay sao chép. Câu trả lời AI là điểm bắt đầu, chưa phải bằng chứng.</p><strong>TẠM HOÃN KẾT LUẬN</strong></article>
+        <article class="step-card" data-number="02"><small>BƯỚC 02</small><h2>XÁC ĐỊNH</h2><p>Gạch chân điều cần kiểm tra: con số, tên người, trích dẫn, mốc thời gian hoặc lời khuyên quan trọng.</p><strong>KHOANH VÙNG KHẲNG ĐỊNH</strong></article>
+        <article class="step-card" data-number="03"><small>BƯỚC 03</small><h2>TÌM NGUỒN</h2><p>Tìm tài liệu gốc và nguồn có trách nhiệm như cơ quan chuyên môn, văn bản chính thức hoặc nghiên cứu rõ tác giả.</p><strong>TRUY VẾT XUẤT XỨ</strong></article>
+        <article class="step-card" data-number="04"><small>BƯỚC 04</small><h2>ĐỐI CHIẾU</h2><p>So sánh nội dung, ngày công bố, phương pháp và ngữ cảnh với nguồn độc lập; xem các nguồn có cùng trích một nơi không.</p><strong>KIỂM TRA BẰNG CHỨNG</strong></article>
+        <article class="step-card" data-number="05"><small>BƯỚC 05</small><h2>KẾT LUẬN</h2><p>Chọn Đúng, Sai, Chưa đủ căn cứ hoặc Cần kiểm chứng thêm; nêu bằng chứng và giới hạn của nó.</p><strong>KẾT LUẬN CÓ CĂN CỨ</strong></article>
+      </div>
+      <p class="knowledge-note">Không tìm thấy bằng chứng chưa đủ để khẳng định thông tin sai. Hãy kết luận đúng với chất lượng và phạm vi nguồn đã kiểm tra.</p>
+    </section>
   </main>
   <footer class="site-footer">AI CHECK THĐ · THPT Trần Hưng Đạo</footer>
   <script src="../supabase-config.js"></script>

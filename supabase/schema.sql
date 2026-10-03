@@ -61,6 +61,24 @@ create policy "Public can submit leaderboard scores"
     and score between 0 and 100
   );
 
+do $$
+begin
+  if exists (
+    select 1
+    from pg_publication
+    where pubname = 'supabase_realtime'
+  ) and not exists (
+    select 1
+    from pg_publication_tables
+    where pubname = 'supabase_realtime'
+      and schemaname = 'public'
+      and tablename = 'leaderboard_scores'
+  ) then
+    alter publication supabase_realtime add table public.leaderboard_scores;
+  end if;
+end
+$$;
+
 create or replace view public.research_assessment_summary
 with (security_invoker = true)
 as

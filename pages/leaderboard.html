@@ -11,14 +11,14 @@
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
   <style>
-    .leader-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 11px}.leader-tab{padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:white;color:#53655b;font-size:10px;font-weight:800}.leader-tab.active{background:var(--forest);border-color:var(--forest);color:white}.leader-board{overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:4px}.leader-row{display:grid;grid-template-columns:58px minmax(120px,1fr) minmax(90px,150px) minmax(110px,160px);gap:10px;padding:11px 14px;border-bottom:1px solid #edf1eb;align-items:center;font-size:10px}.leader-row:last-child{border-bottom:0}.leader-heading{background:#eaf1e8;color:#53665a;font-size:9px;font-weight:800}.rank{color:var(--leaf);font:700 14px "Space Grotesk",sans-serif}.leader-empty{padding:32px 18px;text-align:center;color:var(--muted);font-size:11px}.name-form{display:flex;align-items:end;gap:8px;max-width:420px}.notice{margin-top:12px;padding:12px 14px;background:#fff6e6;color:#655a46;font-size:10px}@media(max-width:520px){.leader-row{grid-template-columns:35px minmax(70px,1fr) 78px 86px;gap:5px;padding:10px 7px;font-size:9px}.leader-heading{font-size:8px}.name-form{align-items:stretch;flex-direction:column}.name-form .button{width:100%}}
+    .leader-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 11px}.leader-tab{padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:white;color:#53655b;font-size:10px;font-weight:800}.leader-tab.active{background:var(--forest);border-color:var(--forest);color:white}.leader-podium{display:flex;justify-content:center;align-items:end;gap:clamp(10px,4vw,44px);padding:27px 15px 21px;margin-bottom:14px;border:1px solid var(--line);border-radius:6px;background:radial-gradient(ellipse at 50% 100%,#e7efe4,transparent 70%),#fff}.podium-item{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:0}.podium-item.first{order:2}.podium-item.second{order:1}.podium-item.third{order:3}.podium-circle{width:clamp(92px,14vw,132px);height:clamp(92px,14vw,132px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;border:4px solid #b8c6c0;border-radius:50%;background:#fff;box-shadow:0 8px 20px #163d3514;text-align:center}.podium-item.first .podium-circle{width:clamp(106px,16vw,148px);height:clamp(106px,16vw,148px);border-color:#e9c45e;background:linear-gradient(145deg,#fff9e4,#fff)}.podium-item.second .podium-circle{border-color:#bdc9c6}.podium-item.third .podium-circle{border-color:#c99169}.podium-place{color:#68786d;font:800 9px "Space Grotesk",sans-serif}.podium-name{max-width:100%;overflow:hidden;color:var(--forest);font-size:clamp(9px,1vw,11px);font-weight:800;text-overflow:ellipsis;white-space:nowrap}.podium-score{color:var(--leaf);font:700 11px "Space Grotesk",sans-serif}.leader-board{overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:4px}.leader-row{display:grid;grid-template-columns:58px minmax(120px,1fr) minmax(90px,150px) minmax(110px,160px);gap:10px;padding:11px 14px;border-bottom:1px solid #edf1eb;align-items:center;font-size:10px}.leader-row:last-child{border-bottom:0}.leader-heading{background:#eaf1e8;color:#53665a;font-size:9px;font-weight:800}.rank{color:var(--leaf);font:700 14px "Space Grotesk",sans-serif}.leader-empty{padding:32px 18px;text-align:center;color:var(--muted);font-size:11px}.name-form{display:flex;align-items:end;gap:8px;max-width:420px}.name-cooldown{margin:8px 0 0;color:var(--muted);font-size:10px}.name-form input[readonly]{background:#f0f3ef;color:#68786d}.name-form .button:disabled{opacity:.58;cursor:not-allowed}.notice{margin-top:12px;padding:12px 14px;background:#fff6e6;color:#655a46;font-size:10px}@media(max-width:520px){.leader-row{grid-template-columns:35px minmax(70px,1fr) 78px 86px;gap:5px;padding:10px 7px;font-size:9px}.leader-heading{font-size:8px}.name-form{align-items:stretch;flex-direction:column}.name-form .button{width:100%}.leader-podium{gap:8px;padding:21px 5px 16px}.podium-circle{width:88px;height:88px;padding:7px;border-width:3px}.podium-item.first .podium-circle{width:100px;height:100px}.podium-name{font-size:9px}.podium-score{font-size:10px}}
   </style>
 </head>
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng"><a href="../index.html">Trang chủ</a><a href="knowledge.html">Kiến thức</a><a href="practice.html">Thực hành</a><a href="assessment.html">Đánh giá</a><a href="leaderboard.html" aria-current="page">BXH</a><a href="research.html">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
   <main class="page-shell">
     <header class="page-header"><div><p class="eyebrow">04 / GHI NHẬN</p><h1 class="page-title">Bảng xếp hạng kỹ năng.</h1><p class="page-lead">Theo dõi thành tích cao nhất ở từng khu vực. Dùng cùng một trình duyệt để kết quả từ các trang được tổng hợp.</p></div><span class="page-count">3 BẢNG RIÊNG</span></header>
-    <section class="panel"><div class="name-form"><div class="form-row" style="flex:1"><label for="playerName">Biệt danh · không nhập tên thật</label><input id="playerName" maxlength="24" placeholder="Ví dụ: Sao Xanh 12A5" autocomplete="nickname"></div><button class="button button-dark" id="saveName">Lưu tên</button></div></section>
+    <section class="panel"><div class="name-form"><div class="form-row" style="flex:1"><label for="playerName">Biệt danh · không nhập tên thật</label><input id="playerName" maxlength="24" placeholder="Ví dụ: Sao Xanh 12A5" autocomplete="nickname"></div><button class="button button-dark" id="saveName">Lưu tên</button></div><p class="name-cooldown" id="nameCooldown" aria-live="polite"></p></section>
     <p class="panel-copy" id="leaderStatus" aria-live="polite" style="margin-top:10px"></p>
     <div class="leader-tabs" id="leaderTabs"><button class="leader-tab active" data-board="rubric">Thử thách rubric</button><button class="leader-tab" data-board="assessment">Đánh giá năng lực</button><button class="leader-tab" data-board="practice">Tình huống</button><button class="leader-tab" id="refreshBoard" type="button">Cập nhật ↻</button></div>
     <div class="leader-board" id="leaderBoard"></div>
@@ -29,10 +29,132 @@
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
   <script>
-    const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(`aicheck:${key}`))??fallback}catch{return fallback}};const write=(key,value)=>localStorage.setItem(`aicheck:${key}`,JSON.stringify(value));let board="rubric";
-    async function render(){const labels={rubric:"Điểm",assessment:"Điểm",practice:"Điểm tình huống"};const root=document.getElementById("leaderBoard"),status=document.getElementById("leaderStatus");let records=[],source="thiết bị này";if(window.AICheckCloud?.configured){const result=await window.AICheckCloud.getLeaderboard(board);if(result.synced){records=result.rows;source="BXH chung";status.textContent="Đang xem dữ liệu chung từ Supabase."}else{status.textContent="Không kết nối được Supabase; đang xem điểm trên thiết bị này."}}else{status.textContent="Chưa cấu hình Supabase; đang xem điểm trên thiết bị này."}if(source==="thiết bị này")records=read("records",[]).filter(row=>Number.isFinite(row[board])).map(row=>({name:row.name,score:row[board],date:row.date||""})).sort((a,b)=>b.score-a.score).slice(0,20);if(!records.length){root.innerHTML=`<div class="leader-empty">Chưa có kết quả trong ${source}. Hoàn thành một lượt để ghi nhận thành tích.</div>`;return}root.innerHTML=`<div class="leader-row leader-heading"><span>HẠNG</span><span>TÊN HIỂN THỊ</span><span>${labels[board]}</span><span>NGÀY LÀM CAO NHẤT</span></div>${records.map((row,index)=>`<div class="leader-row"><span class="rank">${String(index+1).padStart(2,"0")}</span><span>${escapeText(row.name)}</span><strong>${row.score}/100</strong><span>${row.date||"—"}</span></div>`).join("")}`}
-    function escapeText(value){const node=document.createElement("span");node.textContent=value;return node.innerHTML}
-    document.getElementById("playerName").value=read("player","");document.getElementById("saveName").addEventListener("click",()=>{const name=document.getElementById("playerName").value.trim();if(!name){document.getElementById("playerName").focus();return}write("player",name);document.getElementById("saveName").textContent="Đã lưu ✓";setTimeout(()=>document.getElementById("saveName").textContent="Lưu tên",1200)});document.getElementById("leaderTabs").addEventListener("click",event=>{const button=event.target.closest("[data-board]");if(!button)return;board=button.dataset.board;document.querySelectorAll("[data-board]").forEach(tab=>tab.classList.toggle("active",tab===button));render()});document.getElementById("refreshBoard").addEventListener("click",render);render();if(window.AICheckCloud?.configured)setInterval(render,20000);
+    const read = (key, fallback) => {
+      try { return JSON.parse(localStorage.getItem(`aicheck:${key}`)) ?? fallback; }
+      catch { return fallback; }
+    };
+    let board = "rubric";
+    let realtimeStatus = "connecting";
+    let unsubscribeLeaderboard = null;
+
+    async function render() {
+      const labels = { rubric: "Điểm", assessment: "Điểm", practice: "Điểm tình huống" };
+      const root = document.getElementById("leaderBoard");
+      const status = document.getElementById("leaderStatus");
+      let records = [];
+      let source = "thiết bị này";
+
+      if (window.AICheckCloud?.configured) {
+        const result = await window.AICheckCloud.getLeaderboard(board);
+        if (result.synced) {
+          records = result.rows;
+          source = "BXH chung";
+          status.textContent = realtimeStatus === "subscribed"
+            ? "BXH chung · cập nhật trực tiếp khi có điểm mới."
+            : realtimeStatus === "unavailable"
+              ? "BXH chung · kết nối trực tiếp không khả dụng, đang tự làm mới mỗi 20 giây."
+              : "BXH chung · đang kết nối cập nhật trực tiếp…";
+        } else {
+          status.textContent = "Không kết nối được Supabase; đang xem điểm trên thiết bị này.";
+        }
+      } else {
+        status.textContent = "Chưa cấu hình Supabase; đang xem điểm trên thiết bị này.";
+      }
+
+      if (source === "thiết bị này") {
+        records = read("records", [])
+          .filter(row => Number.isFinite(row[board]))
+          .map(row => ({ name: row.name, score: row[board], date: row.date || "" }))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 20);
+      }
+
+      if (!records.length) {
+        root.innerHTML = `<div class="leader-empty">Chưa có kết quả trong ${source}. Hoàn thành một lượt để ghi nhận thành tích.</div>`;
+        return;
+      }
+
+      const podiumSlots = [
+        { rank: 2, className: "second" },
+        { rank: 1, className: "first" },
+        { rank: 3, className: "third" }
+      ];
+      const podium = podiumSlots.map(slot => {
+        const row = records[slot.rank - 1];
+        const place = slot.rank === 1 ? "🥇 NHẤT" : slot.rank === 2 ? "🥈 NHÌ" : "🥉 BA";
+        return `<div class="podium-item ${slot.className}"><div class="podium-circle"><span class="podium-place">${place}</span><span class="podium-name">${row ? escapeText(row.name) : "Chưa có người chơi"}</span><strong class="podium-score">${row ? `${row.score}/100` : "—"}</strong></div></div>`;
+      }).join("");
+      const remaining = records.slice(3);
+      const table = remaining.length
+        ? `<div class="leader-board"><div class="leader-row leader-heading"><span>HẠNG</span><span>TÊN HIỂN THỊ</span><span>${labels[board]}</span><span>NGÀY LÀM CAO NHẤT</span></div>${remaining.map((row, index) => `<div class="leader-row"><span class="rank">${String(index + 4).padStart(2, "0")}</span><span>${escapeText(row.name)}</span><strong>${row.score}/100</strong><span>${row.date || "—"}</span></div>`).join("")}</div>`
+        : `<div class="leader-empty">${records.length < 4 ? "Chưa có thêm người chơi để hiển thị trong bảng xếp hạng." : "Chưa có dữ liệu."}</div>`;
+      root.innerHTML = `<div class="leader-podium" aria-label="Ba người đứng đầu">${podium}</div>${table}`;
+    }
+
+    function connectLeaderboard() {
+      unsubscribeLeaderboard?.();
+      realtimeStatus = "connecting";
+      if (!window.AICheckCloud?.configured || !window.AICheckCloud.subscribeLeaderboard) return;
+      unsubscribeLeaderboard = window.AICheckCloud.subscribeLeaderboard(
+        board,
+        () => render(),
+        state => {
+          realtimeStatus = state === "SUBSCRIBED" ? "subscribed" : "unavailable";
+          render();
+        }
+      );
+    }
+
+    function escapeText(value) {
+      const node = document.createElement("span");
+      node.textContent = value;
+      return node.innerHTML;
+    }
+
+    const nameInput = document.getElementById("playerName");
+    const nameButton = document.getElementById("saveName");
+    const nameCooldown = document.getElementById("nameCooldown");
+    const dateFormatter = new Intl.DateTimeFormat("vi-VN", { dateStyle: "long", timeStyle: "short" });
+    function updateNameEditor(message = "") {
+      const state = window.AICheckCloud?.getPlayerNameState?.() || { name: read("player", ""), canChange: true, nextChangeAt: null };
+      nameInput.value = state.name;
+      nameInput.readOnly = Boolean(state.name && !state.canChange);
+      nameButton.disabled = Boolean(state.name && !state.canChange);
+      nameCooldown.textContent = message || (state.name && !state.canChange
+        ? `Bạn có thể đổi biệt danh sau ${dateFormatter.format(state.nextChangeAt)}.`
+        : state.name
+          ? "Bạn đã có thể đổi biệt danh."
+          : "Sau khi lưu, biệt danh sẽ được giữ cố định trong 7 ngày.");
+    }
+    updateNameEditor();
+    setInterval(updateNameEditor, 60000);
+    nameButton.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      if (!name) {
+        nameInput.focus();
+        return;
+      }
+      const result = window.AICheckCloud?.savePlayerName?.(name);
+      if (!result?.saved) {
+        updateNameEditor(result?.reason === "cooldown" ? `Chưa thể đổi biệt danh. Bạn có thể đổi sau ${dateFormatter.format(result.nextChangeAt)}.` : "Không thể lưu biệt danh. Hãy thử lại.");
+        return;
+      }
+      updateNameEditor(result.changed ? `Đã lưu biệt danh. Có thể đổi tiếp sau ${dateFormatter.format(result.nextChangeAt)}.` : "Biệt danh này đang được sử dụng.");
+      nameButton.textContent = "Đã lưu ✓";
+      setTimeout(() => nameButton.textContent = "Lưu tên", 1200);
+    });
+    document.getElementById("leaderTabs").addEventListener("click", event => {
+      const button = event.target.closest("[data-board]");
+      if (!button) return;
+      board = button.dataset.board;
+      document.querySelectorAll("[data-board]").forEach(tab => tab.classList.toggle("active", tab === button));
+      connectLeaderboard();
+      render();
+    });
+    document.getElementById("refreshBoard").addEventListener("click", render);
+    connectLeaderboard();
+    render();
+    if (window.AICheckCloud?.configured) setInterval(render, 20000);
   </script>
   <script src="../site-nav.js"></script>
 </body>

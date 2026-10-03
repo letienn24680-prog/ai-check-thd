@@ -3,7 +3,7 @@
 ## 1. Tạo cơ sở dữ liệu Supabase
 
 1. Tạo một project tại Supabase và mở **SQL Editor**.
-2. Chạy toàn bộ nội dung `supabase/schema.sql`.
+2. Chạy toàn bộ nội dung `supabase/schema.sql`. Schema sẽ thêm bảng điểm vào publication `supabase_realtime` để BXH nhận thông báo khi có điểm mới.
 3. Trong **Project Settings → API**, sao chép Project URL và publishable/anon key.
 4. Điền hai giá trị vào `supabase-config.js`:
 
@@ -45,6 +45,8 @@ Không nhập tên, lớp, email hoặc thông tin định danh học sinh. Bả
 
 ## Lưu ý về BXH
 
-Điểm mới được gửi lên Supabase để mọi người cùng xem; nếu Supabase chưa cấu hình hoặc mất kết nối, website vẫn lưu cục bộ. Kết quả cũ đang nằm trong trình duyệt **không tự chuyển** lên cơ sở dữ liệu. Bảng công khai dùng biệt danh và điểm cao nhất theo từng hoạt động. Vì trình duyệt gửi điểm, người dùng có thể giả mạo điểm; không dùng BXH này làm điểm chính thức. Muốn chống gian lận cần xác thực người dùng và xác minh/chấm điểm phía máy chủ.
+Điểm mới được gửi lên Supabase để mọi người cùng xem; BXH nhận thay đổi qua Supabase Realtime và tự tải lại mỗi 20 giây làm phương án dự phòng. Nếu đã chạy schema trước khi bật Realtime cho BXH, hãy chạy lại `supabase/schema.sql` trong SQL Editor. Nếu Realtime không kết nối được, trang sẽ báo trạng thái và tiếp tục tự làm mới định kỳ. Khi Supabase chưa cấu hình hoặc mất kết nối, website vẫn lưu cục bộ. Kết quả cũ đang nằm trong trình duyệt **không tự chuyển** lên cơ sở dữ liệu. Bảng công khai dùng biệt danh và điểm cao nhất theo từng hoạt động. Vì trình duyệt gửi điểm, người dùng có thể giả mạo điểm; không dùng BXH này làm điểm chính thức. Muốn chống gian lận cần xác thực người dùng và xác minh/chấm điểm phía máy chủ.
 
 Không nhập tên thật, lớp, email hay mã học sinh vào biệt danh. Bảng điểm có thể được mọi khách truy cập đọc.
+
+Biệt danh chỉ được đổi một lần mỗi 7 ngày; thời điểm đổi được giữ trong bộ nhớ của trình duyệt. Vì hiện chưa có đăng nhập tài khoản, giới hạn này chỉ áp dụng trên cùng trình duyệt/thiết bị và có thể bị đặt lại khi xóa dữ liệu trang hoặc đổi thiết bị. Muốn bảo đảm giới hạn theo từng người trên nhiều thiết bị, cần bổ sung tài khoản và kiểm tra thời hạn phía máy chủ.
