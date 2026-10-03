@@ -8,21 +8,49 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../site.css">
+  <link rel="stylesheet" href="../site-nav.css">
   <style>
-    .research-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.85fr);gap:15px}.research-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-content:start}.chart-box{padding:18px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:5px}.chart-box h2{margin:0 0 6px;font:700 17px "Space Grotesk",sans-serif}.chart{height:180px;display:flex;justify-content:center;align-items:end;gap:42px;margin:21px 7px 25px;border-bottom:1px solid #bcc9bc;background:repeating-linear-gradient(to bottom,transparent 0,transparent 43px,#e3eae1 44px,#e3eae1 45px)}.bar-pair{height:100%;display:flex;align-items:end;gap:10px}.bar{width:42px;min-height:3px;height:var(--height,2%);position:relative;background:#619979;transition:height .3s}.bar.after{background:var(--orange)}.bar span{position:absolute;bottom:-23px;left:50%;transform:translateX(-50%);font-size:9px;color:#56685d}.chart-key{display:flex;justify-content:center;gap:15px;color:var(--muted);font-size:9px}.chart-key i{display:inline-block;width:8px;height:8px;margin-right:5px;background:#619979}.chart-key .orange{background:var(--orange)}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.stat{padding:9px;background:#eff4ed;color:var(--muted);font-size:9px}.stat b{display:block;color:var(--forest);font:700 15px "Space Grotesk",sans-serif}.research-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.fact{padding:14px;background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:4px}.fact b{display:block;margin-bottom:5px;color:var(--leaf);font-size:9px;text-transform:uppercase}.fact p{margin:0;color:#586a5e;font-size:10px}.qr-row{display:flex;align-items:center;gap:13px;margin-top:15px}.qr-row img{width:84px;height:84px;background:white}.qr-row small{color:var(--muted);font-size:9px}@media(max-width:760px){.research-layout{grid-template-columns:1fr}.research-facts{grid-template-columns:1fr 1fr}}@media(max-width:440px){.research-form{grid-template-columns:1fr}.research-facts{grid-template-columns:1fr}}
+    .research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .stage-card{padding:18px;background:#fff;border:1px solid var(--line);border-radius:5px}
+    .stage-card h2{margin:0 0 14px;font:700 17px "Space Grotesk",sans-serif}
+    .stage-main{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .metric{padding:11px;background:#eff4ed;border-radius:3px}
+    .metric span{display:block;color:var(--muted);font-size:9px}
+    .metric strong{display:block;margin-top:2px;color:var(--forest);font:700 24px "Space Grotesk",sans-serif}
+    .metric small{font-size:11px;font-weight:500}
+    .chart-box{margin-top:14px;padding:18px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:5px}
+    .chart-box h2{margin:0 0 5px;font:700 17px "Space Grotesk",sans-serif}
+    .chart-note{margin:0;color:var(--muted);font-size:10px}
+    .chart{height:175px;display:flex;justify-content:center;align-items:end;gap:58px;margin:18px 7px 25px;border-bottom:1px solid #bcc9bc;background:repeating-linear-gradient(to bottom,transparent 0,transparent 42px,#e3eae1 43px,#e3eae1 44px)}
+    .bar{width:48px;height:var(--height,0%);min-height:0;position:relative;background:#619979;transition:height .25s}
+    .bar.after{background:var(--orange)}
+    .bar span{position:absolute;bottom:-23px;left:50%;transform:translateX(-50%);font-size:9px;color:#56685d;white-space:nowrap}
+    .chart-key{display:flex;justify-content:center;gap:15px;color:var(--muted);font-size:9px}
+    .chart-key i{display:inline-block;width:8px;height:8px;margin-right:5px;background:#619979}
+    .chart-key .orange{background:var(--orange)}
+    .research-status{margin-top:14px}
+    .privacy-note{margin:9px 0 0;color:var(--muted);font-size:10px}
+    .research-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    .fact{padding:14px;background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:4px}
+    .fact b{display:block;margin-bottom:5px;color:var(--leaf);font-size:9px;text-transform:uppercase}
+    .fact p{margin:0;color:#586a5e;font-size:10px}
+    .qr-row{display:flex;align-items:center;gap:13px;margin-top:15px}
+    .qr-row img{width:84px;height:84px;background:white}
+    .qr-row small{color:var(--muted);font-size:9px}
+    @media(max-width:700px){.research-grid,.research-facts{grid-template-columns:1fr}.stage-card{padding:15px}.chart{gap:45px}}
   </style>
 </head>
 <body>
-  <header class="site-header"><div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><nav class="site-nav" aria-label="Điều hướng"><a href="../index.html">Trang chủ</a><a href="knowledge.html">Kiến thức</a><a href="practice.html">Thực hành</a><a href="assessment.html">Đánh giá</a><a href="leaderboard.html">BXH</a><a href="research.html" aria-current="page">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng"><a href="../index.html">Trang chủ</a><a href="knowledge.html">Kiến thức</a><a href="practice.html">Thực hành</a><a href="assessment.html">Đánh giá</a><a href="leaderboard.html">BXH</a><a href="research.html" aria-current="page">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
   <main class="page-shell">
-    <header class="page-header"><div><p class="eyebrow">05 / NGHIÊN CỨU</p><h1 class="page-title">Theo dõi thay đổi bằng dữ liệu.</h1><p class="page-lead">Nhập số liệu khảo sát đã được nhóm xác minh. Biểu đồ để trống ban đầu, không dùng dữ liệu minh họa như kết quả thật.</p></div><span class="page-count">DÀNH CHO GIÁO VIÊN · BAN GIÁM KHẢO</span></header>
-    <div class="research-layout"><form class="research-form panel" id="researchForm">
-      <div class="form-row"><label for="sampleSize">Số học sinh khảo sát</label><input id="sampleSize" type="number" min="0" placeholder="Nhập số liệu"></div><div class="form-row"><label for="aiUse">Tỷ lệ sử dụng AI (%)</label><input id="aiUse" type="number" min="0" max="100" placeholder="0–100"></div>
-      <div class="form-row"><label for="verifyRate">Thường xuyên kiểm chứng (%)</label><input id="verifyRate" type="number" min="0" max="100" placeholder="0–100"></div><div class="form-row"><label for="goodRate">Đạt mức khá / giỏi (%)</label><input id="goodRate" type="number" min="0" max="100" placeholder="0–100"></div>
-      <div class="form-row"><label for="beforeScore">Điểm trung bình trước</label><input id="beforeScore" type="number" min="0" max="100" step="0.1" placeholder="0–100"></div><div class="form-row"><label for="afterScore">Điểm trung bình sau</label><input id="afterScore" type="number" min="0" max="100" step="0.1" placeholder="0–100"></div>
-      <button class="button button-dark" type="submit">Cập nhật biểu đồ</button><button class="button button-outline" id="clearResearch" type="button">Xóa số liệu</button>
-    </form><section class="chart-box"><h2>Điểm trung bình trước – sau</h2><p class="panel-copy" id="chartCaption">Nhập điểm để hiển thị kết quả.</p><div class="stats" id="researchStats" hidden></div><div class="chart" role="img" aria-label="Biểu đồ so sánh điểm trung bình trước và sau"><div class="bar-pair"><div class="bar" id="beforeBar"><span>Trước</span></div><div class="bar after" id="afterBar"><span>Sau</span></div></div></div><div class="chart-key"><span><i></i>Trước can thiệp</span><span><i class="orange"></i>Sau can thiệp</span></div></section></div>
-    <p class="callout" id="researchSyncStatus" aria-live="polite" style="margin-top:14px">Đang kiểm tra số liệu đã được duyệt.</p><p class="panel-copy">Không đưa thông tin định danh học sinh lên website công khai. Bản nháp nhập trên trang này chỉ lưu ở trình duyệt; số liệu online chỉ đọc từ bảng đã được giáo viên duyệt.</p>
+    <header class="page-header"><div><p class="eyebrow">05 / NGHIÊN CỨU</p><h1 class="page-title">Kết quả khảo sát tự động.</h1><p class="page-lead">Số người tham gia và điểm được tổng hợp từ bài đánh giá trước/sau can thiệp; không cần nhập tay.</p></div><span class="page-count">DỮ LIỆU TỪ BÀI ĐÁNH GIÁ</span></header>
+    <div class="research-grid">
+      <article class="stage-card"><p class="eyebrow">LẦN ĐO 01</p><h2>Trước can thiệp</h2><div class="stage-main"><div class="metric"><span>Người tham gia</span><strong id="preCount">—</strong></div><div class="metric"><span>Điểm trung bình</span><strong id="preAverage">—</strong></div><div class="metric"><span>Đạt mức Khá/Giỏi</span><strong id="preGoodCount">—</strong><span id="preGoodRate"></span></div><div class="metric"><span>Lượt làm</span><strong id="preAttempts">—</strong></div></div></article>
+      <article class="stage-card"><p class="eyebrow">LẦN ĐO 02</p><h2>Sau can thiệp</h2><div class="stage-main"><div class="metric"><span>Người tham gia</span><strong id="postCount">—</strong></div><div class="metric"><span>Điểm trung bình</span><strong id="postAverage">—</strong></div><div class="metric"><span>Đạt mức Khá/Giỏi</span><strong id="postGoodCount">—</strong><span id="postGoodRate"></span></div><div class="metric"><span>Lượt làm</span><strong id="postAttempts">—</strong></div></div></article>
+    </div>
+    <section class="chart-box"><h2>So sánh điểm trung bình</h2><p class="chart-note" id="scoreChange">Đang tải kết quả khảo sát…</p><div class="chart" role="img" aria-label="Biểu đồ so sánh điểm trung bình trước và sau can thiệp"><div class="bar" id="preBar"><span>Trước</span></div><div class="bar after" id="postBar"><span>Sau</span></div></div><div class="chart-key"><span><i></i>Trước can thiệp</span><span><i class="orange"></i>Sau can thiệp</span></div></section>
+    <p class="callout research-status" id="researchStatus" aria-live="polite">Đang kết nối dữ liệu…</p>
+    <p class="privacy-note">Mỗi người tham gia được nhận diện bằng một mã ngẫu nhiên lưu trên trình duyệt, không lưu tên thật. Dùng cùng trình duyệt cho cả hai lần đo; đổi thiết bị hoặc xóa dữ liệu trình duyệt có thể được tính thành người mới. Chỉ chọn “Sau can thiệp” sau khi đã tham gia giải pháp.</p>
     <h2 class="section-label">Thông tin đề tài</h2><div class="research-facts">
       <article class="fact"><b>Tên đề tài</b><p>“Thực trạng và giải pháp nâng cao năng lực kiểm chứng thông tin do trí tuệ nhân tạo (AI) cung cấp cho học sinh Trường THPT Trần Hưng Đạo”.</p></article>
       <article class="fact"><b>Lý do chọn đề tài</b><p>AI ngày càng phổ biến trong học tập; học sinh cần biết đánh giá và kiểm chứng thông tin trước khi sử dụng.</p></article>
@@ -33,14 +61,75 @@
     </div>
     <div class="qr-row"><img id="siteQr" alt="QR mở trang chủ AI CHECK THĐ" hidden><div><strong>QR TRANG CHỦ</strong><small id="qrCaption">Mã QR sẵn sàng khi website có địa chỉ công khai.</small></div></div>
   </main>
-  <footer class="site-footer">AI CHECK THĐ · Số liệu cần được xác minh trước khi công bố</footer>
+  <footer class="site-footer">AI CHECK THĐ · Số liệu tổng hợp tự động từ bài đánh giá</footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
+  <script src="../site-nav.js"></script>
   <script>
-    const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(`aicheck:${key}`))??fallback}catch{return fallback}};const fields=["sampleSize","aiUse","verifyRate","goodRate","beforeScore","afterScore"];const saved=read("research",{});fields.forEach(id=>{if(saved[id]!==undefined)document.getElementById(id).value=saved[id]});
-    function update(){const beforeRaw=document.getElementById("beforeScore").value,afterRaw=document.getElementById("afterScore").value;if(beforeRaw===""||afterRaw===""){document.getElementById("chartCaption").textContent="Cần nhập điểm trung bình trước và sau.";return}const before=Number(beforeRaw),after=Number(afterRaw);if(before<0||before>100||after<0||after>100){document.getElementById("chartCaption").textContent="Điểm trung bình phải nằm trong khoảng 0–100.";return}document.getElementById("beforeBar").style.setProperty("--height",`${Math.max(before,1)}%`);document.getElementById("afterBar").style.setProperty("--height",`${Math.max(after,1)}%`);const delta=after-before;document.getElementById("chartCaption").textContent=`Trước ${before} · Sau ${after} · Thay đổi ${delta>0?"+":""}${delta.toFixed(1)} điểm`;const labels=[["Số học sinh khảo sát",saved.sampleSize||document.getElementById("sampleSize").value||"—"],["Sử dụng AI",document.getElementById("aiUse").value?`${document.getElementById("aiUse").value}%`:"—"],["Thường xuyên kiểm chứng",document.getElementById("verifyRate").value?`${document.getElementById("verifyRate").value}%`:"—"],["Đạt khá / giỏi",document.getElementById("goodRate").value?`${document.getElementById("goodRate").value}%`:"—"]];document.getElementById("researchStats").innerHTML=labels.map(([label,value])=>`<div class="stat">${label}<b>${value}</b></div>`).join("");document.getElementById("researchStats").hidden=false;}
-    document.getElementById("researchForm").addEventListener("submit",event=>{event.preventDefault();const data={};fields.forEach(id=>data[id]=document.getElementById(id).value);localStorage.setItem("aicheck:research",JSON.stringify(data));Object.assign(saved,data);update();});document.getElementById("clearResearch").addEventListener("click",()=>{localStorage.removeItem("aicheck:research");fields.forEach(id=>document.getElementById(id).value="");document.getElementById("researchStats").hidden=true;document.getElementById("beforeBar").style.setProperty("--height","2%");document.getElementById("afterBar").style.setProperty("--height","2%");document.getElementById("chartCaption").textContent="Nhập điểm để hiển thị kết quả.";});if(saved.beforeScore!==undefined&&saved.afterScore!==undefined)update();if(window.AICheckCloud?.configured){window.AICheckCloud.getResearchSummary().then(result=>{if(result.synced&&result.row){const row=result.row,shared={sampleSize:row.sample_size,aiUse:row.ai_use_pct,verifyRate:row.verify_often_pct,goodRate:row.good_rate_pct,beforeScore:row.before_mean,afterScore:row.after_mean};fields.forEach(id=>document.getElementById(id).value=shared[id]);Object.assign(saved,shared);update();document.getElementById("researchSyncStatus").textContent=`Đang hiển thị số liệu đã duyệt trên website · cập nhật ${row.updated_at?.slice(0,10)||""}.`}else if(result.error){document.getElementById("researchSyncStatus").textContent="Không đọc được dữ liệu chung; kiểm tra bảng và chính sách Supabase."}else{document.getElementById("researchSyncStatus").textContent="Chưa có số liệu nghiên cứu được công bố; bản nháp hiện chỉ nằm trên thiết bị này."}}).catch(()=>{document.getElementById("researchSyncStatus").textContent="Không tải được dữ liệu chung; bản nháp vẫn chỉ nằm trên thiết bị này."})}else{document.getElementById("researchSyncStatus").textContent="Chưa cấu hình Supabase; bản nháp chỉ lưu cục bộ."}const homeUrl=new URL("../index.html",location.href).href;if(/^https?:/i.test(homeUrl)){document.getElementById("siteQr").src=`https://api.qrserver.com/v1/create-qr-code/?size=168x168&data=${encodeURIComponent(homeUrl)}`;document.getElementById("siteQr").hidden=false;document.getElementById("qrCaption").textContent="Quét để mở trang chủ AI CHECK THĐ."}
+    function setStage(phase, row) {
+      const prefix = phase === "pre" ? "pre" : "post";
+      const participants = Number(row?.participant_count || 0);
+      const average = row?.average_score == null ? null : Number(row.average_score);
+      const goodCount = Number(row?.good_count || 0);
+      document.getElementById(`${prefix}Count`).textContent = participants;
+      document.getElementById(`${prefix}Average`).textContent = average == null ? "—" : average.toFixed(1);
+      document.getElementById(`${prefix}GoodCount`).textContent = goodCount;
+      document.getElementById(`${prefix}GoodRate`).textContent = row?.good_rate_pct == null ? "" : `${Number(row.good_rate_pct).toFixed(1)}%`;
+      document.getElementById(`${prefix}Attempts`).textContent = Number(row?.attempt_count || 0);
+      document.getElementById(`${prefix}Bar`).style.setProperty("--height", `${Math.max(0, Math.min(100, average || 0))}%`);
+      return average;
+    }
+
+    async function loadResearchResults() {
+      const status = document.getElementById("researchStatus");
+      if (!window.AICheckCloud?.configured) {
+        setStage("pre", null);
+        setStage("post", null);
+        document.getElementById("scoreChange").textContent = "Chưa có kết nối cơ sở dữ liệu để tính kết quả.";
+        status.textContent = "Supabase chưa được cấu hình; số liệu sẽ xuất hiện sau khi kết nối.";
+        return;
+      }
+
+      const result = await window.AICheckCloud.getResearchSummary();
+      if (!result.synced) {
+        setStage("pre", null);
+        setStage("post", null);
+        document.getElementById("scoreChange").textContent = "Chưa tải được dữ liệu để so sánh.";
+        status.textContent = "Không đọc được bảng tổng hợp. Hãy chạy phiên bản schema mới trong Supabase SQL Editor.";
+        return;
+      }
+
+      const rows = result.rows || [];
+      const pre = rows.find(row => row.phase === "pre") || null;
+      const post = rows.find(row => row.phase === "post") || null;
+      const preAverage = setStage("pre", pre);
+      const postAverage = setStage("post", post);
+
+      if (preAverage == null || postAverage == null) {
+        document.getElementById("scoreChange").textContent = "Cần có kết quả ở cả hai lần đo để tính mức thay đổi.";
+      } else {
+        const change = postAverage - preAverage;
+        document.getElementById("scoreChange").textContent = `Thay đổi trung bình: ${change > 0 ? "+" : ""}${change.toFixed(1)} điểm`;
+      }
+
+      const latest = rows.map(row => row.updated_at).filter(Boolean).sort().at(-1);
+      status.textContent = rows.length
+        ? `Đã đồng bộ từ Supabase${latest ? ` · cập nhật ${latest.slice(0, 10)}` : ""}.`
+        : "Chưa có lượt đánh giá được đồng bộ. Người học cần chọn đúng giai đoạn trước khi nộp bài.";
+    }
+
+    loadResearchResults().catch(() => {
+      document.getElementById("researchStatus").textContent = "Không tải được số liệu từ Supabase. Vui lòng thử tải lại trang.";
+    });
+    if (window.AICheckCloud?.configured) window.setInterval(() => loadResearchResults().catch(() => {}), 30000);
+
+    const homeUrl = new URL("../index.html", location.href).href;
+    if (/^https?:/i.test(homeUrl)) {
+      document.getElementById("siteQr").src = `https://api.qrserver.com/v1/create-qr-code/?size=168x168&data=${encodeURIComponent(homeUrl)}`;
+      document.getElementById("siteQr").hidden = false;
+      document.getElementById("qrCaption").textContent = "Quét để mở trang chủ AI CHECK THĐ.";
+    }
   </script>
 </body>
 </html>

@@ -18,16 +18,27 @@
     return guestName;
   }
 
-  async function saveScore({ name, activity, score }) {
+  function getParticipantId() {
+    let participantId = localStorage.getItem("aicheck:participantId");
+    if (!participantId) {
+      participantId = crypto.randomUUID();
+      localStorage.setItem("aicheck:participantId", participantId);
+    }
+    return participantId;
+  }
+
+  async function saveScore({ name, activity, score, phase = null }) {
     if (!client) return { synced: false, reason: "not-configured" };
     const displayName = String(name || "Bạn").trim().slice(0, 24);
-    if (!displayName || !["rubric", "assessment", "practice"].includes(activity) || !Number.isInteger(score) || score < 0 || score > 100) {
+    if (!displayName || !["rubric", "assessment", "practice"].includes(activity) || !Number.isInteger(score) || score < 0 || score > 100 || (activity === "assessment" && !["pre", "post"].includes(phase))) {
       return { synced: false, reason: "invalid-data" };
     }
     try {
       const { error } = await client.from("leaderboard_scores").insert({
+        participant_id: getParticipantId(),
         display_name: displayName,
         activity,
+        phase: activity === "assessment" ? phase : null,
         score
       });
       return error ? { synced: false, reason: "request-failed", error } : { synced: true };
@@ -72,16 +83,19 @@
   async function getResearchSummary() {
     if (!client) return { synced: false, row: null };
     try {
-      const { data, error } = await client.from("research_summary").select("*").eq("id", 1).maybeSingle();
-      return error ? { synced: false, row: null, error } : { synced: true, row: data };
+      const { data, error } = await client
+        .from("research_assessment_summary")
+        .select("phase, participant_count, average_score, good_count, good_rate_pct, updated_at, attempt_count");
+      return error ? { synced: false, rows: [], error } : { synced: true, rows: data || [] };
     } catch (error) {
-      return { synced: false, row: null, error };
+      return { synced: false, rows: [], error };
     }
   }
 
   window.AICheckCloud = {
     configured,
     getDisplayName,
+    getParticipantId,
     saveScore,
     getLeaderboard,
     getResearchSummary

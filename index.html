@@ -9,12 +9,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="site.css">
-  <style>.home-qr{display:flex;align-items:center;gap:12px;margin-top:18px;color:var(--forest);font-size:9px;font-weight:800}.home-qr img{width:74px;height:74px;padding:4px;background:white;border:1px solid var(--line)}</style>
+  <link rel="stylesheet" href="site-nav.css">
+  <style>.home-qr{display:flex;align-items:center;gap:12px;margin-top:18px;color:var(--forest);font-size:9px;font-weight:800}.home-qr img{width:74px;height:74px;padding:4px;background:white;border:1px solid var(--line)}.home-site-header .brand-name{display:none}</style>
 </head>
 <body>
-  <header class="site-header"><div class="header-inner">
+  <header class="site-header home-site-header"><div class="header-inner">
     <a class="brand" href="index.html" aria-label="AI CHECK THĐ - trang chủ"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a>
-    <nav class="site-nav" aria-label="Điều hướng chính"><a href="index.html" aria-current="page">Trang chủ</a><a href="pages/knowledge.html">Kiến thức</a><a href="pages/practice.html">Thực hành</a><a href="pages/assessment.html">Đánh giá</a><a href="pages/leaderboard.html">BXH</a><a href="pages/research.html">Nghiên cứu</a><a href="pages/resources.html">Tài nguyên</a></nav>
+    <button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng chính"><a href="index.html" aria-current="page">Trang chủ</a><a href="pages/knowledge.html">Kiến thức</a><a href="pages/practice.html">Thực hành</a><a href="pages/assessment.html">Đánh giá</a><a href="pages/leaderboard.html">BXH</a><a href="pages/research.html">Nghiên cứu</a><a href="pages/resources.html">Tài nguyên</a></nav>
   </div></header>
   <main>
     <section class="home-hero"><div class="home-copy"><div class="home-copy-inner">
@@ -31,7 +32,7 @@
         <a class="portal-link" href="pages/practice.html"><small>02 / THỬ</small><strong>Thực hành & thư viện ↗</strong><span>Luyện tình huống ngẫu nhiên và xem lời giải có nguồn.</span></a>
         <a class="portal-link" href="pages/assessment.html"><small>03 / ĐO</small><strong>Đánh giá & rubric ↗</strong><span>15 câu hỏi, điểm số theo kỹ năng, bốn mức kết quả.</span></a>
         <a class="portal-link" href="pages/leaderboard.html"><small>04 / GHI NHẬN</small><strong>Bảng xếp hạng ↗</strong><span>Theo dõi riêng thành tích rubric, bài đo và thực hành.</span></a>
-        <a class="portal-link" href="pages/research.html"><small>05 / NGHIÊN CỨU</small><strong>Kết quả & đề tài ↗</strong><span>Nhập số liệu trước–sau và xem thông tin nghiên cứu.</span></a>
+        <a class="portal-link" href="pages/research.html"><small>05 / NGHIÊN CỨU</small><strong>Kết quả & đề tài ↗</strong><span>Xem tự động số người tham gia và kết quả trước–sau.</span></a>
         <a class="portal-link" href="pages/resources.html"><small>06 / TÀI NGUYÊN</small><strong>Forms, infographic, video ↗</strong><span>Kết nối biểu mẫu và sản phẩm truyền thông của nhóm.</span></a>
       </nav>
     </div>
@@ -45,5 +46,6 @@
       document.querySelector(".home-content").append(home);
     }
   </script>
+  <script src="site-nav.js"></script>
 </body>
 </html>

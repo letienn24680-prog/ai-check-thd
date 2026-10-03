@@ -33,28 +33,15 @@ Publishable/anon key được phép nằm trong website khi RLS đã bật. Khô
 
 Khi sửa website sau này, cập nhật repository; Netlify sẽ tự deploy lại.
 
-## 4. Cập nhật kết quả nghiên cứu đã duyệt
+## 4. Kết quả nghiên cứu tự động
 
-Bảng `research_summary` chỉ cho phép đọc công khai; website không có quyền ghi bảng này. Sau khi giáo viên duyệt số liệu, cập nhật một dòng qua Supabase SQL Editor:
+Sau khi thêm ID người tham gia và giai đoạn đo, chạy lại toàn bộ `supabase/schema.sql` trong SQL Editor. Schema sẽ thêm các cột còn thiếu và tạo view `research_assessment_summary` cho trang Nghiên cứu.
 
-```sql
-insert into public.research_summary (
-  id, sample_size, ai_use_pct, verify_often_pct,
-  before_mean, after_mean, good_rate_pct, updated_at
-) values (
-  1, 0, 0, 0, 0, 0, 0, now()
-)
-on conflict (id) do update set
-  sample_size = excluded.sample_size,
-  ai_use_pct = excluded.ai_use_pct,
-  verify_often_pct = excluded.verify_often_pct,
-  before_mean = excluded.before_mean,
-  after_mean = excluded.after_mean,
-  good_rate_pct = excluded.good_rate_pct,
-  updated_at = now();
-```
+Trước mỗi bài đánh giá 15 câu, học sinh phải chọn **Trước can thiệp** hoặc **Sau can thiệp**. Trang Nghiên cứu đọc ID ẩn danh, lấy kết quả mới nhất của mỗi ID ở từng giai đoạn, rồi tự tính số người, số lượt, điểm trung bình và tỷ lệ đạt Khá/Giỏi. Trang tự tải lại dữ liệu định kỳ.
 
-Thay các số 0 bằng số liệu tổng hợp đã được xác minh. Không nhập tên, lớp, email hoặc thông tin định danh học sinh.
+Để so sánh cùng một nhóm, học sinh cần làm cả hai lần trên cùng trình duyệt/thiết bị và không xóa dữ liệu trang. ID chỉ đại diện cho một trình duyệt, không xác minh danh tính thật: một người đổi máy có thể bị tính thành ID mới. Các bài nộp cũ chưa có giai đoạn `pre`/`post` không được dùng trong so sánh này. Số liệu sử dụng AI hoặc thường xuyên kiểm chứng từ Google Forms không được suy ra từ điểm đánh giá; cần tổng hợp riêng nếu đề tài muốn báo cáo các tỷ lệ đó.
+
+Không nhập tên, lớp, email hoặc thông tin định danh học sinh. Bảng điểm công khai vẫn có thể bị giả mạo vì kết quả được gửi từ trình duyệt.
 
 ## Lưu ý về BXH
 
