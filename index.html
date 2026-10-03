@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#163d35">
+  <meta name="description" content="AI CHECK THĐ: trạm học tập, thực hành và đánh giá năng lực kiểm chứng thông tin AI.">
+  <title>AI CHECK THĐ | Trang chủ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <style>.home-qr{display:flex;align-items:center;gap:12px;margin-top:18px;color:var(--forest);font-size:9px;font-weight:800}.home-qr img{width:74px;height:74px;padding:4px;background:white;border:1px solid var(--line)}</style>
+</head>
+<body>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="index.html" aria-label="AI CHECK THĐ - trang chủ"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a>
+    <nav class="site-nav" aria-label="Điều hướng chính"><a href="index.html" aria-current="page">Trang chủ</a><a href="pages/knowledge.html">Kiến thức</a><a href="pages/practice.html">Thực hành</a><a href="pages/assessment.html">Đánh giá</a><a href="pages/leaderboard.html">BXH</a><a href="pages/research.html">Nghiên cứu</a><a href="pages/resources.html">Tài nguyên</a></nav>
+  </div></header>
+  <main>
+    <section class="home-hero"><div class="home-copy"><div class="home-copy-inner">
+      <p class="eyebrow" style="color:var(--lime)">THPT TRẦN HƯNG ĐẠO · NGHIÊN CỨU KHOA HỌC</p>
+      <h1 class="home-title">AI CHECK<br><span>THĐ.</span></h1>
+      <p><strong>AI có thể trả lời. Bạn cần biết cách kiểm chứng.</strong> Không gian học tập giúp học sinh dừng lại, tìm bằng chứng và dùng thông tin AI có trách nhiệm.</p>
+      <div class="home-actions"><a class="button button-lime" href="pages/knowledge.html">Bắt đầu kiểm chứng →</a><a class="button button-outline" href="pages/assessment.html">Làm bài đánh giá ↗</a></div>
+      <div class="home-warning">Đừng tin ngay – Hãy kiểm chứng trước khi sử dụng.</div>
+    </div></div></section>
+    <div class="home-content">
+      <header class="page-header"><div><p class="eyebrow">CHỌN TRẠM</p><h2 class="page-title">Đi thẳng đến nội dung bạn cần.</h2><p class="page-lead">Mỗi khu vực là một trang riêng, có thể mở trực tiếp và quay lại trang chủ từ menu.</p></div><span class="page-count">HỌC · THỬ · ĐO</span></header>
+      <nav class="portal-grid" aria-label="Các trang chức năng">
+        <a class="portal-link" href="pages/knowledge.html"><small>01 / HỌC</small><strong>Kiến thức & 5 bước ↗</strong><span>Nhận diện rủi ro và làm theo quy trình kiểm chứng.</span></a>
+        <a class="portal-link" href="pages/practice.html"><small>02 / THỬ</small><strong>Thực hành & thư viện ↗</strong><span>Luyện tình huống ngẫu nhiên và xem lời giải có nguồn.</span></a>
+        <a class="portal-link" href="pages/assessment.html"><small>03 / ĐO</small><strong>Đánh giá & rubric ↗</strong><span>15 câu hỏi, điểm số theo kỹ năng, bốn mức kết quả.</span></a>
+        <a class="portal-link" href="pages/leaderboard.html"><small>04 / GHI NHẬN</small><strong>Bảng xếp hạng ↗</strong><span>Theo dõi riêng thành tích rubric, bài đo và thực hành.</span></a>
+        <a class="portal-link" href="pages/research.html"><small>05 / NGHIÊN CỨU</small><strong>Kết quả & đề tài ↗</strong><span>Nhập số liệu trước–sau và xem thông tin nghiên cứu.</span></a>
+        <a class="portal-link" href="pages/resources.html"><small>06 / TÀI NGUYÊN</small><strong>Forms, infographic, video ↗</strong><span>Kết nối biểu mẫu và sản phẩm truyền thông của nhóm.</span></a>
+      </nav>
+    </div>
+  </main>
+  <footer class="site-footer">AI CHECK THĐ · Sản phẩm phục vụ nghiên cứu khoa học · THPT Trần Hưng Đạo</footer>
+  <script>
+    if (/^https?:/i.test(location.href)) {
+      const home = document.createElement("div");
+      home.className = "home-qr";
+      home.innerHTML = `<img alt="QR truy cập AI CHECK THĐ" src="https://api.qrserver.com/v1/create-qr-code/?size=112x112&data=${encodeURIComponent(location.href)}"><span>QUÉT ĐỂ TRUY CẬP WEBSITE</span>`;
+      document.querySelector(".home-content").append(home);
+    }
+  </script>
+</body>
+</html>
