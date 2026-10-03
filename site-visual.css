@@ -1,0 +1,24 @@
+body{background-color:#edf3ef;background-image:repeating-linear-gradient(135deg,transparent 0 42px,rgba(22,61,53,.04) 43px,transparent 44px),linear-gradient(122deg,#f7faf4 0%,#dcece6 34%,#eff0df 66%,#d9e8e6 100%);background-size:42px 42px,260% 260%;background-position:0 0,0% 50%;background-repeat:repeat,no-repeat;background-attachment:fixed;animation:background-drift 18s ease-in-out infinite alternate}
+.site-header{background:rgba(248,250,246,.92);box-shadow:0 4px 18px rgba(22,61,53,.035)}
+.site-nav a{transition:background .2s,color .2s,transform .2s}
+.site-nav a:hover{transform:translateY(-1px)}
+.page-shell{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,0) 280px)}
+.page-header{animation:soft-rise .42s ease-out both}
+.panel,.stage-card,.chart-box,.fact,.resource-card,.risk-card,.step-card,.portal-link,.rubric-card{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.panel:hover,.stage-card:hover,.chart-box:hover,.resource-card:hover,.risk-card:hover,.step-card:hover,.portal-link:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(19,58,48,.08);border-color:#b7d0bd}
+.home-hero{position:relative;isolation:isolate;overflow:hidden;background-size:cover;background-position:center 44%}
+.home-hero::after{content:"";position:absolute;z-index:-1;top:0;right:0;width:48%;height:100%;background-image:linear-gradient(rgba(217,242,108,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(217,242,108,.2) 1px,transparent 1px);background-size:38px 38px;opacity:.58;animation:grid-drift 18s linear infinite;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%)}
+.home-copy-inner{animation:soft-rise .55s ease-out both}
+.portal-link:nth-child(2),.stage-card:nth-child(2){animation-delay:.06s}
+.portal-link:nth-child(3){animation-delay:.12s}
+.portal-link:nth-child(4){animation-delay:.18s}
+.portal-link:nth-child(5){animation-delay:.24s}
+.portal-link:nth-child(6){animation-delay:.3s}
+.portal-link{animation:soft-rise .42s ease-out both}
+.button{transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.button:hover{box-shadow:0 6px 16px rgba(16,45,40,.14)}
+@keyframes soft-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes background-drift{from{background-position:0 0,0% 50%}to{background-position:0 0,100% 50%}}
+@keyframes grid-drift{from{background-position:0 0,0 0}to{background-position:38px 38px,-38px 0}}
+@media(max-width:680px){body{background-attachment:scroll;background-size:32px 32px,320% 320%}.home-hero::after{width:72%;opacity:.42;background-size:31px 31px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 68%);mask-image:linear-gradient(90deg,transparent,#000 68%)}}
+@media(prefers-reduced-motion:reduce){body{animation:background-drift 55s ease-in-out infinite alternate!important}.home-hero::after{animation:grid-drift 55s linear infinite!important}.page-header,.home-copy-inner,.portal-link{animation:none!important}.panel,.stage-card,.chart-box,.fact,.resource-card,.risk-card,.step-card,.portal-link,.rubric-card,.site-nav a,.button{transition:none!important}}
