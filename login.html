@@ -82,42 +82,82 @@
 
     <a href="index.html" class="guest-btn" id="guestBtn">Tiếp tục với tư cách Khách (Không cần tài khoản) →</a>
 
-    <a href="#" class="support-link" id="forgotPass" onclick="handleForgotPassword(); return false;">Quên mật khẩu?</a>
+    <a href="#" class="support-link" id="forgotPass">Quên mật khẩu?</a>
     
     <!-- Form hỗ trợ ẩn -->
     <div id="supportForm" class="hidden">
-      <hr style="margin:20px 0;border:0;border-top:1px solid var(--line)">
-      <p style="margin-bottom:10px;font-weight:700;color:var(--forest);font-size:12px">Gửi yêu cầu đặt lại mật khẩu cho Admin:</p>
-      <div class="form-group">
-        <label for="supportName">Tên hoặc biệt danh của bạn</label>
-        <input type="text" id="supportName" placeholder="Ví dụ: Nguyễn Văn A">
-      </div>
-      <div class="form-group">
-        <label for="supportEmail">Email đã đăng ký</label>
-        <input type="email" id="supportEmail" placeholder="email@example.com">
-      </div>
-      <button type="button" class="button button-outline" id="sendSupport" style="width:100%;font-size:11px">Gửi yêu cầu hỗ trợ →</button>
-    </div>
+  <hr style="margin:20px 0;border:0;border-top:1px solid var(--line)">
+  <p style="margin-bottom:10px;font-weight:700;color:var(--forest);font-size:12px">Xác minh đổi mật khẩu:</p>
+
+  <!-- Bước 1: Nhập Email -->
+  <div class="form-group" id="stepEmailGroup">
+    <label for="supportEmail">Email đã đăng ký</label>
+    <input type="email" id="supportEmail" placeholder="email@example.com">
+    <button type="button" class="button button-outline" id="btnSendOTP" onclick="sendOTPCode()" style="width:100%;font-size:11px;margin-top:8px">Gửi mã xác minh về Email</button>
   </div>
+
+  <!-- Bước 2: Nhập Mã OTP (Ẩn lúc đầu) -->
+  <div class="form-group" id="stepOTPGroup" style="display: none; margin-top: 10px;">
+    <label for="supportOTP">Mã xác minh (OTP 6 số)</label>
+    <input type="text" id="supportOTP" placeholder="Nhập mã 6 số từ Gmail">
+    <button type="button" class="button button-outline" id="btnVerifyOTP" onclick="verifyOTPCode()" style="width:100%;font-size:11px;margin-top:8px">Xác minh & Đổi mật khẩu</button>
+  </div>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="cloud.js"></script>
   <script>
-    async function handleForgotPassword() {
-  const email = prompt("Nhập email tài khoản của bạn để nhận liên kết đặt lại mật khẩu:");
-  
-  if (!email || !email.trim()) return;
+    // 1. Hàm gửi mã OTP về Gmail
+async function sendOTPCode() {
+  const emailInput = document.getElementById('supportEmail');
+  const email = emailInput ? emailInput.value.trim() : '';
 
-  // Gọi API Supabase gửi mail tự động
-  const { data, error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-    redirectTo: 'https://ai-check-thd.netlify.app/reset-password.html',
+  if (!email) {
+    alert("Vui lòng nhập Email đã đăng ký!");
+    return;
+  }
+
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+  if (error) {
+    alert("Lỗi gửi mã: " + error.message);
+  } else {
+    alert("Mã xác minh đã được gửi về Gmail của bạn!");
+    document.getElementById('stepOTPGroup').style.display = 'block';
+  }
+}
+
+// 2. Hàm xác minh mã OTP
+async function verifyOTPCode() {
+  const email = document.getElementById('supportEmail').value.trim();
+  const otp = document.getElementById('supportOTP').value.trim();
+
+  if (!otp) {
+    alert("Vui lòng nhập mã OTP!");
+    return;
+  }
+
+  const { data, error } = await supabase.auth.verifyOtp({
+    email: email,
+    token: otp,
+    type: 'recovery'
   });
 
   if (error) {
-    alert("Không thể gửi email: " + error.message);
+    alert("Mã OTP không chính xác hoặc đã hết hạn!");
   } else {
-    alert("Hệ thống đã gửi email khôi phục mật khẩu! Vui lòng kiểm tra hộp thư (hoặc thư rác/spam).");
+    alert("Xác minh thành công! Đang chuyển đến trang đặt lại mật khẩu...");
+    window.location.href = "reset-password.html";
+  }
+}
+
+  if (verifyError) {
+    alert("Mã xác minh không chính xác hoặc đã hết hạn!");
+  } else {
+    alert("Xác minh thành công! Đang chuyển đến trang đặt lại mật khẩu...");
+    // Chuyển hướng sang trang reset-password.html
+    window.location.href = "reset-password.html";
   }
 }
     const authForm = document.getElementById('authForm');
