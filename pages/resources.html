@@ -24,7 +24,9 @@
     <div class="resource-grid"><a class="resource-card" href="knowledge.html"><b>CẨM NANG 5 BƯỚC ↗</b><span>Quy trình kiểm chứng và các dấu hiệu cần chú ý.</span></a><a class="resource-card" href="assessment.html"><b>PHIẾU ĐÁNH GIÁ ↗</b><span>Bài đo năng lực 20 câu, rubric 100 điểm.</span></a><a class="resource-card" href="practice.html"><b>BỘ CÂU HỎI THỰC HÀNH ↗</b><span>30 tình huống theo ba nhóm chủ đề.</span></a><a class="resource-card" href="assessment.html#rubric"><b>RUBRIC CHẤM ĐIỂM ↗</b><span>Tiêu chí, trọng số và bốn mức kết quả.</span></a></div>
   </main>
   <footer class="site-footer">AI CHECK THĐ · Tài nguyên cho học sinh và nhóm nghiên cứu</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
+  <script src="../cloud.js"></script>
   <script>
     const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(`aicheck:${key}`))??fallback}catch{return fallback}};
     function updateForm(url){const box=document.getElementById("formEmbed"),frame=document.getElementById("formFrame");box.hidden=!url;if(!url)return;document.getElementById("openForm").href=url;if(/^https:\/\/docs\.google\.com\/forms\//i.test(url)){const embed=new URL(url);embed.searchParams.set("embedded","true");frame.src=embed.href;frame.hidden=false}else{frame.removeAttribute("src");frame.hidden=true}}

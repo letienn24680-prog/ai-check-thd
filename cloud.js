@@ -1,8 +1,170 @@
 (() => {
   const config = window.AICHECK_CONFIG || {};
   const sdk = window.supabase;
-  const configured = Boolean(config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient);
+    const configured = Boolean(config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient);
   const client = configured ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null;
+
+  // --- HỆ THỐNG OFFLINE QUEUE ---
+  function getSyncQueue() {
+    try { return JSON.parse(localStorage.getItem("aicheck:sync_queue") || "[]"); } catch { return []; }
+  }
+  function addToSyncQueue(data) {
+    const queue = getSyncQueue();
+    queue.push({ ...data, queued_at: new Date().toISOString() });
+    localStorage.setItem("aicheck:sync_queue", JSON.stringify(queue));
+  }
+  async function processSyncQueue() {
+    if (!client || !navigator.onLine) return;
+    const queue = getSyncQueue();
+    if (queue.length === 0) return;
+
+    const remaining = [];
+    for (const item of queue) {
+      try {
+        const { error } = await client.from("leaderboard_scores").insert({
+          participant_id: item.participant_id,
+          display_name: item.display_name,
+          activity: item.activity,
+          phase: item.phase,
+          score: item.score,
+          created_at: item.queued_at // Giữ nguyên thời gian lúc làm bài
+        });
+        if (error) throw error;
+      } catch (e) {
+        remaining.push(item);
+      }
+    }
+    localStorage.setItem("aicheck:sync_queue", JSON.stringify(remaining));
+  }
+
+  // --- HỆ THỐNG AUTH ---
+  async function signUp(email, password, displayName) {
+    if (!client) return { error: { message: "Chưa cấu hình Supabase" } };
+    try {
+      const { data, error } = await client.auth.signUp({
+        email,
+        password,
+        options: { data: { display_name: displayName } }
+      });
+      if (!error && displayName) {
+        try { localStorage.setItem("aicheck:player", JSON.stringify(displayName.trim().slice(0, 24))); } catch {}
+      }
+      return { data, error };
+    } catch (err) {
+      return { error: { message: err.message || "Lỗi đăng ký" } };
+    }
+  }
+
+  async function signIn(email, password) {
+    if (!client) return { error: { message: "Chưa cấu hình Supabase" } };
+    try {
+      const { data, error } = await client.auth.signInWithPassword({ email, password });
+      if (!error && data?.user) {
+        const name = data.user.user_metadata?.display_name || data.user.email?.split("@")[0] || "";
+        if (name) {
+          try { localStorage.setItem("aicheck:player", JSON.stringify(name.trim().slice(0, 24))); } catch {}
+        }
+        processSyncQueue(); // Thử sync ngay sau khi login
+      }
+      return { data, error };
+    } catch (err) {
+      return { error: { message: err.message || "Lỗi đăng nhập" } };
+    }
+  }
+
+  async function signOut() {
+    if (!client) return;
+    try { await client.auth.signOut(); } catch {}
+    location.reload();
+  }
+
+  async function getUser() {
+    if (!client) return null;
+    try {
+      const { data, error } = await client.auth.getUser();
+      if (error || !data) return null;
+      return data.user;
+    } catch {
+      return null;
+    }
+  }
+
+  function getLocalSupportRequests() {
+    try { return JSON.parse(localStorage.getItem("aicheck:local_support_requests") || "[]"); } catch { return []; }
+  }
+
+  function saveLocalSupportRequest(item) {
+    const list = getLocalSupportRequests();
+    list.unshift(item);
+    localStorage.setItem("aicheck:local_support_requests", JSON.stringify(list));
+  }
+
+  async function sendSupportRequest(email, name, reason) {
+    const localItem = {
+      id: "local_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+      user_email: String(email || "").trim(),
+      display_name: String(name || "").trim(),
+      reason: String(reason || "").trim(),
+      status: "pending",
+      created_at: new Date().toISOString()
+    };
+
+    if (!client) {
+      saveLocalSupportRequest(localItem);
+      return { data: localItem, error: null, local: true };
+    }
+
+    try {
+      const { data, error } = await client.from("support_requests").insert({
+        user_email: localItem.user_email,
+        display_name: localItem.display_name,
+        reason: localItem.reason
+      });
+      if (error) {
+        // Fallback lưu cục bộ nếu bảng chưa tạo trên Supabase
+        saveLocalSupportRequest(localItem);
+        return { data: localItem, error: null, local: true };
+      }
+      return { data, error: null };
+    } catch (err) {
+      saveLocalSupportRequest(localItem);
+      return { data: localItem, error: null, local: true };
+    }
+  }
+
+  async function resolveSupportRequest(id) {
+    // Xử lý local
+    const localList = getLocalSupportRequests();
+    const found = localList.find(r => r.id === id);
+    if (found) {
+      found.status = "resolved";
+      localStorage.setItem("aicheck:local_support_requests", JSON.stringify(localList));
+      return { success: true };
+    }
+    // Xử lý Supabase
+    if (client) {
+      try {
+        const { error } = await client.from("support_requests").update({ status: "resolved" }).eq("id", id);
+        return { success: !error, error };
+      } catch (err) {
+        return { success: false, error: err };
+      }
+    }
+    return { success: false };
+  }
+
+  function isAdmin(user) {
+    if (!user || !user.email) return false;
+    const email = user.email.toLowerCase();
+    const adminEmails = [
+      "admin@aicheck.thd",
+      "admin@thd.edu.vn",
+      "giaovien@thd.edu.vn",
+      "kaigegm@gmail.com",
+      "thd.aicheck@gmail.com"
+    ];
+    return adminEmails.includes(email) || user.user_metadata?.role === "admin";
+  }
 
   function getDisplayName(fallback = "") {
     let savedName = "";
@@ -75,7 +237,7 @@
     if (!displayName || !["rubric", "assessment", "practice"].includes(activity) || !Number.isInteger(score) || score < 0 || score > 100 || (activity === "assessment" && !["pre", "post"].includes(phase))) {
       return { synced: false, reason: "invalid-data" };
     }
-    try {
+        try {
       const { error } = await client.from("leaderboard_scores").insert({
         participant_id: getParticipantId(),
         display_name: displayName,
@@ -83,11 +245,20 @@
         phase: activity === "assessment" ? phase : null,
         score
       });
-      return error ? { synced: false, reason: "request-failed", error } : { synced: true };
+      if (error) {
+        addToSyncQueue({ participant_id: getParticipantId(), display_name: displayName, activity, phase, score });
+        return { synced: false, reason: "request-failed", offline: true };
+      }
+      return { synced: true };
     } catch (error) {
-      return { synced: false, reason: "request-failed", error };
+      addToSyncQueue({ participant_id: getParticipantId(), display_name: displayName, activity, phase, score });
+      return { synced: false, reason: "request-failed", error, offline: true };
     }
   }
+
+  // Tự động sync khi online trở lại
+  window.addEventListener("online", processSyncQueue);
+  if (configured) setTimeout(processSyncQueue, 2000);
 
   async function getLeaderboard(activity) {
     if (!client) return { synced: false, rows: [] };
@@ -150,6 +321,7 @@
 
   window.AICheckCloud = {
     configured,
+    client,
     getDisplayName,
     getPlayerNameState,
     savePlayerName,
@@ -157,6 +329,16 @@
     saveScore,
     getLeaderboard,
     subscribeLeaderboard,
-    getResearchSummary
+    getResearchSummary,
+    // Auth & Quản trị
+    signUp,
+    signIn,
+    signOut,
+    getUser,
+    isAdmin,
+    sendSupportRequest,
+    resolveSupportRequest,
+    getLocalSupportRequests,
+    processSyncQueue
   };
 })();

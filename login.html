@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#163d35">
+  <title>Đăng nhập | AI CHECK THĐ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <style>
+    body{display:grid;place-items:center;min-height:100vh;background-color:var(--forest);color:white;padding:20px 10px}
+    .login-card{width:min(420px,95%);padding:32px 28px;background:white;color:var(--ink);border-radius:12px;box-shadow:var(--shadow)}
+    .login-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .back-home{color:var(--muted);font-size:11px;font-weight:700;text-decoration:none}
+    .back-home:hover{color:var(--forest);text-decoration:underline}
+    .brand-badge{display:flex;align-items:center;gap:10px}
+    .login-card h1{margin:0 0 6px;font:700 24px "Space Grotesk",sans-serif;color:var(--forest)}
+    .login-card p{margin:0 0 20px;font-size:12px;color:var(--muted)}
+    .tabs{display:flex;gap:16px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+    .tab{padding:8px 0;border:0;background:none;font-weight:700;font-size:13px;color:var(--muted);cursor:pointer;position:relative}
+    .tab.active{color:var(--forest)}
+    .tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--forest)}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;margin-bottom:6px;font-size:11px;font-weight:700;color:var(--muted)}
+    .form-group input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;font-size:13px}
+    .form-group input:focus{border-color:var(--forest);outline:2px solid #d9f26c}
+    .login-btn{width:100%;margin-top:8px;padding:12px;border:0;border-radius:6px;background:var(--forest);color:white;font-weight:700;font-size:13px;cursor:pointer;transition:background .2s}
+    .login-btn:hover{background:var(--leaf)}
+    .login-btn:disabled{opacity:0.6;cursor:not-allowed}
+    .guest-btn{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:6px;background:#f8faf8;color:var(--forest);font-weight:700;font-size:12px;cursor:pointer;text-align:center;text-decoration:none;display:block}
+    .guest-btn:hover{background:#eaf2e8;border-color:#b9d0ba}
+    .support-link{display:block;margin-top:16px;text-align:center;font-size:11px;color:var(--muted);text-decoration:none}
+    .support-link:hover{text-decoration:underline}
+    #errorMsg{margin-top:12px;font-size:12px;color:#c84f36;text-align:center;min-height:18px}
+    .hidden{display:none}
+    .already-logged{padding:14px;background:#edf5eb;border-radius:8px;border:1px solid #c9decb;margin-bottom:18px;font-size:12px;color:#245437}
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-top">
+      <div class="brand-badge">
+        <div style="width:32px;height:32px;background:var(--lime);border-radius:8px;display:grid;place-items:center;font:700 12px 'Space Grotesk';color:var(--forest)">AI</div>
+        <span style="font:700 14px 'Space Grotesk';color:var(--forest)">AI CHECK THĐ</span>
+      </div>
+      <a href="index.html" class="back-home">← Về Trang chủ</a>
+    </div>
+
+    <div id="alreadyLoggedBox" class="already-logged hidden">
+      <strong>Bạn đã đăng nhập:</strong> <span id="currentLoggedUser"></span>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <a href="index.html" class="button button-dark" style="font-size:10px;flex:1">Vào Trang chủ →</a>
+        <button type="button" class="button button-outline" id="btnLogoutCurrent" style="font-size:10px">Đăng xuất</button>
+      </div>
+    </div>
+
+    <h1 id="formTitle">Xin chào!</h1>
+    <p id="formDesc">Đăng nhập tài khoản để đồng bộ điểm số và kết quả khảo sát.</p>
+    
+    <div class="tabs">
+      <button class="tab active" id="tabLogin" type="button">Đăng nhập</button>
+      <button class="tab" id="tabRegister" type="button">Đăng ký mới</button>
+    </div>
+
+    <form id="authForm">
+      <div class="form-group" id="nameGroup" style="display:none">
+        <label for="displayName">Biệt danh (hiển thị trên BXH)</label>
+        <input type="text" id="displayName" placeholder="Ví dụ: Sao Xanh 12A5" maxlength="24">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="name@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password" minlength="6">
+      </div>
+      <button type="submit" class="login-btn" id="submitBtn">Đăng nhập</button>
+      <div id="errorMsg" aria-live="polite"></div>
+    </form>
+
+    <a href="index.html" class="guest-btn" id="guestBtn">Tiếp tục với tư cách Khách (Không cần tài khoản) →</a>
+
+    <a href="#" class="support-link" id="forgotPass">Quên mật khẩu? Gửi yêu cầu hỗ trợ</a>
+    
+    <!-- Form hỗ trợ ẩn -->
+    <div id="supportForm" class="hidden">
+      <hr style="margin:20px 0;border:0;border-top:1px solid var(--line)">
+      <p style="margin-bottom:10px;font-weight:700;color:var(--forest);font-size:12px">Gửi yêu cầu đặt lại mật khẩu cho Admin:</p>
+      <div class="form-group">
+        <label for="supportName">Tên hoặc biệt danh của bạn</label>
+        <input type="text" id="supportName" placeholder="Ví dụ: Nguyễn Văn A">
+      </div>
+      <div class="form-group">
+        <label for="supportEmail">Email đã đăng ký</label>
+        <input type="email" id="supportEmail" placeholder="email@example.com">
+      </div>
+      <button type="button" class="button button-outline" id="sendSupport" style="width:100%;font-size:11px">Gửi yêu cầu hỗ trợ →</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="cloud.js"></script>
+  <script>
+    const authForm = document.getElementById('authForm');
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const nameGroup = document.getElementById('nameGroup');
+    const formTitle = document.getElementById('formTitle');
+    const formDesc = document.getElementById('formDesc');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const alreadyLoggedBox = document.getElementById('alreadyLoggedBox');
+    const currentLoggedUser = document.getElementById('currentLoggedUser');
+    const btnLogoutCurrent = document.getElementById('btnLogoutCurrent');
+    let isLogin = true;
+
+    // Kiểm tra trạng thái đã đăng nhập
+    async function checkExistingAuth() {
+      if (typeof window.AICheckCloud?.getUser !== 'function') return;
+      const user = await window.AICheckCloud.getUser();
+      if (user) {
+        alreadyLoggedBox.classList.remove('hidden');
+        currentLoggedUser.textContent = user.user_metadata?.display_name || user.email;
+      }
+    }
+    checkExistingAuth();
+
+    btnLogoutCurrent.onclick = async () => {
+      await window.AICheckCloud.signOut();
+    };
+
+    tabLogin.onclick = () => {
+      isLogin = true;
+      tabLogin.classList.add('active');
+      tabRegister.classList.remove('active');
+      nameGroup.style.display = 'none';
+      formTitle.textContent = 'Mừng bạn quay lại';
+      formDesc.textContent = 'Đăng nhập tài khoản để đồng bộ điểm số và kết quả khảo sát.';
+      submitBtn.textContent = 'Đăng nhập';
+      errorMsg.textContent = '';
+    };
+
+    tabRegister.onclick = () => {
+      isLogin = false;
+      tabRegister.classList.add('active');
+      tabLogin.classList.remove('active');
+      nameGroup.style.display = 'block';
+      formTitle.textContent = 'Tạo tài khoản mới';
+      formDesc.textContent = 'Tạo tài khoản để lưu thành tích vào BXH toàn trường.';
+      submitBtn.textContent = 'Đăng ký ngay';
+      errorMsg.textContent = '';
+    };
+
+    authForm.onsubmit = async (e) => {
+      e.preventDefault();
+      errorMsg.style.color = 'var(--forest)';
+      errorMsg.textContent = 'Đang xử lý, vui lòng chờ…';
+      submitBtn.disabled = true;
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      
+      if (isLogin) {
+        const { data, error } = await window.AICheckCloud.signIn(email, password);
+        if (error) {
+          errorMsg.style.color = '#c84f36';
+          errorMsg.textContent = 'Lỗi: ' + (error.message || error);
+          submitBtn.disabled = false;
+        } else {
+          errorMsg.style.color = '#28744f';
+          errorMsg.textContent = 'Đăng nhập thành công! Đang chuyển hướng…';
+          setTimeout(() => {
+            const redirect = localStorage.getItem('aicheck:redirectAfterLogin');
+            localStorage.removeItem('aicheck:redirectAfterLogin');
+            location.href = redirect || 'index.html';
+          }, 500);
+        }
+      } else {
+        const displayName = document.getElementById('displayName').value.trim();
+        if (!displayName) {
+          errorMsg.style.color = '#c84f36';
+          errorMsg.textContent = 'Vui lòng nhập biệt danh để hiển thị trên BXH';
+          submitBtn.disabled = false;
+          return;
+        }
+        const { data, error } = await window.AICheckCloud.signUp(email, password, displayName);
+        if (error) {
+          errorMsg.style.color = '#c84f36';
+          errorMsg.textContent = 'Lỗi: ' + (error.message || error);
+          submitBtn.disabled = false;
+        } else {
+          errorMsg.style.color = '#28744f';
+          errorMsg.textContent = 'Đăng ký thành công! Hãy đăng nhập với thông tin vừa tạo.';
+          isLogin = true;
+          tabLogin.click();
+          submitBtn.disabled = false;
+        }
+      }
+    };
+
+    document.getElementById('forgotPass').onclick = (e) => {
+      e.preventDefault();
+      document.getElementById('supportForm').classList.toggle('hidden');
+    };
+
+    document.getElementById('sendSupport').onclick = async () => {
+      const email = document.getElementById('supportEmail').value.trim();
+      const name = document.getElementById('supportName').value.trim();
+      if (!email) return alert('Vui lòng nhập email của bạn');
+      
+      const res = await window.AICheckCloud.sendSupportRequest(email, name, 'Yêu cầu đặt lại mật khẩu');
+      if (res && res.error && !res.local) {
+        alert('Lỗi: ' + (res.error.message || res.error));
+      } else {
+        alert('Yêu cầu hỗ trợ của bạn đã được ghi nhận thành công! Admin sẽ hỗ trợ giải quyết sớm.');
+        document.getElementById('supportForm').classList.add('hidden');
+        document.getElementById('supportEmail').value = '';
+        document.getElementById('supportName').value = '';
+      }
+    };
+  </script>
+</body>
+</html>

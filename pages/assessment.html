@@ -11,32 +11,15 @@
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
   <style>
-    .phase-picker{margin:12px 0;padding:11px;background:#eef4eb;border:1px solid var(--line);border-radius:4px}
-    .phase-picker[hidden]{display:none}
-    .phase-picker p{margin:0 0 8px;color:#53675b;font-size:10px}
-    .phase-options{display:flex;gap:7px;flex-wrap:wrap}
-    .phase-button{padding:8px 11px;border:1px solid #cbd9cb;border-radius:4px;background:white;color:#3c5848;font-size:10px;font-weight:800}
-    .phase-button[aria-pressed="true"]{background:var(--forest);border-color:var(--forest);color:white}
-  </style>
-  <style>
-    .identity-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;margin:0 0 14px;padding:14px 16px;background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:8px}
-    .identity-row .form-row{max-width:280px}
-    .name-cooldown{grid-column:1/-1;margin:0;color:var(--muted);font-size:10px}
-    .identity-row input[readonly]{background:#f0f3ef;color:#68786d}
-    .identity-row .button:disabled{opacity:.58;cursor:not-allowed}
-    #syncStatus{min-height:16px;margin:0 0 14px;padding-left:3px}
-    .assessment-layout{display:grid;gap:14px;max-width:920px;margin:0 auto}
-    .quiz-card{position:relative;overflow:hidden;padding:clamp(18px,4vw,34px);background:linear-gradient(145deg,#fff 0%,#fbfdf9 100%);border:1px solid #dce7dc;border-radius:12px;box-shadow:0 18px 48px rgba(16,45,40,.09)}
-    .quiz-card::before{position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,var(--lime),#55a77a,#276b50);content:""}
-    .mode-row{display:flex;gap:6px;width:max-content;max-width:100%;margin-bottom:21px;padding:4px;background:#edf3ed;border:1px solid #e1e9df;border-radius:8px}
-    .mode-button{min-height:38px;padding:8px 13px;border:1px solid transparent;border-radius:6px;background:transparent;color:#52645a;font-size:10px;font-weight:800;transition:background .18s,color .18s,box-shadow .18s}
-    .mode-button.active{background:var(--forest);color:white;box-shadow:0 4px 10px rgba(16,45,40,.16)}
-    .mode-button:focus-visible,.phase-button:focus-visible,.choice:focus-visible{outline:3px solid #e6a34d;outline-offset:2px}
-    .phase-picker{margin:0 0 22px;padding:15px 16px;background:#f3f7eb;border:1px solid #e0e9d6;border-radius:8px}
-    .phase-picker p{margin:0 0 10px;color:#53675b;font-size:11px}
-    .phase-options{gap:8px}
-    .phase-button{min-height:38px;padding:8px 13px;border-color:#d0ddca;border-radius:6px;font-size:10px;transition:background .18s,border-color .18s,color .18s}
-    .phase-button[aria-pressed="true"]{background:#1d6349;border-color:#1d6349;color:white}
+    .start-screen{padding:6px 0}
+    .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+    .start-card{padding:22px;background:#fff;border:1px solid #dce7dc;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;box-shadow:0 4px 14px rgba(16,45,40,.04)}
+    .start-card:hover{transform:translateY(-3px);border-color:var(--forest);box-shadow:0 10px 28px rgba(16,45,40,.1)}
+    .start-card h3{margin:10px 0 6px;font:700 19px "Space Grotesk",sans-serif;color:var(--forest)}
+    .start-card p{margin:0 0 16px;color:var(--muted);font-size:11px;line-height:1.6;flex:1}
+    .quiz-back-btn{background:none;border:1px solid #cbd9cb;color:var(--forest);font-size:11px;font-weight:700;cursor:pointer;padding:6px 12px;border-radius:5px;display:inline-flex;align-items:center;gap:6px;transition:background .2s}
+    .quiz-back-btn:hover{background:#eaf2e8;border-color:var(--forest)}
+    @media(max-width:680px){.start-grid{grid-template-columns:1fr}}
     .quiz-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px}
     .quiz-card h2{margin:0;color:var(--forest);font:700 clamp(21px,3vw,27px)/1.2 "Space Grotesk","Be Vietnam Pro",sans-serif}
     .q-meta{flex:none;padding:7px 10px;background:#e9f2e8;border-radius:20px;color:#286947;font-size:9px;font-weight:800;text-transform:uppercase}
@@ -86,7 +69,60 @@
     <div class="identity-row"><div class="form-row"><label for="studentName">Biệt danh trên BXH · không nhập tên thật</label><input id="studentName" maxlength="24" placeholder="Ví dụ: Sao Xanh 12A5" autocomplete="nickname"></div><button class="button button-outline" id="saveName">Lưu tên</button><p class="name-cooldown" id="nameCooldown" aria-live="polite"></p></div>
     <p class="panel-copy" id="syncStatus" aria-live="polite"></p>
     <div class="assessment-layout">
-      <section class="quiz-card" aria-label="Bài đánh giá"><div class="mode-row" role="group" aria-label="Chọn loại bài"><button class="mode-button active" data-mode="assessment">Đánh giá 20 câu</button><button class="mode-button" data-mode="rubric">Thử thách rubric</button></div><div class="phase-picker" id="phasePicker"><p>Chọn đợt đo trước khi bắt đầu để kết quả được thống kê đúng giai đoạn.</p><div class="phase-options" role="group" aria-label="Giai đoạn khảo sát"><button class="phase-button" type="button" data-phase="pre" aria-pressed="false">Trước can thiệp</button><button class="phase-button" type="button" data-phase="post" aria-pressed="false">Sau can thiệp</button></div></div><div id="quizView"><div class="quiz-heading"><h2 id="quizTitle">Bài đo năng lực</h2><span class="q-meta" id="qMeta"></span></div><p id="quizIntro">Chọn trước hoặc sau can thiệp, sau đó đọc từng tình huống và chọn một phương án có căn cứ nhất.</p><div class="quiz-progress-label"><span>Tiến độ làm bài</span><strong id="progressLabel">1 / 20 câu</strong></div><div class="progress" id="quizProgressTrack" role="progressbar" aria-label="Tiến độ bài đánh giá" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="quizProgress"></span></div><p class="question-number" id="questionNumber"></p><p class="q-text" id="qText"></p><div class="option-list" id="optionList"></div><div class="quiz-footer"><span class="status" id="quizStatus">Chọn giai đoạn khảo sát trước khi trả lời</span><button class="button button-dark" id="nextQuestion" disabled>Câu tiếp theo →</button></div></div><div id="resultView" class="quiz-hidden" aria-live="polite"></div></section>
+      <section class="quiz-card" aria-label="Bài đánh giá">
+        <!-- MÀN HÌNH BẮT ĐẦU: CHỌN GIAI ĐOẠN ĐO -->
+        <div id="startScreen" class="start-screen">
+          <div style="margin-bottom:14px">
+            <span class="tag" style="background:#eaf2e8;color:#286947;font-weight:800;margin-bottom:6px">THPT TRẦN HƯNG ĐẠO · KHẢO SÁT NĂNG LỰC</span>
+            <h2 style="margin:4px 0 6px;color:var(--forest);font:700 24px 'Space Grotesk',sans-serif">Chọn đợt đo để bắt đầu</h2>
+            <p style="margin:0;color:var(--muted);font-size:12px">Bài đo gồm 20 câu hỏi tình huống chia đều cho 5 kỹ năng. Chọn đúng giai đoạn của bạn để kết quả được lưu và đồng bộ chính xác vào đề tài nghiên cứu.</p>
+          </div>
+
+          <div class="start-grid">
+            <div class="start-card" id="cardPre" onclick="startAssessmentWithPhase('pre')">
+              <div>
+                <span class="tag" style="background:#eaf2e8;color:#286947;font-weight:800">ĐỢT ĐO 01</span>
+                <h3>Đo Trước can thiệp</h3>
+                <p>Khảo sát năng lực ban đầu của học sinh trước khi học quy trình 5 bước và các giải pháp kiểm chứng thông tin AI. Đề gồm 20 câu hỏi tình huống.</p>
+              </div>
+              <button type="button" class="button button-lime" style="width:100%">Bắt đầu Trước can thiệp →</button>
+            </div>
+
+            <div class="start-card" id="cardPost" onclick="startAssessmentWithPhase('post')">
+              <div>
+                <span class="tag" style="background:#fff3e6;color:#c84f36;font-weight:800">ĐỢT ĐO 02</span>
+                <h3>Đo Sau can thiệp</h3>
+                <p>Đánh giá sự tiến bộ sau khi đã tìm hiểu kiến thức, cẩm nang và thực hành các tình huống kiểm chứng. Đề gồm 20 câu hỏi tình huống.</p>
+              </div>
+              <button type="button" class="button button-dark" style="width:100%">Bắt đầu Sau can thiệp →</button>
+            </div>
+          </div>
+
+          <div style="margin-top:22px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+            <span style="font-size:11px;color:var(--muted)">Hoặc luyện nhanh trọng số từng kỹ năng theo Rubric:</span>
+            <button type="button" class="button button-outline" onclick="startRubricQuiz()" style="font-size:11px">Làm thử thách Rubric nhanh (5 câu) ↗</button>
+          </div>
+        </div>
+
+        <!-- MÀN HÌNH LÀM BÀI -->
+        <div id="quizView" class="quiz-hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+            <button type="button" class="quiz-back-btn" id="btnBackToStart">← Đổi đợt đo</button>
+            <span class="q-meta" id="qMeta"></span>
+          </div>
+          <div class="quiz-heading"><h2 id="quizTitle">Bài đo năng lực</h2></div>
+          <p id="quizIntro">Đọc kỹ từng tình huống và chọn một phương án có căn cứ nhất.</p>
+          <div class="quiz-progress-label"><span>Tiến độ làm bài</span><strong id="progressLabel">1 / 20 câu</strong></div>
+          <div class="progress" id="quizProgressTrack" role="progressbar" aria-label="Tiến độ bài đánh giá" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="quizProgress"></span></div>
+          <p class="question-number" id="questionNumber"></p>
+          <p class="q-text" id="qText"></p>
+          <div class="option-list" id="optionList"></div>
+          <div class="quiz-footer"><span class="status" id="quizStatus">Hãy chọn một đáp án</span><button class="button button-dark" id="nextQuestion" disabled>Câu tiếp theo →</button></div>
+        </div>
+
+        <!-- MÀN HÌNH KẾT QUẢ -->
+        <div id="resultView" class="quiz-hidden" aria-live="polite"></div>
+      </section>
       <details class="rubric-card" id="rubric"><summary>Rubric 100 điểm<span>Trọng số từng kỹ năng và ngưỡng xếp loại</span></summary><div class="rubric-content"><div class="rubric-line"><span>Nhận diện thông tin cần kiểm chứng</span><b>20 điểm</b></div><div class="rubric-line"><span>Kiểm tra nguồn</span><b>20 điểm</b></div><div class="rubric-line"><span>Đối chiếu thông tin</span><b>25 điểm</b></div><div class="rubric-line"><span>Đánh giá độ tin cậy</span><b>20 điểm</b></div><div class="rubric-line"><span>Kết luận có căn cứ</span><b>15 điểm</b></div><div class="rubric-line"><strong>TỔNG</strong><strong>100 ĐIỂM</strong></div><div class="bands"><div class="band"><b>Yếu</b>0–25 điểm</div><div class="band"><b>Trung bình</b>26–50 điểm</div><div class="band"><b>Khá</b>51–75 điểm</div><div class="band"><b>Giỏi</b>76–100 điểm</div></div></div></details>
     </div>
   </main>
@@ -147,15 +183,149 @@
       {s:4,id:"r4a",q:"Sau khi kiểm tra tài liệu gốc, em không tìm thấy bằng chứng xác nhận câu AI nói. Kết luận nào hợp lý nhất?",o:["Tài liệu không nhắc đến nên câu AI chắc chắn đúng","Chưa tìm thấy căn cứ xác nhận; cần nêu rõ giới hạn này","Kết luận câu AI chắc chắn sai"],a:1},
       {s:4,id:"r4b",q:"Em xác minh được một phần câu trả lời AI, nhưng phần còn lại chưa có nguồn. Em nên kết luận thế nào?",o:["Tách phần đã xác minh và phần chưa đủ căn cứ","Dùng toàn bộ câu trả lời vì đã kiểm tra được một phần","Bác bỏ cả câu trả lời dù một phần đã có nguồn"],a:0}
     ];
-    function start(nextMode=mode){mode=nextMode;cursor=0;answers=[];selected=null;assessmentPhase=null;document.getElementById("phasePicker").hidden=mode!=="assessment";document.getElementById("quizStatus").textContent=mode==="assessment"?"Chọn giai đoạn khảo sát trước khi trả lời":"Chưa chọn đáp án";document.querySelectorAll(".phase-button").forEach(button=>button.setAttribute("aria-pressed","false"));questions=mode==="assessment"?shuffle(skills.flatMap((_,s)=>draw(bank.filter(item=>item.s===s).map((item,i)=>({...item,id:`q${s}-${i}`})),4,`quiz-v2-20-${s}`))):shuffle(skills.map((_,s)=>draw(rubricBank.filter(item=>item.s===s),1,`rubric-v2-clear-${s}`)[0]));document.getElementById("quizView").classList.remove("quiz-hidden");document.getElementById("resultView").classList.add("quiz-hidden");document.querySelectorAll(".mode-button").forEach(button=>button.classList.toggle("active",button.dataset.mode===mode));document.getElementById("quizTitle").textContent=mode==="assessment"?"Bài đo năng lực":"Thử thách rubric";document.getElementById("quizIntro").textContent=mode==="assessment"?"Mỗi câu là một tình huống riêng. Hãy đọc kỹ thông tin được nêu và chọn một phương án có căn cứ nhất.":"Mỗi câu đưa ra một tình huống cụ thể. Hãy chọn cách kiểm chứng hoặc kết luận phù hợp nhất; chỉ chọn một đáp án.";renderQuestion();}
-    function renderQuestion(){selected=null;const item=questions[cursor],progress=Math.round((cursor+1)/questions.length*100);document.getElementById("qMeta").textContent=`${mode==="assessment"?assessmentPhase==="pre"?"TRƯỚC CAN THIỆP":assessmentPhase==="post"?"SAU CAN THIỆP":"CHỌN GIAI ĐOẠN":"THỬ THÁCH RUBRIC"} · ${skills[item.s]}`;document.getElementById("questionNumber").textContent=`${mode==="assessment"?"CÂU":"CÂU RUBRIC"} ${cursor+1} / ${questions.length}`;document.getElementById("qText").textContent=item.q;document.getElementById("quizProgress").style.width=`${progress}%`;document.getElementById("quizProgressTrack").setAttribute("aria-valuenow",String(progress));document.getElementById("progressLabel").textContent=`${cursor+1} / ${questions.length} câu`;document.getElementById("quizStatus").textContent=mode==="assessment"&&!assessmentPhase?"Chọn giai đoạn khảo sát trước khi trả lời":"Chưa chọn đáp án";const next=document.getElementById("nextQuestion");next.disabled=true;next.textContent=cursor===questions.length-1?"Xem kết quả →":"Tiếp tục →";const list=document.getElementById("optionList");list.replaceChildren();item.o.forEach((label,i)=>{const button=document.createElement("button");button.type="button";button.className="choice";button.textContent=label;button.addEventListener("click",()=>{list.querySelectorAll("button").forEach(option=>option.classList.remove("selected"));button.classList.add("selected");selected=i;next.disabled=mode==="assessment"&&!assessmentPhase;document.getElementById("quizStatus").textContent=mode==="assessment"&&!assessmentPhase?"Đã chọn đáp án; hãy chọn giai đoạn khảo sát":"Đã chọn đáp án"});list.append(button);});}
-    function finish(){const counts={},correct={};questions.forEach((item,i)=>{counts[item.s]=(counts[item.s]||0)+1;if(answers[i]===item.a)correct[item.s]=(correct[item.s]||0)+1});const breakdown=skills.map((skill,s)=>({skill,score:Math.round((correct[s]||0)/counts[s]*weights[skill]),max:weights[skill],rate:Math.round((correct[s]||0)/counts[s]*100)}));const total=breakdown.reduce((sum,item)=>sum+item.score,0),label=level(total),weakest=[...breakdown].sort((a,b)=>a.rate-b.rate)[0];saveRecord(mode,total,mode==="assessment"?assessmentPhase:null);document.getElementById("quizView").classList.add("quiz-hidden");const result=document.getElementById("resultView");result.classList.remove("quiz-hidden");document.getElementById("quizProgress").style.width="100%";document.getElementById("quizProgressTrack").setAttribute("aria-valuenow","100");document.getElementById("progressLabel").textContent=`${questions.length} / ${questions.length} hoàn thành`;result.innerHTML=`<p class="eyebrow">${mode==="assessment"?"KẾT QUẢ CỦA BẠN":"KẾT QUẢ THỬ THÁCH RUBRIC"}</p><div class="result-score">${total}<span style="font-size:18px">/100</span></div><p class="result-level">Mức ${["Yếu","Trung bình","Khá","Giỏi"].indexOf(label)+1}: ${label}</p><div class="result-note">${noteFor(label,mode==="assessment"&&weakest.rate<100?weakest.skill:"")}</div>${breakdown.map(item=>`<div class="skill-row"><div class="skill-label"><span>${item.skill}</span><span>${item.score}/${item.max}</span></div><div class="skill-track"><span style="width:${item.rate}%"></span></div></div>`).join("")}<button class="button button-dark" id="retry">Làm lượt mới ↻</button>`;document.getElementById("retry").addEventListener("click",()=>start(mode));}
-    document.querySelectorAll(".phase-button").forEach(button=>button.addEventListener("click",()=>{assessmentPhase=button.dataset.phase;document.querySelectorAll(".phase-button").forEach(option=>option.setAttribute("aria-pressed",String(option===button)));document.getElementById("quizStatus").textContent=selected===null?"Đợt khảo sát đã chọn; hãy đọc câu hỏi":"Đã chọn đáp án và đợt khảo sát";document.getElementById("nextQuestion").disabled=selected===null;}));document.getElementById("nextQuestion").addEventListener("click",()=>{if(selected===null)return;if(mode==="assessment"&&!assessmentPhase){document.getElementById("quizStatus").textContent="Hãy chọn Trước can thiệp hoặc Sau can thiệp.";return}answers[cursor]=selected;if(cursor<questions.length-1){cursor++;renderQuestion();}else finish();});document.querySelectorAll(".mode-button").forEach(button=>button.addEventListener("click",()=>start(button.dataset.mode)));
-    const nameInput=document.getElementById("studentName"),nameButton=document.getElementById("saveName"),nameCooldown=document.getElementById("nameCooldown"),nameDateFormatter=new Intl.DateTimeFormat("vi-VN",{dateStyle:"long",timeStyle:"short"});
-    function updateNameEditor(message=""){const state=window.AICheckCloud?.getPlayerNameState?.()||{name:read("player",""),canChange:true,nextChangeAt:null};nameInput.value=state.name;nameInput.readOnly=Boolean(state.name&&!state.canChange);nameButton.disabled=Boolean(state.name&&!state.canChange);nameCooldown.textContent=message||(state.name&&!state.canChange?`Bạn có thể đổi biệt danh sau ${nameDateFormatter.format(state.nextChangeAt)}.`:state.name?"Bạn đã có thể đổi biệt danh.":"Sau khi lưu, biệt danh sẽ được giữ cố định trong 7 ngày.");}
-    updateNameEditor();setInterval(updateNameEditor,60000);
-    nameButton.addEventListener("click",()=>{const name=nameInput.value.trim();if(!name){nameInput.focus();return}const result=window.AICheckCloud?.savePlayerName?.(name);if(!result?.saved){updateNameEditor(result?.reason==="cooldown"?`Chưa thể đổi biệt danh. Bạn có thể đổi sau ${nameDateFormatter.format(result.nextChangeAt)}.`:"Không thể lưu biệt danh. Hãy thử lại.");return}updateNameEditor(result.changed?`Đã lưu biệt danh. Có thể đổi tiếp sau ${nameDateFormatter.format(result.nextChangeAt)}.`:"Biệt danh này đang được sử dụng.");nameButton.textContent="Đã lưu ✓";setTimeout(()=>nameButton.textContent="Lưu tên",1200);});
-    document.getElementById("syncStatus").textContent=window.AICheckCloud?.configured?"BXH đồng bộ trực tuyến đã bật.":"Chưa cấu hình Supabase; kết quả hiện lưu cục bộ.";start();
+    function openStartScreen() {
+      document.getElementById("startScreen").classList.remove("quiz-hidden");
+      document.getElementById("quizView").classList.add("quiz-hidden");
+      document.getElementById("resultView").classList.add("quiz-hidden");
+    }
+
+    function startAssessmentWithPhase(phase) {
+      mode = "assessment";
+      assessmentPhase = phase;
+      startQuiz();
+    }
+
+    function startRubricQuiz() {
+      mode = "rubric";
+      assessmentPhase = null;
+      startQuiz();
+    }
+
+    function startQuiz() {
+      cursor = 0;
+      answers = [];
+      selected = null;
+      questions = mode === "assessment"
+        ? shuffle(skills.flatMap((_, s) => draw(bank.filter(item => item.s === s).map((item, i) => ({ ...item, id: `q${s}-${i}` })), 4, `quiz-v2-20-${s}`)))
+        : shuffle(skills.map((_, s) => draw(rubricBank.filter(item => item.s === s), 1, `rubric-v2-clear-${s}`)[0]));
+      
+      document.getElementById("startScreen").classList.add("quiz-hidden");
+      document.getElementById("quizView").classList.remove("quiz-hidden");
+      document.getElementById("resultView").classList.add("quiz-hidden");
+      document.getElementById("quizTitle").textContent = mode === "assessment"
+        ? (assessmentPhase === "pre" ? "Đo Trước can thiệp (20 câu)" : "Đo Sau can thiệp (20 câu)")
+        : "Thử thách Rubric (5 câu)";
+      document.getElementById("quizIntro").textContent = mode === "assessment"
+        ? "Mỗi câu là một tình huống riêng. Hãy đọc kỹ thông tin được nêu và chọn một phương án có căn cứ nhất."
+        : "Mỗi câu đưa ra một tình huống cụ thể. Hãy chọn cách kiểm chứng hoặc kết luận phù hợp nhất.";
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      selected = null;
+      const item = questions[cursor];
+      const progress = Math.round(((cursor + 1) / questions.length) * 100);
+      const phaseLabel = assessmentPhase === "pre" ? "ĐỢT 01: TRƯỚC CAN THIỆP" : assessmentPhase === "post" ? "ĐỢT 02: SAU CAN THIỆP" : "THỬ THÁCH RUBRIC";
+      document.getElementById("qMeta").textContent = `${phaseLabel} · ${skills[item.s]}`;
+      document.getElementById("questionNumber").textContent = `${mode === "assessment" ? "CÂU" : "CÂU RUBRIC"} ${cursor + 1} / ${questions.length}`;
+      document.getElementById("qText").textContent = item.q;
+      document.getElementById("quizProgress").style.width = `${progress}%`;
+      document.getElementById("quizProgressTrack").setAttribute("aria-valuenow", String(progress));
+      document.getElementById("progressLabel").textContent = `${cursor + 1} / ${questions.length} câu`;
+      document.getElementById("quizStatus").textContent = "Hãy chọn một đáp án bên dưới";
+      
+      const next = document.getElementById("nextQuestion");
+      next.disabled = true;
+      next.textContent = cursor === questions.length - 1 ? "Xem kết quả →" : "Câu tiếp theo →";
+      
+      const list = document.getElementById("optionList");
+      list.replaceChildren();
+      item.o.forEach((label, i) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice";
+        button.textContent = label;
+        button.addEventListener("click", () => {
+          list.querySelectorAll("button").forEach(option => option.classList.remove("selected"));
+          button.classList.add("selected");
+          selected = i;
+          next.disabled = false;
+          document.getElementById("quizStatus").textContent = "Đã chọn đáp án. Bấm Tiếp tục để sang câu sau.";
+        });
+        list.append(button);
+      });
+    }
+
+    function finish() {
+      const counts = {}, correct = {};
+      questions.forEach((item, i) => {
+        counts[item.s] = (counts[item.s] || 0) + 1;
+        if (answers[i] === item.a) correct[item.s] = (correct[item.s] || 0) + 1;
+      });
+      const breakdown = skills.map((skill, s) => ({
+        skill,
+        score: Math.round(((correct[s] || 0) / counts[s]) * weights[skill]),
+        max: weights[skill],
+        rate: Math.round(((correct[s] || 0) / counts[s]) * 100)
+      }));
+      const total = breakdown.reduce((sum, item) => sum + item.score, 0);
+      const label = level(total);
+      const weakest = [...breakdown].sort((a, b) => a.rate - b.rate)[0];
+      
+      saveRecord(mode, total, mode === "assessment" ? assessmentPhase : null);
+      if (window.AICheckCloud?.processSyncQueue) {
+        setTimeout(window.AICheckCloud.processSyncQueue, 1000);
+      }
+
+      document.getElementById("quizView").classList.add("quiz-hidden");
+      const result = document.getElementById("resultView");
+      result.classList.remove("quiz-hidden");
+      document.getElementById("quizProgress").style.width = "100%";
+      document.getElementById("quizProgressTrack").setAttribute("aria-valuenow", "100");
+      document.getElementById("progressLabel").textContent = `${questions.length} / ${questions.length} hoàn thành`;
+      
+      const phaseBadge = mode === "assessment"
+        ? (assessmentPhase === "pre" ? "ĐỢT ĐO 01: TRƯỚC CAN THIỆP" : "ĐỢT ĐO 02: SAU CAN THIỆP")
+        : "THỬ THÁCH RUBRIC";
+
+      result.innerHTML = `
+        <p class="eyebrow">${phaseBadge}</p>
+        <div class="result-score">${total}<span style="font-size:18px">/100</span></div>
+        <p class="result-level">Mức ${["Yếu", "Trung bình", "Khá", "Giỏi"].indexOf(label) + 1}: ${label}</p>
+        <div class="result-note">${noteFor(label, mode === "assessment" && weakest.rate < 100 ? weakest.skill : "")}</div>
+        ${breakdown.map(item => `
+          <div class="skill-row">
+            <div class="skill-label"><span>${item.skill}</span><span>${item.score}/${item.max}</span></div>
+            <div class="skill-track"><span style="width:${item.rate}%"></span></div>
+          </div>
+        `).join("")}
+        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="button button-dark" id="retryCurrent">Làm lại đợt này ↻</button>
+          <button class="button button-outline" id="btnChooseOther">← Chọn đợt đo khác</button>
+        </div>
+      `;
+
+      document.getElementById("retryCurrent").addEventListener("click", () => startQuiz());
+      document.getElementById("btnChooseOther").addEventListener("click", () => openStartScreen());
+    }
+
+    document.getElementById("nextQuestion").addEventListener("click", () => {
+      if (selected === null) return;
+      answers[cursor] = selected;
+      if (cursor < questions.length - 1) {
+        cursor++;
+        renderQuestion();
+      } else {
+        finish();
+      }
+    });
+
+    document.getElementById("btnBackToStart").addEventListener("click", () => {
+      if (cursor > 0 && cursor < questions.length - 1) {
+        if (!confirm("Bạn có muốn dừng lượt làm bài hiện tại để quay lại màn hình chọn đợt đo?")) return;
+      }
+      openStartScreen();
+    });
   </script>
   <script src="../site-nav.js"></script>
 </body>

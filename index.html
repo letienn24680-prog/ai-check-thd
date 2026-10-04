@@ -60,7 +60,13 @@
       </section>
     </div>
   </main>
-  <footer class="site-footer">AI CHECK THĐ · Sản phẩm phục vụ nghiên cứu khoa học · THPT Trần Hưng Đạo</footer>
+  <footer class="site-footer">
+    AI CHECK THĐ · Sản phẩm phục vụ nghiên cứu khoa học · THPT Trần Hưng Đạo
+    <div style="margin-top:6px;font-size:10px">
+      <a href="login.html" style="color:var(--lime);text-decoration:none;margin-right:12px">👤 Tài khoản</a>
+      <a href="admin.html" style="color:var(--lime);text-decoration:none">⚙️ Quản trị (Admin)</a>
+    </div>
+  </footer>
   <script>
     if (/^https?:/i.test(location.href)) {
       const home = document.createElement("div");
@@ -69,6 +75,10 @@
       document.querySelector(".home-content").append(home);
     }
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="auth-guard.js"></script>
   <script src="site-nav.js"></script>
 </body>
 </html>

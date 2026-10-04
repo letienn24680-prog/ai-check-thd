@@ -48,7 +48,9 @@
     </section>
   </main>
   <footer class="site-footer">AI CHECK THĐ · THPT Trần Hưng Đạo</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
+  <script src="../cloud.js"></script>
   <script>
     try { const url = JSON.parse(localStorage.getItem("aicheck:infographicUrl") || "\"\"") || window.AICHECK_CONFIG?.infographicUrl; if (url) { const link = document.getElementById("infographicLink"); link.href = url; link.target = "_blank"; link.rel = "noopener noreferrer"; } } catch {}
   </script>

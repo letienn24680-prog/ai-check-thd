@@ -39,6 +39,38 @@ create index if not exists leaderboard_scores_assessment_phase_idx
   on public.leaderboard_scores (participant_id, phase, created_at desc)
   where activity = 'assessment' and phase is not null;
 
+-- Bảng lưu yêu cầu hỗ trợ/quên mật khẩu
+create table if not exists public.support_requests (
+  id uuid primary key default gen_random_uuid(),
+  user_email text not null,
+  display_name text,
+  reason text not null,
+  status text not null default 'pending' check (status in ('pending', 'resolved')),
+  created_at timestamptz not null default now()
+);
+
+alter table public.support_requests enable row level security;
+grant usage on schema public to anon, authenticated;
+grant select, insert, update on public.support_requests to anon, authenticated;
+
+drop policy if exists "Anyone can submit support requests" on public.support_requests;
+create policy "Anyone can submit support requests"
+  on public.support_requests for insert
+  to anon, authenticated
+  with check (true);
+
+drop policy if exists "Authenticated users can read support requests" on public.support_requests;
+create policy "Authenticated users can read support requests"
+  on public.support_requests for select
+  to authenticated
+  using (true);
+
+drop policy if exists "Authenticated users can update support requests" on public.support_requests;
+create policy "Authenticated users can update support requests"
+  on public.support_requests for update
+  to authenticated
+  using (true);
+
 alter table public.leaderboard_scores enable row level security;
 grant usage on schema public to anon, authenticated;
 grant select, insert on public.leaderboard_scores to anon, authenticated;
