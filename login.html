@@ -82,7 +82,7 @@
 
     <a href="index.html" class="guest-btn" id="guestBtn">Tiếp tục với tư cách Khách (Không cần tài khoản) →</a>
 
-    <a href="#" class="support-link" id="forgotPass">Quên mật khẩu? Gửi yêu cầu hỗ trợ</a>
+    <a href="#" class="support-link" id="forgotPass" onclick="handleForgotPassword(); return false;">Quên mật khẩu?</a>
     
     <!-- Form hỗ trợ ẩn -->
     <div id="supportForm" class="hidden">
@@ -104,6 +104,22 @@
   <script src="supabase-config.js"></script>
   <script src="cloud.js"></script>
   <script>
+    async function handleForgotPassword() {
+  const email = prompt("Nhập email tài khoản của bạn để nhận liên kết đặt lại mật khẩu:");
+  
+  if (!email || !email.trim()) return;
+
+  // Gọi API Supabase gửi mail tự động
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+    redirectTo: 'https://ai-check-thd.netlify.app/reset-password.html',
+  });
+
+  if (error) {
+    alert("Không thể gửi email: " + error.message);
+  } else {
+    alert("Hệ thống đã gửi email khôi phục mật khẩu! Vui lòng kiểm tra hộp thư (hoặc thư rác/spam).");
+  }
+}
     const authForm = document.getElementById('authForm');
     const tabLogin = document.getElementById('tabLogin');
     const tabRegister = document.getElementById('tabRegister');
