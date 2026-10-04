@@ -74,6 +74,35 @@
       </div>
     </section>
 
+    <!-- QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG -->
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div>
+          <h2 class="panel-title" style="margin:0">Danh sách Tài khoản & Địa chỉ IP</h2>
+          <p class="panel-copy" style="margin:4px 0 0">Quản lý toàn bộ tài khoản học sinh đã đăng ký trên hệ thống.</p>
+        </div>
+        <button class="btn-small" onclick="loadUsersList()">↻ Tải lại danh sách</button>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Biệt danh</th>
+              <th>Email</th>
+              <th>Địa chỉ IP</th>
+              <th>Ngày tạo</th>
+              <th>Vai trò</th>
+            </tr>
+          </thead>
+          <tbody id="user-list-body">
+            <tr>
+              <td colspan="5" style="text-align:center;color:var(--muted)">Đang tải danh sách tài khoản...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <!-- YÊU CẦU HỖ TRỢ -->
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -151,8 +180,51 @@
     }
 
     async function loadAllData() {
-      await Promise.all([loadScores(), loadSupportRequests()]);
+      await Promise.all([loadScores(), loadSupportRequests(), loadUsersList()]);
       calculateStats();
+    }
+    
+    async function loadUsersList() {
+      const userTableBody = document.getElementById("user-list-body");
+      if (!userTableBody) return;
+
+      const sdk = window.supabase;
+      const config = window.AICHECK_CONFIG || {};
+
+      if (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient) {
+        const client = sdk.createClient(config.supabaseUrl, config.supabaseAnonKey);
+        try {
+          const { data: users, error } = await client
+            .from("user_profiles")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+          if (error) {
+            userTableBody.innerHTML = `<tr><td colspan="5" style="color:red;text-align:center">Lỗi tải danh sách: ${error.message}</td></tr>`;
+            return;
+          }
+
+          if (!users || users.length === 0) {
+            userTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa có tài khoản nào đăng ký.</td></tr>`;
+            return;
+          }
+
+          userTableBody.innerHTML = users.map(user => `
+            <tr>
+              <td><strong>${escapeHtml(user.display_name || "—")}</strong></td>
+              <td>${escapeHtml(user.email || "—")}</td>
+              <td><code style="background:#eef2ed;padding:2px 6px;border-radius:4px;font-size:11px">${escapeHtml(user.register_ip || "Không xác định")}</code></td>
+              <td style="color:var(--muted)">${user.created_at ? new Date(user.created_at).toLocaleString("vi-VN") : "—"}</td>
+              <td><span class="tag">${escapeHtml(user.role || "student")}</span></td>
+            </tr>
+          `).join("");
+          return;
+        } catch (e) {
+          console.warn("Lỗi khi kết nối lấy user_profiles:", e);
+        }
+      }
+
+      userTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa kết nối dữ liệu đám mây.</td></tr>`;
     }
 
     async function loadScores() {

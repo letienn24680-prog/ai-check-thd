@@ -82,7 +82,7 @@
 
     <a href="index.html" class="guest-btn" id="guestBtn">Tiếp tục với tư cách Khách (Không cần tài khoản) →</a>
 
-    <a href="#" class="support-link" id="forgotPass">Quên mật khẩu?</a>
+    <a href="#" class="support-link" id="forgotPass" onclick="document.getElementById('supportForm').classList.toggle('hidden'); return false;">Quên mật khẩu?</a>
     
     <!-- Form hỗ trợ ẩn -->
     <div id="supportForm" class="hidden">
@@ -105,10 +105,9 @@
 </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
-  <script src="cloud.js"></script>
+<script src="supabase-config.js"></script>
+<script src="cloud.js"></script>
   <script>
-    // 1. Hàm gửi mã OTP về Gmail
 async function sendOTPCode() {
   const emailInput = document.getElementById('supportEmail');
   const email = emailInput ? emailInput.value.trim() : '';
@@ -118,46 +117,69 @@ async function sendOTPCode() {
     return;
   }
 
-  const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+  // Tự động khởi tạo và lấy client Supabase an toàn
+      if (!window.supabaseClient && typeof supabase !== 'undefined' && window.AICHECK_CONFIG) {
+        window.supabaseClient = supabase.createClient(window.AICHECK_CONFIG.supabaseUrl, window.AICHECK_CONFIG.supabaseAnonKey);
+      }
+      const client = window.supabaseClient || window.supabase;
 
-  if (error) {
-    alert("Lỗi gửi mã: " + error.message);
-  } else {
-    alert("Mã xác minh đã được gửi về Gmail của bạn!");
-    document.getElementById('stepOTPGroup').style.display = 'block';
+      if (!client || !client.auth) {
+        alert("Lỗi: Chưa kết nối được với Supabase. Vui lòng kiểm tra lại file supabase-config.js!");
+        return;
+      }
+
+  try {
+    const { data, error } = await client.auth.resetPasswordForEmail(email);
+
+    if (error) {
+      alert("Lỗi gửi mã: " + error.message);
+    } else {
+      alert("Mã xác minh đã được gửi về Gmail của bạn!");
+      const otpGroup = document.getElementById('stepOTPGroup');
+      if (otpGroup) {
+        otpGroup.style.display = 'block';
+      }
+    }
+  } catch (err) {
+    alert("Có lỗi xảy ra: " + err.message);
   }
 }
 
 // 2. Hàm xác minh mã OTP
 async function verifyOTPCode() {
-  const email = document.getElementById('supportEmail').value.trim();
-  const otp = document.getElementById('supportOTP').value.trim();
+  const emailInput = document.getElementById('supportEmail');
+  const otpInput = document.getElementById('supportOTP');
+  
+  const email = emailInput ? emailInput.value.trim() : '';
+  const otp = otpInput ? otpInput.value.trim() : '';
 
   if (!otp) {
     alert("Vui lòng nhập mã OTP!");
     return;
   }
 
-  const { data, error } = await supabase.auth.verifyOtp({
-    email: email,
-    token: otp,
-    type: 'recovery'
-  });
+  const client = typeof supabaseClient !== 'undefined' ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
 
-  if (error) {
-    alert("Mã OTP không chính xác hoặc đã hết hạn!");
-  } else {
-    alert("Xác minh thành công! Đang chuyển đến trang đặt lại mật khẩu...");
-    window.location.href = "reset-password.html";
+  if (!client || !client.auth) {
+    alert("Lỗi: Chưa kết nối được với Supabase!");
+    return;
   }
-}
 
-  if (verifyError) {
-    alert("Mã xác minh không chính xác hoặc đã hết hạn!");
-  } else {
-    alert("Xác minh thành công! Đang chuyển đến trang đặt lại mật khẩu...");
-    // Chuyển hướng sang trang reset-password.html
-    window.location.href = "reset-password.html";
+  try {
+    const { data, error } = await client.auth.verifyOtp({
+      email: email,
+      token: otp,
+      type: 'recovery'
+    });
+
+    if (error) {
+      alert("Mã OTP không chính xác hoặc đã hết hạn!");
+    } else {
+      alert("Xác minh thành công! Đang chuyển đến trang đặt lại mật khẩu...");
+      window.location.href = "reset-password.html";
+    }
+  } catch (err) {
+    alert("Lỗi xác minh: " + err.message);
   }
 }
     const authForm = document.getElementById('authForm');
@@ -257,26 +279,40 @@ async function verifyOTPCode() {
       }
     };
 
-    document.getElementById('forgotPass').onclick = (e) => {
+    const forgotPassBtn = document.getElementById('forgotPass');
+  if (forgotPassBtn) {
+    forgotPassBtn.onclick = (e) => {
       e.preventDefault();
-      document.getElementById('supportForm').classList.toggle('hidden');
+      const supportForm = document.getElementById('supportForm');
+      if (supportForm) supportForm.classList.toggle('hidden');
     };
+  }
 
-    document.getElementById('sendSupport').onclick = async () => {
-      const email = document.getElementById('supportEmail').value.trim();
-      const name = document.getElementById('supportName').value.trim();
+  const sendSupportBtn = document.getElementById('sendSupport');
+  if (sendSupportBtn) {
+    sendSupportBtn.onclick = async () => {
+      const supportEmail = document.getElementById('supportEmail');
+      const supportName = document.getElementById('supportName');
+
+      const email = supportEmail ? supportEmail.value.trim() : '';
+      const name = supportName ? supportName.value.trim() : '';
+
       if (!email) return alert('Vui lòng nhập email của bạn');
-      
-      const res = await window.AICheckCloud.sendSupportRequest(email, name, 'Yêu cầu đặt lại mật khẩu');
-      if (res && res.error && !res.local) {
-        alert('Lỗi: ' + (res.error.message || res.error));
-      } else {
-        alert('Yêu cầu hỗ trợ của bạn đã được ghi nhận thành công! Admin sẽ hỗ trợ giải quyết sớm.');
-        document.getElementById('supportForm').classList.add('hidden');
-        document.getElementById('supportEmail').value = '';
-        document.getElementById('supportName').value = '';
+
+      if (window.AICheckCloud && window.AICheckCloud.sendSupportRequest) {
+        const res = await window.AICheckCloud.sendSupportRequest(email, name, 'Yêu cầu đặt lại mật khẩu');
+        if (res && res.error) {
+          alert('Lỗi: ' + (res.error.message || res.error));
+        } else {
+          alert('Yêu cầu hỗ trợ của bạn đã được ghi nhận thành công! Admin sẽ hỗ trợ giải quyết sớm.');
+          const supportForm = document.getElementById('supportForm');
+          if (supportForm) supportForm.classList.add('hidden');
+          if (supportEmail) supportEmail.value = '';
+          if (supportName) supportName.value = '';
+        }
       }
     };
+  }
   </script>
 </body>
 </html>

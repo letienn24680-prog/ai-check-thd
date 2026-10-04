@@ -41,14 +41,42 @@
   async function signUp(email, password, displayName) {
     if (!client) return { error: { message: "Chưa cấu hình Supabase" } };
     try {
+      // 1. Tự động lấy địa chỉ IP của người dùng
+      let userIp = 'Không xác định';
+      try {
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        userIp = ipData.ip;
+      } catch (e) {
+        console.warn('Không lấy được IP:', e);
+      }
+
+      // 2. Thực hiện đăng ký tài khoản Auth trên Supabase
       const { data, error } = await client.auth.signUp({
         email,
         password,
         options: { data: { display_name: displayName } }
       });
-      if (!error && displayName) {
-        try { localStorage.setItem("aicheck:player", JSON.stringify(displayName.trim().slice(0, 24))); } catch {}
+
+      // 3. Nếu đăng ký thành công, lưu dữ liệu vào bảng user_profiles
+      if (!error && data?.user) {
+        try {
+          await client.from('user_profiles').insert([{
+            id: data.user.id,
+            email: email,
+            display_name: displayName,
+            role: 'student',
+            register_ip: userIp
+          }]);
+        } catch (dbErr) {
+          console.warn('Không thể ghi nhận profile:', dbErr);
+        }
+
+        if (displayName) {
+          try { localStorage.setItem("aicheck:player", JSON.stringify(displayName.trim().slice(0, 24))); } catch {}
+        }
       }
+
       return { data, error };
     } catch (err) {
       return { error: { message: err.message || "Lỗi đăng ký" } };
