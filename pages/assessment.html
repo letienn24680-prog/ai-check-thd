@@ -57,6 +57,7 @@
     .bands{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}
     .band{padding:9px;border:1px solid #ffffff2e;background:#ffffff0d;border-radius:5px;font-size:9px}
     .band b{display:block;color:var(--lime);font-size:10px}
+    @media(max-width:600px){.bands{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
     .quiz-hidden{display:none!important}
     [data-theme="dark"] .start-card{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
     [data-theme="dark"] .start-card:hover{background:#14382e;border-color:#3ec888}
@@ -156,6 +157,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
+  <script src="../site-nav.js"></script>
   <script>
     const skills = ["Nhận diện thông tin", "Kiểm tra nguồn", "Đối chiếu thông tin", "Đánh giá độ tin cậy", "Kết luận có căn cứ"];
     const weights = { "Nhận diện thông tin": 20, "Kiểm tra nguồn": 20, "Đối chiếu thông tin": 25, "Đánh giá độ tin cậy": 20, "Kết luận có căn cứ": 15 };
@@ -306,6 +308,17 @@
         setTimeout(window.AICheckCloud.processSyncQueue, 1000);
       }
 
+      let gamifyRes = null;
+      if (window.AICheckGamification?.recordAssessmentResult) {
+        gamifyRes = window.AICheckGamification.recordAssessmentResult({
+          mode,
+          total,
+          label,
+          breakdown,
+          phase: mode === "assessment" ? assessmentPhase : null
+        });
+      }
+
       window.AICheckLoader?.show("Đang phân tích năng lực & ghi nhận điểm số...");
       setTimeout(() => window.AICheckLoader?.hide(), 450);
 
@@ -325,6 +338,34 @@
         <div class="result-score">${total}<span style="font-size:18px">/100</span></div>
         <p class="result-level">Mức ${["Yếu", "Trung bình", "Khá", "Giỏi"].indexOf(label) + 1}: ${label}</p>
         <div class="result-note">${noteFor(label, mode === "assessment" && weakest.rate < 100 ? weakest.skill : "")}</div>
+        
+        ${gamifyRes ? `
+          <div class="assessment-gamify-card">
+            <div class="assessment-gamify-badge">
+              <span class="gamify-icon">${gamifyRes.newStats?.levelIcon || "⭐"}</span>
+              <div>
+                <div class="assessment-gamify-title">Điểm Kinh Nghiệm (XP) Đạt Được</div>
+                <div class="assessment-gamify-sub">
+                  Đánh giá chuẩn Rubric: <strong>+${gamifyRes.totalEarned} XP</strong>
+                  <span style="opacity:0.85"> · (Điểm bài: ${gamifyRes.baseXp} XP + Thưởng xếp loại ${label}: +${gamifyRes.levelBonus} XP${gamifyRes.progressBonus ? ` + Tiến bộ: +${gamifyRes.progressBonus} XP` : ""})</span>
+                </div>
+              </div>
+            </div>
+            <div class="assessment-gamify-stats">
+              <span>Cấp độ: <strong>Lv.${gamifyRes.newStats?.level || 1} ${gamifyRes.newStats?.levelTitle || ""}</strong></span>
+              <span>Tổng tích lũy: <strong>${gamifyRes.newStats?.xp || 0} XP</strong></span>
+            </div>
+            <div class="assessment-progress-bar">
+              <div class="assessment-progress-fill" style="width:${gamifyRes.newStats?.progressPercent || 0}%"></div>
+            </div>
+            <div class="assessment-next-level">
+              ${gamifyRes.newStats?.nextLevelTitle !== "Tối đa" && gamifyRes.newStats?.nextLevelTitle !== "Max Level" 
+                ? `Cần thêm <strong>${(gamifyRes.newStats?.nextLevelXp || 0) - (gamifyRes.newStats?.xp || 0)} XP</strong> để đạt ${gamifyRes.newStats?.nextLevelTitle}` 
+                : `Đã đạt cấp độ cao nhất!`}
+            </div>
+          </div>
+        ` : ""}
+
         ${breakdown.map(item => `
           <div class="skill-row">
             <div class="skill-label"><span>${item.skill}</span><span>${item.score}/${item.max}</span></div>

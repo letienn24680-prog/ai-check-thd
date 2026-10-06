@@ -1,0 +1,502 @@
+[
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Vận tốc ánh sáng trong chân không",
+    "quote": "AI nói ánh sáng truyền trong chân không với tốc độ xấp xỉ 300.000 km/s.",
+    "task": "Tra cứu hằng số vật lý quốc tế NIST/CODATA.",
+    "source": "Viện Tiêu chuẩn và Công nghệ Quốc gia (NIST), SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Vận tốc ánh sáng trong chân không chính xác là 299.792.458 m/s, xấp xỉ 300.000 km/s."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Rơi tự do trong chân không",
+    "quote": "AI khẳng định trong chân không, quả cầu sắt rơi nhanh hơn chiếc lông chim vì sắt nặng hơn.",
+    "task": "Kiểm tra thí nghiệm ống Newton về sự rơi tự do trong chân không.",
+    "source": "SGK Vật lý 10, thí nghiệm Apollo 15 trên Mặt Trăng.",
+    "verdict": "Sai",
+    "explain": "Trong môi trường chân không không có lực cản không khí, mọi vật đều rơi với cùng gia tốc trọng trường g và chạm đất cùng lúc bất kể khối lượng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Khối lượng và Trọng lượng",
+    "quote": "AI nói khối lượng của một phi hành gia lên Mặt Trăng sẽ giảm đi 6 lần so với ở Trái Đất.",
+    "task": "Phân biệt khái niệm khối lượng (lượng chất) và trọng lượng (lực hút trọng trường).",
+    "source": "SGK Vật lý 10 (Cơ học).",
+    "verdict": "Sai",
+    "explain": "Khối lượng là lượng chất cấu tạo nên vật và không đổi khi di chuyển. Chỉ có trọng lượng (lực hấp dẫn P = mg) giảm 6 lần do gia tốc trọng trường Mặt Trăng chỉ bằng 1/6 Trái Đất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Độ không tuyệt đối",
+    "quote": "AI nói nhiệt độ thấp nhất trong vũ trụ là 0 độ C, dưới nhiệt độ này không có gì tồn tại.",
+    "task": "Tra cứu thang đo nhiệt độ Kelvin và độ không tuyệt đối.",
+    "source": "SGK Vật lý 10 (Nhiệt học).",
+    "verdict": "Sai",
+    "explain": "Nhiệt độ thấp nhất lý thuyết là 0 Kelvin (tương đương -273.15 độ C), tại đó các phân tử dừng chuyển động nhiệt; 0 độ C chỉ là điểm đóng băng của nước ở áp suất chuẩn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Điểm sôi của nước trên đỉnh núi cao",
+    "quote": "AI khẳng định trên đỉnh núi Everest ở độ cao hơn 8.800m, nước tinh khiết vẫn sôi ở đúng 100 độ C.",
+    "task": "Tra cứu mối liên hệ giữa áp suất khí quyển và nhiệt độ sôi của chất lỏng.",
+    "source": "Giáo trình Nhiệt động lực học, SGK Vật lý.",
+    "verdict": "Sai",
+    "explain": "Áp suất khí quyển giảm khi lên cao. Trên đỉnh Everest, áp suất chỉ còn khoảng 1/3 áp suất mực nước biển nên nước sôi ở nhiệt độ khoảng 71 độ C."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng khúc xạ ánh sáng",
+    "quote": "AI nói khi tia sáng truyền từ không khí vào nước, góc khúc xạ luôn lớn hơn góc tới.",
+    "task": "Kiểm tra định luật khúc xạ ánh sáng của Snell-Descartes: n1*sin(i) = n2*sin(r).",
+    "source": "SGK Vật lý 11 (Quang hình học).",
+    "verdict": "Sai",
+    "explain": "Nước có chiết suất lớn hơn không khí (n2 > n1). Theo định luật Snell, sin(r) < sin(i) nên góc khúc xạ r luôn nhỏ hơn góc tới i."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Sự nở vì nhiệt dị thường của nước",
+    "quote": "AI nói nước cũng như mọi chất lỏng khác, luôn luôn co lại khi nhiệt độ giảm từ 4 độ C về 0 độ C.",
+    "task": "Tra cứu tính chất giãn nở vì nhiệt dị thường của nước ở dải nhiệt độ 0-4 độ C.",
+    "source": "SGK Vật lý và Hóa học đại cương.",
+    "verdict": "Sai",
+    "explain": "Nước có tính chất dị thường: mật độ nước đạt cực đại ở 4 độ C. Khi hạ nhiệt độ từ 4 độ C về 0 độ C, nước lại nở ra và khối lượng riêng giảm, giúp băng nổi trên mặt nước."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Kim loại dẫn điện tốt nhất",
+    "quote": "AI nói vàng là kim loại dẫn điện tốt nhất trong tất cả các kim loại.",
+    "task": "Tra cứu bảng độ dẫn điện tiêu chuẩn của kim loại.",
+    "source": "Sổ tay Vật lý kỹ thuật, SGK Vật lý.",
+    "verdict": "Sai",
+    "explain": "Bạc (Ag) mới là kim loại dẫn điện tốt nhất ở nhiệt độ phòng, tiếp theo là đồng (Cu), rồi mới đến vàng (Au) và nhôm (Al)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng đoản mạch",
+    "quote": "AI nói đoản mạch là hiện tượng điện trở mạch ngoài rất lớn làm dòng điện giảm về 0.",
+    "task": "Kiểm tra định nghĩa hiện tượng đoản mạch (ngắn mạch) theo định luật Ohm.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Đoản mạch xảy ra khi điện trở mạch ngoài rất nhỏ (tiến về 0), khiến cường độ dòng điện trong mạch tăng vọt rất lớn, dễ gây cháy nổ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Sóng âm truyền trong chân không",
+    "quote": "AI nói nếu nổ bom hạt nhân ngoài vũ trụ chân không, người ở trạm không gian gần đó sẽ nghe thấy tiếng nổ đinh tai.",
+    "task": "Kiểm tra bản chất sóng cơ và môi trường truyền sóng âm.",
+    "source": "SGK Vật lý 12 (Sóng cơ).",
+    "verdict": "Sai",
+    "explain": "Sóng âm là sóng cơ học, cần môi trường vật chất (rắn, lỏng, khí) để lan truyền. Trong chân không vũ trụ không có hạt vật chất nên sóng âm hoàn toàn không truyền đi được."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Mặt Trời là loại thiên thể nào",
+    "quote": "AI nói Mặt Trời là một hành tinh lớn nằm ở trung tâm Hệ Mặt Trời.",
+    "task": "Kiểm tra định nghĩa hành tinh và ngôi sao trong thiên văn học.",
+    "source": "SGK Địa lý/Vật lý, NASA.",
+    "verdict": "Sai",
+    "explain": "Mặt Trời là một ngôi sao (ngôi sao lùn vàng), tự phát sáng nhờ phản ứng nhiệt hạch trong lõi; các hành tinh như Trái Đất, Sao Hỏa quay quanh Mặt Trời."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hành tinh nóng nhất Hệ Mặt Trời",
+    "quote": "AI nói Sao Thủy là hành tinh nóng nhất vì nó nằm gần Mặt Trời nhất.",
+    "task": "Tra cứu nhiệt độ bề mặt các hành tinh trong Hệ Mặt Trời.",
+    "source": "Dữ liệu quan sát hành tinh NASA, SGK Vật lý.",
+    "verdict": "Sai",
+    "explain": "Sao Kim (Venus) mới là hành tinh nóng nhất (khoảng 465 độ C) do bầu khí quyển CO2 dày đặc tạo ra hiệu ứng nhà kính cực mạnh, nóng hơn cả Sao Thủy."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Định luật vạn vật hấp dẫn",
+    "quote": "AI nói lực hấp dẫn giữa hai vật tỉ lệ nghịch với khoảng cách giữa chúng.",
+    "task": "Kiểm tra công thức định luật vạn vật hấp dẫn của Newton: F = G*(m1*m2)/r^2.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Lực hấp dẫn tỉ lệ nghịch với BÌNH PHƯƠNG khoảng cách giữa hai vật (r^2), không phải tỉ lệ nghịch với khoảng cách."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Điện năng tiêu thụ của bóng đèn",
+    "quote": "AI nói bóng đèn 100W thắp sáng liên tục trong 10 giờ sẽ tiêu thụ đúng 1 kilowatt-giờ (1 số điện).",
+    "task": "Tính công suất và điện năng tiêu thụ: A = P * t.",
+    "source": "SGK Vật lý 9/11.",
+    "verdict": "Đúng",
+    "explain": "100W * 10 giờ = 1000 Wh = 1 kWh, tương đương 1 số điện trên công tơ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tốc độ âm thanh trong các môi trường",
+    "quote": "AI nói âm thanh truyền nhanh nhất trong không khí, sau đó đến nước và chậm nhất trong thép.",
+    "task": "Kiểm tra sự truyền sóng cơ trong các môi trường rắn, lỏng, khí.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Âm thanh truyền nhanh nhất trong chất rắn (thép ~5000 m/s), sau đó đến chất lỏng (nước ~1500 m/s) và chậm nhất trong chất khí (không khí ~340 m/s) do mật độ phân tử."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Cầu vồng sau cơn mưa",
+    "quote": "AI nói cầu vồng xuất hiện là do hiện tượng tán sắc và phản xạ toàn phần của ánh sáng Mặt Trời qua các giọt nước mưa.",
+    "task": "Kiểm tra cơ chế quang học tạo thành cầu vồng.",
+    "source": "SGK Vật lý 11/12 (Tán sắc ánh sáng).",
+    "verdict": "Đúng",
+    "explain": "Ánh sáng trắng Mặt Trời bị khúc xạ, tán sắc thành dải màu từ đỏ đến tím và phản xạ trong các giọt nước mưa lơ lửng tạo thành cầu vồng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Thuyết tương đối hẹp và thời gian",
+    "quote": "AI nói theo thuyết tương đối của Einstein, một chiếc đồng hồ chuyển động với vận tốc gần vận tốc ánh sáng sẽ chạy chậm hơn đồng hồ đứng yên.",
+    "task": "Tra cứu hiệu ứng giãn nở thời gian trong thuyết tương đối hẹp.",
+    "source": "Giáo trình Vật lý hiện đại, công trình Einstein 1905.",
+    "verdict": "Đúng",
+    "explain": "Theo thuyết tương đối hẹp, thời gian trong hệ quy chiếu chuyển động nhanh bị giãn nở (chạy chậm hơn) so với hệ quy chiếu đứng yên."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Màu sắc của bầu trời ban ngày",
+    "quote": "AI nói bầu trời ban ngày có màu xanh lam là do hiện tượng tán xạ Rayleigh của ánh sáng Mặt Trời trong khí quyển.",
+    "task": "Tra cứu định luật tán xạ Rayleigh.",
+    "source": "SGK Vật lý, Cơ quan Hàng không Vũ trụ NASA.",
+    "verdict": "Đúng",
+    "explain": "Các phân tử khí quyển tán xạ ánh sáng có bước sóng ngắn (xanh lam, tím) mạnh hơn nhiều so với ánh sáng bước sóng dài (đỏ, vàng), tạo nên màu xanh của bầu trời."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Dòng điện trong kim loại",
+    "quote": "AI nói dòng điện trong kim loại là dòng chuyển dời có hướng của các ion dương kim loại.",
+    "task": "Kiểm tra bản chất dòng điện trong kim loại.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Dòng điện trong kim loại là dòng chuyển dời có hướng của các electron tự do ngược chiều điện trường. Các ion dương cố định ở nút mạng tinh thể."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Trọng lượng của vật ở xích đạo so với địa cực",
+    "quote": "AI khẳng định một vật có trọng lượng tại xích đạo lớn hơn trọng lượng tại hai địa cực của Trái Đất.",
+    "task": "Tra cứu lực quán tính ly tâm và hình dạng dẹt của Trái Đất ảnh hưởng đến gia tốc g.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Tại xích đạo, bán kính Trái Đất lớn hơn và có lực quán tính ly tâm do tự quay, nên gia tốc trọng trường g nhỏ hơn ở địa cực. Vật có trọng lượng tại xích đạo nhỏ hơn tại địa cực."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Lực ma sát nghỉ cực đại",
+    "quote": "AI nói lực ma sát nghỉ tác dụng lên vật luôn luôn bằng đúng lực ma sát trượt.",
+    "task": "Phân biệt lực ma sát nghỉ và lực ma sát trượt.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Lực ma sát nghỉ biến thiên từ 0 đến giá trị cực đại để cân bằng với ngoại lực tác dụng. Lực ma sát nghỉ cực đại thường lớn hơn lực ma sát trượt một chút."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Nguyên lý bảo toàn cơ năng",
+    "quote": "AI nói cơ năng của một vật chuyển động trong trọng trường luôn luôn được bảo toàn ngay cả khi có lực ma sát lớn.",
+    "task": "Kiểm tra điều kiện áp dụng định luật bảo toàn cơ năng.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Cơ năng chỉ được bảo toàn khi vật chỉ chịu tác dụng của các lực thế (như trọng lực, lực đàn hồi). Khi có lực ma sát, cơ năng bị tiêu hao biến thành nhiệt năng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Ánh sáng Mặt Trời đến Trái Đất",
+    "quote": "AI nói ánh sáng từ Mặt Trời mất khoảng 8 phút 20 giây để tới được Trái Đất.",
+    "task": "Tính toán từ khoảng cách Trái Đất - Mặt Trời (~150 triệu km) và vận tốc ánh sáng.",
+    "source": "NASA, SGK Thiên văn / Vật lý.",
+    "verdict": "Đúng",
+    "explain": "150.000.000 km / 300.000 km/s = 500 giây, tương đương khoảng 8 phút 20 giây."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Kính hiển vi quang học",
+    "quote": "AI nói kính hiển vi quang học có thể phóng đại nhìn thấy rõ ràng cấu trúc từng nguyên tử đơn lẻ.",
+    "task": "Tra cứu giới hạn nhiễu xạ ánh sáng của kính hiển vi quang học.",
+    "source": "Giáo trình Quang học sóng.",
+    "verdict": "Sai",
+    "explain": "Kính hiển vi quang học bị giới hạn bởi bước sóng ánh sáng (vài trăm nanomet), không thể phân giải vật thể kích thước nguyên tử (cỡ 0.1 nanomet). Để thấy nguyên tử phải dùng kính hiển vi điện tử hoặc kính STM."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tia X và tia phóng xạ Gamma",
+    "quote": "AI nói tia X và tia Gamma đều là sóng điện từ có tần số rất cao và bước sóng rất ngắn.",
+    "task": "Kiểm tra thang sóng điện từ.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Tia X và tia Gamma đều là bức xạ điện từ mang năng lượng cao, có bước sóng cực ngắn và khả năng đâm xuyên mạnh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Gương cầu lồi làm gương chiếu hậu",
+    "quote": "AI nói gương chiếu hậu ô tô thường dùng gương cầu lồi vì nó cho ảnh ảo cùng chiều và trường nhìn rộng hơn gương phẳng.",
+    "task": "Kiểm tra tính chất tạo ảnh của gương cầu lồi.",
+    "source": "SGK Vật lý 7/11.",
+    "verdict": "Đúng",
+    "explain": "Gương cầu lồi cho ảnh ảo nhỏ hơn vật nhưng có vùng quan sát (thị trường) rộng hơn nhiều so với gương phẳng cùng kích thước."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Động lượng của một hệ cô lập",
+    "quote": "AI nói trong một hệ kín (cô lập), tổng động lượng của hệ luôn luôn được bảo toàn.",
+    "task": "Kiểm tra định luật bảo toàn động lượng.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Đúng",
+    "explain": "Định luật bảo toàn động lượng phát biểu: Tổng động lượng của một hệ cô lập không đổi theo thời gian."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Động cơ vĩnh cửu loại một",
+    "quote": "AI khẳng định một kỹ sư đã chế tạo thành công cỗ máy sinh công liên tục mà không cần tiêu thụ bất kỳ năng lượng nào.",
+    "task": "Kiểm tra nguyên lý thứ nhất của nhiệt động lực học.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Động cơ vĩnh cửu loại một vi phạm định luật bảo toàn và chuyển hóa năng lượng nên không thể chế tạo được trong thực tế."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Dòng điện xoay chiều 220V",
+    "quote": "AI nói giá trị 220V của mạng điện sinh hoạt gia đình là giá trị điện áp cực đại (U0).",
+    "task": "Phân biệt điện áp hiệu dụng (U) và điện áp cực đại (U0).",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "220V là giá trị hiệu dụng. Giá trị điện áp cực đại là U0 = 220 * căn(2) xấp xỉ 311V."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng cộng hưởng cơ",
+    "quote": "AI nói hiện tượng cộng hưởng cơ xảy ra khi tần số của lực cưỡng bức xấp xỉ bằng tần số dao động riêng của hệ.",
+    "task": "Kiểm tra điều kiện xảy ra hiện tượng cộng hưởng.",
+    "source": "SGK Vật lý 12 (Dao động cơ).",
+    "verdict": "Đúng",
+    "explain": "Khi tần số của ngoại lực cưỡng bức bằng tần số riêng của hệ, biên độ dao động cưỡng bức đạt giá trị cực đại, đó là hiện tượng cộng hưởng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Lực đẩy Archimedes",
+    "quote": "AI nói lực đẩy Archimedes tác dụng lên vật chìm trong chất lỏng tỉ lệ thuận với khối lượng của vật đó.",
+    "task": "Kiểm tra công thức lực đẩy Archimedes: F_A = d * V.",
+    "source": "SGK Vật lý 8/10.",
+    "verdict": "Sai",
+    "explain": "Lực đẩy Archimedes phụ thuộc vào trọng lượng riêng của chất lỏng (d) và thể tích phần chất lỏng bị vật chiếm chỗ (V), không phụ thuộc vào khối lượng của vật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Đèn LED phát sáng",
+    "quote": "AI nói đèn LED phát sáng nhờ nung nóng dây tóc kim loại tới nhiệt độ hàng nghìn độ C.",
+    "task": "Tìm hiểu nguyên lý phát quang của đi-ốt phát quang (LED).",
+    "source": "SGK Vật lý 11/12.",
+    "verdict": "Sai",
+    "explain": "Đèn LED phát sáng nhờ hiện tượng điện - phát quang tại mối nối p-n của chất bán dẫn, không phải do nung nóng dây tóc như đèn sợi đốt."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Từ trường của Trái Đất",
+    "quote": "AI nói cực bắc từ trường của Trái Đất nằm trùng khít hoàn toàn về mặt địa lý với cực Bắc địa lý.",
+    "task": "Tra cứu độ lệch giữa cực từ và cực địa lý (độ từ thiên).",
+    "source": "Tài liệu Địa vật lý, Cục Khảo sát Địa chất.",
+    "verdict": "Sai",
+    "explain": "Cực từ Bắc và cực Bắc địa lý không trùng nhau mà lệch nhau hàng trăm kilomet, và cực từ còn di chuyển chậm theo thời gian."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Quang phổ liên tục",
+    "quote": "AI nói quang phổ liên tục phụ thuộc vào thành phần hóa học của nguồn phát sáng.",
+    "task": "Kiểm tra đặc điểm của quang phổ liên tục.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Quang phổ liên tục chỉ phụ thuộc vào nhiệt độ của vật phát sáng, không phụ thuộc vào thành phần cấu tạo hóa học của vật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Chuyển động tròn đều",
+    "quote": "AI nói trong chuyển động tròn đều, gia tốc của vật luôn luôn bằng 0 vì tốc độ không đổi.",
+    "task": "Kiểm tra khái niệm gia tốc hướng tâm.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Mặc dù độ lớn vận tốc không đổi, nhưng hướng của vectơ vận tốc liên tục thay đổi, do đó vật luôn có gia tốc hướng tâm khác 0."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tia tử ngoại (UV)",
+    "quote": "AI nói tia tử ngoại bị thủy tinh thông thường hấp thụ rất mạnh.",
+    "task": "Tra cứu tính chất truyền qua của tia tử ngoại đối với thủy tinh và thạch anh.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Thủy tinh thông thường hấp thụ rất mạnh tia tử ngoại (UV); để cho tia UV truyền qua người ta phải dùng thạch anh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Mạng tinh thể chất rắn",
+    "quote": "AI nói chất rắn vô định hình như thủy tinh có nhiệt độ nóng chảy xác định.",
+    "task": "Phân biệt chất rắn kết tinh và chất rắn vô định hình.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Chất rắn kết tinh mới có nhiệt độ nóng chảy xác định. Chất rắn vô định hình không có cấu trúc tinh thể nên không có nhiệt độ nóng chảy xác định mà mềm dần khi đun nóng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Nhiên liệu hạt nhân Urani",
+    "quote": "AI nói phản ứng phân hạch hạt nhân Urani-235 trong lò phản ứng hạt nhân là phản ứng tỏa năng lượng rất lớn.",
+    "task": "Kiểm tra phản ứng phân hạch kích thích bởi nơtron.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Sự phân hạch của 1 hạt nhân U-235 giải phóng khoảng 200 MeV năng lượng, tỏa nhiệt khổng lồ ứng dụng trong các nhà máy điện hạt nhân."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng tự cảm",
+    "quote": "AI nói hiện tượng tự cảm là hiện tượng cảm ứng điện từ xảy ra trong mạch do chính sự biến thiên cường độ dòng điện trong mạch đó gây ra.",
+    "task": "Kiểm tra định nghĩa hiện tượng tự cảm.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Đúng",
+    "explain": "Định nghĩa chuẩn: Hiện tượng tự cảm là hiện tượng cảm ứng điện từ trong một mạch điện do chính sự biến thiên của dòng điện trong mạch đó gây ra."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Công suất tiêu thụ cực đại",
+    "quote": "AI nói công của lực ma sát tác dụng lên một vật chuyển động trên mặt sàn luôn luôn sinh công dương làm tăng cơ năng.",
+    "task": "Kiểm tra dấu của công lực ma sát trượt: A = F * s * cos(alpha).",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Lực ma sát trượt luôn ngược chiều chuyển động (góc 180 độ), nên cos(180) = -1, công của lực ma sát trượt luôn là công cản (công âm), làm giảm cơ năng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiệu suất của động cơ nhiệt",
+    "quote": "AI nói động cơ nhiệt lý tưởng có thể đạt hiệu suất 100% nếu loại bỏ hoàn toàn ma sát cơ học.",
+    "task": "Kiểm tra định lý Carnot và nguyên lý hai nhiệt động lực học.",
+    "source": "Giáo trình Nhiệt động lực học.",
+    "verdict": "Sai",
+    "explain": "Theo định lý Carnot, hiệu suất động cơ nhiệt cực đại bằng (T1 - T2)/T1 và luôn nhỏ hơn 100% vì luôn phải truyền một phần nhiệt lượng cho nguồn lạnh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Độ cao của âm thanh",
+    "quote": "AI nói độ cao của âm thanh được quyết định bởi biên độ dao động của nguồn âm.",
+    "task": "Phân biệt các đặc trưng sinh lý của âm: độ cao, độ to, âm sắc.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Độ cao của âm gắn liền với tần số dao động của âm (tần số càng lớn âm càng bổng). Biên độ dao động quyết định độ to của âm."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tán xạ ánh sáng",
+    "quote": "AI nói ánh sáng đỏ bị tán xạ mạnh hơn ánh sáng tím trong khí quyển.",
+    "task": "Kiểm tra định luật tán xạ Rayleigh (tỉ lệ nghịch với lũy thừa bậc 4 của bước sóng).",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Ánh sáng tím và xanh có bước sóng ngắn nên bị tán xạ mạnh hơn nhiều so với ánh sáng đỏ có bước sóng dài."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Điện trở phụ thuộc nhiệt độ ở kim loại",
+    "quote": "AI nói khi nhiệt độ của dây kim loại tăng lên thì điện trở của nó sẽ giảm đi.",
+    "task": "Tra cứu hệ số nhiệt điện trở của kim loại.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Khi nhiệt độ kim loại tăng, các ion nút mạng dao động mạnh hơn cản trở dòng electron, làm điện trở của dây dẫn kim loại tăng lên."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Trọng trường Trái Đất",
+    "quote": "AI nói càng lên cao so với mặt đất thì gia tốc trọng trường g của Trái Đất càng tăng.",
+    "task": "Kiểm tra công thức gia tốc trọng trường: g = G*M / (R + h)^2.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Khi độ cao h tăng, khoảng cách tới tâm Trái Đất tăng nên gia tốc trọng trường g giảm dần."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Thấu kính phân kì",
+    "quote": "AI nói thấu kính phân kì bằng thủy tinh đặt trong không khí luôn cho ảnh thật của một vật thật.",
+    "task": "Kiểm tra tính chất tạo ảnh của thấu kính phân kì.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Thấu kính phân kì đặt trong không khí luôn cho ảnh ảo, cùng chiều và nhỏ hơn vật thật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Chuyển động thẳng đều",
+    "quote": "AI nói trong chuyển động thẳng đều, đồ thị vận tốc theo thời gian là một đường thẳng song song với trục thời gian.",
+    "task": "Kiểm tra đồ thị v-t của chuyển động thẳng đều.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Đúng",
+    "explain": "Trong chuyển động thẳng đều, vận tốc v là hằng số không đổi theo thời gian nên đồ thị v-t là đường thẳng nằm ngang song song với trục thời gian Ot."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Áp suất chất lỏng",
+    "quote": "AI nói áp suất ở đáy bình chứa chất lỏng chỉ phụ thuộc vào diện tích đáy bình chứ không phụ thuộc vào độ sâu.",
+    "task": "Kiểm tra công thức áp suất thủy tĩnh: p = d * h.",
+    "source": "SGK Vật lý 8/10.",
+    "verdict": "Sai",
+    "explain": "Áp suất chất lỏng ở độ sâu h tính bằng p = p0 + d*h, phụ thuộc trực tiếp vào độ sâu và trọng lượng riêng chất lỏng, không phụ thuộc vào diện tích đáy (nghịch lý thủy tĩnh)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Lực ma sát có lợi",
+    "quote": "AI khẳng định lực ma sát trong đời sống hoàn toàn chỉ gây hại và con người luôn phải triệt tiêu nó 100%.",
+    "task": "Tìm hiểu vai trò của lực ma sát trong đời sống (ma sát nghỉ khi đi lại, phanh xe).",
+    "source": "SGK Vật lý 8/10.",
+    "verdict": "Sai",
+    "explain": "Lực ma sát có vai trò thiết yếu: không có ma sát người không thể đi lại, xe không thể dừng khi phanh, đinh và ốc vít không thể giữ chặt đồ vật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Phản xạ toàn phần",
+    "quote": "AI nói hiện tượng phản xạ toàn phần xảy ra khi ánh sáng truyền từ môi trường chiết quang kém sang môi trường chiết quang hơn.",
+    "task": "Kiểm tra điều kiện xảy ra phản xạ toàn phần: n1 > n2 và góc tới i >= igh.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Phản xạ toàn phần chỉ xảy ra khi ánh sáng truyền từ môi trường chiết quang hơn sang môi trường chiết quang kém hơn (n1 > n2) và góc tới lớn hơn hoặc bằng góc giới hạn phản xạ toàn phần."
+  }
+]

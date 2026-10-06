@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#163d35">
-  <title>Thực hành & Thư viện 60 Tình huống | AI CHECK THĐ</title>
+  <title>Thực hành & Thư viện 1.000+ Tình huống | AI CHECK THĐ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../site.css">
@@ -57,7 +57,7 @@
     .question-label{margin:18px 0 8px;font-size:11px;font-weight:800;letter-spacing:0.02em;color:var(--color-leaf)}
     [data-theme="dark"] .question-label{color:#d9f26c}
     .choices{display:flex;flex-wrap:wrap;gap:8px}
-    .practice-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+    .practice-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
     [data-theme="dark"] .practice-actions{border-top-color:rgba(255,255,255,.1)}
     .feedback{min-height:38px;margin:14px 0 0;padding:12px 14px;border-radius:8px;background:rgba(36,114,79,.08);color:#1b573a;font-size:11px;line-height:1.6}
     .feedback:empty{display:none}
@@ -106,10 +106,10 @@
     <header class="page-header">
       <div>
         <p class="eyebrow">02 / THỬ NGHIỆM THỰC CHIẾN</p>
-        <h1 class="page-title">Check AI: Đấu trường 60 tình huống.</h1>
+        <h1 class="page-title">Check AI: Đấu trường 1.000+ tình huống.</h1>
         <p class="page-lead">Mỗi thẻ đưa ra một phát biểu do AI cung cấp và nêu việc cần kiểm tra. Hãy đọc cả hai, chọn một kết luận cùng cách kiểm chứng phù hợp; hệ thống sẽ phân tích sư phạm và tính điểm kinh nghiệm ngay sau khi em trả lời.</p>
       </div>
-      <span class="page-count">60 TÌNH HUỐNG · 3 CHỦ ĐỀ</span>
+      <span class="page-count">1.060 TÌNH HUỐNG · 3 CHỦ ĐỀ</span>
     </header>
 
     <!-- 🎮 GAMIFICATION HUD BAR -->
@@ -133,7 +133,7 @@
 
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
           <span class="tag-topic" id="practiceTopic">ĐANG TẢI...</span>
-          <span class="muted" id="practiceProgress" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px">CÂU 1 / 8</span>
+          <span class="muted" id="practiceProgress" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px">CÂU 1 / 10</span>
         </div>
 
         <h2 class="sr-only" id="practiceTitle">Câu hỏi tình huống</h2>
@@ -153,7 +153,10 @@
 
         <div class="practice-actions">
           <span class="muted" id="practiceScore" style="font-size:11px">Chọn kết luận và cách kiểm chứng</span>
-          <button class="button button-dark" id="practiceAction">Kiểm tra đáp án →</button>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <button type="button" class="button button-outline" id="btnPracticeHint" style="padding:8px 13px;font-size:11px;font-weight:700" title="Bấm để mở trợ giúp và gợi ý tra cứu">💡 Trợ giúp / Gợi ý</button>
+            <button class="button button-dark" id="practiceAction">Kiểm tra đáp án →</button>
+          </div>
         </div>
 
         <p class="feedback" id="practiceFeedback" aria-live="polite"></p>
@@ -168,30 +171,30 @@
       <aside class="panel panel-dark">
         <p class="eyebrow" style="color:var(--lime)">LUYỆN TẬP THEO LƯỢT</p>
         <h2 class="panel-title">Mỗi lượt là một đề mới.</h2>
-        <p class="panel-copy">Câu đã làm không lặp cho đến khi dùng hết kho 60 tình huống. Lượt cuối có thể ngắn hơn để giữ nguyên nguyên tắc đó.</p>
+        <p class="panel-copy">Mỗi lượt gồm 10 tình huống được chọn ngẫu nhiên từ kho 1.060 câu. Khi hoàn thành, hệ thống tự động xáo đề mới và tuyệt đối không trùng lặp với các câu vừa làm.</p>
         <button class="button button-lime" id="newPractice" style="width:100%;margin-top:14px">Bắt đầu lượt mới ↻</button>
         <a class="button button-outline" id="googleFormLink" href="resources.html#formConfig" style="width:100%;margin-top:8px">Mở Google Form ↗</a>
         <p class="panel-copy" style="margin-top:16px;line-height:1.5">Các tình huống là tư liệu mô phỏng cho hoạt động học tập, không phải trích dẫn nghiên cứu thật nếu chưa kèm nguồn.</p>
       </aside>
     </div>
 
-    <!-- 📚 THƯ VIỆN 60 TÌNH HUỐNG VỚI TÌM KIẾM TỨC THÌ -->
-    <details class="scenario-library" open>
-      <summary id="libraryTitle">Thư viện tình huống · 60 tình huống</summary>
+    <!-- 💡 TRỢ GIÚP & GỢI Ý TRA CỨU TÌNH HUỐNG (MẶC ĐỊNH LUÔN ẨN) -->
+    <details class="scenario-library" id="scenarioLibrary">
+      <summary id="libraryTitle">💡 Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (1.060 tình huống)</summary>
       <div class="scenario-library-content">
-        <p class="panel-copy">Chọn một thẻ để xem nhiệm vụ, nguồn đối chiếu, kết luận tham khảo và giải thích chi tiết.</p>
+        <p class="panel-copy">Gợi ý dành cho em: Em có thể tra cứu nhanh theo từ khóa, chủ đề hoặc xem các tình huống tương tự để tìm phương pháp kiểm chứng chuẩn xác.</p>
 
         <!-- 🔍 THANH TÌM KIẾM TỨC THÌ -->
         <div class="scenario-search-box">
           <span class="scenario-search-icon">🔍</span>
-          <input type="text" id="scenarioSearchInput" class="scenario-search-input" placeholder="Tìm kiếm nhanh trong 60 tình huống (ví dụ: Deepfake, Fansipan, trà sữa, đề thi, AI...)">
+          <input type="text" id="scenarioSearchInput" class="scenario-search-input" placeholder="Tìm kiếm nhanh trong 1.060 tình huống (ví dụ: Deepfake, Fansipan, Định luật Ohm, Phân số, ChatGPT...)">
         </div>
 
         <div class="filter-row" id="filters">
-          <button class="filter active" data-filter="Tất cả">Tất cả · 60</button>
-          <button class="filter" data-filter="Học tập">Học tập · 20</button>
-          <button class="filter" data-filter="Đời sống">Đời sống · 20</button>
-          <button class="filter" data-filter="AI">AI · 20</button>
+          <button class="filter active" data-filter="Tất cả">Tất cả · 1.060</button>
+          <button class="filter" data-filter="Học tập">Học tập · 360</button>
+          <button class="filter" data-filter="Đời sống">Đời sống · 350</button>
+          <button class="filter" data-filter="AI">AI · 350</button>
         </div>
         <div class="scenario-grid" id="scenarioGrid"></div>
       </div>
@@ -266,14 +269,21 @@
       setTimeout(() => pill.remove(), 1200);
     }
 
+    const ROUND_SIZE = 10;
     function startRound() { 
       let used = read("used:practice", []); 
-      let remaining = scenarios.map((item, itemIndex) => ({ ...item, id: `s${itemIndex}` })).filter(item => !used.includes(item.id)); 
-      if (!remaining.length) { 
-        used = []; 
-        remaining = scenarios.map((item, itemIndex) => ({ ...item, id: `s${itemIndex}` })); 
+      const allScenarios = scenarios.map((item, itemIndex) => ({ ...item, id: `s${itemIndex}` })); 
+      let remaining = allScenarios.filter(item => !used.includes(item.id)); 
+      
+      // Nếu số câu chưa làm còn lại ít hơn ROUND_SIZE (10 câu)
+      if (remaining.length < ROUND_SIZE) { 
+        // Lấy danh sách ID của các câu của lượt vừa hoàn thành để chống trùng lặp tuyệt đối
+        const lastRoundIds = (set || []).map(item => item.id); 
+        used = [...lastRoundIds]; 
+        remaining = allScenarios.filter(item => !used.includes(item.id)); 
       } 
-      set = shuffle(remaining).slice(0, Math.min(8, remaining.length)); 
+      
+      set = shuffle(remaining).slice(0, ROUND_SIZE); 
       write("used:practice", [...used, ...set.map(item => item.id)]); 
       index = 0; 
       correct = 0; 
@@ -430,9 +440,9 @@
         
         // 🎮 Ghi nhận Gamification: XP & Streak & Sound
         if (window.AICheckGamification) {
-          const gamifyRes = window.AICheckGamification.recordAnswer(isBothCorrect);
+          const gamifyRes = window.AICheckGamification.recordPracticeAnswer(trustCorrect, methodCorrect);
           updateGamifyHud();
-          if (isBothCorrect) {
+          if (gamifyRes.xpEarned > 0) {
             showFloatingXp(gamifyRes.xpEarned);
           }
         }
@@ -450,10 +460,10 @@
       saveResult(score); 
       complete = true; 
 
-      // Gamification hoàn thành lượt
+      // Gamification hoàn thành lượt bài
       let roundBonus = 0;
       if (window.AICheckGamification) {
-        const roundRes = window.AICheckGamification.completeRound(correct, set.length);
+        const roundRes = window.AICheckGamification.completePracticeRound(correct, set.length);
         roundBonus = roundRes.bonusXp;
         updateGamifyHud();
       }
@@ -469,28 +479,41 @@
       if (progressBar) progressBar.style.width = "100%";
     }
 
-    function renderLibrary(filter = currentFilter, searchKeyword = currentSearchTerm) { 
+    const LIBRARY_PAGE_SIZE = 60;
+
+    function renderLibrary(filter = currentFilter, searchKeyword = currentSearchTerm, append = false) { 
       currentFilter = filter;
       currentSearchTerm = searchKeyword;
       const grid = document.getElementById("scenarioGrid"); 
-      grid.replaceChildren(); 
+      if (!append) {
+        grid.replaceChildren(); 
+      }
       
-      const cleanKw = searchKeyword.trim().toLowerCase();
+      const cleanKw = (searchKeyword || "").trim().toLowerCase();
 
-      scenarios.forEach((item, itemIndex) => { 
-        if (filter !== "Tất cả" && item.group !== filter) return; 
+      const filtered = scenarios.map((item, idx) => ({ ...item, originalIndex: idx })).filter(item => {
+        if (filter !== "Tất cả" && item.group !== filter) return false;
         if (cleanKw) {
           const matchTitle = item.title.toLowerCase().includes(cleanKw);
           const matchQuote = item.quote.toLowerCase().includes(cleanKw);
           const matchTopic = item.topic.toLowerCase().includes(cleanKw);
           const matchExplain = item.explain.toLowerCase().includes(cleanKw);
-          if (!matchTitle && !matchQuote && !matchTopic && !matchExplain) return;
+          if (!matchTitle && !matchQuote && !matchTopic && !matchExplain) return false;
         }
+        return true;
+      });
 
+      const oldMoreBtn = document.getElementById("loadMoreScenariosWrap");
+      if (oldMoreBtn) oldMoreBtn.remove();
+
+      const currentCount = append ? grid.querySelectorAll(".scenario-button").length : 0;
+      const nextBatch = filtered.slice(currentCount, currentCount + LIBRARY_PAGE_SIZE);
+
+      nextBatch.forEach(item => { 
         const button = document.createElement("button"); 
         button.className = "scenario-button"; 
         button.type = "button"; 
-        button.innerHTML = `<span>${String(itemIndex + 1).padStart(2, "0")}</span><span><strong>${item.title}</strong><small>${item.group} · ${item.topic}</small></span>`; 
+        button.innerHTML = `<span>#${String(item.originalIndex + 1).padStart(4, "0")}</span><span><strong>${item.title}</strong><small>${item.group} · ${item.topic}</small></span>`; 
         button.addEventListener("click", () => {
           window.AICheckAudio?.playClick();
           openScenario(item);
@@ -498,13 +521,37 @@
         grid.append(button); 
       }); 
 
-      if (!grid.children.length) {
+      const totalRendered = currentCount + nextBatch.length;
+
+      if (totalRendered < filtered.length) {
+        const moreWrap = document.createElement("div");
+        moreWrap.id = "loadMoreScenariosWrap";
+        moreWrap.style.gridColumn = "1 / -1";
+        moreWrap.style.textAlign = "center";
+        moreWrap.style.margin = "16px 0 8px";
+        
+        const moreBtn = document.createElement("button");
+        moreBtn.type = "button";
+        moreBtn.className = "button button-outline";
+        moreBtn.style.padding = "10px 24px";
+        moreBtn.style.fontSize = "12px";
+        moreBtn.style.fontWeight = "700";
+        moreBtn.innerHTML = `Xem thêm tình huống (${totalRendered.toLocaleString("vi-VN")}/${filtered.length.toLocaleString("vi-VN")}) ↓`;
+        moreBtn.addEventListener("click", () => {
+          window.AICheckAudio?.playClick();
+          renderLibrary(filter, searchKeyword, true);
+        });
+        moreWrap.appendChild(moreBtn);
+        grid.append(moreWrap);
+      }
+
+      if (!filtered.length) {
         const emptyMsg = document.createElement("p");
         emptyMsg.className = "muted";
         emptyMsg.style.gridColumn = "1/-1";
-        emptyMsg.style.padding = "20px";
+        emptyMsg.style.padding = "24px 20px";
         emptyMsg.style.textAlign = "center";
-        emptyMsg.textContent = "Không tìm thấy tình huống phù hợp với từ khóa này.";
+        emptyMsg.textContent = "Không tìm thấy tình huống nào phù hợp với từ khóa này.";
         grid.append(emptyMsg);
       }
     }
@@ -530,18 +577,62 @@
       }, 500);
     }); 
     
+    let isLibraryRendered = false;
+    function ensureLibraryRendered() {
+      if (!isLibraryRendered) {
+        isLibraryRendered = true;
+        renderLibrary(currentFilter, currentSearchTerm);
+      }
+    }
+
+    const scenarioLibEl = document.getElementById("scenarioLibrary");
+    if (scenarioLibEl) {
+      scenarioLibEl.addEventListener("toggle", () => {
+        if (scenarioLibEl.open) {
+          ensureLibraryRendered();
+        }
+      });
+    }
+
+    // Bấm nút Trợ giúp / Gợi ý trong câu hỏi hiện tại
+    document.getElementById("btnPracticeHint")?.addEventListener("click", () => {
+      window.AICheckAudio?.playClick();
+      const lib = document.getElementById("scenarioLibrary");
+      if (lib) {
+        lib.open = true;
+        ensureLibraryRendered();
+        
+        const currentItem = set[index];
+        if (currentItem) {
+          const sInput = document.getElementById("scenarioSearchInput");
+          if (sInput) {
+            sInput.value = currentItem.topic || "";
+            currentFilter = currentItem.group || "Tất cả";
+            document.querySelectorAll(".filter").forEach(filter => {
+              filter.classList.toggle("active", filter.dataset.filter === currentFilter);
+            });
+            renderLibrary(currentFilter, currentItem.topic || "");
+          }
+        }
+        
+        lib.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+
     document.getElementById("filters").addEventListener("click", event => { 
       const button = event.target.closest("[data-filter]"); 
       if (!button) return; 
       window.AICheckAudio?.playClick();
+      ensureLibraryRendered();
       document.querySelectorAll(".filter").forEach(filter => filter.classList.toggle("active", filter === button)); 
       renderLibrary(button.dataset.filter, currentSearchTerm); 
     }); 
 
-    // Ô tìm kiếm tức thì trong thư viện 60 tình huống
+    // Ô tìm kiếm tức thì trong thư viện 1.060 tình huống
     const searchInput = document.getElementById("scenarioSearchInput");
     if (searchInput) {
       searchInput.addEventListener("input", (e) => {
+        ensureLibraryRendered();
         renderLibrary(currentFilter, e.target.value);
       });
     }
@@ -576,24 +667,23 @@
       const ds = scenarios.filter(s => s.group === "Đời sống").length;
       const ai = scenarios.filter(s => s.group === "AI").length;
       const pageCount = document.querySelector(".page-count");
-      if (pageCount) pageCount.textContent = `${total} TÌNH HUỐNG · 3 CHỦ ĐỀ`;
+      if (pageCount) pageCount.textContent = `${total.toLocaleString("vi-VN")} TÌNH HUỐNG · 3 CHỦ ĐỀ`;
       const libTitle = document.getElementById("libraryTitle");
-      if (libTitle) libTitle.textContent = `Thư viện tình huống · ${total} tình huống`;
+      if (libTitle) libTitle.textContent = `💡 Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (${total.toLocaleString("vi-VN")} tình huống)`;
       const btnAll = document.querySelector('[data-filter="Tất cả"]');
-      if (btnAll) btnAll.textContent = `Tất cả · ${total}`;
+      if (btnAll) btnAll.textContent = `Tất cả · ${total.toLocaleString("vi-VN")}`;
       const btnHt = document.querySelector('[data-filter="Học tập"]');
-      if (btnHt) btnHt.textContent = `Học tập · ${ht}`;
+      if (btnHt) btnHt.textContent = `Học tập · ${ht.toLocaleString("vi-VN")}`;
       const btnDs = document.querySelector('[data-filter="Đời sống"]');
-      if (btnDs) btnDs.textContent = `Đời sống · ${ds}`;
+      if (btnDs) btnDs.textContent = `Đời sống · ${ds.toLocaleString("vi-VN")}`;
       const btnAi = document.querySelector('[data-filter="AI"]');
-      if (btnAi) btnAi.textContent = `AI · ${ai}`;
+      if (btnAi) btnAi.textContent = `AI · ${ai.toLocaleString("vi-VN")}`;
     }
 
     // Lắng nghe sự kiện cập nhật Gamification từ toàn cục
     window.addEventListener("aicheck:gamify-change", updateGamifyHud);
 
     updateCounts(); 
-    renderLibrary(); 
     startRound();
   </script>
   <script src="../site-nav.js"></script>

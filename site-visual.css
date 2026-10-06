@@ -559,36 +559,160 @@ body {
   transform: translateX(3px) !important;
 }
 
+/* --- Khối 3 điểm cốt lõi "Về dự án" (Bento Glassmorphism Cards) --- */
 .home-about-points {
-  display: grid !important;
-  align-content: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  justify-content: center !important;
 }
-.home-about-points article {
-  display: grid !important;
-  grid-template-columns: 44px 1fr !important;
-  gap: 14px !important;
-  padding: 18px 0 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
-  align-items: start !important;
+
+.home-about-points .about-point-card {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  padding: 18px 20px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 18px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.28s ease,
+              border-color 0.28s ease,
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-.home-about-points article:first-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+
+/* Hiệu ứng viền dải sáng ở cạnh trái thẻ */
+.home-about-points .about-point-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--color-accent, #d9f26c), #3ec888, transparent);
+  opacity: 0.6;
+  border-radius: 4px 0 0 4px;
+  transition: opacity 0.3s ease, width 0.3s ease;
 }
-.home-about-points article > span {
-  color: var(--color-accent) !important;
-  font: 700 14px "Space Grotesk", sans-serif !important;
-  padding-top: 2px !important;
+
+.home-about-points .about-point-aside {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
 }
+
+.home-about-points .about-point-num {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 12px !important;
+  background: rgba(217, 242, 108, 0.12) !important;
+  border: 1px solid rgba(217, 242, 108, 0.32) !important;
+  color: var(--color-accent, #d9f26c) !important;
+  font-family: "Space Grotesk", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.home-about-points .about-point-main {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.home-about-points .about-point-head {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 6px !important;
+}
+
+.home-about-points .about-point-icon {
+  font-size: 19px !important;
+  line-height: 1 !important;
+  display: inline-block !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+  transition: transform 0.25s ease !important;
+}
+
 .home-about-points h3 {
-  margin: 0 0 4px !important;
+  margin: 0 !important;
   color: #ffffff !important;
-  font: 700 16px "Space Grotesk", sans-serif !important;
+  font: 700 17px/1.3 "Space Grotesk", sans-serif !important;
+  letter-spacing: -0.01em !important;
 }
+
 .home-about-points p {
   margin: 0 !important;
-  color: #d8e5dc !important;
-  font-size: 11.5px !important;
-  line-height: 1.5 !important;
+  color: #d5e5db !important;
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+  opacity: 0.95;
+}
+
+/* Hover mượt mà trên PC */
+@media (hover: hover) {
+  .home-about-points .about-point-card:hover {
+    transform: translateY(-3px) scale(1.012) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(217, 242, 108, 0.45) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(217, 242, 108, 0.14) !important;
+  }
+  .home-about-points .about-point-card:hover::before {
+    opacity: 1;
+    width: 5px;
+  }
+  .home-about-points .about-point-card:hover .about-point-num {
+    background: rgba(217, 242, 108, 0.24) !important;
+    border-color: rgba(217, 242, 108, 0.6) !important;
+    box-shadow: 0 0 12px rgba(217, 242, 108, 0.35) !important;
+    transform: scale(1.06) !important;
+  }
+  .home-about-points .about-point-card:hover .about-point-icon {
+    transform: scale(1.2) rotate(6deg) !important;
+  }
+}
+
+/* Touch feedback trên Mobile */
+.home-about-points .about-point-card:active {
+  transform: scale(0.99) !important;
+}
+
+/* Tối ưu hiển thị Responsive trên Mobile */
+@media (max-width: 680px) {
+  .home-about-points {
+    gap: 12px !important;
+  }
+  .home-about-points .about-point-card {
+    padding: 14px 14px !important;
+    gap: 12px !important;
+    border-radius: 14px !important;
+  }
+  .home-about-points .about-point-num {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+  }
+  .home-about-points .about-point-icon {
+    font-size: 16px !important;
+  }
+  .home-about-points h3 {
+    font-size: 15px !important;
+  }
+  .home-about-points p {
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+  }
 }
 
 /* FAQ Accordion phong cách Hiện đại */
@@ -1777,10 +1901,15 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
   border-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
-[data-theme="dark"] .home-about-points article {
-  background: #102a22;
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+[data-theme="dark"] .home-about-points .about-point-card {
+  background: rgba(16, 42, 34, 0.72) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4) !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] .home-about-points .about-point-card:hover {
+  background: rgba(22, 58, 47, 0.88) !important;
+  border-color: rgba(217, 242, 108, 0.5) !important;
 }
 /* 🛠️ FIX UI: DARK MODE COMPREHENSIVE CONTRAST & CARD STYLING */
 
@@ -2683,19 +2812,37 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
   color: var(--color-muted);
 }
 
-/* Responsive Cho Bento Grid */
+/* Responsive Cho Bento Grid & Bento Strip */
 @media (max-width: 960px) {
   .bento-portal-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
 @media (max-width: 640px) {
+  .bento-profile-strip {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 14px 16px !important;
+    gap: 12px !important;
+  }
+  .bento-profile-strip > div:last-child {
+    justify-content: flex-start !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
   .bento-portal-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
   }
   .gamify-hud {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  .gamify-hud-left {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
   }
 }
 

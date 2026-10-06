@@ -1,0 +1,3402 @@
+[
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số nguyên tố nhỏ nhất",
+    "quote": "AI khẳng định số 1 là số nguyên tố nhỏ nhất vì chỉ chia hết cho 1.",
+    "task": "Tra cứu định nghĩa số nguyên tố trong SGK Toán.",
+    "source": "SGK Toán 6, Từ điển Toán học chuẩn.",
+    "verdict": "Sai",
+    "explain": "Số nguyên tố là số tự nhiên lớn hơn 1 và chỉ có 2 ước nguyên dương là 1 và chính nó. Số nguyên tố nhỏ nhất là 2."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Tính chẵn lẻ của số 0",
+    "quote": "AI nói số 0 không phải là số chẵn cũng không phải là số lẻ.",
+    "task": "Kiểm tra định nghĩa số chẵn trong số học.",
+    "source": "SGK Toán phổ thông (dạng 2k).",
+    "verdict": "Sai",
+    "explain": "Số chẵn là số nguyên chia hết cho 2 (dạng 2k với k thuộc Z). Vì 0 = 2*0 nên 0 là số nguyên chẵn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số vô tỉ Pi",
+    "quote": "AI tuyên bố số Pi có thể biểu diễn chính xác tuyệt đối bằng phân số 22/7.",
+    "task": "Tra cứu tính chất số vô tỉ và lịch sử số Pi.",
+    "source": "SGK Toán và tài liệu Giải tích cổ điển.",
+    "verdict": "Sai",
+    "explain": "Số Pi là số vô tỉ và số siêu việt. Phân số 22/7 chỉ là giá trị xấp xỉ gần đúng của Archimedes (3.142857...), không phải là giá trị chính xác của Pi (3.141592...)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Phép chia cho 0",
+    "quote": "AI nói trong tập số thực, 5 chia cho 0 bằng vô cùng (infinity).",
+    "task": "Kiểm tra tiên đề và quy tắc phép toán trong trường số thực.",
+    "source": "SGK Đại số & Giải tích.",
+    "verdict": "Sai",
+    "explain": "Trong số học và giải tích chuẩn trên tập số thực, phép chia cho 0 không xác định. Ký hiệu vô cùng chỉ xuất hiện trong giới hạn, không phải là một số thực."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Tổng các góc trong tam giác",
+    "quote": "AI khẳng định tổng 3 góc trong bất kỳ tam giác nào trong vũ trụ luôn luôn bằng đúng 180 độ.",
+    "task": "Tìm hiểu sự khác biệt giữa hình học phẳng Euclid và hình học phi Euclid.",
+    "source": "Tài liệu Hình học cao cấp, hình học cầu Riemann.",
+    "verdict": "Cần kiểm chứng thêm",
+    "explain": "Trong hình học phẳng Euclid, tổng ba góc bằng 180 độ. Tuy nhiên trong hình học phi Euclid (như mặt cầu), tổng ba góc tam giác luôn lớn hơn 180 độ. AI thiếu điều kiện 'hình học phẳng'."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Phương trình bậc hai vô nghiệm",
+    "quote": "AI khẳng định phương trình x^2 + 4 = 0 hoàn toàn không có nghiệm nào trong bất kỳ tập số nào.",
+    "task": "Kiểm tra tập nghiệm trong tập số thực R và tập số phức C.",
+    "source": "SGK Toán 12 (Giải tích và Đại số).",
+    "verdict": "Sai",
+    "explain": "Phương trình x^2 + 4 = 0 vô nghiệm trong tập số thực R, nhưng có hai nghiệm trong tập số phức C là x = 2i và x = -2i."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Đạo hàm của hàm hằng",
+    "quote": "AI nói đạo hàm của hàm số y = 2026 trên tập số thực luôn bằng 0.",
+    "task": "Kiểm tra công thức tính đạo hàm cơ bản.",
+    "source": "SGK Toán 11/12 (Giải tích).",
+    "verdict": "Đúng",
+    "explain": "Đạo hàm của một hàm hằng f(x) = C luôn bằng 0 trên toàn bộ tập xác định."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Dãy số Fibonacci",
+    "quote": "AI nói số tiếp theo trong dãy Fibonacci 1, 1, 2, 3, 5, 8 là 13.",
+    "task": "Kiểm tra quy luật sinh của dãy Fibonacci.",
+    "source": "Tài liệu Lý thuyết số cơ bản.",
+    "verdict": "Đúng",
+    "explain": "Dãy Fibonacci có quy luật mỗi số sau bằng tổng hai số liền trước: 5 + 8 = 13."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Nghịch lý Monty Hall",
+    "quote": "AI khuyên trong bài toán 3 cánh cửa Monty Hall, đổi cửa hay giữ nguyên cửa có xác suất thắng như nhau là 50%.",
+    "task": "Phân tích xác suất có điều kiện của bài toán Monty Hall.",
+    "source": "Giáo trình Xác suất và Thống kê.",
+    "verdict": "Sai",
+    "explain": "Nếu đổi cửa, xác suất trúng xe hơi tăng lên 2/3 (66.7%), trong khi giữ nguyên cửa ban đầu chỉ có xác suất thắng 1/3 (33.3%)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số nguyên tố chẵn duy nhất",
+    "quote": "AI nói số 2 là số nguyên tố chẵn duy nhất trong toàn bộ tập số tự nhiên.",
+    "task": "Kiểm tra định nghĩa số nguyên tố và tính chất chia hết cho 2.",
+    "source": "SGK Toán 6/10.",
+    "verdict": "Đúng",
+    "explain": "Mọi số chẵn lớn hơn 2 đều chia hết cho 2 (có ít nhất 3 ước) nên đều là hợp số. Do đó 2 là số nguyên tố chẵn duy nhất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số hoàn hảo nhỏ nhất",
+    "quote": "AI nói số hoàn hảo nhỏ nhất là số 6 vì tổng các ước thực sự bằng chính nó.",
+    "task": "Tra cứu định nghĩa số hoàn hảo trong số học.",
+    "source": "Tài liệu Lý thuyết số.",
+    "verdict": "Đúng",
+    "explain": "Số hoàn hảo là số tự nhiên bằng tổng tất cả các ước nguyên dương nhỏ hơn nó. Ước thực sự của 6 là 1, 2, 3 và 1 + 2 + 3 = 6."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Tung đồng xu độc lập",
+    "quote": "AI nói nếu tung đồng xu 5 lần liên tiếp đều ra Ngửa, thì lần thứ 6 xác suất ra Sấp sẽ là 90%.",
+    "task": "Tìm hiểu về tính độc lập của các phép thử ngẫu nhiên.",
+    "source": "Giáo trình Xác suất thống kê.",
+    "verdict": "Sai",
+    "explain": "Mỗi lần tung đồng xu là một biến cố độc lập. Xác suất ra Sấp ở lần thứ 6 vẫn là 50% (ngụy biện con bạc - Gambler's fallacy)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Căn bậc hai số học của số âm",
+    "quote": "AI khẳng định căn bậc hai số học của -9 là -3 vì (-3)^2 = 9.",
+    "task": "Kiểm tra định nghĩa căn bậc hai số học trong trường số thực.",
+    "source": "SGK Toán 9/10.",
+    "verdict": "Sai",
+    "explain": "Trong tập số thực, số âm không có căn bậc hai số học. Căn bậc hai số học của một số a >= 0 luôn phải là một số không âm."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Góc nội tiếp chắn nửa đường tròn",
+    "quote": "AI nói góc nội tiếp chắn nửa đường tròn luôn luôn là một góc vuông (90 độ).",
+    "task": "Tra cứu định lý góc nội tiếp trong hình học phẳng.",
+    "source": "SGK Toán 9 (Hình học).",
+    "verdict": "Đúng",
+    "explain": "Góc nội tiếp có số đo bằng một nửa số đo của cung bị chắn; nửa đường tròn có số đo 180 độ nên góc nội tiếp bằng 90 độ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Lũy thừa bậc 0 của số 0",
+    "quote": "AI khẳng định 0 mũ 0 luôn luôn bằng 1 trong mọi ngữ cảnh toán học.",
+    "task": "Tìm hiểu quy ước dạng vô định 0^0 trong đại số và giải tích.",
+    "source": "Giáo trình Giải tích toán học đại cương.",
+    "verdict": "Cần kiểm chứng thêm",
+    "explain": "Trong đại số rời rạc và tổ hợp, 0^0 thường được quy ước bằng 1 để tiện cho các công thức nhị thức; nhưng trong giải tích giới hạn, 0^0 là dạng vô định."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Định lý Pythagoras đảo",
+    "quote": "AI nói nếu một tam giác có độ dài 3 cạnh là 3, 4, 5 thì chắc chắn đó là tam giác vuông.",
+    "task": "Kiểm tra định lý Pythagoras đảo: a^2 + b^2 = c^2.",
+    "source": "SGK Toán 7/8 (Hình học).",
+    "verdict": "Đúng",
+    "explain": "Vì 3^2 + 4^2 = 9 + 16 = 25 = 5^2, theo định lý Pythagoras đảo, tam giác có 3 cạnh 3, 4, 5 là tam giác vuông."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số chính phương tận cùng bằng 2",
+    "quote": "AI nói có một số chính phương nguyên dương có chữ số tận cùng bằng 2.",
+    "task": "Kiểm tra các chữ số tận cùng có thể có của số chính phương.",
+    "source": "SGK Toán nâng cao chuyên đề số học.",
+    "verdict": "Sai",
+    "explain": "Chữ số tận cùng của bình phương một số tự nhiên chỉ có thể là 0, 1, 4, 5, 6, 9. Không có số chính phương nào tận cùng bằng 2, 3, 7, 8."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Đường thẳng song song theo Euclid",
+    "quote": "AI nói trong mặt phẳng, qua một điểm nằm ngoài đường thẳng có vô số đường thẳng song song với nó.",
+    "task": "Kiểm tra tiên đề thứ năm của Euclid.",
+    "source": "SGK Toán và lịch sử hình học.",
+    "verdict": "Sai",
+    "explain": "Theo tiên đề Euclid, qua một điểm ở ngoài một đường thẳng chỉ vẽ được một và chỉ một đường thẳng song song với đường thẳng đó."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Diện tích hình tròn bán kính R",
+    "quote": "AI nói công thức tính diện tích hình tròn bán kính R là 2*Pi*R.",
+    "task": "Phân biệt công thức chu vi và diện tích hình tròn.",
+    "source": "SGK Toán 5/9.",
+    "verdict": "Sai",
+    "explain": "2*Pi*R là công thức tính chu vi hình tròn. Diện tích hình tròn phải là Pi * R^2."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Trung bình cộng so với Trung vị",
+    "quote": "AI nói trung bình cộng luôn luôn phản ánh chính xác mức thu nhập điển hình của người dân hơn trung vị.",
+    "task": "Tìm hiểu ảnh hưởng của các giá trị ngoại lai (outliers) trong thống kê.",
+    "source": "Giáo trình Thống kê ứng dụng.",
+    "verdict": "Sai",
+    "explain": "Khi phân phối thu nhập bị lệch mạnh do có một số rất ít tỷ phú siêu giàu, giá trị trung bình bị kéo cao giả tạo; khi đó số trung vị (median) phản ánh đúng mức thu nhập điển hình của đa số hơn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Xác suất biến cố chắc chắn",
+    "quote": "AI nói xác suất của một biến cố chắc chắn xảy ra luôn bằng 1.",
+    "task": "Kiểm tra tiên đề xác suất của Kolmogorov.",
+    "source": "Giáo trình Xác suất và Thống kê.",
+    "verdict": "Đúng",
+    "explain": "Theo tiên đề lý thuyết xác suất, xác suất của không gian mẫu (biến cố chắc chắn) luôn bằng 1 (P(Omega) = 1)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Bất đẳng thức tam giác",
+    "quote": "AI nói tồn tại một tam giác có độ dài 3 cạnh lần lượt là 2cm, 3cm và 6cm.",
+    "task": "Kiểm tra bất đẳng thức tam giác: tổng hai cạnh bất kỳ phải lớn hơn cạnh còn lại.",
+    "source": "SGK Toán 7.",
+    "verdict": "Sai",
+    "explain": "Vì 2 + 3 = 5 < 6, vi phạm bất đẳng thức tam giác (tổng hai cạnh phải lớn hơn cạnh thứ ba), nên không thể tạo thành tam giác."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số đối của số 0",
+    "quote": "AI nói số 0 không có số đối trong tập hợp số nguyên Z.",
+    "task": "Kiểm tra định nghĩa số đối trong số học.",
+    "source": "SGK Toán 6.",
+    "verdict": "Sai",
+    "explain": "Mọi số nguyên a đều có số đối là -a sao cho a + (-a) = 0. Số đối của 0 chính là 0 (vì 0 + 0 = 0)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Độ dài đường chéo hình vuông",
+    "quote": "AI nói hình vuông cạnh dài 1 đơn vị thì đường chéo có độ dài chính xác bằng 1.4.",
+    "task": "Tính độ dài đường chéo bằng định lý Pythagoras.",
+    "source": "SGK Toán 7/9.",
+    "verdict": "Sai",
+    "explain": "Độ dài đường chéo của hình vuông cạnh 1 là căn bậc hai của 2 (căn 2), là một số vô tỉ xấp xỉ 1.414213..., không bằng số hữu tỉ 1.4."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Tích của hai số âm",
+    "quote": "AI nói tích của hai số thực âm luôn luôn là một số thực dương.",
+    "task": "Kiểm tra quy tắc dấu trong phép nhân số thực.",
+    "source": "SGK Toán 6/7.",
+    "verdict": "Đúng",
+    "explain": "Theo quy tắc nhân hai số nguyên/số thực cùng dấu âm, tích của chúng luôn là một số dương (ví dụ: (-2) * (-3) = 6)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số hữu tỉ biểu diễn dạng phân số",
+    "quote": "AI nói mọi số thập phân vô hạn đều là số vô tỉ không thể chuyển thành phân số.",
+    "task": "Phân biệt số thập phân vô hạn tuần hoàn và không tuần hoàn.",
+    "source": "SGK Toán 7 Đại số.",
+    "verdict": "Sai",
+    "explain": "Số thập phân vô hạn tuần hoàn (như 0.333... = 1/3) là số hữu tỉ và hoàn toàn biểu diễn được dưới dạng phân số a/b. Chỉ số thập phân vô hạn không tuần hoàn mới là số vô tỉ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Hàm số chẵn và đồ thị",
+    "quote": "AI nói đồ thị của hàm số chẵn luôn nhận trục hoành Ox làm trục đối xứng.",
+    "task": "Kiểm tra tính chất hình học của hàm số chẵn và hàm số lẻ.",
+    "source": "SGK Toán 10/11.",
+    "verdict": "Sai",
+    "explain": "Đồ thị của hàm số chẵn nhận trục tung Oy làm trục đối xứng, không phải trục hoành Ox."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Giá trị lớn nhất của hàm sin(x)",
+    "quote": "AI nói giá trị của sin(x) trên tập số thực có thể đạt tới 2 khi góc x rất lớn.",
+    "task": "Kiểm tra tập giá trị của hàm số lượng giác sin(x).",
+    "source": "SGK Toán 11 (Lượng giác).",
+    "verdict": "Sai",
+    "explain": "Hàm số sin(x) có tập giá trị nằm trong đoạn [-1; 1]. Dù góc x lớn bao nhiêu thì sin(x) không bao giờ vượt quá 1."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Phép nhân ma trận có giao hoán không",
+    "quote": "AI nói phép nhân hai ma trận vuông cùng cấp luôn luôn có tính chất giao hoán (A*B = B*A).",
+    "task": "Kiểm tra tính chất của phép nhân ma trận trong đại số tuyến tính.",
+    "source": "Giáo trình Đại số tuyến tính.",
+    "verdict": "Sai",
+    "explain": "Nói chung phép nhân ma trận không có tính chất giao hoán, nghĩa là thường thì A*B khác B*A."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số Euler e",
+    "quote": "AI nói cơ số logarit tự nhiên e là một hằng số toán học xấp xỉ 2.718.",
+    "task": "Tra cứu định nghĩa và giá trị của số e.",
+    "source": "SGK Giải tích 11/12.",
+    "verdict": "Đúng",
+    "explain": "Số e là giới hạn của (1 + 1/n)^n khi n tiến tới vô cùng, có giá trị xấp xỉ 2.7182818..."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Hai góc bù nhau",
+    "quote": "AI nói hai góc bù nhau là hai góc có tổng số đo bằng 90 độ.",
+    "task": "Phân biệt hai góc phụ nhau và hai góc bù nhau.",
+    "source": "SGK Toán 6/7 Hình học.",
+    "verdict": "Sai",
+    "explain": "Hai góc phụ nhau mới có tổng số đo bằng 90 độ. Hai góc bù nhau có tổng số đo bằng 180 độ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Nghiệm bội chẵn và đổi dấu",
+    "quote": "AI nói qua điểm nghiệm bội chẵn thì đồ thị hàm số luôn luôn đổi dấu từ dương sang âm hoặc ngược lại.",
+    "task": "Kiểm tra tính chất dấu của hàm đa thức qua nghiệm bội chẵn.",
+    "source": "SGK Toán 12 Giải tích.",
+    "verdict": "Sai",
+    "explain": "Qua nghiệm bội lẻ hàm số mới đổi dấu; qua nghiệm bội chẵn đồ thị hàm số tiếp xúc trục hoành và không đổi dấu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Giai thừa của 0",
+    "quote": "AI nói 0! (0 giai thừa) theo quy ước toán học chuẩn là bằng 1.",
+    "task": "Tra cứu định nghĩa hàm giai thừa trong tổ hợp.",
+    "source": "SGK Toán 11 Đại số & Tổ hợp.",
+    "verdict": "Đúng",
+    "explain": "Trong toán học chuẩn, 0! được quy ước bằng 1 để phù hợp với các công thức chỉnh hợp, tổ hợp và hàm Gamma (Gamma(1) = 0! = 1)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Hai tam giác đồng dạng và bằng nhau",
+    "quote": "AI nói hai tam giác có 3 góc tương ứng bằng nhau thì chắc chắn bằng nhau.",
+    "task": "Phân biệt tam giác đồng dạng (g-g-g) và tam giác bằng nhau.",
+    "source": "SGK Toán 8 Hình học.",
+    "verdict": "Sai",
+    "explain": "Ba góc tương ứng bằng nhau chỉ chứng minh được hai tam giác đồng dạng với nhau, không chứng minh được chúng bằng nhau (kích thước có thể khác nhau)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Tập rỗng là con của mọi tập hợp",
+    "quote": "AI nói tập hợp rỗng là tập hợp con của mọi tập hợp bất kỳ.",
+    "task": "Kiểm tra tiên đề lý thuyết tập hợp.",
+    "source": "SGK Toán 10 Đại số.",
+    "verdict": "Đúng",
+    "explain": "Theo lý thuyết tập hợp, mệnh đề 'mọi phần tử của tập rỗng đều thuộc tập A' luôn đúng trong logic hình thức. Do đó tập rỗng là con của mọi tập hợp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Đường tiệm cận ngang của hàm số",
+    "quote": "AI nói đồ thị hàm số y = 1/x không bao giờ cắt đường tiệm cận của nó.",
+    "task": "Kiểm tra định nghĩa đường tiệm cận và sự tương giao.",
+    "source": "SGK Toán 12 Giải tích.",
+    "verdict": "Đúng",
+    "explain": "Với hàm phân thức y = 1/x, tiệm cận ngang là y = 0. Phương trình 1/x = 0 vô nghiệm nên đồ thị không bao giờ cắt đường tiệm cận này."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số chia hết cho 9 và cho 3",
+    "quote": "AI nói mọi số tự nhiên chia hết cho 3 thì đều chia hết cho 9.",
+    "task": "Kiểm tra dấu hiệu chia hết trong số học.",
+    "source": "SGK Toán 6.",
+    "verdict": "Sai",
+    "explain": "Điều ngược lại mới đúng: số chia hết cho 9 thì chia hết cho 3. Ví dụ số 6, 12, 15 chia hết cho 3 nhưng không chia hết cho 9."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Hệ phương trình tuyến tính vô số nghiệm",
+    "quote": "AI nói hệ 2 phương trình bậc nhất 2 ẩn có định thức D = 0 thì luôn có vô số nghiệm.",
+    "task": "Kiểm tra công thức nghiệm Cramer và trường hợp vô nghiệm.",
+    "source": "SGK Toán 10.",
+    "verdict": "Sai",
+    "explain": "Khi D = 0, nếu Dx hoặc Dy khác 0 thì hệ vô nghiệm. Hệ chỉ có vô số nghiệm khi đồng thời D = Dx = Dy = 0."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Thể tích hình cầu bán kính R",
+    "quote": "AI nói thể tích hình cầu bán kính R là 4/3 * Pi * R^3.",
+    "task": "Tra cứu công thức thể tích khối cầu.",
+    "source": "SGK Toán 9/12 Hình học.",
+    "verdict": "Đúng",
+    "explain": "Công thức thể tích khối cầu bán kính R chính xác là V = (4/3) * Pi * R^3."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Cực trị và đạo hàm bằng 0",
+    "quote": "AI khẳng định nếu đạo hàm f'(x0) = 0 thì x0 chắc chắn là một điểm cực trị của hàm số.",
+    "task": "Kiểm tra điều kiện đủ để hàm số đạt cực trị (sự đổi dấu của đạo hàm).",
+    "source": "SGK Toán 12 Giải tích.",
+    "verdict": "Sai",
+    "explain": "f'(x0) = 0 chỉ là điều kiện cần. Ví dụ với hàm y = x^3, đạo hàm tại x=0 bằng 0 nhưng hàm số đồng biến trên R và không đạt cực trị tại x=0 vì đạo hàm không đổi dấu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số siêu việt",
+    "quote": "AI nói mọi số siêu việt đều là số vô tỉ.",
+    "task": "Tra cứu định nghĩa số đại số và số siêu việt.",
+    "source": "Giáo trình Lý thuyết số đại học.",
+    "verdict": "Đúng",
+    "explain": "Số siêu việt là số thực không phải là nghiệm của bất kỳ phương trình đa thức với hệ số hữu tỉ nào. Mọi số hữu tỉ đều là số đại số, do đó mọi số siêu việt đều là số vô tỉ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Chu kỳ của hàm tang tan(x)",
+    "quote": "AI nói hàm số y = tan(x) tuần hoàn với chu kỳ cơ sở là 2*Pi.",
+    "task": "Kiểm tra chu kỳ của các hàm lượng giác cơ bản.",
+    "source": "SGK Toán 11 Lượng giác.",
+    "verdict": "Sai",
+    "explain": "Hàm số sin(x) và cos(x) tuần hoàn với chu kỳ 2*Pi, trong khi hàm số tan(x) và cot(x) tuần hoàn với chu kỳ cơ sở là Pi."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Đường trung trực của đoạn thẳng",
+    "quote": "AI nói đường trung trực của một đoạn thẳng là đường thẳng đi qua trung điểm và vuông góc với đoạn thẳng đó.",
+    "task": "Kiểm tra định nghĩa hình học chuẩn.",
+    "source": "SGK Toán 7.",
+    "verdict": "Đúng",
+    "explain": "Định nghĩa chuẩn: Đường trung trực của một đoạn thẳng là đường thẳng vuông góc với đoạn thẳng tại trung điểm của nó."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Trung điểm của cạnh huyền tam giác vuông",
+    "quote": "AI nói trong tam giác vuông, khoảng cách từ trung điểm cạnh huyền tới đỉnh góc vuông bằng một nửa độ dài cạnh huyền.",
+    "task": "Kiểm tra tính chất đường trung tuyến ứng với cạnh huyền.",
+    "source": "SGK Toán 8 Hình học.",
+    "verdict": "Đúng",
+    "explain": "Trong tam giác vuông, đường trung tuyến ứng với cạnh huyền bằng một nửa cạnh huyền, đồng thời trung điểm cạnh huyền là tâm đường tròn ngoại tiếp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Tập số nguyên tố vô hạn",
+    "quote": "AI tuyên bố nhà toán học Euclid đã chứng minh tập hợp các số nguyên tố là vô hạn từ thời cổ đại.",
+    "task": "Tra cứu lịch sử định lý Euclid về tính vô hạn của số nguyên tố.",
+    "source": "Lịch sử toán học, SGK Toán nâng cao.",
+    "verdict": "Đúng",
+    "explain": "Euclid đã đưa ra chứng minh phản chứng kinh điển rất đẹp trong tác phẩm Cơ sở (Elements) khẳng định có vô hạn số nguyên tố."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Số Catalan",
+    "quote": "AI nói dãy số Catalan là một dãy số tự nhiên thường xuất hiện trong các bài toán đếm đường đi và cây nhị phân.",
+    "task": "Tra cứu ứng dụng tổ hợp của số Catalan.",
+    "source": "Giáo trình Toán rời rạc.",
+    "verdict": "Đúng",
+    "explain": "Số Catalan C_n xuất hiện trong rất nhiều bài toán đếm cấu trúc tổ hợp như đếm số cây nhị phân, số cách đặt ngoặc hợp lệ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Định lý Bachet-Bezout",
+    "quote": "AI nói ước chung lớn nhất của hai số nguyên a và b luôn biểu diễn được dưới dạng ax + by với x, y là các số nguyên.",
+    "task": "Kiểm tra định lý Bezout trong lý thuyết số.",
+    "source": "Giáo trình Số học đại số.",
+    "verdict": "Đúng",
+    "explain": "Theo đồng nhất thức Bezout, gcd(a, b) = d luôn tồn tại các số nguyên x, y thỏa mãn ax + by = d."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Hình chữ nhật vàng",
+    "quote": "AI nói hình chữ nhật vàng có tỷ lệ giữa chiều dài và chiều rộng chính xác bằng tỷ lệ vàng Phi xấp xỉ 1.618.",
+    "task": "Tra cứu định nghĩa hình chữ nhật vàng và tỷ lệ Phi.",
+    "source": "Hình học ứng dụng và mỹ thuật học.",
+    "verdict": "Đúng",
+    "explain": "Hình chữ nhật vàng có tỷ lệ cạnh dài / cạnh ngắn = (1 + căn 5) / 2 xấp xỉ 1.61803398..."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Đạo hàm của hàm logarit ln(x)",
+    "quote": "AI nói đạo hàm của y = ln(x) với x > 0 là 1/x.",
+    "task": "Kiểm tra bảng đạo hàm các hàm số sơ cấp.",
+    "source": "SGK Toán 12 Giải tích.",
+    "verdict": "Đúng",
+    "explain": "Đạo hàm của hàm logarit tự nhiên ln(x) với mọi x > 0 chính xác là 1/x."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Toán học",
+    "title": "Phép dời hình bảo toàn khoảng cách",
+    "quote": "AI nói phép dời hình trong mặt phẳng có thể làm thay đổi khoảng cách giữa hai điểm bất kỳ.",
+    "task": "Kiểm tra định nghĩa phép dời hình trong hình học.",
+    "source": "SGK Toán 11 Hình học.",
+    "verdict": "Sai",
+    "explain": "Theo định nghĩa, phép dời hình là phép biến hình bảo toàn khoảng cách giữa hai điểm bất kỳ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hằng số vận tốc ánh sáng và sai số",
+    "quote": "AI nói ánh sáng truyền trong chân không với tốc độ xấp xỉ 300.000 km/s.",
+    "task": "Tra cứu hằng số vật lý quốc tế NIST/CODATA.",
+    "source": "Viện Tiêu chuẩn và Công nghệ Quốc gia (NIST), SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Vận tốc ánh sáng trong chân không chính xác là 299.792.458 m/s, xấp xỉ 300.000 km/s."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Rơi tự do trong chân không",
+    "quote": "AI khẳng định trong chân không, quả cầu sắt rơi nhanh hơn chiếc lông chim vì sắt nặng hơn.",
+    "task": "Kiểm tra thí nghiệm ống Newton về sự rơi tự do trong chân không.",
+    "source": "SGK Vật lý 10, thí nghiệm Apollo 15 trên Mặt Trăng.",
+    "verdict": "Sai",
+    "explain": "Trong môi trường chân không không có lực cản không khí, mọi vật đều rơi với cùng gia tốc trọng trường g và chạm đất cùng lúc bất kể khối lượng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Khối lượng và Trọng lượng",
+    "quote": "AI nói khối lượng của một phi hành gia lên Mặt Trăng sẽ giảm đi 6 lần so với ở Trái Đất.",
+    "task": "Phân biệt khái niệm khối lượng (lượng chất) và trọng lượng (lực hút trọng trường).",
+    "source": "SGK Vật lý 10 (Cơ học).",
+    "verdict": "Sai",
+    "explain": "Khối lượng là lượng chất cấu tạo nên vật và không đổi khi di chuyển. Chỉ có trọng lượng (lực hấp dẫn P = mg) giảm 6 lần do gia tốc trọng trường Mặt Trăng chỉ bằng 1/6 Trái Đất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Độ không tuyệt đối",
+    "quote": "AI nói nhiệt độ thấp nhất trong vũ trụ là 0 độ C, dưới nhiệt độ này không có gì tồn tại.",
+    "task": "Tra cứu thang đo nhiệt độ Kelvin và độ không tuyệt đối.",
+    "source": "SGK Vật lý 10 (Nhiệt học).",
+    "verdict": "Sai",
+    "explain": "Nhiệt độ thấp nhất lý thuyết là 0 Kelvin (tương đương -273.15 độ C), tại đó các phân tử dừng chuyển động nhiệt; 0 độ C chỉ là điểm đóng băng của nước ở áp suất chuẩn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Điểm sôi của nước trên đỉnh núi cao",
+    "quote": "AI khẳng định trên đỉnh núi Everest ở độ cao hơn 8.800m, nước tinh khiết vẫn sôi ở đúng 100 độ C.",
+    "task": "Tra cứu mối liên hệ giữa áp suất khí quyển và nhiệt độ sôi của chất lỏng.",
+    "source": "Giáo trình Nhiệt động lực học, SGK Vật lý.",
+    "verdict": "Sai",
+    "explain": "Áp suất khí quyển giảm khi lên cao. Trên đỉnh Everest, áp suất chỉ còn khoảng 1/3 áp suất mực nước biển nên nước sôi ở nhiệt độ khoảng 71 độ C."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng khúc xạ ánh sáng",
+    "quote": "AI nói khi tia sáng truyền từ không khí vào nước, góc khúc xạ luôn lớn hơn góc tới.",
+    "task": "Kiểm tra định luật khúc xạ ánh sáng của Snell-Descartes: n1*sin(i) = n2*sin(r).",
+    "source": "SGK Vật lý 11 (Quang hình học).",
+    "verdict": "Sai",
+    "explain": "Nước có chiết suất lớn hơn không khí (n2 > n1). Theo định luật Snell, sin(r) < sin(i) nên góc khúc xạ r luôn nhỏ hơn góc tới i."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Sự nở vì nhiệt dị thường của nước",
+    "quote": "AI nói nước cũng như mọi chất lỏng khác, luôn luôn co lại khi nhiệt độ giảm từ 4 độ C về 0 độ C.",
+    "task": "Tra cứu tính chất giãn nở vì nhiệt dị thường của nước ở dải nhiệt độ 0-4 độ C.",
+    "source": "SGK Vật lý và Hóa học đại cương.",
+    "verdict": "Sai",
+    "explain": "Nước có tính chất dị thường: mật độ nước đạt cực đại ở 4 độ C. Khi hạ nhiệt độ từ 4 độ C về 0 độ C, nước lại nở ra và khối lượng riêng giảm, giúp băng nổi trên mặt nước."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Xếp hạng độ dẫn điện của kim loại",
+    "quote": "AI nói vàng là kim loại dẫn điện tốt nhất trong tất cả các kim loại.",
+    "task": "Tra cứu bảng độ dẫn điện tiêu chuẩn của kim loại.",
+    "source": "Sổ tay Vật lý kỹ thuật, SGK Vật lý.",
+    "verdict": "Sai",
+    "explain": "Bạc (Ag) mới là kim loại dẫn điện tốt nhất ở nhiệt độ phòng, tiếp theo là đồng (Cu), rồi mới đến vàng (Au) và nhôm (Al)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng đoản mạch",
+    "quote": "AI nói đoản mạch là hiện tượng điện trở mạch ngoài rất lớn làm dòng điện giảm về 0.",
+    "task": "Kiểm tra định nghĩa hiện tượng đoản mạch (ngắn mạch) theo định luật Ohm.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Đoản mạch xảy ra khi điện trở mạch ngoài rất nhỏ (tiến về 0), khiến cường độ dòng điện trong mạch tăng vọt rất lớn, dễ gây cháy nổ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Sóng âm truyền trong chân không",
+    "quote": "AI nói nếu nổ bom hạt nhân ngoài vũ trụ chân không, người ở trạm không gian gần đó sẽ nghe thấy tiếng nổ đinh tai.",
+    "task": "Kiểm tra bản chất sóng cơ và môi trường truyền sóng âm.",
+    "source": "SGK Vật lý 12 (Sóng cơ).",
+    "verdict": "Sai",
+    "explain": "Sóng âm là sóng cơ học, cần môi trường vật chất (rắn, lỏng, khí) để lan truyền. Trong chân không vũ trụ không có hạt vật chất nên sóng âm hoàn toàn không truyền đi được."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Mặt Trời là loại thiên thể nào",
+    "quote": "AI nói Mặt Trời là một hành tinh lớn nằm ở trung tâm Hệ Mặt Trời.",
+    "task": "Kiểm tra định nghĩa hành tinh và ngôi sao trong thiên văn học.",
+    "source": "SGK Địa lý/Vật lý, NASA.",
+    "verdict": "Sai",
+    "explain": "Mặt Trời là một ngôi sao (ngôi sao lùn vàng), tự phát sáng nhờ phản ứng nhiệt hạch trong lõi; các hành tinh như Trái Đất, Sao Hỏa quay quanh Mặt Trời."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hành tinh nóng nhất Hệ Mặt Trời",
+    "quote": "AI nói Sao Thủy là hành tinh nóng nhất vì nó nằm gần Mặt Trời nhất.",
+    "task": "Tra cứu nhiệt độ bề mặt các hành tinh trong Hệ Mặt Trời.",
+    "source": "Dữ liệu quan sát hành tinh NASA, SGK Vật lý.",
+    "verdict": "Sai",
+    "explain": "Sao Kim (Venus) mới là hành tinh nóng nhất (khoảng 465 độ C) do bầu khí quyển CO2 dày đặc tạo ra hiệu ứng nhà kính cực mạnh, nóng hơn cả Sao Thủy."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Định luật vạn vật hấp dẫn",
+    "quote": "AI nói lực hấp dẫn giữa hai vật tỉ lệ nghịch với khoảng cách giữa chúng.",
+    "task": "Kiểm tra công thức định luật vạn vật hấp dẫn của Newton: F = G*(m1*m2)/r^2.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Lực hấp dẫn tỉ lệ nghịch với BÌNH PHƯƠNG khoảng cách giữa hai vật (r^2), không phải tỉ lệ nghịch với khoảng cách."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Điện năng tiêu thụ của bóng đèn",
+    "quote": "AI nói bóng đèn 100W thắp sáng liên tục trong 10 giờ sẽ tiêu thụ đúng 1 kilowatt-giờ (1 số điện).",
+    "task": "Tính công suất và điện năng tiêu thụ: A = P * t.",
+    "source": "SGK Vật lý 9/11.",
+    "verdict": "Đúng",
+    "explain": "100W * 10 giờ = 1000 Wh = 1 kWh, tương đương 1 số điện trên công tơ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tốc độ âm thanh trong các môi trường",
+    "quote": "AI nói âm thanh truyền nhanh nhất trong không khí, sau đó đến nước và chậm nhất trong thép.",
+    "task": "Kiểm tra sự truyền sóng cơ trong các môi trường rắn, lỏng, khí.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Âm thanh truyền nhanh nhất trong chất rắn (thép ~5000 m/s), sau đó đến chất lỏng (nước ~1500 m/s) và chậm nhất trong chất khí (không khí ~340 m/s) do mật độ phân tử."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Cầu vồng sau cơn mưa",
+    "quote": "AI nói cầu vồng xuất hiện là do hiện tượng tán sắc và phản xạ toàn phần của ánh sáng Mặt Trời qua các giọt nước mưa.",
+    "task": "Kiểm tra cơ chế quang học tạo thành cầu vồng.",
+    "source": "SGK Vật lý 11/12 (Tán sắc ánh sáng).",
+    "verdict": "Đúng",
+    "explain": "Ánh sáng trắng Mặt Trời bị khúc xạ, tán sắc thành dải màu từ đỏ đến tím và phản xạ trong các giọt nước mưa lơ lửng tạo thành cầu vồng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Thuyết tương đối hẹp và thời gian",
+    "quote": "AI nói theo thuyết tương đối của Einstein, một chiếc đồng hồ chuyển động với vận tốc gần vận tốc ánh sáng sẽ chạy chậm hơn đồng hồ đứng yên.",
+    "task": "Tra cứu hiệu ứng giãn nở thời gian trong thuyết tương đối hẹp.",
+    "source": "Giáo trình Vật lý hiện đại, công trình Einstein 1905.",
+    "verdict": "Đúng",
+    "explain": "Theo thuyết tương đối hẹp, thời gian trong hệ quy chiếu chuyển động nhanh bị giãn nở (chạy chậm hơn) so với hệ quy chiếu đứng yên."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Màu sắc của bầu trời ban ngày",
+    "quote": "AI nói bầu trời ban ngày có màu xanh lam là do hiện tượng tán xạ Rayleigh của ánh sáng Mặt Trời trong khí quyển.",
+    "task": "Tra cứu định luật tán xạ Rayleigh.",
+    "source": "SGK Vật lý, Cơ quan Hàng không Vũ trụ NASA.",
+    "verdict": "Đúng",
+    "explain": "Các phân tử khí quyển tán xạ ánh sáng có bước sóng ngắn (xanh lam, tím) mạnh hơn nhiều so với ánh sáng bước sóng dài (đỏ, vàng), tạo nên màu xanh của bầu trời."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Dòng điện trong kim loại",
+    "quote": "AI nói dòng điện trong kim loại là dòng chuyển dời có hướng của các ion dương kim loại.",
+    "task": "Kiểm tra bản chất dòng điện trong kim loại.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Dòng điện trong kim loại là dòng chuyển dời có hướng của các electron tự do ngược chiều điện trường. Các ion dương cố định ở nút mạng tinh thể."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Trọng lượng của vật ở xích đạo so với địa cực",
+    "quote": "AI khẳng định một vật có trọng lượng tại xích đạo lớn hơn trọng lượng tại hai địa cực của Trái Đất.",
+    "task": "Tra cứu lực quán tính ly tâm và hình dạng dẹt của Trái Đất ảnh hưởng đến gia tốc g.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Tại xích đạo, bán kính Trái Đất lớn hơn và có lực quán tính ly tâm do tự quay, nên gia tốc trọng trường g nhỏ hơn ở địa cực. Vật có trọng lượng tại xích đạo nhỏ hơn tại địa cực."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Lực ma sát nghỉ cực đại",
+    "quote": "AI nói lực ma sát nghỉ tác dụng lên vật luôn luôn bằng đúng lực ma sát trượt.",
+    "task": "Phân biệt lực ma sát nghỉ và lực ma sát trượt.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Lực ma sát nghỉ biến thiên từ 0 đến giá trị cực đại để cân bằng với ngoại lực tác dụng. Lực ma sát nghỉ cực đại thường lớn hơn lực ma sát trượt một chút."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Nguyên lý bảo toàn cơ năng",
+    "quote": "AI nói cơ năng của một vật chuyển động trong trọng trường luôn luôn được bảo toàn ngay cả khi có lực ma sát lớn.",
+    "task": "Kiểm tra điều kiện áp dụng định luật bảo toàn cơ năng.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Cơ năng chỉ được bảo toàn khi vật chỉ chịu tác dụng của các lực thế (như trọng lực, lực đàn hồi). Khi có lực ma sát, cơ năng bị tiêu hao biến thành nhiệt năng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Ánh sáng Mặt Trời đến Trái Đất",
+    "quote": "AI nói ánh sáng từ Mặt Trời mất khoảng 8 phút 20 giây để tới được Trái Đất.",
+    "task": "Tính toán từ khoảng cách Trái Đất - Mặt Trời (~150 triệu km) và vận tốc ánh sáng.",
+    "source": "NASA, SGK Thiên văn / Vật lý.",
+    "verdict": "Đúng",
+    "explain": "150.000.000 km / 300.000 km/s = 500 giây, tương đương khoảng 8 phút 20 giây."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Kính hiển vi quang học",
+    "quote": "AI nói kính hiển vi quang học có thể phóng đại nhìn thấy rõ ràng cấu trúc từng nguyên tử đơn lẻ.",
+    "task": "Tra cứu giới hạn nhiễu xạ ánh sáng của kính hiển vi quang học.",
+    "source": "Giáo trình Quang học sóng.",
+    "verdict": "Sai",
+    "explain": "Kính hiển vi quang học bị giới hạn bởi bước sóng ánh sáng (vài trăm nanomet), không thể phân giải vật thể kích thước nguyên tử (cỡ 0.1 nanomet). Để thấy nguyên tử phải dùng kính hiển vi điện tử hoặc kính STM."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tia X và tia phóng xạ Gamma",
+    "quote": "AI nói tia X và tia Gamma đều là sóng điện từ có tần số rất cao và bước sóng rất ngắn.",
+    "task": "Kiểm tra thang sóng điện từ.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Tia X và tia Gamma đều là bức xạ điện từ mang năng lượng cao, có bước sóng cực ngắn và khả năng đâm xuyên mạnh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Gương cầu lồi làm gương chiếu hậu",
+    "quote": "AI nói gương chiếu hậu ô tô thường dùng gương cầu lồi vì nó cho ảnh ảo cùng chiều và trường nhìn rộng hơn gương phẳng.",
+    "task": "Kiểm tra tính chất tạo ảnh của gương cầu lồi.",
+    "source": "SGK Vật lý 7/11.",
+    "verdict": "Đúng",
+    "explain": "Gương cầu lồi cho ảnh ảo nhỏ hơn vật nhưng có vùng quan sát (thị trường) rộng hơn nhiều so với gương phẳng cùng kích thước."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Động lượng của một hệ cô lập",
+    "quote": "AI nói trong một hệ kín (cô lập), tổng động lượng của hệ luôn luôn được bảo toàn.",
+    "task": "Kiểm tra định luật bảo toàn động lượng.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Đúng",
+    "explain": "Định luật bảo toàn động lượng phát biểu: Tổng động lượng của một hệ cô lập không đổi theo thời gian."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Động cơ vĩnh cửu loại một",
+    "quote": "AI khẳng định một kỹ sư đã chế tạo thành công cỗ máy sinh công liên tục mà không cần tiêu thụ bất kỳ năng lượng nào.",
+    "task": "Kiểm tra nguyên lý thứ nhất của nhiệt động lực học.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Động cơ vĩnh cửu loại một vi phạm định luật bảo toàn và chuyển hóa năng lượng nên không thể chế tạo được trong thực tế."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Dòng điện xoay chiều 220V",
+    "quote": "AI nói giá trị 220V của mạng điện sinh hoạt gia đình là giá trị điện áp cực đại (U0).",
+    "task": "Phân biệt điện áp hiệu dụng (U) và điện áp cực đại (U0).",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "220V là giá trị hiệu dụng. Giá trị điện áp cực đại là U0 = 220 * căn(2) xấp xỉ 311V."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng cộng hưởng cơ",
+    "quote": "AI nói hiện tượng cộng hưởng cơ xảy ra khi tần số của lực cưỡng bức xấp xỉ bằng tần số dao động riêng của hệ.",
+    "task": "Kiểm tra điều kiện xảy ra hiện tượng cộng hưởng.",
+    "source": "SGK Vật lý 12 (Dao động cơ).",
+    "verdict": "Đúng",
+    "explain": "Khi tần số của ngoại lực cưỡng bức bằng tần số riêng của hệ, biên độ dao động cưỡng bức đạt giá trị cực đại, đó là hiện tượng cộng hưởng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Lực đẩy Archimedes",
+    "quote": "AI nói lực đẩy Archimedes tác dụng lên vật chìm trong chất lỏng tỉ lệ thuận với khối lượng của vật đó.",
+    "task": "Kiểm tra công thức lực đẩy Archimedes: F_A = d * V.",
+    "source": "SGK Vật lý 8/10.",
+    "verdict": "Sai",
+    "explain": "Lực đẩy Archimedes phụ thuộc vào trọng lượng riêng của chất lỏng (d) và thể tích phần chất lỏng bị vật chiếm chỗ (V), không phụ thuộc vào khối lượng của vật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Đèn LED phát sáng",
+    "quote": "AI nói đèn LED phát sáng nhờ nung nóng dây tóc kim loại tới nhiệt độ hàng nghìn độ C.",
+    "task": "Tìm hiểu nguyên lý phát quang của đi-ốt phát quang (LED).",
+    "source": "SGK Vật lý 11/12.",
+    "verdict": "Sai",
+    "explain": "Đèn LED phát sáng nhờ hiện tượng điện - phát quang tại mối nối p-n của chất bán dẫn, không phải do nung nóng dây tóc như đèn sợi đốt."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Từ trường của Trái Đất",
+    "quote": "AI nói cực bắc từ trường của Trái Đất nằm trùng khít hoàn toàn về mặt địa lý với cực Bắc địa lý.",
+    "task": "Tra cứu độ lệch giữa cực từ và cực địa lý (độ từ thiên).",
+    "source": "Tài liệu Địa vật lý, Cục Khảo sát Địa chất.",
+    "verdict": "Sai",
+    "explain": "Cực từ Bắc và cực Bắc địa lý không trùng nhau mà lệch nhau hàng trăm kilomet, và cực từ còn di chuyển chậm theo thời gian."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Quang phổ liên tục",
+    "quote": "AI nói quang phổ liên tục phụ thuộc vào thành phần hóa học của nguồn phát sáng.",
+    "task": "Kiểm tra đặc điểm của quang phổ liên tục.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Quang phổ liên tục chỉ phụ thuộc vào nhiệt độ của vật phát sáng, không phụ thuộc vào thành phần cấu tạo hóa học của vật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Chuyển động tròn đều",
+    "quote": "AI nói trong chuyển động tròn đều, gia tốc của vật luôn luôn bằng 0 vì tốc độ không đổi.",
+    "task": "Kiểm tra khái niệm gia tốc hướng tâm.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Mặc dù độ lớn vận tốc không đổi, nhưng hướng của vectơ vận tốc liên tục thay đổi, do đó vật luôn có gia tốc hướng tâm khác 0."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tia tử ngoại (UV)",
+    "quote": "AI nói tia tử ngoại bị thủy tinh thông thường hấp thụ rất mạnh.",
+    "task": "Tra cứu tính chất truyền qua của tia tử ngoại đối với thủy tinh và thạch anh.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Thủy tinh thông thường hấp thụ rất mạnh tia tử ngoại (UV); để cho tia UV truyền qua người ta phải dùng thạch anh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Mạng tinh thể chất rắn",
+    "quote": "AI nói chất rắn vô định hình như thủy tinh có nhiệt độ nóng chảy xác định.",
+    "task": "Phân biệt chất rắn kết tinh và chất rắn vô định hình.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Chất rắn kết tinh mới có nhiệt độ nóng chảy xác định. Chất rắn vô định hình không có cấu trúc tinh thể nên không có nhiệt độ nóng chảy xác định mà mềm dần khi đun nóng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Nhiên liệu hạt nhân Urani",
+    "quote": "AI nói phản ứng phân hạch hạt nhân Urani-235 trong lò phản ứng hạt nhân là phản ứng tỏa năng lượng rất lớn.",
+    "task": "Kiểm tra phản ứng phân hạch kích thích bởi nơtron.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Đúng",
+    "explain": "Sự phân hạch của 1 hạt nhân U-235 giải phóng khoảng 200 MeV năng lượng, tỏa nhiệt khổng lồ ứng dụng trong các nhà máy điện hạt nhân."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiện tượng tự cảm",
+    "quote": "AI nói hiện tượng tự cảm là hiện tượng cảm ứng điện từ xảy ra trong mạch do chính sự biến thiên cường độ dòng điện trong mạch đó gây ra.",
+    "task": "Kiểm tra định nghĩa hiện tượng tự cảm.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Đúng",
+    "explain": "Định nghĩa chuẩn: Hiện tượng tự cảm là hiện tượng cảm ứng điện từ trong một mạch điện do chính sự biến thiên của dòng điện trong mạch đó gây ra."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Công suất tiêu thụ cực đại",
+    "quote": "AI nói công của lực ma sát tác dụng lên một vật chuyển động trên mặt sàn luôn luôn sinh công dương làm tăng cơ năng.",
+    "task": "Kiểm tra dấu của công lực ma sát trượt: A = F * s * cos(alpha).",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Lực ma sát trượt luôn ngược chiều chuyển động (góc 180 độ), nên cos(180) = -1, công của lực ma sát trượt luôn là công cản (công âm), làm giảm cơ năng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Hiệu suất của động cơ nhiệt",
+    "quote": "AI nói động cơ nhiệt lý tưởng có thể đạt hiệu suất 100% nếu loại bỏ hoàn toàn ma sát cơ học.",
+    "task": "Kiểm tra định lý Carnot và nguyên lý hai nhiệt động lực học.",
+    "source": "Giáo trình Nhiệt động lực học.",
+    "verdict": "Sai",
+    "explain": "Theo định lý Carnot, hiệu suất động cơ nhiệt cực đại bằng (T1 - T2)/T1 và luôn nhỏ hơn 100% vì luôn phải truyền một phần nhiệt lượng cho nguồn lạnh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Độ cao của âm thanh",
+    "quote": "AI nói độ cao của âm thanh được quyết định bởi biên độ dao động của nguồn âm.",
+    "task": "Phân biệt các đặc trưng sinh lý của âm: độ cao, độ to, âm sắc.",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Độ cao của âm gắn liền với tần số dao động của âm (tần số càng lớn âm càng bổng). Biên độ dao động quyết định độ to của âm."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Tán xạ ánh sáng",
+    "quote": "AI nói ánh sáng đỏ bị tán xạ mạnh hơn ánh sáng tím trong khí quyển.",
+    "task": "Kiểm tra định luật tán xạ Rayleigh (tỉ lệ nghịch với lũy thừa bậc 4 của bước sóng).",
+    "source": "SGK Vật lý 12.",
+    "verdict": "Sai",
+    "explain": "Ánh sáng tím và xanh có bước sóng ngắn nên bị tán xạ mạnh hơn nhiều so với ánh sáng đỏ có bước sóng dài."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Điện trở phụ thuộc nhiệt độ ở kim loại",
+    "quote": "AI nói khi nhiệt độ của dây kim loại tăng lên thì điện trở của nó sẽ giảm đi.",
+    "task": "Tra cứu hệ số nhiệt điện trở của kim loại.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Khi nhiệt độ kim loại tăng, các ion nút mạng dao động mạnh hơn cản trở dòng electron, làm điện trở của dây dẫn kim loại tăng lên."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Trọng trường Trái Đất",
+    "quote": "AI nói càng lên cao so với mặt đất thì gia tốc trọng trường g của Trái Đất càng tăng.",
+    "task": "Kiểm tra công thức gia tốc trọng trường: g = G*M / (R + h)^2.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Sai",
+    "explain": "Khi độ cao h tăng, khoảng cách tới tâm Trái Đất tăng nên gia tốc trọng trường g giảm dần."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Thấu kính phân kì",
+    "quote": "AI nói thấu kính phân kì bằng thủy tinh đặt trong không khí luôn cho ảnh thật của một vật thật.",
+    "task": "Kiểm tra tính chất tạo ảnh của thấu kính phân kì.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Thấu kính phân kì đặt trong không khí luôn cho ảnh ảo, cùng chiều và nhỏ hơn vật thật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Chuyển động thẳng đều",
+    "quote": "AI nói trong chuyển động thẳng đều, đồ thị vận tốc theo thời gian là một đường thẳng song song với trục thời gian.",
+    "task": "Kiểm tra đồ thị v-t của chuyển động thẳng đều.",
+    "source": "SGK Vật lý 10.",
+    "verdict": "Đúng",
+    "explain": "Trong chuyển động thẳng đều, vận tốc v là hằng số không đổi theo thời gian nên đồ thị v-t là đường thẳng nằm ngang song song với trục thời gian Ot."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Áp suất chất lỏng",
+    "quote": "AI nói áp suất ở đáy bình chứa chất lỏng chỉ phụ thuộc vào diện tích đáy bình chứ không phụ thuộc vào độ sâu.",
+    "task": "Kiểm tra công thức áp suất thủy tĩnh: p = d * h.",
+    "source": "SGK Vật lý 8/10.",
+    "verdict": "Sai",
+    "explain": "Áp suất chất lỏng ở độ sâu h tính bằng p = p0 + d*h, phụ thuộc trực tiếp vào độ sâu và trọng lượng riêng chất lỏng, không phụ thuộc vào diện tích đáy (nghịch lý thủy tĩnh)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Lực ma sát có lợi",
+    "quote": "AI khẳng định lực ma sát trong đời sống hoàn toàn chỉ gây hại và con người luôn phải triệt tiêu nó 100%.",
+    "task": "Tìm hiểu vai trò của lực ma sát trong đời sống (ma sát nghỉ khi đi lại, phanh xe).",
+    "source": "SGK Vật lý 8/10.",
+    "verdict": "Sai",
+    "explain": "Lực ma sát có vai trò thiết yếu: không có ma sát người không thể đi lại, xe không thể dừng khi phanh, đinh và ốc vít không thể giữ chặt đồ vật."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Vật lý",
+    "title": "Phản xạ toàn phần",
+    "quote": "AI nói hiện tượng phản xạ toàn phần xảy ra khi ánh sáng truyền từ môi trường chiết quang kém sang môi trường chiết quang hơn.",
+    "task": "Kiểm tra điều kiện xảy ra phản xạ toàn phần: n1 > n2 và góc tới i >= igh.",
+    "source": "SGK Vật lý 11.",
+    "verdict": "Sai",
+    "explain": "Phản xạ toàn phần chỉ xảy ra khi ánh sáng truyền từ môi trường chiết quang hơn sang môi trường chiết quang kém hơn (n1 > n2) và góc tới lớn hơn hoặc bằng góc giới hạn phản xạ toàn phần."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Kim loại duy nhất ở thể lỏng",
+    "quote": "AI nói thủy ngân là kim loại duy nhất tồn tại ở thể lỏng tại nhiệt độ phòng 25 độ C.",
+    "task": "Kiểm tra trạng thái vật lý của các nguyên tố trong bảng tuần hoàn.",
+    "source": "SGK Hóa học 10/12, Sổ tay Hóa lý CRC.",
+    "verdict": "Đúng",
+    "explain": "Thủy ngân (Hg) có nhiệt độ nóng chảy là -38.83 độ C, là kim loại duy nhất ở thể lỏng ở nhiệt độ phòng chuẩn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Kim loại kiềm tác dụng với nước",
+    "quote": "AI nói khi thả một mẩu natri vào nước, phản ứng diễn ra êm dịu và hấp thụ nhiệt làm nước mát lạnh.",
+    "task": "Kiểm tra phản ứng của kim loại kiềm với nước.",
+    "source": "SGK Hóa học 12 (Kim loại kiềm).",
+    "verdict": "Sai",
+    "explain": "Phản ứng của natri với nước tỏa nhiệt rất mạnh, giải phóng khí H2 có thể bốc cháy hoặc nổ mạnh, dung dịch tạo thành có tính kiềm mạnh (NaOH)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Thang đo pH",
+    "quote": "AI khẳng định dung dịch có pH bằng 9 là dung dịch có môi trường axit mạnh.",
+    "task": "Kiểm tra định nghĩa thang đo pH: pH < 7 là axit, pH = 7 trung tính, pH > 7 là bazơ/kiềm.",
+    "source": "SGK Hóa học 11.",
+    "verdict": "Sai",
+    "explain": "Dung dịch có pH = 9 có tính kiềm (bazơ), không phải môi trường axit."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Khí gây hiệu ứng nhà kính chính",
+    "quote": "AI nói khí oxy (O2) là khí nhà kính chủ yếu giữ nhiệt sưởi ấm khí quyển Trái Đất.",
+    "task": "Tìm hiểu các loại khí nhà kính trong khí quyển Trái Đất.",
+    "source": "Báo cáo IPCC, SGK Hóa học / Địa lý.",
+    "verdict": "Sai",
+    "explain": "O2 và N2 không phải khí nhà kính. Khí nhà kính chủ yếu giữ nhiệt là hơi nước (H2O), carbon dioxide (CO2), methane (CH4) và N2O."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Khí độc CO trong lò than",
+    "quote": "AI nói khí carbon monoxide (CO) rất độc vì nó kết hợp chặt chẽ với hemoglobin trong máu làm mất khả năng vận chuyển oxy.",
+    "task": "Tra cứu cơ chế gây ngạt độc của khí CO.",
+    "source": "Tài liệu Y học độc chất, SGK Hóa học 11.",
+    "verdict": "Đúng",
+    "explain": "Khí CO kết dính với hemoglobin trong hồng cầu mạnh gấp hơn 200 lần so với oxy, tạo thành carboxyhemoglobin khiến máu không thể đưa oxy tới tế bào, gây ngạt thở và tử vong."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Axit trong dạ dày người",
+    "quote": "AI nói dịch vị trong dạ dày người chứa axit sulfuric (H2SO4) đậm đặc để tiêu hóa thức ăn.",
+    "task": "Tra cứu thành phần axit trong dịch vị dạ dày.",
+    "source": "SGK Sinh học 11, Hóa học 11.",
+    "verdict": "Sai",
+    "explain": "Axit trong dịch vị dạ dày là axit clohiđric (HCl) loãng với nồng độ khoảng 0.01M - 0.1M (pH khoảng 1.5 - 3.5), không phải axit sulfuric."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Nồng độ cồn y tế sát khuẩn",
+    "quote": "AI khẳng định cồn 90 độ sát trùng vết thương tốt hơn và nhanh hơn cồn 70 độ trong y tế.",
+    "task": "Tìm hiểu cơ chế đông tụ protein vi khuẩn của cồn ethanol trong y khoa.",
+    "source": "Dược thư Quốc gia Việt Nam, Hướng dẫn của WHO.",
+    "verdict": "Sai",
+    "explain": "Cồn 90 độ làm đông tụ protein bề mặt vi khuẩn quá nhanh tạo lớp vỏ bọc bảo vệ vi khuẩn bên trong; cồn 70 độ thẩm thấu qua màng tế bào tốt hơn nên có hiệu quả diệt khuẩn cao nhất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Kim loại nhẹ nhất",
+    "quote": "AI nói nhôm là kim loại nhẹ nhất trong tất cả các kim loại đã biết.",
+    "task": "Tra cứu khối lượng riêng của các kim loại trong bảng tuần hoàn.",
+    "source": "Bảng tuần hoàn Mendeleev, Sổ tay Hóa học.",
+    "verdict": "Sai",
+    "explain": "Liti (Li) mới là kim loại nhẹ nhất với khối lượng riêng chỉ khoảng 0.534 g/cm3 (nhẹ hơn cả nước), trong khi nhôm có khối lượng riêng khoảng 2.7 g/cm3."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Khí trơ trong bóng đèn dây tóc",
+    "quote": "AI nói người ta bơm khí argon hoặc nitơ vào bóng đèn sợi đốt để ngăn dây tóc vonfram bị oxy hóa khi nung nóng.",
+    "task": "Kiểm tra cấu tạo và nguyên lý của bóng đèn dây tóc.",
+    "source": "SGK Hóa học và Vật lý phổ thông.",
+    "verdict": "Đúng",
+    "explain": "Khí trơ như argon (Ar) hoặc khí nitơ (N2) trơ về mặt hóa học, giúp ngăn dây tóc vonfram phản ứng với oxy ở nhiệt độ cao, kéo dài tuổi thọ bóng đèn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Kim loại cứng nhất",
+    "quote": "AI nói kim cương là kim loại cứng nhất trong tự nhiên.",
+    "task": "Phân biệt kim cương (dạng thù hình phi kim của carbon) và kim loại.",
+    "source": "SGK Hóa học 10/11.",
+    "verdict": "Sai",
+    "explain": "Kim cương là dạng thù hình của carbon (phi kim), không phải kim loại. Kim loại cứng nhất là crom (Cr)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Nước vôi trong đổi màu",
+    "quote": "AI nói khi sục khí CO2 từ từ vào nước vôi trong Ca(OH)2, dung dịch ban đầu sẽ xuất hiện kết tủa trắng.",
+    "task": "Kiểm tra phản ứng của CO2 với Ca(OH)2 tạo CaCO3.",
+    "source": "SGK Hóa học 9/11.",
+    "verdict": "Đúng",
+    "explain": "Phản ứng CO2 + Ca(OH)2 -> CaCO3 (kết tủa trắng) + H2O làm nước vôi trong bị vẩn đục trắng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Muối ăn là hợp chất gì",
+    "quote": "AI nói muối ăn gia đình sử dụng hàng ngày có thành phần hóa học chính là natri clorua (NaCl).",
+    "task": "Kiểm tra công thức hóa học của muối ăn.",
+    "source": "SGK Hóa học 8/9.",
+    "verdict": "Đúng",
+    "explain": "Muối ăn có thành phần chính là natri clorua (NaCl), thường được bổ sung thêm một lượng nhỏ muối iot (như KIO3)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Hiện tượng rỉ sét của sắt",
+    "quote": "AI nói sắt chỉ cần tiếp xúc với khí oxy khô hoàn toàn không có hơi nước là sẽ bị rỉ sét ngay lập tức.",
+    "task": "Kiểm tra điều kiện xảy ra quá trình ăn mòn hóa học và điện hóa của sắt.",
+    "source": "SGK Hóa học 12 (Ăn mòn kim loại).",
+    "verdict": "Sai",
+    "explain": "Quá trình gỉ sét của sắt là ăn mòn điện hóa, đòi hỏi phải có ĐỒNG THỜI cả oxy và hơi ẩm (nước). Trong khí oxy khô tuyệt đối sắt không bị gỉ ở nhiệt độ thường."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Chất xúc tác trong phản ứng",
+    "quote": "AI nói chất xúc tác làm tăng tốc độ phản ứng hóa học và bị tiêu hao dần sau mỗi chu kỳ phản ứng.",
+    "task": "Kiểm tra định nghĩa chất xúc tác trong hóa học.",
+    "source": "SGK Hóa học 10.",
+    "verdict": "Sai",
+    "explain": "Chất xúc tác làm giảm năng lượng hoạt hóa giúp phản ứng xảy ra nhanh hơn, nhưng khối lượng và bản chất hóa học của nó không đổi sau phản ứng (không bị tiêu hao)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Oxy chiếm tỷ lệ bao nhiêu trong không khí",
+    "quote": "AI nói khí oxy chiếm khoảng 78% thể tích không khí khô quanh ta.",
+    "task": "Tra cứu thành phần thể tích của không khí khô tầng đối lưu.",
+    "source": "SGK Hóa học 8, Địa lý 6.",
+    "verdict": "Sai",
+    "explain": "Khí nitơ (N2) mới chiếm khoảng 78% thể tích không khí; khí oxy (O2) chiếm khoảng 21%, còn lại là agon, CO2 và các khí khác."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Kim loại dẫn nhiệt tốt nhất",
+    "quote": "AI nói đồng là kim loại dẫn nhiệt tốt nhất.",
+    "task": "Tra cứu hệ số dẫn nhiệt của kim loại.",
+    "source": "Sổ tay Hóa lý chuẩn.",
+    "verdict": "Sai",
+    "explain": "Tương tự như dẫn điện, bạc (Ag) là kim loại dẫn nhiệt tốt nhất ở điều kiện thường, tiếp sau mới là đồng (Cu)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Phản ứng quang hợp của cây xanh",
+    "quote": "AI nói trong phản ứng quang hợp, oxy giải phóng ra môi trường có nguồn gốc từ phân tử CO2 bị bẻ gãy.",
+    "task": "Tra cứu thí nghiệm đồng vị phóng xạ O-18 của Ruben và Kamen về quang hợp.",
+    "source": "SGK Sinh học 11, Hóa học sinh học.",
+    "verdict": "Sai",
+    "explain": "Oxy giải phóng trong quang hợp sinh ra từ quá trình quang phân ly nước (H2O), không phải từ phân tử CO2."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Axit axetic trong giấm ăn",
+    "quote": "AI nói giấm ăn dùng nấu nướng thực chất là dung dịch axit axetic (CH3COOH) có nồng độ khoảng 2% đến 5%.",
+    "task": "Kiểm tra thành phần hóa học của giấm ăn gia đình.",
+    "source": "SGK Hóa học 9/11.",
+    "verdict": "Đúng",
+    "explain": "Giấm ăn là dung dịch axit axetic loãng có nồng độ từ 2% đến 5% thu được từ quá trình lên men giấm rượu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Khí cười bóng cười",
+    "quote": "AI nói khí cười dinitơ monoxit (N2O) là một chất hoàn toàn vô hại với hệ thần kinh và có thể hít tùy thích.",
+    "task": "Tra cứu tác hại y khoa của khí N2O đối với hệ thần kinh trung ương.",
+    "source": "Cảnh báo Bộ Y tế, Viện Sức khỏe Tâm thần.",
+    "verdict": "Sai",
+    "explain": "Hít khí N2O kéo dài phá hủy vitamin B12 trong cơ thể, gây thoái hóa tủy sống, tê liệt tứ chi, tổn thương não vĩnh viễn và có thể dẫn đến tử vong."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Thuốc tím khử trùng",
+    "quote": "AI nói thuốc tím có công thức hóa học là KMnO4 (kali pemanganat).",
+    "task": "Kiểm tra công thức hóa học của thuốc tím y tế.",
+    "source": "SGK Hóa học 10.",
+    "verdict": "Đúng",
+    "explain": "Thuốc tím là tên thông dụng của muối kali pemanganat (KMnO4), có tính oxy hóa mạnh dùng sát trùng, tẩy uế."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Kim loại có nhiệt độ nóng chảy cao nhất",
+    "quote": "AI nói sắt có nhiệt độ nóng chảy cao nhất trong các kim loại.",
+    "task": "Tra cứu nhiệt độ nóng chảy của các kim loại trong bảng tuần hoàn.",
+    "source": "SGK Hóa học 12.",
+    "verdict": "Sai",
+    "explain": "Vonfram (W - Wolfram) là kim loại có nhiệt độ nóng chảy cao nhất đạt tới 3.422 độ C, do đó được dùng làm dây tóc bóng đèn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Baking soda là muối gì",
+    "quote": "AI nói bột nở baking soda trong làm bánh có công thức là NaHCO3 (natri hiđrocacbonat).",
+    "task": "Kiểm tra thành phần muối của baking soda.",
+    "source": "SGK Hóa học 11/12.",
+    "verdict": "Đúng",
+    "explain": "Baking soda là muối natri hiđrocacbonat (NaHCO3), khi gặp nhiệt độ hoặc axit sinh ra khí CO2 làm bột bánh xốp nở."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Khí gas sinh hoạt có mùi",
+    "quote": "AI nói khí gas thiên nhiên (LPG gồm propan và butan) tự nhiên nguyên chất vốn đã có mùi hôi trứng thối đặc trưng.",
+    "task": "Tìm hiểu chất tạo mùi an toàn mercaptan pha vào khí gas sinh hoạt.",
+    "source": "Tài liệu an toàn phòng cháy chữa cháy hóa chất.",
+    "verdict": "Sai",
+    "explain": "Khí propan và butan nguyên chất không màu, không mùi. Người ta phải cố tình pha thêm chất có mùi nồng (thiol/mercaptan) để người dân dễ dàng phát hiện khi bị rò rỉ gas."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Hợp chất hữu cơ",
+    "quote": "AI nói mọi hợp chất chứa nguyên tố cacbon đều là hợp chất hữu cơ.",
+    "task": "Kiểm tra định nghĩa hợp chất hữu cơ và các trường hợp ngoại lệ.",
+    "source": "SGK Hóa học 11.",
+    "verdict": "Sai",
+    "explain": "Hợp chất hữu cơ là hợp chất của cacbon (trừ các chất vô cơ như CO, CO2, muối cacbonat, xianua, cacbua...)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Ozon ở tầng bình lưu",
+    "quote": "AI nói tầng ozon (O3) ở tầng bình lưu đóng vai trò hấp thụ phần lớn bức xạ tia cực tím độc hại từ Mặt Trời.",
+    "task": "Kiểm tra vai trò của tầng ozon bảo vệ sự sống.",
+    "source": "SGK Hóa học 10, Báo cáo môi trường Liên Hợp Quốc.",
+    "verdict": "Đúng",
+    "explain": "Tầng ozon ở tầng bình lưu hấp thụ tới 97-99% bức xạ tử ngoại có bước sóng trung bình (UV-B) từ Mặt Trời, bảo vệ sinh vật trên Trái Đất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Đốt cháy kim loại magie",
+    "quote": "AI nói magie cháy trong không khí phát ra ánh sáng trắng chói lòa và có thể dập tắt dễ dàng bằng bình chữa cháy CO2.",
+    "task": "Kiểm tra phản ứng của magie cháy với khí CO2.",
+    "source": "SGK Hóa học 12 (Kim loại kiềm thổ), Tài liệu PCCC.",
+    "verdict": "Sai",
+    "explain": "Tuyệt đối không dùng bình CO2 để dập đám cháy magie vì magie nóng sáng tiếp tục phản ứng mạnh với CO2 (2Mg + CO2 -> 2MgO + C) tỏa nhiệt mạnh hơn và đám cháy bùng to hơn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Dung dịch cồn sát khuẩn tự chế",
+    "quote": "AI khuyên dùng rượu gạo 30 độ để lau sát khuẩn phòng dịch vì rượu nào cũng diệt được mọi virus.",
+    "task": "Kiểm tra nồng độ cồn tối thiểu có tác dụng diệt khuẩn.",
+    "source": "Hướng dẫn kiểm soát nhiễm khuẩn của WHO và Bộ Y tế.",
+    "verdict": "Sai",
+    "explain": "Cồn chỉ có khả năng diệt khuẩn và vô hiệu hóa virus khi nồng độ từ 60 độ trở lên; rượu gạo 30 độ không đủ nồng độ để sát khuẩn hiệu quả."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Nước tinh khiết dẫn điện",
+    "quote": "AI nói nước cất hoàn toàn nguyên chất là chất dẫn điện cực kỳ tốt.",
+    "task": "Kiểm tra độ dẫn điện của nước cất siêu sạch.",
+    "source": "SGK Hóa học 11 (Sự điện li).",
+    "verdict": "Sai",
+    "explain": "Nước cất nguyên chất điện li vô cùng yếu (nồng độ ion H+ và OH- cực nhỏ) nên thực tế dẫn điện rất kém; nước thông thường dẫn điện được là do có hòa tan các ion khoáng chất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Nguyên tố phổ biến nhất trong vũ trụ",
+    "quote": "AI nói nguyên tố hydro là nguyên tố dồi dào nhất trong toàn vũ trụ quan sát được.",
+    "task": "Tra cứu thành phần nguyên tố cấu tạo vũ trụ.",
+    "source": "NASA, Tài liệu Vật lý thiên văn.",
+    "verdict": "Đúng",
+    "explain": "Hydro chiếm khoảng 75% khối lượng vật chất thông thường trong vũ trụ, tiếp theo là heli (khoảng 24%)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Băng khô là chất gì",
+    "quote": "AI nói đá khô (băng khô) thực chất là nước đá đóng băng ở nhiệt độ âm sâu dưới -100 độ C.",
+    "task": "Kiểm tra bản chất của băng khô trong công nghiệp bảo quản.",
+    "source": "SGK Hóa học 11.",
+    "verdict": "Sai",
+    "explain": "Băng khô là carbon dioxide (CO2) ở trạng thái rắn. Khi thăng hoa ở áp suất thường (-78.5 độ C), nó chuyển thẳng thành thể khí mà không qua thể lỏng nên gọi là băng khô."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Nguyên tử trung hòa về điện",
+    "quote": "AI nói nguyên tử trung hòa về điện vì số hạt proton mang điện tích dương luôn bằng số hạt electron mang điện tích âm.",
+    "task": "Kiểm tra cấu tạo hạt của nguyên tử.",
+    "source": "SGK Hóa học 10.",
+    "verdict": "Đúng",
+    "explain": "Trong một nguyên tử trung hòa, số hạt proton (điện tích +1) ở hạt nhân luôn bằng số hạt electron (điện tích -1) ở lớp vỏ nguyên tử."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Axit sunfuric đặc hút nước",
+    "quote": "AI nói axit sunfuric đặc (H2SO4) có tính háo nước cực kỳ mạnh và làm than hóa đường saccarozơ.",
+    "task": "Kiểm tra thí nghiệm cho H2SO4 đặc vào đường ăn.",
+    "source": "SGK Hóa học 10.",
+    "verdict": "Đúng",
+    "explain": "H2SO4 đặc hút nước mãnh liệt từ các hợp chất gluxit, biến đường ăn (C12H22O11) thành cột than cacbon đen xốp kèm theo tỏa nhiệt lớn và bốc khói độc SO2."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Chất dẻo PVC",
+    "quote": "AI nói PVC là tên viết tắt của Polyvinyl Clorua, một loại polyme tổng hợp được dùng phổ biến làm ống nước.",
+    "task": "Tra cứu công thức và tên gọi của PVC.",
+    "source": "SGK Hóa học 12 (Polime).",
+    "verdict": "Đúng",
+    "explain": "PVC là viết tắt của Polyvinyl Clorua (-CH2-CHCl-)n, vật liệu nhựa nhiệt dẻo rất phổ biến trong xây dựng và công nghiệp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Hợp kim đồng thau",
+    "quote": "AI nói đồng thau là hợp kim của đồng và thiếc.",
+    "task": "Phân biệt đồng thau (brass) và đồng thanh (bronze).",
+    "source": "Từ điển Luyện kim, SGK Hóa học 12.",
+    "verdict": "Sai",
+    "explain": "Đồng thau là hợp kim của đồng (Cu) và kẽm (Zn). Hợp kim của đồng và thiếc (Sn) được gọi là đồng thanh (hoặc đồng điếu)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Nước cứng là nước gì",
+    "quote": "AI nói nước cứng là nước chứa nhiều ion canxi (Ca2+) và magie (Mg2+).",
+    "task": "Tra cứu khái niệm nước cứng và phương pháp làm mềm nước.",
+    "source": "SGK Hóa học 12.",
+    "verdict": "Đúng",
+    "explain": "Nước cứng là nước chứa hàm lượng cao các ion Ca2+ và Mg2+, dễ đóng cặn trong ấm đun nước và làm giảm bọt của xà phòng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Chất độc Xyanua trong măng tươi",
+    "quote": "AI nói măng tươi có chứa glucozit sinh axit xyanhydric (HCN) có thể gây ngộ độc nếu không luộc kỹ bỏ nước.",
+    "task": "Tìm hiểu độc tố tự nhiên trong măng tre và cách sơ chế an toàn.",
+    "source": "Viện Dinh dưỡng Quốc gia, Cục An toàn thực phẩm.",
+    "verdict": "Đúng",
+    "explain": "Măng tươi chứa hợp chất cyanogenic glycoside khi vào dạ dày chuyển hóa thành axit xyanhydric rất độc; luộc kỹ măng mở vung và ngâm nước nhiều lần giúp loại bỏ độc tố này."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Tẩy trắng bằng Javen",
+    "quote": "AI nói nước Javen là dung dịch chứa hỗn hợp hai muối NaCl và NaClO.",
+    "task": "Kiểm tra thành phần hóa học của nước Javen.",
+    "source": "SGK Hóa học 10.",
+    "verdict": "Đúng",
+    "explain": "Nước Javen được điều chế bằng cách sục khí clo vào dung dịch NaOH loãng ở nhiệt độ thường: Cl2 + 2NaOH -> NaCl + NaClO + H2O. NaClO có tính oxy hóa mạnh giúp tẩy trắng và sát khuẩn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Vàng hòa tan trong axit",
+    "quote": "AI nói vàng có thể tan dễ dàng trong dung dịch axit clohiđric loãng ở nhiệt độ phòng.",
+    "task": "Kiểm tra tính khử của kim loại vàng (Au) trong dãy điện hóa.",
+    "source": "SGK Hóa học 12.",
+    "verdict": "Sai",
+    "explain": "Vàng là kim loại rất trơ, đứng sau hydro trong dãy hoạt động hóa học nên không tác dụng với dung dịch HCl hay H2SO4 loãng; vàng chỉ tan trong nước cường toan (hỗn hợp HNO3 và HCl đặc tỉ lệ 1:3)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Độ âm điện lớn nhất",
+    "quote": "AI nói nguyên tố có độ âm điện lớn nhất trong bảng tuần hoàn là flo (F).",
+    "task": "Tra cứu thang độ âm điện Pauling.",
+    "source": "SGK Hóa học 10.",
+    "verdict": "Đúng",
+    "explain": "Theo thang Pauling, Flo có độ âm điện lớn nhất (3.98), là phi kim có tính oxy hóa mạnh nhất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Chất béo no và không no",
+    "quote": "AI nói mỡ động vật thường chứa nhiều axit béo không no ở thể lỏng ở nhiệt độ thường.",
+    "task": "Phân biệt chất béo no trong mỡ động vật và chất béo không no trong dầu thực vật.",
+    "source": "SGK Hóa học 12 (Lipit).",
+    "verdict": "Sai",
+    "explain": "Mỡ động vật chủ yếu chứa các gốc axit béo no nên ở thể rắn ở nhiệt độ thường; dầu thực vật chứa nhiều gốc axit béo không no nên ở thể lỏng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Thử tính axit bazơ bằng quỳ tím",
+    "quote": "AI nói giấy quỳ tím khi nhúng vào dung dịch kiềm bazơ sẽ chuyển sang màu đỏ rực rỡ.",
+    "task": "Kiểm tra sự đổi màu của chất chỉ thị quỳ tím.",
+    "source": "SGK Hóa học 8/9/11.",
+    "verdict": "Sai",
+    "explain": "Dung dịch axit làm quỳ tím hóa đỏ, trong khi dung dịch bazơ làm quỳ tím hóa xanh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Phản ứng tráng gương của glucozơ",
+    "quote": "AI nói glucozơ có khả năng tham gia phản ứng tráng bạc vì trong phân tử có nhóm chức anđehit (-CHO).",
+    "task": "Kiểm tra cấu tạo phân tử glucozơ và tính chất hóa học.",
+    "source": "SGK Hóa học 12 (Cacbohiđrat).",
+    "verdict": "Đúng",
+    "explain": "Glucozơ ở dạng mạch hở có 1 nhóm anđehit (-CHO) ở đầu mạch nên có tính chất khử, tác dụng với dung dịch AgNO3 trong NH3 tạo kết tủa bạc bám sáng bóng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Polyetylen (PE) tái chế",
+    "quote": "AI nói nhựa PE là loại nhựa nhiệt rắn không thể nấu chảy để đúc lại nhiều lần.",
+    "task": "Phân biệt nhựa nhiệt dẻo và nhựa nhiệt rắn.",
+    "source": "SGK Hóa học 12.",
+    "verdict": "Sai",
+    "explain": "PE là nhựa nhiệt dẻo (thermoplastic), có thể nóng chảy khi đun nóng và đông cứng lại khi nguội, do đó có thể tái chế nấu chảy nhiều lần."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Xà phòng hóa chất béo",
+    "quote": "AI nói phản ứng xà phòng hóa chất béo bằng dung dịch NaOH sinh ra sản phẩm phụ quý là glixerol.",
+    "task": "Kiểm tra phương trình phản ứng thủy phân este và chất béo trong môi trường kiềm.",
+    "source": "SGK Hóa học 12.",
+    "verdict": "Đúng",
+    "explain": "Chất béo (triglixerit) thủy phân trong dung dịch kiềm sinh ra muối của axit béo (xà phòng) và ancol đa chức glixerol (C3H5(OH)3)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Kim loại nhóm IA có mấy electron hóa trị",
+    "quote": "AI nói các kim loại kiềm nhóm IA có 2 electron ở lớp ngoài cùng.",
+    "task": "Kiểm tra cấu hình electron nguyên tử kim loại kiềm.",
+    "source": "SGK Hóa học 10/12.",
+    "verdict": "Sai",
+    "explain": "Kim loại kiềm (nhóm IA: Li, Na, K, Rb, Cs) chỉ có 1 electron ở lớp ngoài cùng (cấu hình ns1), nên dễ nhường 1 electron để tạo ion +1."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Hơi thủy ngân độc hại",
+    "quote": "AI nói khi nhiệt kế thủy ngân bị vỡ, người ta có thể rắc bột lưu huỳnh lên để gom thủy ngân lại an toàn.",
+    "task": "Kiểm tra phản ứng hóa học giữa thủy ngân và lưu huỳnh ở nhiệt độ thường.",
+    "source": "SGK Hóa học 10 (Lưu huỳnh).",
+    "verdict": "Đúng",
+    "explain": "Thủy ngân phản ứng với bột lưu huỳnh ngay ở nhiệt độ thường tạo thành HgS không bay hơi và ít độc: Hg + S -> HgS, giúp dễ dàng thu gom xử lý an toàn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Uống sữa khi ngộ độc kim loại nặng",
+    "quote": "AI khuyên uống nhiều sữa tươi hoặc lòng trắng trứng khi sơ cứu ngộ độc muối kim loại nặng trước khi đến viện.",
+    "task": "Tìm hiểu cơ chế kết tủa protein với ion kim loại nặng (chì, đồng, thủy ngân).",
+    "source": "Tài liệu Y tế sơ cấp cứu, Hóa sinh học.",
+    "verdict": "Đúng",
+    "explain": "Protein (albumin) trong sữa tươi và lòng trắng trứng kết tủa với ion kim loại nặng giúp giữ kim loại lại trong dạ dày, làm chậm hấp thu vào máu trong thời gian chờ cấp cứu rửa ruột."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Ăn mòn điện hóa tàu biển",
+    "quote": "AI nói để bảo vệ vỏ tàu biển bằng thép ngâm trong nước biển, người ta gắn các tấm kẽm (Zn) vào vỏ tàu.",
+    "task": "Tìm hiểu phương pháp bảo vệ kim loại bằng điện cực hy sinh.",
+    "source": "SGK Hóa học 12 (Ăn mòn kim loại).",
+    "verdict": "Đúng",
+    "explain": "Kẽm có tính khử mạnh hơn sắt, đóng vai trò là cực âm (anot) bị ăn mòn trước (vật hy sinh), bảo vệ vỏ tàu thép không bị rỉ sét trong nước biển."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Hiệu ứng Tyndall của hệ keo",
+    "quote": "AI nói khi chiếu chùm sáng qua một dung dịch thực sự trong suốt, ta sẽ nhìn thấy rõ vệt sáng như chiếu qua sương mù.",
+    "task": "Phân biệt dung dịch thực và hệ keo (hiệu ứng Tyndall).",
+    "source": "SGK Hóa học 10/11.",
+    "verdict": "Sai",
+    "explain": "Hiệu ứng Tyndall (nhìn thấy vệt sáng do hạt phân tán tán xạ ánh sáng) chỉ xảy ra ở hệ keo (như sương mù, khói, sữa loãng), không xuất hiện trong dung dịch thực trong suốt."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Hóa học",
+    "title": "Mùi tanh của cá do đâu",
+    "quote": "AI nói mùi tanh của cá chủ yếu do các hợp chất amin (như trimetylamin) gây ra, có thể giảm bớt bằng cách nấu với giấm hoặc chanh.",
+    "task": "Tìm hiểu tính chất bazơ của amin và phản ứng trung hòa axit.",
+    "source": "SGK Hóa học 12 (Amin).",
+    "verdict": "Đúng",
+    "explain": "Trimetylamin có tính bazơ yếu, khi nấu cá dùng chất chua như chanh, giấm (axit) sẽ tạo thành muối không bay hơi, làm giảm rõ rệt mùi tanh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Số lượng nhiễm sắc thể ở người",
+    "quote": "AI nói tế bào sinh dưỡng của người bình thường chứa 48 nhiễm sắc thể (24 cặp).",
+    "task": "Kiểm tra bộ nhiễm sắc thể lưỡng bội 2n của người.",
+    "source": "SGK Sinh học 10/12.",
+    "verdict": "Sai",
+    "explain": "Bộ nhiễm sắc thể lưỡng bội bình thường ở người là 2n = 46 (gồm 23 cặp tương đồng). Loài tinh tinh mới có 48 nhiễm sắc thể."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Cấu trúc chuỗi xoắn kép ADN",
+    "quote": "AI nói phân tử ADN có cấu trúc chuỗi xoắn kép do Watson và Crick phát hiện năm 1953.",
+    "task": "Tra cứu lịch sử phát hiện sinh học phân tử.",
+    "source": "Giải Nobel Y học 1962, SGK Sinh học 10/12.",
+    "verdict": "Đúng",
+    "explain": "James Watson và Francis Crick đã công bố mô hình cấu trúc xoắn kép của ADN vào năm 1953 trên tạp chí Nature."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Nguyên tắc bổ sung trong ADN",
+    "quote": "AI nói trong phân tử ADN, A luôn liên kết với G bằng 3 liên kết hydro.",
+    "task": "Kiểm tra nguyên tắc bổ sung giữa các bazơ nitơ trong ADN.",
+    "source": "SGK Sinh học 10/12.",
+    "verdict": "Sai",
+    "explain": "Theo nguyên tắc bổ sung: Adenin (A) liên kết với Timin (T) bằng 2 liên kết hydro; Guanin (G) liên kết với Xitôzin (X/C) bằng 3 liên kết hydro."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Kháng sinh có diệt được virus không",
+    "quote": "AI khẳng định uống thuốc kháng sinh phổ rộng là cách tốt nhất để tiêu diệt virus gây cảm cúm trong máu.",
+    "task": "Tìm hiểu cơ chế tác động của thuốc kháng sinh đối với vi khuẩn và cấu tạo virus.",
+    "source": "Tổ chức Y tế Thế giới (WHO), Hướng dẫn Bộ Y tế.",
+    "verdict": "Sai",
+    "explain": "Kháng sinh chỉ tiêu diệt hoặc ức chế vi khuẩn (bằng cách phá hủy thành tế bào, ức chế tổng hợp protein vi khuẩn). Virus không có cấu tạo tế bào nên kháng sinh hoàn toàn vô tác dụng đối với virus."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Người nhóm máu O truyền máu",
+    "quote": "AI nói người có nhóm máu O có thể truyền hồng cầu cho người thuộc tất cả các nhóm máu A, B, AB.",
+    "task": "Kiểm tra hệ kháng nguyên và kháng thể của hệ nhóm máu ABO.",
+    "source": "SGK Sinh học 11, Viện Huyết học Truyền máu.",
+    "verdict": "Đúng",
+    "explain": "Hồng cầu nhóm O không có kháng nguyên A và B trên bề mặt, do đó có thể truyền cho người có nhóm máu A, B, AB trong trường hợp truyền khối hồng cầu cấp cứu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tim người đập tự động",
+    "quote": "AI nói tim người co bóp nhịp nhàng tự động suốt đời là nhờ hệ dẫn truyền tim tự phát xung điện.",
+    "task": "Tra cứu sinh lý học tim mạch và hệ dẫn truyền tim.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Đúng",
+    "explain": "Tim có tính tự động nhờ hệ dẫn truyền tim (gồm nút xoang nhĩ, nút nhĩ thất, bó His và mạng Purkinje) tự phát xung điện định kỳ kích thích cơ tim co bóp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tế bào thực vật có ty thể không",
+    "quote": "AI nói tế bào thực vật chỉ có lục lạp để quang hợp chứ không hề có bào quan ty thể.",
+    "task": "Kiểm tra bào quan của tế bào nhân thực thực vật.",
+    "source": "SGK Sinh học 10.",
+    "verdict": "Sai",
+    "explain": "Tế bào thực vật có cả lục lạp (để quang hợp) và ty thể (để thực hiện hô hấp tế bào tạo năng lượng ATP cho các hoạt động sống)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Màng tế bào cấu tạo từ gì",
+    "quote": "AI nói màng sinh chất của tế bào được cấu tạo chủ yếu từ lớp kép photpholipit và các phân tử protein.",
+    "task": "Kiểm tra mô hình khảm động của màng sinh chất (Singer & Nicolson 1972).",
+    "source": "SGK Sinh học 10.",
+    "verdict": "Đúng",
+    "explain": "Màng sinh chất có cấu trúc khảm động gồm lớp kép photpholipit quay đuôi kị nước vào trong và các protein màng bám hoặc xuyên màng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Cây nhả oxy vào ban đêm",
+    "quote": "AI khẳng định tất cả các loài cây xanh đều nhả ra lượng oxy khổng lồ vào ban đêm nên cần để thật nhiều cây trong phòng ngủ kín.",
+    "task": "Kiểm tra quá trình quang hợp và hô hấp của thực vật trong bóng tối.",
+    "source": "SGK Sinh học 11 (Hô hấp ở thực vật).",
+    "verdict": "Sai",
+    "explain": "Ban đêm không có ánh sáng cây ngừng quang hợp và chỉ thực hiện hô hấp tế bào (hấp thụ O2 và thải CO2); để nhiều cây trong phòng ngủ đóng kín cửa có thể gây ngột ngạt thiếu oxy."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Chức năng của tiểu cầu trong máu",
+    "quote": "AI nói tiểu cầu có chức năng chính là vận chuyển khí oxy từ phổi tới các mô cơ quan.",
+    "task": "Phân biệt chức năng của hồng cầu, bạch cầu và tiểu cầu.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Sai",
+    "explain": "Hồng cầu (chứa hemoglobin) mới vận chuyển oxy; tiểu cầu tham gia vào quá trình đông máu và bảo vệ thành mạch."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Đột biến gen luôn luôn có hại",
+    "quote": "AI nói mọi đột biến gen xảy ra trong tự nhiên đều gây hại chết người và không có đột biến nào có lợi.",
+    "task": "Kiểm tra vai trò của đột biến gen trong tiến hóa và chọn giống.",
+    "source": "SGK Sinh học 12 (Di truyền học).",
+    "verdict": "Sai",
+    "explain": "Đa số đột biến là trung tính, một số có hại nhưng cũng có những đột biến mang lại tính trạng có lợi giúp sinh vật thích nghi tốt hơn với môi trường sống và cung cấp nguyên liệu cho tiến hóa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Bệnh mù màu di truyền",
+    "quote": "AI nói bệnh mù màu đỏ - lục ở người là do gen lặn nằm trên nhiễm sắc thể giới tính X quy định.",
+    "task": "Tra cứu cơ chế di truyền liên kết giới tính của bệnh mù màu.",
+    "source": "SGK Sinh học 12.",
+    "verdict": "Đúng",
+    "explain": "Gen quy định bệnh mù màu đỏ - lục là gen lặn nằm trên vùng không tương đồng của NST giới tính X, do đó bệnh biểu hiện ở nam giới (XY) nhiều hơn nữ giới (XX)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Vi khuẩn có nhân hoàn chỉnh không",
+    "quote": "AI nói vi khuẩn là sinh vật nhân thực có màng nhân bao bọc vật chất di truyền rất rõ ràng.",
+    "task": "Phân biệt tế bào nhân sơ (Prokaryote) và tế bào nhân thực (Eukaryote).",
+    "source": "SGK Sinh học 10.",
+    "verdict": "Sai",
+    "explain": "Vi khuẩn là sinh vật nhân sơ (Prokaryote), vật chất di truyền là một phân tử ADN trần dạng vòng nằm ở vùng nhân, không có màng nhân bao bọc."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Enzyme tiêu hóa tinh bột ở miệng",
+    "quote": "AI nói trong khoang miệng người, tuyến nước bọt tiết ra enzyme amylase (ptyalin) giúp thủy phân một phần tinh bột chín thành đường mantôzơ.",
+    "task": "Kiểm tra sinh lý tiêu hóa ở khoang miệng.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Đúng",
+    "explain": "Enzyme amylase trong nước bọt xúc tác thủy phân tinh bột chín thành đường đôi mantôzơ, tạo vị ngọt nhẹ khi nhai kỹ cơm."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Vai trò của insulin",
+    "quote": "AI nói hormone insulin do tuyến tụy tiết ra có tác dụng làm tăng nồng độ đường glucose trong máu.",
+    "task": "Kiểm tra chức năng điều hòa đường huyết của insulin và glucagon.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Sai",
+    "explain": "Insulin giúp vận chuyển glucose từ máu vào tế bào và tổng hợp glycogen dự trữ, từ đó làm GIẢM đường huyết. Hormone glucagon mới làm tăng đường huyết."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Cây bắt mồi sống ở đất nghèo dinh dưỡng",
+    "quote": "AI nói cây nắp ấm bắt côn trùng để lấy đường glucose bù cho việc không quang hợp được.",
+    "task": "Tìm hiểu dinh dưỡng khoáng của các loài thực vật bắt mồi.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Sai",
+    "explain": "Cây bắt mồi vẫn có lá xanh và quang hợp bình thường tạo chất hữu cơ; chúng bẫy côn trùng để phân hủy lấy chất đạm (nitơ và khoáng) bù đắp cho môi trường đất đầm lầy cằn cỗi."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Thuyết chọn lọc tự nhiên",
+    "quote": "AI nói Charles Darwin là nhà khoa học đề xuất thuyết tiến hóa bằng con đường chọn lọc tự nhiên trong cuốn sách 'Nguồn gốc các loài' (1859).",
+    "task": "Tra cứu lịch sử học thuyết tiến hóa sinh học.",
+    "source": "SGK Sinh học 12.",
+    "verdict": "Đúng",
+    "explain": "Darwin đã công bố học thuyết chọn lọc tự nhiên kinh điển giải thích sự hình thành các đặc điểm thích nghi và loài mới vào năm 1859."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Chức năng của gan",
+    "quote": "AI nói gan chỉ có một nhiệm vụ duy nhất là tiết ra axit dạ dày.",
+    "task": "Kiểm tra các chức năng chuyển hóa, giải độc và tiêu hóa của gan.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Sai",
+    "explain": "Gan là cơ quan chuyển hóa lớn nhất cơ thể: lọc và giải độc máu, tổng hợp protein huyết tương, dự trữ glycogen, tiết mật nhũ hóa chất béo; gan không tiết axit dạ dày."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "ADN ty thể di truyền theo dòng nào",
+    "quote": "AI nói ADN trong ty thể của con người chỉ được di truyền theo dòng mẹ.",
+    "task": "Kiểm tra cơ chế di truyền ngoài nhân tế bào chất.",
+    "source": "SGK Sinh học 12 (Di truyền ngoài nhân).",
+    "verdict": "Đúng",
+    "explain": "Khi thụ tinh, tinh trùng chỉ đưa nhân vào noãn, toàn bộ tế bào chất và ty thể của hợp tử được thừa hưởng từ tế bào trứng của mẹ, nên hệ gen ty thể di truyền theo dòng mẹ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Máu trong tĩnh mạch luôn luôn đỏ thẫm",
+    "quote": "AI khẳng định tất cả các tĩnh mạch trong cơ thể người đều chở máu nghèo oxy màu đỏ thẫm.",
+    "task": "Kiểm tra vòng tuần hoàn phổi và tĩnh mạch phổi.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Sai",
+    "explain": "Tĩnh mạch phổi dẫn máu giàu oxy từ phổi trở về tâm nhĩ trái của tim, do đó tĩnh mạch phổi chứa máu đỏ tươi."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Vùng điều hòa trên gen",
+    "quote": "AI nói vùng điều hòa nằm ở đầu 5' của mạch mã gốc của gen mang tín hiệu khởi động phiên mã.",
+    "task": "Kiểm tra cấu trúc chung của một gen cấu trúc.",
+    "source": "SGK Sinh học 12.",
+    "verdict": "Sai",
+    "explain": "Vùng điều hòa nằm ở đầu 3' của mạch mã gốc (tương ứng đầu 5' của mạch bổ sung) chứa trình tự nuclêôtit đặc biệt giúp ARN polimeraza nhận biết và khởi đầu phiên mã."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Mã di truyền có tính thoái hóa",
+    "quote": "AI nói tính thoái hóa của mã di truyền nghĩa là nhiều bộ ba khác nhau có thể cùng mã hóa cho một loại axit amin.",
+    "task": "Kiểm tra đặc điểm của mã di truyền.",
+    "source": "SGK Sinh học 12.",
+    "verdict": "Đúng",
+    "explain": "Bảng mã di truyền có 64 bộ ba nhưng chỉ mã hóa 20 loại axit amin; hiện tượng nhiều côđon cùng chỉ định 1 axit amin được gọi là tính thoái hóa (dư thừa) của mã di truyền."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Thực bào ở bạch cầu",
+    "quote": "AI nói bạch cầu trung tính và đại thực bào có khả năng thực bào tiêu diệt vi khuẩn xâm nhập vào cơ thể.",
+    "task": "Kiểm tra miễn dịch không đặc hiệu ở người.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Đúng",
+    "explain": "Bạch cầu trung tính và đại thực bào có khả năng nuốt và tiêu hóa vi sinh vật ngoại lai nhờ các enzyme thủy phân trong lizôxôm."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Hiện tượng ưu thế lai",
+    "quote": "AI nói con lai F1 có ưu thế lai cao thường được giữ lại để làm giống cho các thế hệ sau.",
+    "task": "Kiểm tra phương pháp ứng dụng ưu thế lai trong chọn giống.",
+    "source": "SGK Sinh học 12.",
+    "verdict": "Sai",
+    "explain": "Ưu thế lai biểu hiện cao nhất ở F1 sau đó giảm dần qua các thế hệ do hiện tượng thoái hóa giống (tỉ lệ dị hợp giảm, đồng hợp lặn có hại tăng), nên F1 chỉ dùng để thương phẩm, không dùng làm giống."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tế bào thần kinh nhân đôi",
+    "quote": "AI nói các nơron thần kinh trưởng thành trong vỏ não người liên tục phân chia nguyên phân hàng triệu lần mỗi ngày.",
+    "task": "Kiểm tra chu kỳ tế bào của tế bào thần kinh biệt hóa.",
+    "source": "SGK Sinh học 10/11.",
+    "verdict": "Sai",
+    "explain": "Các nơron thần kinh trưởng thành đã biệt hóa hoàn toàn dừng ở pha G0 của chu kỳ tế bào và hầu như không phân chia nguyên phân trong suốt cuộc đời."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Khí khổng ở lá cây",
+    "quote": "AI nói khí khổng ở lá cây mở ra khi tế bào hạt đậu no nước và đóng lại khi tế bào mất nước.",
+    "task": "Kiểm tra cơ chế đóng mở khí khổng.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Đúng",
+    "explain": "Thành trong của tế bào hình hạt đậu dày, thành ngoài mỏng; khi hút nước no tế bào căng ra làm thành ngoài dãn nhiều kéo theo thành trong làm mở lỗ khí khổng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Thận lọc máu tạo nước tiểu",
+    "quote": "AI nói đơn vị chức năng của thận là nephron gồm cầu thận, nang Bowman và ống thận.",
+    "task": "Kiểm tra cấu tạo vi thể của thận người.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Đúng",
+    "explain": "Mỗi quả thận chứa khoảng 1 triệu nephron (đơn vị chức năng) thực hiện lọc huyết tương ở cầu thận và tái hấp thu các chất ở ống thận để tạo nước tiểu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Hệ vi sinh đường ruột",
+    "quote": "AI nói toàn bộ vi khuẩn trong đường ruột người đều là mầm bệnh có hại cần phải uống thuốc diệt sạch.",
+    "task": "Tìm hiểu vai trò của hệ vi sinh đường ruột (microbiome) đối với tiêu hóa và miễn dịch.",
+    "source": "Tài liệu Sinh lý học vi sinh, Viện Dinh dưỡng.",
+    "verdict": "Sai",
+    "explain": "Đường ruột chứa hàng nghìn tỷ lợi khuẩn giúp tổng hợp vitamin K, vitamin nhóm B, hỗ trợ tiêu hóa chất xơ và cạnh tranh ngăn chặn vi khuẩn gây bệnh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tế bào gốc vạn năng",
+    "quote": "AI nói tế bào gốc vạn năng có khả năng biệt hóa thành hầu hết các loại tế bào chuyên hóa trong cơ thể.",
+    "task": "Tra cứu tiềm năng sinh học của tế bào gốc (pluripotent stem cells).",
+    "source": "Tạp chí Nature/Science, SGK Sinh học nâng cao.",
+    "verdict": "Đúng",
+    "explain": "Tế bào gốc vạn năng (như tế bào gốc phôi hoặc iPSC) có thể biệt hóa thành mọi dòng tế bào thuộc 3 lá mầm phôi."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Sinh sản vô tính ở thực vật",
+    "quote": "AI nói giâm cành, chiết cành và ghép chồi là các hình thức sinh sản hữu tính tạo biến dị tổ hợp phong phú.",
+    "task": "Phân biệt sinh sản vô tính và sinh sản hữu tính ở thực vật.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Sai",
+    "explain": "Giâm, chiết, ghép cành là các hình thức nhân giống sinh dưỡng (sinh sản vô tính) dựa trên nguyên phân, con non giữ nguyên vẹn đặc tính di truyền của cây mẹ, không tạo biến dị tổ hợp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tuyến giáp tiết hormone gì",
+    "quote": "AI nói tuyến giáp tiết hormone thyroxine chứa iot tham gia điều hòa tốc độ chuyển hóa cơ bản của cơ thể.",
+    "task": "Tra cứu chức năng của hormone tuyến giáp.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Đúng",
+    "explain": "Thyroxine (T4) và triiodothyronine (T3) do tuyến giáp tiết ra chứa iod, kích thích chuyển hóa tế bào, sinh nhiệt và phát triển thể chất, trí tuệ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Đa bội thể ở thực vật",
+    "quote": "AI nói cây tứ bội (4n) thường có cơ quan sinh dưỡng to, chống chịu tốt hơn cây lưỡng bội (2n) tương ứng.",
+    "task": "Kiểm tra đặc điểm của thể đa bội trong di truyền học.",
+    "source": "SGK Sinh học 12.",
+    "verdict": "Đúng",
+    "explain": "Do hàm lượng ADN trong tế bào tăng gấp đôi, quá trình sinh tổng hợp chất diễn ra mạnh mẽ làm tế bào to hơn, cơ quan sinh dưỡng (lá, củ, quả) lớn hơn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Virus HIV tấn công tế bào nào",
+    "quote": "AI nói virus HIV chủ yếu xâm nhập và phá hủy các tế bào lympho T-CD4 của hệ miễn dịch người.",
+    "task": "Tra cứu cơ chế gây suy giảm miễn dịch của HIV.",
+    "source": "Tổ chức Y tế Thế giới (WHO), SGK Sinh học 10/12.",
+    "verdict": "Đúng",
+    "explain": "HIV gắn đặc hiệu vào thụ thể CD4 trên bề mặt tế bào lympho T hỗ trợ, nhân lên và phá hủy tế bào này dẫn đến hội chứng suy giảm miễn dịch mắc phải (AIDS)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Quá trình phiên mã ở đâu",
+    "quote": "AI nói ở tế bào nhân thực, quá trình phiên mã tổng hợp mARN diễn ra trong tế bào chất.",
+    "task": "Kiểm tra vị trí diễn ra phiên mã và dịch mã trong tế bào nhân thực.",
+    "source": "SGK Sinh học 10/12.",
+    "verdict": "Sai",
+    "explain": "Ở tế bào nhân thực, phiên mã diễn ra trong nhân tế bào (nơi chứa ADN). Sau đó phân tử mARN mới được chuyển qua lỗ nhân ra tế bào chất để thực hiện dịch mã."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Sự tạo thành dịch mật",
+    "quote": "AI nói dịch mật do túi mật tự sản xuất và tiết ra trực tiếp.",
+    "task": "Kiểm tra cơ quan sản xuất mật và cơ quan dự trữ mật.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Sai",
+    "explain": "Dịch mật do các tế bào gan sản xuất liên tục, túi mật chỉ đóng vai trò là nơi chứa và cô đặc dịch mật trước khi bơm vào tá tràng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Hiện tượng liền xương",
+    "quote": "AI nói xương người phát triển to ra về bề ngang là nhờ sự phân chia của các tế bào màng xương.",
+    "task": "Tra cứu cấu tạo và sự phát triển của xương người.",
+    "source": "SGK Sinh học 8.",
+    "verdict": "Đúng",
+    "explain": "Màng xương chứa các tế bào tạo xương phân chia tạo ra các lớp xương mới bồi tụ giúp xương to ra về bề ngang; đĩa sụn tăng trưởng giúp xương dài ra."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tập tính bẩm sinh ở động vật",
+    "quote": "AI nói tập tính bẩm sinh là chuỗi phản xạ không điều kiện sinh ra đã có, mang tính di truyền theo loài.",
+    "task": "Kiểm tra phân loại tập tính động vật.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Đúng",
+    "explain": "Tập tính bẩm sinh sinh ra đã có, được di truyền từ bố mẹ, đặc trưng cho loài và bền vững không thay đổi theo thời gian."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Hệ thần kinh giao cảm và đối giao cảm",
+    "quote": "AI nói khi cơ thể ở trạng thái căng thẳng nguy hiểm (phản ứng chiến hay chạy), hệ thần kinh giao cảm làm tim đập nhanh và giãn đồng tử.",
+    "task": "Tra cứu tác động của hệ thần kinh sinh dưỡng.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Đúng",
+    "explain": "Phân hệ giao cảm kích hoạt cơ thể đối phó khẩn cấp: tăng nhịp tim, huyết áp, giãn phế quản, giãn đồng tử và ức chế hoạt động tiêu hóa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Vòng tuần hoàn kép ở chim và thú",
+    "quote": "AI nói chim và thú có tim 4 ngăn hoàn chỉnh và hai vòng tuần hoàn, máu đỏ tươi nuôi cơ thể không bị pha trộn.",
+    "task": "Kiểm tra tiến hóa hệ tuần hoàn ở động vật có xương sống.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Đúng",
+    "explain": "Tim của chim và thú có 4 ngăn (2 tâm nhĩ, 2 tâm thất) tách biệt hoàn toàn, giúp máu giàu oxy nuôi cơ thể không bị pha trộn với máu nghèo oxy."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Quá trình thụ phấn ở thực vật",
+    "quote": "AI nói thụ phấn là hiện tượng hạt phấn tiếp xúc với đầu nhụy của hoa.",
+    "task": "Kiểm tra định nghĩa thụ phấn và thụ tinh ở thực vật có hoa.",
+    "source": "SGK Sinh học 6/11.",
+    "verdict": "Đúng",
+    "explain": "Thụ phấn là quá trình chuyển hạt phấn từ bao phấn đến đầu nhụy của hoa; thụ tinh là sự kết hợp giữa giao tử đực và giao tử cái."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tế bào que và tế bào nón ở võng mạc",
+    "quote": "AI nói tế bào que ở võng mạc mắt người có chức năng cảm nhận màu sắc chi tiết dưới ánh sáng ban ngày chói chang.",
+    "task": "Phân biệt thụ thể ánh sáng ở mắt: tế bào que và tế bào nón.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Sai",
+    "explain": "Tế bào nón mới tiếp nhận ánh sáng mạnh và cảm nhận màu sắc chi tiết; tế bào que có độ nhạy sáng cao giúp nhìn trong ánh sáng yếu (chập choạng, ban đêm) nhưng không phân biệt được màu sắc."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Dạ dày 4 ngăn ở động vật nhai lại",
+    "quote": "AI nói dạ dày của trâu bò gồm 4 ngăn lần lượt là dạ cỏ, dạ tổ ong, dạ lá sách và dạ múi khế.",
+    "task": "Kiểm tra cấu tạo cơ quan tiêu hóa của động vật nhai lại.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Đúng",
+    "explain": "Động vật nhai lại có dạ dày 4 ngăn: dạ cỏ (lên men vi sinh vật), dạ tổ ong, dạ lá sách (hấp thu nước) và dạ múi khế (dạ dày thực sự tiết dịch vị axit)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Hiện tượng ứ giọt ở cây",
+    "quote": "AI nói hiện tượng ứ giọt xuất hiện ở mép lá cây vào sáng sớm là bằng chứng của áp suất rễ đẩy nước lên.",
+    "task": "Tra cứu hiện tượng ứ giọt trong sinh lý thực vật.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Đúng",
+    "explain": "Ban đêm độ ẩm không khí cao, thoát hơi nước ngừng trệ nhưng áp suất rễ vẫn đẩy nước và ion khoáng lên qua mạch gỗ, rỉ ra thành từng giọt nước ở mép lá."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Bệnh máu khó đông Hemophilia",
+    "quote": "AI nói bệnh máu khó đông do đột biến gen trội nằm trên nhiễm sắc thể Y quy định.",
+    "task": "Tra cứu cơ chế di truyền của bệnh Hemophilia.",
+    "source": "SGK Sinh học 12.",
+    "verdict": "Sai",
+    "explain": "Bệnh máu khó đông là do đột biến gen LẶN nằm trên nhiễm sắc thể giới tính X (vùng không tương đồng), không phải gen trội trên Y."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Hệ bạch huyết trong cơ thể",
+    "quote": "AI nói hệ bạch huyết đổ dịch bạch huyết trực tiếp vào động mạch chủ ngay khi rời khỏi các mô.",
+    "task": "Kiểm tra đường đi của dịch bạch huyết trở về hệ tuần hoàn máu.",
+    "source": "SGK Sinh học 8/11.",
+    "verdict": "Sai",
+    "explain": "Dịch bạch huyết được gom qua các mạch bạch huyết và hạch, cuối cùng đổ vào tĩnh mạch dưới đòn (tĩnh mạch lớn trước khi về tim), không đổ vào động mạch chủ áp lực cao."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Đơn phân của phân tử protein",
+    "quote": "AI nói đơn phân cấu tạo nên phân tử protein là các nucleotit.",
+    "task": "Phân biệt đơn phân của axit nucleic và protein.",
+    "source": "SGK Sinh học 10.",
+    "verdict": "Sai",
+    "explain": "Đơn phân cấu tạo nên protein là các axit amin (amino acid); nucleotit là đơn phân cấu tạo nên axit nucleic (ADN và ARN)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Hiện tượng rụng lá mùa thu",
+    "quote": "AI nói cây rụng lá vào mùa khô lạnh nhằm mục đích giảm thiểu tối đa sự thoát hơi nước qua bề mặt lá.",
+    "task": "Tìm hiểu ý nghĩa thích nghi sinh thái của sự rụng lá.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Đúng",
+    "explain": "Vào mùa khô hanh hoặc mùa đông nhiệt độ thấp rễ hút nước kém, việc rụng lá giúp cây hạn chế mất nước qua khí khổng để duy trì sự sống."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Chức năng của màng bao myelin ở nơron",
+    "quote": "AI nói bao myelin bao bọc sợi trục nơron có tác dụng làm chậm tốc độ truyền xung thần kinh.",
+    "task": "Tra cứu dẫn truyền xung thần kinh trên sợi có bao myelin.",
+    "source": "SGK Sinh học 11.",
+    "verdict": "Sai",
+    "explain": "Bao myelin đóng vai trò cách điện, xung thần kinh lan truyền theo lối nhảy cóc (nhảy qua các eo Ranvier) giúp tốc độ truyền xung thần kinh TĂNG LÊN gấp nhiều lần (lên tới 100m/s), không phải làm chậm lại."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Tế bào chết theo chương trình (Apoptosis)",
+    "quote": "AI nói hiện tượng các tế bào tự tiêu biến có kiểm soát trong quá trình phát triển phôi được gọi là apoptosis.",
+    "task": "Tra cứu cơ chế apoptosis trong sinh học phát triển.",
+    "source": "Tạp chí Y sinh học, SGK Sinh học 10 nâng cao.",
+    "verdict": "Đúng",
+    "explain": "Apoptosis là quá trình tế bào chết có lập trình theo tín hiệu di truyền, ví dụ tiêu biến màng bơi giữa các ngón tay ở phôi thai người."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Sinh học",
+    "title": "Vai trò của riboxom trong tế bào",
+    "quote": "AI nói riboxom là bào quan thực hiện nhiệm vụ tổng hợp protein cho tế bào.",
+    "task": "Kiểm tra chức năng của bào quan riboxom.",
+    "source": "SGK Sinh học 10.",
+    "verdict": "Đúng",
+    "explain": "Riboxom là nhà máy sinh tổng hợp protein của tế bào, dịch mã trình tự codon trên mARN thành chuỗi polipeptit."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến thắng Bạch Đằng năm 938",
+    "quote": "AI nói Ngô Quyền đánh tan quân Nam Hán trên sông Bạch Đằng vào năm 981.",
+    "task": "Kiểm tra mốc thời gian chiến thắng Bạch Đằng của Ngô Quyền và Lê Hoàn.",
+    "source": "SGK Lịch sử 7/10, Đại Việt sử ký toàn thư.",
+    "verdict": "Sai",
+    "explain": "Ngô Quyền đánh tan quân Nam Hán trên sông Bạch Đằng năm 938 kết thúc hơn 1000 năm Bắc thuộc. Năm 981 là chiến thắng Bạch Đằng của Lê Hoàn chống quân Tống."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiếu dời đô 1010",
+    "quote": "AI nói Chiếu dời đô từ Hoa Lư về Thăng Long do Trần Hưng Đạo viết vào năm 1285.",
+    "task": "Tra cứu tác giả và thời điểm ban bố Chiếu dời đô.",
+    "source": "SGK Lịch sử & Ngữ văn 8/10.",
+    "verdict": "Sai",
+    "explain": "Chiếu dời đô do vua Lý Thái Tổ (Lý Công Uẩn) ban bố năm Canh Tuất 1010 khi dời đô từ Hoa Lư về thành Đại La (Thăng Long)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Ba lần kháng chiến chống Mông Nguyên",
+    "quote": "AI nói quân dân nhà Trần dưới sự chỉ huy của các vua Trần và Trần Hưng Đạo đã 3 lần đánh bại quân xâm lược Mông - Nguyên.",
+    "task": "Kiểm tra các cuộc kháng chiến chống quân Nguyên Mông thế kỷ XIII.",
+    "source": "SGK Lịch sử 7/10, Viện Lịch sử Quân sự.",
+    "verdict": "Đúng",
+    "explain": "Quân dân Đại Việt thời Trần đã 3 lần đánh thắng giặc Mông - Nguyên vào các năm 1258, 1285 và 1287-1288, lập nên những chiến công hiển hách như Chương Dương, Hàm Tử, Bạch Đằng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Khởi nghĩa Lam Sơn kéo dài bao lâu",
+    "quote": "AI nói Khởi nghĩa Lam Sơn do Lê Lợi lãnh đạo kéo dài trong 3 năm từ 1425 đến 1428.",
+    "task": "Kiểm tra niên đại và diễn biến khởi nghĩa Lam Sơn.",
+    "source": "SGK Lịch sử 7/10, Đại Việt thông sử.",
+    "verdict": "Sai",
+    "explain": "Khởi nghĩa Lam Sơn bùng nổ năm 1418 tại Thanh Hóa và toàn thắng vào cuối năm 1427 (kéo dài 10 năm gian khổ), lập ra triều đại Hậu Lê."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Đại phá quân Thanh Tết Kỷ Dậu",
+    "quote": "AI nói vua Quang Trung chỉ huy cuộc hành quân thần tốc đại phá 29 vạn quân Mãn Thanh vào dịp Tết Kỷ Dậu năm 1789.",
+    "task": "Kiểm tra chiến dịch Ngọc Hồi - Đống Đa xuân 1789.",
+    "source": "SGK Lịch sử 7/10, Hoàng Lê nhất thống chí.",
+    "verdict": "Đúng",
+    "explain": "Hoàng đế Quang Trung (Nguyễn Huệ) đã chỉ huy đại quân thần tốc ra Bắc, đánh tan 29 vạn quân Thanh trong dịp Tết Kỷ Dậu 1789 với đỉnh cao là trận Ngọc Hồi - Đống Đa mùng 5 Tết."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Nguyễn Ái Quốc tìm đường cứu nước",
+    "quote": "AI nói Nguyễn Ái Quốc rời bến cảng Nhà Rồng ra đi tìm đường cứu nước vào ngày 5 tháng 6 năm 1911 trên con tàu Amiral Latouche-Tréville.",
+    "task": "Tra cứu mốc thời gian cuộc đời Chủ tịch Hồ Chí Minh.",
+    "source": "Bảo tàng Hồ Chí Minh, SGK Lịch sử 9/12.",
+    "verdict": "Đúng",
+    "explain": "Ngày 5/6/1911, người thanh niên yêu nước Văn Ba (Nguyễn Tất Thành) đã rời bến cảng Nhà Rồng (Sài Gòn) sang phương Tây tìm con đường cứu nước giải phóng dân tộc."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Thành lập Đảng Cộng sản Việt Nam",
+    "quote": "AI nói Đảng Cộng sản Việt Nam được thành lập vào ngày 3 tháng 2 năm 1930 tại Hội nghị Hương Cảng (Trung Quốc) do Nguyễn Ái Quốc chủ trì.",
+    "task": "Kiểm tra Hội nghị thành lập Đảng đầu năm 1930.",
+    "source": "SGK Lịch sử 9/12, Văn kiện Đảng.",
+    "verdict": "Đúng",
+    "explain": "Hội nghị hợp nhất các tổ chức cộng sản diễn ra từ ngày 6/1/1930 tại Cửu Long (Hương Cảng, Trung Quốc) dưới sự chủ trì của đồng chí Nguyễn Ái Quốc, quyết định lấy ngày 3/2 làm ngày kỷ niệm thành lập Đảng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Cách mạng Tháng Tám năm 1945",
+    "quote": "AI nói Cách mạng Tháng Tám nổ ra và giành thắng lợi trong một cuộc nội chiến kéo dài suốt 5 năm.",
+    "task": "Kiểm tra tính chất và thời gian diễn biến Cách mạng Tháng Tám.",
+    "source": "SGK Lịch sử 9/12, Lịch sử Việt Nam hiện đại.",
+    "verdict": "Sai",
+    "explain": "Cách mạng Tháng Tám 1945 diễn ra rất nhanh chóng và thần tốc chỉ trong vòng khoảng 15 ngày (từ 14/8 đến 28/8/1945), giành chính quyền từ tay phát xít Nhật trên cả nước một cách hòa bình và ít đổ máu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Tuyên ngôn Độc lập 2/9/1945",
+    "quote": "AI nói Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại Quảng trường Ba Đình vào ngày 2 tháng 9 năm 1954.",
+    "task": "Kiểm tra mốc thời gian ngày Quốc khánh nước CHXHCN Việt Nam.",
+    "source": "SGK Lịch sử 9/12.",
+    "verdict": "Sai",
+    "explain": "Tuyên ngôn Độc lập khai sinh nước Việt Nam Dân chủ Cộng hòa được đọc vào ngày 2 tháng 9 năm 1945. Năm 1954 là năm chiến thắng Điện Biên Phủ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến dịch Điện Biên Phủ kết thúc khi nào",
+    "quote": "AI nói Chiến dịch Điện Biên Phủ toàn thắng vào chiều ngày 7 tháng 5 năm 1954 khi tướng De Castries đầu hàng.",
+    "task": "Kiểm tra thời điểm kết thúc chiến dịch Điện Biên Phủ.",
+    "source": "SGK Lịch sử 9/12, Viện Lịch sử Quân sự Việt Nam.",
+    "verdict": "Đúng",
+    "explain": "Vào lúc 17h30 ngày 7/5/1954, lá cờ 'Quyết chiến Quyết thắng' tung bay trên nóc hầm tướng De Castries, đánh dấu thắng lợi hoàn toàn của chiến dịch Điện Biên Phủ sau 56 ngày đêm chiến đấu gian khổ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến dịch Hồ Chí Minh lịch sử",
+    "quote": "AI nói Chiến dịch Hồ Chí Minh giải phóng hoàn toàn miền Nam thống nhất đất nước toàn thắng vào ngày 30 tháng 4 năm 1975.",
+    "task": "Kiểm tra diễn biến cuộc Tổng tiến công và nổi dậy mùa Xuân 1975.",
+    "source": "SGK Lịch sử 9/12.",
+    "verdict": "Đúng",
+    "explain": "Vào lúc 11h30 ngày 30/4/1975, xe tăng quân giải phóng húc đổ cổng Dinh Độc Lập, cờ giải phóng tung bay báo hiệu Chiến dịch Hồ Chí Minh toàn thắng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến tranh thế giới thứ nhất diễn ra khi nào",
+    "quote": "AI nói Chiến tranh thế giới thứ nhất bùng nổ năm 1914 và kết thúc vào năm 1918.",
+    "task": "Kiểm tra niên đại Thế chiến I.",
+    "source": "SGK Lịch sử 8/11 thế giới.",
+    "verdict": "Đúng",
+    "explain": "Thế chiến thứ nhất kéo dài từ tháng 7/1914 đến tháng 11/1918 giữa phe Hiệp ước và phe Liên minh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến tranh thế giới thứ hai kết thúc khi nào",
+    "quote": "AI nói Chiến tranh thế giới thứ hai bùng nổ năm 1939 và kết thúc vào năm 1945 sau khi phát xít Đức và quân phiệt Nhật đầu hàng.",
+    "task": "Tra cứu mốc thời gian Thế chiến II.",
+    "source": "SGK Lịch sử 8/11 thế giới, Bách khoa toàn thư Britannica.",
+    "verdict": "Đúng",
+    "explain": "Thế chiến II bùng nổ ngày 1/9/1939 khi Đức tấn công Ba Lan và chính thức kết thúc ngày 2/9/1945 khi Nhật Bản ký văn kiện đầu hàng không điều kiện."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Thành lập Liên Hợp Quốc",
+    "quote": "AI nói tổ chức Liên Hợp Quốc được thành lập vào năm 1945 tại San Francisco nhằm duy trì hòa bình và an ninh quốc tế.",
+    "task": "Tra cứu lịch sử ra đời của Liên Hợp Quốc (UN).",
+    "source": "Hiến chương Liên Hợp Quốc, SGK Lịch sử 12.",
+    "verdict": "Đúng",
+    "explain": "Hiến chương Liên Hợp Quốc được ký kết ngày 26/6/1945 tại San Francisco và có hiệu lực từ ngày 24/10/1945, ngày này được lấy làm Ngày Liên Hợp Quốc."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Cách mạng công nghiệp lần thứ nhất",
+    "quote": "AI nói Cách mạng công nghiệp lần thứ nhất khởi đầu ở nước Đức với phát minh ra bóng đèn điện của Thomas Edison.",
+    "task": "Tra cứu nguồn gốc Cách mạng công nghiệp lần thứ nhất thế kỷ XVIII.",
+    "source": "SGK Lịch sử 8/10.",
+    "verdict": "Sai",
+    "explain": "Cách mạng công nghiệp lần thứ nhất khởi đầu ở nước Anh vào nửa sau thế kỷ XVIII với máy kéo sợi Jenny và động cơ hơi nước của James Watt, tập trung vào ngành dệt."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Tuyên ngôn Độc lập Hoa Kỳ",
+    "quote": "AI nói Tuyên ngôn Độc lập của Hợp chúng quốc Hoa Kỳ được công bố vào ngày 4 tháng 7 năm 1776.",
+    "task": "Tra cứu lịch sử cách mạng tư sản Bắc Mỹ.",
+    "source": "SGK Lịch sử 8/10, Lưu trữ Quốc gia Hoa Kỳ.",
+    "verdict": "Đúng",
+    "explain": "Bản Tuyên ngôn Độc lập do Thomas Jefferson soạn thảo được Đại hội Lục địa thông qua ngày 4/7/1776 tại Philadelphia tuyên bố 13 thuộc địa tách khỏi nước Anh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Bức tường Berlin sụp đổ năm nào",
+    "quote": "AI nói Bức tường Berlin ngăn cách hai miền nước Đức bị phá bỏ vào năm 1989, báo hiệu sự kết thúc của Chiến tranh Lạnh.",
+    "task": "Kiểm tra mốc thời gian thống nhất nước Đức.",
+    "source": "SGK Lịch sử 12 thế giới.",
+    "verdict": "Đúng",
+    "explain": "Bức tường Berlin chính thức sụp đổ vào đêm ngày 9 tháng 11 năm 1989, mở đường cho việc thống nhất nước Đức vào tháng 10/1990."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Hội nghị Yalta năm 1945",
+    "quote": "AI nói Hội nghị Yalta diễn ra giữa nguyên thủ ba cường quốc Liên Xô, Mỹ và Anh nhằm phân chia khu vực ảnh hưởng sau Thế chiến II.",
+    "task": "Tra cứu các thỏa thuận tại Hội nghị Yalta tháng 2/1945.",
+    "source": "SGK Lịch sử 12.",
+    "verdict": "Đúng",
+    "explain": "Hội nghị Yalta họp từ ngày 4 đến 11/2/1945 với sự tham gia của Stalin, Roosevelt và Churchill, hình thành trật tự thế giới hai cực Yalta."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến thắng Điện Biên Phủ trên không",
+    "quote": "AI nói trận 'Điện Biên Phủ trên không' đánh bại cuộc tập kích pháo đài bay B-52 của Mỹ diễn ra trong 12 ngày đêm cuối tháng 12 năm 1972 tại Hà Nội.",
+    "task": "Kiểm tra lịch sử cuộc kháng chiến chống Mỹ cứu nước năm 1972.",
+    "source": "Bảo tàng Phòng không - Không quân, SGK Lịch sử 9/12.",
+    "verdict": "Đúng",
+    "explain": "Từ ngày 18 đến 29/12/1972, quân và dân miền Bắc đặc biệt là Hà Nội đã kiên cường bắn rơi 81 máy bay Mỹ (trong đó có 34 chiếc B-52), buộc Mỹ phải ký Hiệp định Paris 1973."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Người đầu tiên bay vào không gian",
+    "quote": "AI nói phi hành gia Neil Armstrong là người đầu tiên bay vào vũ trụ vào năm 1961.",
+    "task": "Phân biệt chuyến bay của Yuri Gagarin (1961) và cuộc đổ bộ Mặt Trăng của Neil Armstrong (1969).",
+    "source": "Cơ quan Vũ trụ Liên bang Nga Roscosmos, NASA, SGK Lịch sử 12.",
+    "verdict": "Sai",
+    "explain": "Yuri Gagarin (Liên Xô) mới là người đầu tiên bay vào không gian trên tàu Vostok 1 ngày 12/4/1961. Neil Armstrong là người đầu tiên đặt chân lên Mặt Trăng vào năm 1969."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Hiệp định Paris 1973",
+    "quote": "AI nói Hiệp định Paris về chấm dứt chiến tranh, lập lại hòa bình ở Việt Nam được ký kết vào ngày 27 tháng 1 năm 1973.",
+    "task": "Kiểm tra mốc thời gian ký kết Hiệp định Paris.",
+    "source": "SGK Lịch sử 9/12, Bộ Ngoại giao Việt Nam.",
+    "verdict": "Đúng",
+    "explain": "Hiệp định Paris chính thức được ký kết ngày 27/1/1973 tại Paris giữa 4 bên tham chiến, buộc quân đội Mỹ và đồng minh phải rút hoàn toàn khỏi miền Nam Việt Nam."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Kim tự tháp Giza ở đâu",
+    "quote": "AI nói quần thể Kim tự tháp Giza nổi tiếng do nền văn minh Maya ở Nam Mỹ xây dựng.",
+    "task": "Tra cứu nguồn gốc của Kim tự tháp Giza.",
+    "source": "SGK Lịch sử & Địa lý 6.",
+    "verdict": "Sai",
+    "explain": "Quần thể Kim tự tháp Giza do nền văn minh Ai Cập cổ đại xây dựng bên bờ sông Nile từ thời kỳ Cổ Vương quốc (khoảng thiên niên kỷ 3 TCN)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Trận Waterloo năm 1815",
+    "quote": "AI nói Hoàng đế Napoleon Bonaparte đã toàn thắng vang dội trong trận Waterloo năm 1815 để củng cố đế chế Pháp.",
+    "task": "Tra cứu kết quả trận chiến Waterloo 1815.",
+    "source": "SGK Lịch sử 8/10 thế giới.",
+    "verdict": "Sai",
+    "explain": "Trong trận Waterloo ngày 18/6/1815 tại Bỉ, Napoleon bị liên quân Anh - Phổ đánh bại hoàn toàn, dẫn đến sự sụp đổ cuối cùng của Đế chế thứ nhất và ông bị lưu đày đến đảo Saint Helena."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Phong trào Cần Vương do ai phát động",
+    "quote": "AI nói Phong trào Cần Vương chống Pháp bùng nổ sau khi vua Hàm Nghi ban Chiếu Cần Vương năm 1885.",
+    "task": "Tra cứu sự kiện Tôn Thất Thuyết đưa vua Hàm Nghi ra sơn phòng Tân Sở.",
+    "source": "SGK Lịch sử 8/11.",
+    "verdict": "Đúng",
+    "explain": "Tháng 7/1885, sau cuộc binh biến tại kinh thành Huế, Tôn Thất Thuyết phò tá vua Hàm Nghi ra Tân Sở (Quảng Trị) ban Chiếu Cần Vương kêu gọi văn thân sĩ phu và nhân dân giúp vua cứu nước."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến dịch Biên giới Thu Đông 1950",
+    "quote": "AI nói Chiến dịch Biên giới Thu Đông 1950 là chiến dịch đầu tiên mà bộ đội chủ lực Việt Nam chủ động mở cuộc tiến công lớn.",
+    "task": "Kiểm tra ý nghĩa bước ngoặt của Chiến dịch Biên giới 1950.",
+    "source": "SGK Lịch sử 9/12.",
+    "verdict": "Đúng",
+    "explain": "Chiến dịch Biên giới 1950 đánh dấu bước ngoặt ta giành quyền chủ động chiến lược trên chiến trường chính Bắc Bộ, khai thông biên giới Việt - Trung để nhận viện trợ quốc tế."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Cuộc Duy tân Minh Trị ở Nhật Bản",
+    "quote": "AI nói Minh Trị Duy tân là cuộc cải cách toàn diện đưa Nhật Bản từ nước phong kiến lạc hậu chuyển sang phát triển theo con đường tư bản chủ nghĩa.",
+    "task": "Tra cứu cuộc cải cách của Thiên hoàng Minh Trị năm 1868.",
+    "source": "SGK Lịch sử 8/11.",
+    "verdict": "Đúng",
+    "explain": "Bắt đầu từ năm 1868, cuộc Duy tân Minh Trị đã hiện đại hóa Nhật Bản về kinh tế, quân sự, giáo dục và chính trị, giúp Nhật thoát khỏi nguy cơ thuộc địa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Tổ chức ASEAN được thành lập khi nào",
+    "quote": "AI nói Hiệp hội các quốc gia Đông Nam Á (ASEAN) được thành lập vào ngày 8 tháng 8 năm 1967 tại Bangkok với 5 quốc gia sáng lập.",
+    "task": "Tra cứu Tuyên bố Bangkok 1967.",
+    "source": "Cổng thông tin ASEAN, SGK Lịch sử 12.",
+    "verdict": "Đúng",
+    "explain": "ASEAN được thành lập ngày 8/8/1967 tại Bangkok bởi đại diện 5 nước: Indonesia, Malaysia, Philippines, Singapore và Thái Lan."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Việt Nam gia nhập ASEAN năm nào",
+    "quote": "AI nói Việt Nam chính thức trở thành thành viên thứ 7 của Hiệp hội các quốc gia Đông Nam Á (ASEAN) vào ngày 28 tháng 7 năm 1995.",
+    "task": "Kiểm tra mốc thời gian hội nhập quốc tế của Việt Nam.",
+    "source": "Bộ Ngoại giao Việt Nam, SGK Lịch sử 12.",
+    "verdict": "Đúng",
+    "explain": "Ngày 28/7/1995 tại Hội nghị Bộ trưởng Ngoại giao ASEAN lần thứ 28 tại Brunei, Việt Nam chính thức được kết nạp làm thành viên thứ 7 của ASEAN."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Văn minh Lưỡng Hà cổ đại",
+    "quote": "AI nói nền văn minh Lưỡng Hà (Mesopotamia) cổ đại hình thành trên lưu vực hai con sông Tigris và Euphrates.",
+    "task": "Tra cứu vị trí địa lý của văn minh Lưỡng Hà.",
+    "source": "SGK Lịch sử 6/10.",
+    "verdict": "Đúng",
+    "explain": "Mesopotamia có nghĩa là 'vùng đất giữa hai con sông' Tigris và Euphrates (thuộc khu vực Iraq và lân cận ngày nay), cái nôi của chữ viết hình nêm và bộ luật Hammurabi."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Khởi nghĩa Hai Bà Trưng nổ ra năm nào",
+    "quote": "AI nói cuộc khởi nghĩa Hai Bà Trưng chống quân Đông Hán bùng nổ vào mùa xuân năm 40 sau Công nguyên.",
+    "task": "Kiểm tra niên đại khởi nghĩa Hai Bà Trưng.",
+    "source": "SGK Lịch sử 6/10, Đại Việt sử ký toàn thư.",
+    "verdict": "Đúng",
+    "explain": "Mùa xuân năm 40 (năm Canh Tý), Hai Bà Trưng (Trưng Trắc và Trưng Nhị) phất cờ khởi nghĩa tại Hát Môn, đánh đuổi thái thú Tô Định, giành lại độc lập cho đất nước."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Đường lối Đổi mới của Việt Nam",
+    "quote": "AI nói Đại hội đại biểu toàn quốc lần thứ VI của Đảng (tháng 12/1986) đã đề ra đường lối đổi mới toàn diện đất nước.",
+    "task": "Kiểm tra mốc lịch sử khởi xướng công cuộc Đổi mới ở Việt Nam.",
+    "source": "Văn kiện Đảng, SGK Lịch sử 12.",
+    "verdict": "Đúng",
+    "explain": "Đại hội VI (12/1986) là mốc son lịch sử quyết định chuyển từ cơ chế kinh tế kế hoạch hóa tập trung bao cấp sang kinh tế thị trường định hướng xã hội chủ nghĩa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Cách mạng tư sản Pháp 1789",
+    "quote": "AI nói cuộc Cách mạng tư sản Pháp bùng nổ bằng sự kiện quần chúng nhân dân tấn công phá ngục Bastille vào ngày 14 tháng 7 năm 1789.",
+    "task": "Kiểm tra mốc mở đầu Cách mạng Pháp.",
+    "source": "SGK Lịch sử 8/10 thế giới.",
+    "verdict": "Đúng",
+    "explain": "Ngày 14/7/1789, nhân dân Paris đánh chiếm ngục Bastille - biểu tượng của chế độ quân chủ chuyên chế chuyên quyền, ngày này trở thành ngày Quốc khánh của nước Pháp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Khởi nghĩa Yên Thế kéo dài bao lâu",
+    "quote": "AI nói Khởi nghĩa nông dân Yên Thế do Hoàng Hoa Thám (Đề Thám) lãnh đạo đã kiên cường chống Pháp suốt gần 30 năm (1884 - 1913).",
+    "task": "Tra cứu thời gian phong trào nông dân Yên Thế.",
+    "source": "SGK Lịch sử 8/11.",
+    "verdict": "Đúng",
+    "explain": "Phong trào Yên Thế là cuộc khởi nghĩa vũ trang lớn nhất, bền bỉ nhất của nông dân kéo dài gần 30 năm từ 1884 đến khi thủ lĩnh Đề Thám hy sinh năm 1913."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Nước Cộng hòa Nhân dân Trung Hoa thành lập",
+    "quote": "AI nói nước Cộng hòa Nhân dân Trung Hoa được Chủ tịch Mao Trạch Đông tuyên bố thành lập vào ngày 1 tháng 10 năm 1949.",
+    "task": "Tra cứu mốc thời gian cách mạng Trung Quốc thành công.",
+    "source": "SGK Lịch sử 9/12 thế giới.",
+    "verdict": "Đúng",
+    "explain": "Ngày 1/10/1949 tại Quảng trường Thiên An Môn ở Bắc Kinh, nước Cộng hòa Nhân dân Trung Hoa chính thức được tuyên bố thành lập sau thắng lợi của cuộc nội chiến giải phóng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến tranh Triều Tiên (1950 - 1953)",
+    "quote": "AI nói Chiến tranh Triều Tiên kết thúc bằng một hiệp ước hòa bình vĩnh viễn thống nhất hoàn toàn hai miền bán đảo.",
+    "task": "Kiểm tra Hiệp định đình chiến Bàn Môn Điếm 1953.",
+    "source": "SGK Lịch sử 12 thế giới.",
+    "verdict": "Sai",
+    "explain": "Chiến tranh Triều Tiên tạm dừng vào tháng 7/1953 bằng một Hiệp định đình chiến (tại Bàn Môn Điếm), không phải một hiệp ước hòa bình chính thức; về mặt kỹ thuật hai miền vẫn ở trong tình trạng đình chiến."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Nạn đói năm Ất Dậu 1945",
+    "quote": "AI nói nạn đói khủng khiếp năm 1945 ở miền Bắc cướp đi sinh mạng của hơn 2 triệu đồng bào là do chính sách gom thóc tạ của phát xít Nhật và thực dân Pháp.",
+    "task": "Tra cứu nguyên nhân thảm họa nạn đói Ất Dậu.",
+    "source": "SGK Lịch sử 9/12, Tuyên ngôn Độc lập.",
+    "verdict": "Đúng",
+    "explain": "Chính sách vơ vét lương thực, bắt dân nhổ lúa trồng đay phục vụ chiến tranh của phát xít Nhật cùng thực dân Pháp đã gây ra nạn đói thảm khốc làm hơn 2 triệu người chết."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Trận Trân Châu Cảng năm 1941",
+    "quote": "AI nói quân đội phát xít Đức đã bất ngờ ném bom căn cứ hải quân Trân Châu Cảng của Mỹ vào ngày 7 tháng 12 năm 1941.",
+    "task": "Kiểm tra phe phái tấn công Trân Châu Cảng.",
+    "source": "SGK Lịch sử 8/11 thế giới.",
+    "verdict": "Sai",
+    "explain": "Không quân hải quân của Đế quốc Nhật Bản mới là bên bất ngờ tập kích căn cứ Trân Châu Cảng tại Hawaii, khiến Hoa Kỳ chính thức tuyên chiến tham gia Thế chiến II."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Hiệp ước Nhâm Tuất 1862",
+    "quote": "AI nói triều đình nhà Nguyễn đã ký Hiệp ước Nhâm Tuất (1862) nhượng 3 tỉnh miền Đông Nam Kỳ cho thực dân Pháp.",
+    "task": "Tra cứu các hiệp ước triều Nguyễn ký với Pháp.",
+    "source": "SGK Lịch sử 8/11.",
+    "verdict": "Đúng",
+    "explain": "Ngày 5/6/1862, triều đình Huế ký Hiệp ước Nhâm Tuất nhượng 3 tỉnh miền Đông Nam Kỳ (Gia Định, Định Tường, Biên Hòa) và đảo Côn Lôn cho thực dân Pháp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Trận Stalingrad trong Thế chiến II",
+    "quote": "AI nói trận phòng thủ Stalingrad (1942 - 1943) của Hồng quân Liên Xô là bước ngoặt quyết định làm xoay chuyển toàn bộ cục diện Thế chiến thứ hai.",
+    "task": "Tra cứu tầm quan trọng quân sự của trận Stalingrad.",
+    "source": "SGK Lịch sử 8/11 thế giới, Lịch sử chiến tranh vệ quốc vĩ đại.",
+    "verdict": "Đúng",
+    "explain": "Thắng lợi của Hồng quân Liên Xô tiêu diệt toàn bộ tập đoàn quân số 6 của Đức tại Stalingrad đã chấm dứt thế chủ động tấn công của phát xít Đức, mở đầu giai đoạn phản công chiến lược giải phóng châu Âu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Người phụ nữ đầu tiên bay vào vũ trụ",
+    "quote": "AI nói Valentina Tereshkova (Liên Xô) là người phụ nữ đầu tiên trên thế giới bay vào không gian vào năm 1963.",
+    "task": "Tra cứu tiểu sử các nhà du hành vũ trụ.",
+    "source": "Bảo tàng Vũ trụ học Moscow, SGK Lịch sử 12.",
+    "verdict": "Đúng",
+    "explain": "Valentina Tereshkova bay vào quỹ đạo Trái Đất một mình trên con tàu Vostok 6 vào ngày 16 tháng 6 năm 1963, hoàn thành 48 vòng quay quanh Trái Đất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Vương quốc Chăm Pa cổ",
+    "quote": "AI nói nền văn hóa Sa Huỳnh ở miền Trung Việt Nam là tiền đề trực tiếp hình thành nên nhà nước Lâm Ấp - Chăm Pa cổ.",
+    "task": "Tra cứu khảo cổ học và lịch sử vùng đất miền Trung.",
+    "source": "SGK Lịch sử 6/10.",
+    "verdict": "Đúng",
+    "explain": "Các nhà khảo cổ học và sử học đã chứng minh văn hóa Sa Huỳnh thời kỳ đồ sắt là cội nguồn trực tiếp sản sinh văn minh Champa cổ đại."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến dịch Tây Nguyên 1975",
+    "quote": "AI nói đòn tiến công mở màn mang tính đột phá chiến lược của cuộc Tổng tiến công mùa Xuân 1975 là trận đánh Buôn Ma Thuột trong Chiến dịch Tây Nguyên.",
+    "task": "Kiểm tra diễn biến mở màn cuộc Tổng tiến công 1975.",
+    "source": "SGK Lịch sử 9/12.",
+    "verdict": "Đúng",
+    "explain": "Chiến dịch Tây Nguyên mở màn ngày 4/3/1975 với đòn điểm huyệt Buôn Ma Thuột (10/3/1975) đã làm rung chuyển toàn bộ tuyến phòng thủ của đối phương ở Tây Nguyên."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Tổ chức Thương mại Thế giới WTO thành lập",
+    "quote": "AI nói Tổ chức Thương mại Thế giới (WTO) chính thức đi vào hoạt động vào ngày 1 tháng 1 năm 1995 thay thế cho Hiệp định chung về thuế quan và thương mại GATT.",
+    "task": "Tra cứu lịch sử WTO.",
+    "source": "Trang web chính thức của WTO, SGK Lịch sử 12.",
+    "verdict": "Đúng",
+    "explain": "WTO được thành lập ngày 1/1/1995 theo Hiệp định Marrakech (ký năm 1994), kế thừa và mở rộng phạm vi của GATT."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Việt Nam gia nhập Liên Hợp Quốc",
+    "quote": "AI nói Việt Nam chính thức trở thành thành viên thứ 149 của Liên Hợp Quốc vào ngày 20 tháng 9 năm 1977.",
+    "task": "Tra cứu mốc thời gian Việt Nam gia nhập Liên Hợp Quốc.",
+    "source": "Bộ Ngoại giao Việt Nam, Cổng thông tin LHQ.",
+    "verdict": "Đúng",
+    "explain": "Tại khóa họp thứ 32 của Đại hội đồng Liên Hợp Quốc ngày 20/9/1977, Việt Nam chính thức được công nhận là thành viên thứ 149 của tổ chức này."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Phong trào Đông Du do ai khởi xướng",
+    "quote": "AI nói Phong trào Đông Du đưa thanh niên Việt Nam sang Nhật Bản học tập đầu thế kỷ XX do chí sĩ Phan Bội Châu khởi xướng.",
+    "task": "Tra cứu tiểu sử và hoạt động của Phan Bội Châu.",
+    "source": "SGK Lịch sử 8/11.",
+    "verdict": "Đúng",
+    "explain": "Năm 1905, Phan Bội Châu cùng Hội Duy Tân đã phát động phong trào Đông Du vận động thanh niên yêu nước sang Nhật Bản học văn hóa và quân sự để chuẩn bị cứu nước."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Hệ thống chữ viết hình nêm",
+    "quote": "AI nói chữ hình nêm (cuneiform) là một trong những hệ thống chữ viết cổ xưa nhất do người Sumer ở Lưỡng Hà sáng tạo ra khoảng thiên niên kỷ thứ 4 TCN.",
+    "task": "Tra cứu lịch sử chữ viết cổ đại.",
+    "source": "SGK Lịch sử 6/10.",
+    "verdict": "Đúng",
+    "explain": "Người Sumer ở Lưỡng Hà đã dùng que vót nhọn ấn lên đất sét ướt tạo ra các nét hình góc nhọn như mũi nêm, tạo nên chữ hình nêm cổ xưa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Nhà Trần đặt lệ thi Thái học sinh",
+    "quote": "AI nói kỳ thi Tam khôi chọn Trạng nguyên, Bảng nhãn, Thám hoa đầu tiên ở nước ta được tổ chức dưới thời vua Lê Thánh Tông.",
+    "task": "Kiểm tra lịch sử thi cử phong kiến Việt Nam thời Trần và Lê.",
+    "source": "SGK Lịch sử 7/10, Đại Việt sử ký toàn thư.",
+    "verdict": "Sai",
+    "explain": "Khoa thi Tam khôi đầu tiên chọn Trạng nguyên, Bảng nhãn, Thám hoa được tổ chức vào năm 1247 dưới thời vua Trần Thái Tông (Lê Văn Hưu đỗ Bảng nhãn, Nguyễn Quan Quang đỗ Trạng nguyên)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Chiến dịch Đường 9 - Khe Sanh 1968",
+    "quote": "AI nói Chiến dịch Khe Sanh diễn ra vào đầu năm 1968 nhằm nghi binh thu hút và kìm chân lực lượng cơ động chiến lược của quân đội Mỹ ở vùng rừng núi.",
+    "task": "Tra cứu mục đích chiến lược của chiến dịch Khe Sanh 1968.",
+    "source": "SGK Lịch sử 9/12, Viện Lịch sử Quân sự.",
+    "verdict": "Đúng",
+    "explain": "Chiến dịch Khe Sanh đã giam chân và thu hút các sư đoàn lính thủy đánh bộ thiện chiến nhất của Mỹ lên vùng biên giới Quảng Trị, tạo điều kiện thuận lợi cho cuộc Tổng tiến công và nổi dậy Tết Mậu Thân 1968 tại các đô thị."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Vạn Lý Trường Thành xây dựng qua các triều đại",
+    "quote": "AI nói toàn bộ Vạn Lý Trường Thành như ta thấy ngày nay được xây dựng hoàn tất trong duy nhất một đời vua Tần Thủy Hoàng.",
+    "task": "Tra cứu lịch sử xây dựng Vạn Lý Trường Thành qua các triều đại Tần, Hán, Minh.",
+    "source": "Bách khoa toàn thư Lịch sử, SGK Lịch sử 6/10.",
+    "verdict": "Sai",
+    "explain": "Tần Thủy Hoàng nối lại các đoạn thành cổ thời Chiến Quốc, nhưng phần lớn các đoạn tường thành kiên cố bằng gạch đá còn lại ngày nay được xây dựng và tôn tạo dưới thời nhà Minh (thế kỷ XIV - XVII)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Lịch sử",
+    "title": "Phong trào Vô sản hóa năm 1928",
+    "quote": "AI nói Hội Việt Nam Cách mạng Thanh niên đã phát động phong trào 'Vô sản hóa' năm 1928 đưa hội viên vào các hầm mỏ, đồn điền để cùng lao động và truyền bá chủ nghĩa Mác - Lênin.",
+    "task": "Kiểm tra chủ trương của Hội Việt Nam Cách mạng Thanh niên năm 1928.",
+    "source": "SGK Lịch sử 9/12.",
+    "verdict": "Đúng",
+    "explain": "Phong trào 'Vô sản hóa' cuối năm 1928 giúp cán bộ cách mạng rèn luyện lập trường giai cấp công nhân, thúc đẩy mạnh mẽ phong trào công nhân chuyển từ tự phát sang tự giác."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Đường bờ biển của Việt Nam",
+    "quote": "AI nói đường bờ biển nước ta dài 3.260 km kéo dài từ Móng Cái đến Hà Tiên.",
+    "task": "Tra cứu số liệu địa lý chính thức về đường bờ biển Việt Nam.",
+    "source": "Cục Đo đạc Bản đồ Việt Nam, SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Bờ biển Việt Nam dài 3.260 km chạy theo hình chữ S từ Móng Cái (Quảng Ninh) đến Hà Tiên (Kiên Giang)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Điểm cực Đông phần đất liền Việt Nam",
+    "quote": "AI nói điểm cực Đông phần đất liền nước ta nằm tại Mũi Đôi, bán đảo Hòn Gốm, huyện Vạn Ninh, tỉnh Khánh Hòa.",
+    "task": "Tra cứu tọa độ 4 điểm cực của Việt Nam.",
+    "source": "Cục Đo đạc Bản đồ, SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Điểm cực Đông đất liền nằm tại Mũi Đôi (Khánh Hòa) ở kinh độ 109 độ 24 phút Đông, là nơi đón ánh bình minh đầu tiên trên đất liền Việt Nam."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Điểm cực Tây phần đất liền Việt Nam",
+    "quote": "AI nói điểm cực Tây phần đất liền nằm tại A Pa Chải, xã Sín Thầu, huyện Mường Nhé, tỉnh Điện Biên.",
+    "task": "Tra cứu tọa độ điểm cực Tây giáp ngã ba biên giới Việt - Trung - Lào.",
+    "source": "Cục Đo đạc Bản đồ, SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Điểm cực Tây đất liền Việt Nam tọa lạc tại A Pa Chải (Điện Biên) ở kinh độ 102 độ 09 phút Đông."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Vùng kinh tế trọng điểm phía Nam",
+    "quote": "AI nói Đồng bằng sông Hồng là vùng sản xuất lúa gạo xuất khẩu lớn nhất của nước ta.",
+    "task": "So sánh vai trò sản xuất lúa gạo giữa ĐBSCL và ĐBSH.",
+    "source": "Tổng cục Thống kê, SGK Địa lý 12.",
+    "verdict": "Sai",
+    "explain": "Đồng bằng sông Cửu Long mới là vùng sản xuất lương thực và xuất khẩu gạo lớn nhất cả nước, chiếm hơn 50% sản lượng lúa và trên 90% lượng gạo xuất khẩu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Huyện đảo Hoàng Sa trực thuộc tỉnh nào",
+    "quote": "AI nói Huyện đảo Hoàng Sa trực thuộc sự quản lý hành chính của tỉnh Quảng Ngãi.",
+    "task": "Tra cứu đơn vị hành chính quản lý quần đảo Hoàng Sa và Trường Sa.",
+    "source": "Bộ Ngoại giao, Cổng thông tin TP Đà Nẵng, SGK Địa lý 12.",
+    "verdict": "Sai",
+    "explain": "Huyện đảo Hoàng Sa trực thuộc thành phố Đà Nẵng; huyện đảo Trường Sa trực thuộc tỉnh Khánh Hòa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Con sông dài nhất thế giới",
+    "quote": "AI khẳng định sông Amazon chắc chắn dài nhất thế giới và không có bất kỳ tranh luận học thuật nào.",
+    "task": "Tra cứu tranh luận đo đạc giữa sông Nile và sông Amazon.",
+    "source": "Hiệp hội Địa lý Quốc gia (National Geographic), Bách khoa toàn thư Britannica.",
+    "verdict": "Cần kiểm chứng thêm",
+    "explain": "Sách giáo khoa truyền thống ghi nhận sông Nile (châu Phi, ~6.650 km) dài nhất; tuy nhiên các nghiên cứu vệ tinh gần đây của các nhà khoa học Brazil đo lại sông Amazon từ đầu nguồn mới cho rằng Amazon dài hơn (~6.992 km). Chưa có sự đồng thuận tuyệt đối duy nhất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Đại dương lớn nhất và sâu nhất",
+    "quote": "AI nói Thái Bình Dương là đại dương lớn nhất và sâu nhất trên Trái Đất.",
+    "task": "Tra cứu diện tích và độ sâu trung bình của các đại dương.",
+    "source": "Tổ chức Thủy văn Quốc tế (IHO), SGK Địa lý 6/10.",
+    "verdict": "Đúng",
+    "explain": "Thái Bình Dương chiếm khoảng một phần ba diện tích bề mặt Trái Đất và chứa rãnh Mariana với điểm sâu nhất thế giới (Challenger Deep ~11.000m)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Sa mạc nóng lớn nhất thế giới",
+    "quote": "AI nói sa mạc Sahara ở Bắc Phi là sa mạc nóng lớn nhất thế giới.",
+    "task": "Tra cứu diện tích các hoang mạc trên Trái Đất.",
+    "source": "SGK Địa lý 7/10.",
+    "verdict": "Đúng",
+    "explain": "Sahara có diện tích khoảng 9 triệu km2, là hoang mạc nhiệt đới nóng lớn nhất hành tinh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Hoang mạc lớn nhất Trái Đất",
+    "quote": "AI nói sa mạc Sahara là hoang mạc lớn nhất trên Trái Đất bất kể nhiệt độ.",
+    "task": "Phân biệt hoang mạc nhiệt đới và hoang mạc lạnh cực địa.",
+    "source": "Cơ quan Khảo sát Địa chất Hoa Kỳ (USGS), SGK Địa lý.",
+    "verdict": "Sai",
+    "explain": "Theo định nghĩa địa lý về lượng mưa dưới 250mm/năm, Lục địa Nam Cực (hoang mạc lạnh băng giá rộng 14 triệu km2) mới là hoang mạc lớn nhất Trái Đất, tiếp theo là Bắc Cực, rồi mới đến Sahara."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Kênh đào Suez nối hai vùng biển nào",
+    "quote": "AI nói kênh đào Suez nối liền Địa Trung Hải và Biển Đỏ, giúp tàu thuyền đi từ châu Âu sang châu Á không phải vòng qua châu Phi.",
+    "task": "Tra cứu vị trí và vai trò hàng hải của kênh đào Suez.",
+    "source": "SGK Địa lý 10/11.",
+    "verdict": "Đúng",
+    "explain": "Kênh đào Suez cắt qua eo đất Suez ở Ai Cập nối Địa Trung Hải với Biển Đỏ, rút ngắn hàng nghìn hải lý cho tuyến hàng hải Á - Âu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Kênh đào Panama nối hai đại dương nào",
+    "quote": "AI nói kênh đào Panama nối Đại Tây Dương với Thái Bình Dương qua eo đất Trung Mỹ.",
+    "task": "Tra cứu tuyến hàng hải qua kênh đào Panama.",
+    "source": "SGK Địa lý 10/11.",
+    "verdict": "Đúng",
+    "explain": "Kênh đào Panama là công trình thủy lợi then chốt nối Đại Tây Dương và Thái Bình Dương, vận hành bằng hệ thống các âu thuyền nâng hạ tàu."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Khí hậu Việt Nam mang tính chất gì",
+    "quote": "AI nói khí hậu Việt Nam mang tính chất nhiệt đới ẩm gió mùa có mùa đông lạnh ở phía Bắc.",
+    "task": "Kiểm tra đặc điểm tổng quát khí hậu Việt Nam.",
+    "source": "SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Khí hậu nước ta là nhiệt đới ẩm gió mùa; miền Bắc chịu ảnh hưởng của gió mùa Đông Bắc nên có mùa đông lạnh, miền Nam mang tính chất cận xích đạo nóng ẩm quanh năm."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Tỉnh có diện tích lớn nhất Việt Nam",
+    "quote": "AI nói tỉnh Nghệ An là tỉnh có diện tích tự nhiên lớn nhất cả nước.",
+    "task": "Tra cứu niên giám thống kê diện tích các đơn vị hành chính Việt Nam.",
+    "source": "Tổng cục Thống kê, Cổng thông tin tỉnh Nghệ An.",
+    "verdict": "Đúng",
+    "explain": "Nghệ An có diện tích tự nhiên 16.490 km2, là tỉnh có diện tích lớn nhất trong số 63 tỉnh/thành phố của Việt Nam."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Thành phố có diện tích lớn nhất Việt Nam",
+    "quote": "AI nói Thành phố Hồ Chí Minh là thành phố trực thuộc Trung ương có diện tích lớn nhất cả nước.",
+    "task": "So sánh diện tích 5 thành phố trực thuộc Trung ương.",
+    "source": "Tổng cục Thống kê, SGK Địa lý 12.",
+    "verdict": "Sai",
+    "explain": "Hà Nội (sau khi mở rộng địa giới hành chính năm 2008 sáp nhập Hà Tây và huyện Mê Linh) có diện tích khoảng 3.359 km2, lớn nhất trong 5 thành phố trực thuộc Trung ương; TP.HCM rộng khoảng 2.095 km2."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Vành đai lửa Thái Bình Dương",
+    "quote": "AI nói Vành đai lửa Thái Bình Dương là khu vực thường xuyên xảy ra động đất và núi lửa phun trào nhất thế giới.",
+    "task": "Tra cứu địa chất kiến tạo mảng quanh Thái Bình Dương.",
+    "source": "Cơ quan Khảo sát Địa chất Hoa Kỳ (USGS), SGK Địa lý 10.",
+    "verdict": "Đúng",
+    "explain": "Khoảng 81% các trận động đất lớn nhất thế giới và đa số núi lửa đang hoạt động tập trung dọc theo ranh giới các mảng kiến tạo bao quanh Thái Bình Dương."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Vùng đất trũng nhất trên các lục địa",
+    "quote": "AI nói Biển Chết (Dead Sea) là điểm thấp nhất trên bề mặt lục địa Trái Đất với mặt nước thấp hơn mực nước biển hơn 400m.",
+    "task": "Tra cứu độ cao địa hình Biển Chết.",
+    "source": "SGK Địa lý 10, Khảo sát Địa chất.",
+    "verdict": "Đúng",
+    "explain": "Mặt nước Biển Chết nằm ở độ cao khoảng -430m so với mực nước biển, là vùng trũng sâu nhất trên đất liền của Trái Đất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Quốc gia có diện tích lớn nhất thế giới",
+    "quote": "AI nói Liên bang Nga là quốc gia có diện tích lãnh thổ lớn nhất thế giới trải dài trên cả hai châu lục Á và Âu.",
+    "task": "Tra cứu diện tích lãnh thổ các quốc gia.",
+    "source": "Niên giám Thống kê Liên Hợp Quốc, SGK Địa lý 11.",
+    "verdict": "Đúng",
+    "explain": "Nga có diện tích hơn 17.1 triệu km2, chiếm khoảng 1/8 diện tích đất nổi của Trái Đất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Quốc gia có dân số đông nhất thế giới",
+    "quote": "AI khẳng định Trung Quốc chắc chắn vẫn là quốc gia đông dân nhất thế giới vào năm 2026.",
+    "task": "Tra cứu báo cáo triển vọng dân số của Liên Hợp Quốc (UN DESA).",
+    "source": "Quỹ Dân số Liên Hợp Quốc (UNFPA), Dữ liệu nhân khẩu học 2023-2024.",
+    "verdict": "Sai",
+    "explain": "Theo dữ liệu của Liên Hợp Quốc, Ấn Độ đã chính thức vượt qua Trung Quốc để trở thành quốc gia đông dân nhất thế giới từ giữa năm 2023."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Đỉnh núi cao nhất thế giới tính từ tâm Trái Đất",
+    "quote": "AI nói đỉnh Everest là điểm nằm xa tâm Trái Đất nhất trong tất cả các đỉnh núi trên hành tinh.",
+    "task": "Tra cứu ảnh hưởng của hình phình xích đạo của Trái Đất lên các đỉnh núi.",
+    "source": "Cơ quan Khảo sát Địa chất, SGK Địa lý nâng cao.",
+    "verdict": "Sai",
+    "explain": "Đỉnh Everest cao nhất so với mực nước biển (8.848m), nhưng đỉnh núi lửa Chimborazo ở Ecuador (nằm rất gần xích đạo) mới là điểm trên bề mặt đất liền xa tâm Trái Đất nhất do Trái Đất phình to ở vùng xích đạo."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Hồ nước ngọt sâu nhất và cổ nhất thế giới",
+    "quote": "AI nói hồ Baikal ở Nga là hồ nước ngọt sâu nhất và chứa lượng nước ngọt mặt lớn nhất thế giới.",
+    "task": "Tra cứu thông số thủy văn của hồ Baikal.",
+    "source": "UNESCO, Sổ tay Thủy văn thế giới.",
+    "verdict": "Đúng",
+    "explain": "Hồ Baikal có độ sâu tối đa 1.642m, chứa khoảng 20% tổng lượng nước ngọt bề mặt không đóng băng của toàn hành tinh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Đường xích đạo đi qua bao nhiêu quốc gia",
+    "quote": "AI nói đường xích đạo của Trái Đất đi qua lãnh thổ của khoảng 13 quốc gia trên thế giới.",
+    "task": "Tra cứu các nước nằm trên đường xích đạo.",
+    "source": "Hiệp hội Địa lý Quốc gia, Bản đồ Địa lý thế giới.",
+    "verdict": "Đúng",
+    "explain": "Đường xích đạo đi qua 13 quốc gia: Ecuador, Colombia, Brazil, Sao Tome & Principe, Gabon, CH Congo, CHDC Congo, Uganda, Kenya, Somalia, Maldives, Indonesia và Kiribati."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Thủ đô của Australia là gì",
+    "quote": "AI nói Sydney là thủ đô chính thức của nước Australia (Úc).",
+    "task": "Tra cứu thủ đô chính thức của Australia.",
+    "source": "Cổng thông tin Chính phủ Australia, SGK Địa lý 11.",
+    "verdict": "Sai",
+    "explain": "Canberra mới là thủ đô chính thức của Australia; Sydney và Melbourne là hai thành phố lớn và đông dân nhất nhưng không phải thủ đô."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Thủ đô của Canada là thành phố nào",
+    "quote": "AI nói Toronto là thủ đô của Canada.",
+    "task": "Tra cứu thủ đô của Canada.",
+    "source": "Chính phủ Canada, SGK Địa lý 11.",
+    "verdict": "Sai",
+    "explain": "Ottawa mới là thủ đô của Canada; Toronto là thành phố lớn nhất và là trung tâm tài chính."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Đồng bằng có diện tích lớn nhất Việt Nam",
+    "quote": "AI nói Đồng bằng sông Cửu Long có diện tích tự nhiên rộng khoảng 40.000 km2, lớn nhất trong các đồng bằng ở nước ta.",
+    "task": "Tra cứu diện tích các đồng bằng ở Việt Nam.",
+    "source": "Tổng cục Thống kê, SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Đồng bằng sông Cửu Long rộng khoảng 40.000 km2, gấp gần 3 lần Đồng bằng sông Hồng (~15.000 km2)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Thác nước rộng nhất thế giới",
+    "quote": "AI nói thác Victoria ở châu Phi là thác nước cao nhất thế giới.",
+    "task": "Phân biệt thác nước cao nhất (Angel Falls) và các thác nước khác.",
+    "source": "Bách khoa toàn thư Địa lý.",
+    "verdict": "Sai",
+    "explain": "Thác Angel (Salto Angel) ở Venezuela mới là thác nước cao nhất thế giới với chiều cao đổ dốc liên tục 979m; thác Victoria là một trong những thác rộng và hùng vĩ nhất."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Quần đảo lớn nhất thế giới",
+    "quote": "AI nói quốc gia quần đảo Indonesia là quốc gia có nhiều hòn đảo nhất thế giới và là quần đảo lớn nhất thế giới.",
+    "task": "Tra cứu số lượng đảo của Indonesia và Thụy Điển.",
+    "source": "Cục Thống kê Địa lý, WorldAtlas.",
+    "verdict": "Cần kiểm chứng thêm",
+    "explain": "Indonesia là quốc gia quần đảo rộng nhất thế giới (~17.500 đảo), nhưng Thụy Điển mới là quốc gia có số lượng đảo lớn nhất thế giới (hơn 260.000 đảo lớn nhỏ). Tùy thuộc vào tiêu chí 'quần đảo' hay 'số lượng đảo'."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Gió mùa mùa hạ ở Việt Nam",
+    "quote": "AI nói gió mùa mùa hạ thổi vào nước ta theo hướng Tây Nam mang lại lượng mưa lớn cho Nam Bộ và Tây Nguyên.",
+    "task": "Kiểm tra cơ chế hoạt động của gió mùa mùa hạ.",
+    "source": "SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Đầu mùa hạ, khối khí nhiệt đới ẩm từ Bắc Ấn Độ Dương thổi theo hướng tây nam gây mưa lớn cho Nam Bộ và Tây Nguyên; vượt dãy Trường Sơn tạo hiệu ứng phơn khô nóng ở Bắc Trung Bộ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Sông Mê Kông chảy qua bao nhiêu quốc gia",
+    "quote": "AI nói sông Mê Kông bắt nguồn từ cao nguyên Tây Tạng và chảy qua 6 quốc gia trước khi đổ ra Biển Đông.",
+    "task": "Tra cứu lưu vực sông Mê Kông.",
+    "source": "Ủy ban Sông Mê Kông quốc tế (MRC), SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Sông Mê Kông chảy qua 6 nước: Trung Quốc (Lan Thương), Myanmar, Lào, Thái Lan, Campuchia và Việt Nam (Cửu Long)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Cao nguyên đá Đồng Văn",
+    "quote": "AI nói Công viên địa chất toàn cầu Cao nguyên đá Đồng Văn nằm tại tỉnh Cao Bằng.",
+    "task": "Tra cứu vị trí của Cao nguyên đá Đồng Văn.",
+    "source": "Hồ sơ Di sản UNESCO, Cổng thông tin du lịch Hà Giang.",
+    "verdict": "Sai",
+    "explain": "Cao nguyên đá Đồng Văn nằm trên địa bàn 4 huyện của tỉnh Hà Giang, được UNESCO công nhận là Công viên Địa chất Toàn cầu đầu tiên của Việt Nam năm 2010."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Động Phong Nha - Kẻ Bàng",
+    "quote": "AI nói Vườn quốc gia Phong Nha - Kẻ Bàng thuộc tỉnh Quảng Bình đã 2 lần được UNESCO vinh danh là Di sản thiên nhiên thế giới.",
+    "task": "Tra cứu danh hiệu di sản UNESCO của Phong Nha - Kẻ Bàng.",
+    "source": "Trung tâm Di sản Thế giới UNESCO, UBND tỉnh Quảng Bình.",
+    "verdict": "Đúng",
+    "explain": "Phong Nha - Kẻ Bàng được UNESCO vinh danh năm 2003 theo tiêu chí địa chất - địa mạo và năm 2015 theo tiêu chí đa dạng sinh học."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Tài nguyên bôxit của Việt Nam",
+    "quote": "AI nói quặng bôxit (nhôm) của nước ta phân bố tập trung nhiều nhất ở vùng Tây Nguyên.",
+    "task": "Tra cứu tài nguyên khoáng sản kim loại của Việt Nam.",
+    "source": "Viện Khoa học Địa chất và Khoáng sản, SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Trữ lượng quặng bôxit của Việt Nam tập trung chủ yếu ở Tây Nguyên (Đắk Nông, Lâm Đồng, Gia Lai) với trữ lượng hàng tỷ tấn, thuộc hàng đầu thế giới."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Dãy núi cao nhất Việt Nam",
+    "quote": "AI nói dãy Hoàng Liên Sơn với đỉnh Fansipan là dãy núi cao và đồ sộ nhất Việt Nam.",
+    "task": "Tra cứu các khối núi chính ở miền Bắc.",
+    "source": "SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Dãy Hoàng Liên Sơn chạy theo hướng tây bắc - đông nam, đỉnh Fansipan cao 3.147,3m được mệnh danh là 'Nóc nhà Đông Dương'."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Hướng địa hình chủ yếu của Việt Nam",
+    "quote": "AI nói hai hướng địa hình chính của vùng đồi núi Việt Nam là hướng tây bắc - đông nam và hướng vòng cung.",
+    "task": "Kiểm tra đặc điểm địa hình đồi núi Việt Nam.",
+    "source": "SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Địa hình núi nước ta chủ yếu theo hai hướng: tây bắc - đông nam (vùng Tây Bắc, Trường Sơn Bắc) và hướng vòng cung (vùng Đông Bắc, Trường Sơn Nam)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Quốc gia không giáp biển ở Đông Nam Á",
+    "quote": "AI nói Lào là quốc gia duy nhất ở khu vực Đông Nam Á hoàn toàn không có đường bờ biển.",
+    "task": "Kiểm tra bản đồ chính trị 11 quốc gia Đông Nam Á.",
+    "source": "SGK Địa lý 8/11.",
+    "verdict": "Đúng",
+    "explain": "Lào nằm sâu trong nội địa bán đảo Đông Dương, tiếp giáp Việt Nam, Campuchia, Thái Lan, Myanmar và Trung Quốc, là nước duy nhất trong ASEAN không giáp biển."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Nước xuất khẩu cà phê lớn thứ hai thế giới",
+    "quote": "AI nói Việt Nam hiện là nước xuất khẩu cà phê lớn thứ hai trên thế giới (chỉ sau Brazil) và đứng số một về cà phê vối (Robusta).",
+    "task": "Tra cứu số liệu nông nghiệp của Tổ chức Cà phê Quốc tế (ICO).",
+    "source": "ICO, Tổng cục Thống kê, Bộ Nông nghiệp & PTNT.",
+    "verdict": "Đúng",
+    "explain": "Việt Nam là cường quốc cà phê Robusta số một thế giới và là quốc gia xuất khẩu cà phê tổng thể lớn thứ hai toàn cầu sau Brazil."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Khu vực kinh tế biển Việt Nam",
+    "quote": "AI nói vùng biển đặc quyền kinh tế của Việt Nam có diện tích rộng khoảng 1 triệu km2 ở Biển Đông.",
+    "task": "Tra cứu diện tích vùng biển Việt Nam theo Công ước UNCLOS 1982.",
+    "source": "Luật Biển Việt Nam 2012, SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Vùng biển chủ quyền và quyền tài phán của Việt Nam trên Biển Đông rộng khoảng 1 triệu km2, gấp hơn 3 lần diện tích phần đất liền."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Hiện tượng El Nino gây ra điều gì",
+    "quote": "AI nói hiện tượng El Nino ở Việt Nam thường làm tăng lượng mưa bão dữ dội gấp đôi mức bình thường trên cả nước.",
+    "task": "Tra cứu tác động khí hậu của El Nino đối với thời tiết Việt Nam.",
+    "source": "Trung tâm Dự báo Khí tượng Thủy văn Quốc gia.",
+    "verdict": "Sai",
+    "explain": "Pha El Nino thường làm giảm lượng mưa trung bình ở hầu hết các vùng của Việt Nam, gây khô hạn, thiếu nước và mùa đông ấm hơn; La Nina mới thường gây mưa bão dồn dập và lũ lụt."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Tam giác kinh tế phía Bắc",
+    "quote": "AI nói vùng kinh tế trọng điểm Bắc Bộ có ba cực tăng trưởng chính là Hà Nội - Hải Phòng - Quảng Ninh.",
+    "task": "Tra cứu các vùng kinh tế trọng điểm ở Việt Nam.",
+    "source": "SGK Địa lý 12, Bộ Kế hoạch và Đầu tư.",
+    "verdict": "Đúng",
+    "explain": "Tam giác phát triển kinh tế Hà Nội - Hải Phòng - Quảng Ninh là đầu tàu công nghiệp, cảng biển và dịch vụ của toàn miền Bắc."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Đảo có diện tích lớn nhất thế giới",
+    "quote": "AI nói đảo Greenland là hòn đảo có diện tích lớn nhất thế giới.",
+    "task": "Tra cứu danh sách các hòn đảo lớn nhất hành tinh.",
+    "source": "Bách khoa toàn thư Địa lý thế giới.",
+    "verdict": "Đúng",
+    "explain": "Greenland (thuộc Vương quốc Đan Mạch) có diện tích khoảng 2.16 triệu km2, là đảo lớn nhất thế giới (Australia được xếp là lục địa chứ không phải đảo)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Hồ nước ngọt lớn nhất Đông Nam Á",
+    "quote": "AI nói Biển Hồ (Tonle Sap) ở Campuchia là hồ nước ngọt có diện tích mặt nước lớn nhất khu vực Đông Nam Á.",
+    "task": "Tra cứu đặc điểm thủy văn Biển Hồ Campuchia.",
+    "source": "SGK Địa lý 8/11 Đông Nam Á.",
+    "verdict": "Đúng",
+    "explain": "Tonle Sap kết nối với sông Mê Kông, vào mùa lũ diện tích hồ có thể mở rộng lên tới 16.000 km2, là vựa cá nước ngọt tự nhiên khổng lồ của Campuchia."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Khu vực thưa dân nhất thế giới",
+    "quote": "AI nói Mông Cổ là một trong những quốc gia có mật độ dân số thấp nhất thế giới với chưa đầy 2 người trên một kilomet vuông.",
+    "task": "Tra cứu mật độ dân số các quốc gia.",
+    "source": "Dữ liệu dân số Ngân hàng Thế giới (World Bank).",
+    "verdict": "Đúng",
+    "explain": "Mông Cổ có diện tích rộng hơn 1.56 triệu km2 nhưng dân số chỉ khoảng 3.4 triệu người, mật độ khoảng 2.1 người/km2, đất nước thưa dân nhất thế giới."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Biển Ban-tích (Baltic) là biển kín",
+    "quote": "AI nói Biển Baltic nằm ở Bắc Âu là một biển kín có độ mặn thấp hơn nhiều so với độ mặn trung bình của đại dương.",
+    "task": "Tra cứu độ mặn của các vùng biển trên thế giới.",
+    "source": "SGK Địa lý 10 Thủy quyển.",
+    "verdict": "Đúng",
+    "explain": "Do nhận được lượng nước ngọt khổng lồ từ các con sông và bốc hơi yếu, độ mặn của Biển Baltic chỉ từ 0.6% đến 1%, thấp hơn nhiều so với độ mặn đại dương (~3.5%)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Nước có bờ biển dài nhất thế giới",
+    "quote": "AI nói Canada là quốc gia sở hữu đường bờ biển dài nhất thế giới với tổng chiều dài hơn 200.000 km.",
+    "task": "Tra cứu số liệu bờ biển của World Factbook CIA.",
+    "source": "Cục Đo đạc Thống kê Canada, The World Factbook.",
+    "verdict": "Đúng",
+    "explain": "Với hàng nghìn hòn đảo ở Bắc Cực và vịnh Hudson, đường bờ biển Canada dài tới 202.080 km, dài nhất thế giới."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Vùng đất ngập mặn Cà Mau",
+    "quote": "AI nói Rừng ngập mặn Cà Mau là khu rừng ngập mặn lớn thứ hai trên thế giới (sau rừng Sundarbans ở Ấn Độ và Bangladesh).",
+    "task": "Tra cứu diện tích các khu rừng ngập mặn lớn.",
+    "source": "Khu Dự trữ Sinh quyển Thế giới Mũi Cà Mau, SGK Địa lý 12.",
+    "verdict": "Đúng",
+    "explain": "Rừng ngập mặn Cà Mau với diện tích rộng lớn là hệ sinh thái rừng ngập mặn nguyên sinh trù phú bậc nhất Đông Nam Á và đứng thứ hai thế giới sau Sundarbans."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Địa lý",
+    "title": "Đường kinh tuyến gốc số 0",
+    "quote": "AI nói đường kinh tuyến gốc 0 độ đi qua đài thiên văn hoàng gia Greenwich ở London (nước Anh).",
+    "task": "Tra cứu quy ước hệ tọa độ địa lý quốc tế.",
+    "source": "Hội nghị Kinh tuyến Quốc tế 1884, SGK Địa lý 6/10.",
+    "verdict": "Đúng",
+    "explain": "Quy ước quốc tế lấy đường kinh tuyến đi qua đài thiên văn Greenwich làm kinh tuyến gốc (0 độ kinh đông/tây) để phân chia bán cầu và tính múi giờ GMT/UTC."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả Truyện Kiều",
+    "quote": "AI khẳng định tác phẩm Đoạn trường tân thanh (Truyện Kiều) do Nguyễn Trãi sáng tác.",
+    "task": "Tra cứu tác gia văn học trung đại Việt Nam.",
+    "source": "SGK Ngữ văn 9/11, Tuyển tập Nguyễn Du.",
+    "verdict": "Sai",
+    "explain": "Truyện Kiều là kiệt tác của Đại thi hào dân tộc Nguyễn Du (1765 - 1820). Nguyễn Trãi là tác giả Bình Ngô đại cáo."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả Hịch tướng sĩ",
+    "quote": "AI nói tác phẩm Hịch tướng sĩ do Hưng Đạo Đại vương Trần Quốc Tuấn viết trước cuộc kháng chiến chống quân Nguyên Mông lần thứ hai năm 1285.",
+    "task": "Tra cứu bối cảnh sáng tác Hịch tướng sĩ.",
+    "source": "SGK Ngữ văn 8/10.",
+    "verdict": "Đúng",
+    "explain": "Trần Quốc Tuấn viết Hịch tướng sĩ vào khoảng năm 1285 nhằm khích lệ tinh thần yêu nước, trung quân ái quốc và ý chí quyết chiến của tướng sĩ nhà Trần."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Bình Ngô đại cáo viết năm nào",
+    "quote": "AI nói Bình Ngô đại cáo do Nguyễn Trãi thừa lệnh Lê Lợi viết vào đầu năm 1428 sau khi đại thắng giặc Minh.",
+    "task": "Tra cứu hoàn cảnh ra đời Bình Ngô đại cáo.",
+    "source": "SGK Ngữ văn 10, Khởi nghĩa Lam Sơn.",
+    "verdict": "Đúng",
+    "explain": "Bản 'thiên cổ hùng văn' Bình Ngô đại cáo được công bố vào mùa xuân năm 1428 để tuyên cáo trước non sông về việc dẹp yên giặc Minh, khôi phục nền độc lập."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả Tắt đèn",
+    "quote": "AI nói tiểu thuyết Tắt đèn phản ánh số phận đau thương của chị Dậu do nhà văn Nam Cao sáng tác.",
+    "task": "Tra cứu tác giả trào lưu văn học hiện thực phê phán 1930 - 1945.",
+    "source": "SGK Ngữ văn 8/11.",
+    "verdict": "Sai",
+    "explain": "Tiểu thuyết Tắt đèn (1939) là tác phẩm xuất sắc của nhà văn Ngô Tất Tố. Nam Cao là tác giả của Chí Phèo, Lão Hạc, Đời thừa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác phẩm Chí Phèo",
+    "quote": "AI nói tác phẩm Chí Phèo của Nam Cao ban đầu có tên là 'Cái lò gạch cũ', sau đó nhà xuất bản tự đổi thành 'Đôi lứa xứng đôi'.",
+    "task": "Tra cứu lịch sử văn bản tác phẩm Chí Phèo.",
+    "source": "SGK Ngữ văn 11.",
+    "verdict": "Đúng",
+    "explain": "Truyện ngắn viết năm 1941 ban đầu có tên Cái lò gạch cũ, NXB Đời mới đổi thành Đôi lứa xứng đôi; đến năm 1946 khi in lại trong tập Luống cày tác giả đổi tên thành Chí Phèo."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả Vợ chồng A Phủ",
+    "quote": "AI nói truyện ngắn Vợ chồng A Phủ viết về cuộc sống của đồng bào dân tộc thiểu số vùng cao Tây Bắc do nhà văn Tô Hoài sáng tác.",
+    "task": "Tra cứu tập truyện Tây Bắc của Tô Hoài.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Vợ chồng A Phủ in trong tập Truyện Tây Bắc (1953) là kiệt tác của Tô Hoài sau chuyến đi thực tế cùng bộ đội giải phóng Tây Bắc năm 1952."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Hoàn cảnh ra đời bài thơ Tây Tiến",
+    "quote": "AI nói bài thơ Tây Tiến do nhà thơ Huy Cận sáng tác.",
+    "task": "Tra cứu xuất xứ và tác giả bài thơ Tây Tiến.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Sai",
+    "explain": "Tây Tiến là tác phẩm tiêu biểu của nhà thơ Quang Dũng (sáng tác năm 1948 tại Phù Lưu Chanh khi ông rời đơn vị Tây Tiến). Huy Cận nổi tiếng với Tràng giang."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả bài thơ Việt Bắc",
+    "quote": "AI nói bài thơ Việt Bắc là đỉnh cao thơ ca kháng chiến của nhà thơ Tố Hữu viết năm 1954 khi Trung ương Đảng rời chiến khu về thủ đô Hà Nội.",
+    "task": "Tra cứu hoàn cảnh ra đời bài thơ Việt Bắc.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Tố Hữu sáng tác Việt Bắc vào tháng 10/1954 nhân sự kiện cơ quan Trung ương Đảng và Chính phủ rời chiến khu Việt Bắc về lại Thủ đô Hà Nội sau 9 năm kháng chiến chống Pháp."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác phẩm Số đỏ",
+    "quote": "AI nói kiệt tác tiểu thuyết trào phúng Số đỏ với nhân vật Xuân Tóc Đỏ là của nhà văn Vũ Trọng Phụng.",
+    "task": "Tra cứu tác phẩm của Vũ Trọng Phụng.",
+    "source": "SGK Ngữ văn 11.",
+    "verdict": "Đúng",
+    "explain": "Số đỏ (1936) của 'ông vua phóng sự đất Bắc' Vũ Trọng Phụng là đỉnh cao văn học trào phúng Việt Nam châm biếm sâu cay xã hội tư sản thực dân rởm đời."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả truyện ngắn Chiếc thuyền ngoài xa",
+    "quote": "AI nói truyện ngắn Chiếc thuyền ngoài xa do nhà văn Nguyễn Minh Châu sáng tác năm 1983.",
+    "task": "Tra cứu giai đoạn văn học đổi mới của Nguyễn Minh Châu.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Nguyễn Minh Châu viết Chiếc thuyền ngoài xa năm 1983, đặt ra những chiêm nghiệm sâu sắc về mối quan hệ giữa nghệ thuật và cuộc đời đa sự, con người đa đoan."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả Vở kịch Hồn Trương Ba, da hàng thịt",
+    "quote": "AI nói vở kịch Hồn Trương Ba, da hàng thịt do nhà viết kịch Lưu Quang Vũ sáng tác năm 1981.",
+    "task": "Tra cứu kịch bản văn học của Lưu Quang Vũ.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Lưu Quang Vũ viết vở kịch năm 1981 từ cốt truyện dân gian, công diễn năm 1984, đặt ra vấn đề triết lý nhân sinh về sự hài hòa giữa thể xác và tâm hồn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả bài thơ Sóng",
+    "quote": "AI nói bài thơ Sóng thể hiện khát vọng tình yêu nồng nàn do nữ thi sĩ Xuân Quỳnh sáng tác năm 1967 tại bãi biển Diêm Điền.",
+    "task": "Tra cứu tập thơ Hoa dọc chiến hào của Xuân Quỳnh.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Bài thơ Sóng được Xuân Quỳnh sáng tác năm 1967 tại vùng biển Diêm Điền (Thái Thụy, Thái Bình), in trong tập thơ Hoa dọc chiến hào (1968)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả tiểu thuyết Don Quixote",
+    "quote": "AI nói tiểu thuyết hiệp sĩ Don Quixote do đại văn hào người Tây Ban Nha Miguel de Cervantes sáng tác.",
+    "task": "Tra cứu văn học Phục hưng châu Âu.",
+    "source": "SGK Ngữ văn 8/10, Bách khoa toàn thư Văn học.",
+    "verdict": "Đúng",
+    "explain": "Don Quixote (Đôn Ki-hô-tê) của Cervantes xuất bản đầu thế kỷ XVII được coi là cuốn tiểu thuyết hiện đại đầu tiên của phương Tây."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả bi kịch Hamlet",
+    "quote": "AI nói vở bi kịch nổi tiếng Hamlet do đại văn hào người Anh William Shakespeare sáng tác.",
+    "task": "Tra cứu các kiệt tác của Shakespeare.",
+    "source": "SGK Ngữ văn 11, Bách khoa toàn thư.",
+    "verdict": "Đúng",
+    "explain": "Hamlet là một trong bốn vở bi kịch vĩ đại nhất của Shakespeare (cùng với Othello, Vua Lear và Macbeth) viết vào khoảng năm 1599 - 1601."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả tiểu thuyết Những người khốn khổ",
+    "quote": "AI nói tiểu thuyết Những người khốn khổ (Les Misérables) do đại văn hào Pháp Victor Hugo sáng tác.",
+    "task": "Tra cứu tác phẩm văn học lãng mạn chủ nghĩa của Victor Hugo.",
+    "source": "SGK Ngữ văn 10.",
+    "verdict": "Đúng",
+    "explain": "Victor Hugo hoàn thành và xuất bản thiên sử thi văn xuôi đồ sộ Les Misérables vào năm 1862 ca ngợi tình yêu thương đồng loại và khát vọng công lý."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả tiểu thuyết Chiến tranh và hòa bình",
+    "quote": "AI nói đại tiểu thuyết Chiến tranh và hòa bình do đại văn hào Nga Lev Tolstoy sáng tác.",
+    "task": "Tra cứu tác gia văn học hiện thực Nga thế kỷ XIX.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Lev Tolstoy xuất bản Chiến tranh và hòa bình (1869) tái hiện bức tranh sử thi hào hùng của nhân dân Nga trong cuộc chiến tranh vệ quốc chống quân xâm lược Napoleon năm 1812."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả truyện vừa Ông già và biển cả",
+    "quote": "AI nói tác phẩm Ông già và biển cả với nguyên lý 'Tảng băng trôi' do nhà văn Mỹ Ernest Hemingway sáng tác.",
+    "task": "Tra cứu tác phẩm đoạt giải Nobel Văn học 1954 của Hemingway.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Ernest Hemingway xuất bản Ông già và biển cả (The Old Man and the Sea) năm 1952, đưa ra nguyên lý một phần nổi bảy phần chìm của nghệ thuật ngôn từ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thành ngữ 'Vụng chèo khéo chống'",
+    "quote": "AI nói thành ngữ 'Vụng chèo khéo chống' nhằm ca ngợi những người biết chèo thuyền rất điêu luyện trên sông nước.",
+    "task": "Tra cứu nghĩa ẩn dụ của thành ngữ tiếng Việt.",
+    "source": "Từ điển Thành ngữ và Tục ngữ tiếng Việt.",
+    "verdict": "Sai",
+    "explain": "Thành ngữ 'Vụng chèo khéo chống' dùng để phê phán những người làm việc vụng về, mắc sai lầm nhưng lại khéo léo tìm cách chối cãi, ngụy biện, lấp liếm cho lỗi của mình."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Biện pháp tu từ Hoán dụ",
+    "quote": "AI nói câu thơ 'Áo chàm đưa buổi phân ly' dùng biện pháp tu từ hoán dụ lấy trang phục (áo chàm) để gọi người đồng bào các dân tộc Việt Bắc.",
+    "task": "Kiểm tra phương thức hoán dụ trong Ngữ văn THPT.",
+    "source": "SGK Ngữ văn 10/12.",
+    "verdict": "Đúng",
+    "explain": "Màu 'áo chàm' là trang phục đặc trưng của đồng bào các dân tộc thiểu số Việt Bắc; lấy dấu hiệu của vật để chỉ người là phép hoán dụ tu từ sâu sắc."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Nghĩa của từ 'Châu phê'",
+    "quote": "AI nói 'Châu phê' là những nét chữ phê duyệt bằng mực đỏ của nhà vua trên các văn bản tấu trình.",
+    "task": "Tra cứu thuật ngữ văn bản hành chính phong kiến.",
+    "source": "Từ điển Tiếng Việt, Trung tâm Lưu trữ Quốc gia.",
+    "verdict": "Đúng",
+    "explain": "'Châu' là màu đỏ son; 'Châu phê' là chữ viết bằng mực đỏ son của nhà vua khi phê duyệt văn bản, thể hiện quyền lực tối cao của hoàng đế."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Từ 'Information' trong tiếng Anh",
+    "quote": "AI khẳng định 'an information' là cách dùng hoàn toàn đúng ngữ pháp trong tiếng Anh học thuật.",
+    "task": "Kiểm tra danh từ không đếm được trong tiếng Anh.",
+    "source": "Từ điển Oxford/Cambridge Learners' Dictionary.",
+    "verdict": "Sai",
+    "explain": "'Information' là danh từ không đếm được (uncountable noun). Không bao giờ dùng mạo từ 'an' hoặc dạng số nhiều 'informations'; phải dùng 'a piece of information' hoặc 'some information'."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Phân biệt 'Sensitive' và 'Sensible'",
+    "quote": "AI nói hai từ tiếng Anh 'sensitive' và 'sensible' hoàn toàn đồng nghĩa và có thể thay thế cho nhau trong mọi câu.",
+    "task": "Tra cứu định nghĩa của sensitive (nhạy cảm) và sensible (hợp lý, biết điều).",
+    "source": "Từ điển Oxford Advanced Learner's Dictionary.",
+    "verdict": "Sai",
+    "explain": "'Sensitive' nghĩa là nhạy cảm, dễ xúc động hoặc dễ bị tổn thương; còn 'sensible' nghĩa là thực tế, khôn ngoan, có lý trí. Hai từ có nghĩa hoàn toàn khác nhau."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Từ 'Economic' và 'Economical'",
+    "quote": "AI nói 'economical' có nghĩa là thuộc về nền kinh tế quốc dân.",
+    "task": "Phân biệt cặp từ dễ nhầm lẫn economic và economical.",
+    "source": "Từ điển Cambridge Dictionary.",
+    "verdict": "Sai",
+    "explain": "'Economic' mới có nghĩa là thuộc về kinh tế (kinh tế học, sự phát triển kinh tế). 'Economical' có nghĩa là tiết kiệm, chi tiêu ít tiền bạc hay năng lượng."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thì hiện tại hoàn thành với 'Since'",
+    "quote": "AI nói trong câu 'I have lived here since 5 years', dùng 'since' là đúng chuẩn ngữ pháp.",
+    "task": "Kiểm tra cách dùng giới từ chỉ thời gian 'since' (mốc thời gian) và 'for' (khoảng thời gian).",
+    "source": "Ngữ pháp tiếng Anh chuẩn (English Grammar in Use).",
+    "verdict": "Sai",
+    "explain": "'Since' đi kèm với một mốc thời gian cụ thể (như since 2020, since yesterday); với một khoảng thời gian (5 years) bắt buộc phải dùng giới từ 'for' ('for 5 years')."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thành ngữ tiếng Anh 'Break a leg'",
+    "quote": "AI nói khi người bản xứ chúc bạn 'Break a leg' trước buổi biểu diễn, họ đang có ý trù ẻo bạn bị gãy chân.",
+    "task": "Tra cứu nghĩa của thành ngữ sân khấu 'Break a leg'.",
+    "source": "Từ điển Oxford Idioms Dictionary.",
+    "verdict": "Sai",
+    "explain": "'Break a leg' là một thành ngữ phổ biến trong giới nghệ thuật phương Tây dùng để chúc ai đó may mắn, thành công tốt đẹp trước khi lên sân khấu biểu diễn."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Từ 'Affect' và 'Effect'",
+    "quote": "AI nói 'affect' thường là danh từ chỉ kết quả, còn 'effect' thường là động từ chỉ hành động tác động.",
+    "task": "Phân biệt từ loại và nghĩa của affect (động từ) và effect (danh từ).",
+    "source": "Từ điển Merriam-Webster, Oxford.",
+    "verdict": "Sai",
+    "explain": "Ngược lại: 'Affect' thường là một động từ (verb) mang nghĩa tác động/ảnh hưởng đến cái gì; còn 'effect' thường là danh từ (noun) chỉ kết quả hoặc hiệu ứng tác động."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thành ngữ 'Bite the bullet'",
+    "quote": "AI nói thành ngữ 'Bite the bullet' có nghĩa là chấp nhận đối mặt với một tình huống khó khăn, đau đớn mà không thể tránh khỏi.",
+    "task": "Tra cứu nguồn gốc và nghĩa của thành ngữ 'Bite the bullet'.",
+    "source": "Từ điển Cambridge Idioms Dictionary.",
+    "verdict": "Đúng",
+    "explain": "'Bite the bullet' (ngậm đạn) bắt nguồn từ thời chiến trận khi thương binh phải cắn viên chì để chịu đựng đau đớn phẫu thuật; nghĩa bóng là dũng cảm cắn răng đối mặt với nghịch cảnh."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Danh từ 'Furniture' số nhiều",
+    "quote": "AI nói có thể nói 'I bought three furnitures for my new room' trong tiếng Anh.",
+    "task": "Kiểm tra tính chất đếm được của danh từ furniture.",
+    "source": "Từ điển Oxford Learners' Dictionary.",
+    "verdict": "Sai",
+    "explain": "'Furniture' (đồ nội thất) là danh từ không đếm được. Muốn nói 3 món đồ nội thất phải dùng: 'three pieces of furniture' hoặc 'three items of furniture', không thêm 's' vào furniture."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Câu điều kiện loại 2",
+    "quote": "AI nói câu điều kiện loại 2 dùng để diễn tả một điều kiện có thật và hoàn toàn có thể xảy ra ở hiện tại hoặc tương lai.",
+    "task": "Kiểm tra cấu trúc và cách dùng câu điều kiện trong tiếng Anh.",
+    "source": "Giáo trình Ngữ pháp tiếng Anh cơ bản.",
+    "verdict": "Sai",
+    "explain": "Câu điều kiện loại 2 (If + S + V-ed, S + would + V) dùng để diễn tả một giả định KHÔNG CÓ THẬT, trái ngược với thực tế ở hiện tại."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Đảo ngữ với 'Not only... but also'",
+    "quote": "AI nói khi đưa 'Not only' lên đầu câu, mệnh đề phía sau phải thực hiện đảo ngữ đưa trợ động từ lên trước chủ ngữ.",
+    "task": "Kiểm tra cấu trúc đảo ngữ trong tiếng Anh học thuật.",
+    "source": "SGK Tiếng Anh THPT, Oxford Practice Grammar.",
+    "verdict": "Đúng",
+    "explain": "Cấu trúc đảo ngữ chuẩn: Not only + auxiliary verb + S + V, but S also... Ví dụ: 'Not only did he arrive late, but he also forgot his homework.'"
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Mạo từ trước tên các quốc gia",
+    "quote": "AI nói mọi quốc gia trên thế giới đều phải thêm mạo từ 'the' phía trước (ví dụ: the Vietnam, the Japan).",
+    "task": "Kiểm tra quy tắc dùng mạo từ xác định 'the' trước địa danh.",
+    "source": "Ngữ pháp tiếng Anh chuẩn.",
+    "verdict": "Sai",
+    "explain": "Hầu hết tên quốc gia số ít không dùng mạo từ (Vietnam, Japan, France). Chỉ dùng 'the' trước quốc gia có tên là liên bang, vương quốc hoặc danh từ số nhiều (the USA, the UK, the Netherlands, the Philippines)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thành ngữ 'Once in a blue moon'",
+    "quote": "AI nói thành ngữ 'Once in a blue moon' mang nghĩa là một sự việc diễn ra vô cùng hiếm khi hoặc hầu như không bao giờ.",
+    "task": "Tra cứu ý nghĩa thành ngữ tiếng Anh.",
+    "source": "Từ điển Oxford Idioms.",
+    "verdict": "Đúng",
+    "explain": "'Once in a blue moon' (mỗi khi trăng xanh) dùng để chỉ những sự việc rất hiếm khi xảy ra."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tính từ ghép 'Well-known'",
+    "quote": "AI nói 'Well-known' là tính từ đồng nghĩa với 'famous' có nghĩa là nổi tiếng, được nhiều người biết đến.",
+    "task": "Tra cứu từ đồng nghĩa trong tiếng Anh.",
+    "source": "Từ điển Cambridge Dictionary.",
+    "verdict": "Đúng",
+    "explain": "'Well-known' là từ ghép đồng nghĩa phổ biến với 'famous' hoặc 'renowned'."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Cấu trúc 'Used to' và 'Be used to'",
+    "quote": "AI nói 'I used to get up early' và 'I am used to getting up early' mang ý nghĩa hoàn toàn giống hệt nhau.",
+    "task": "Phân biệt thói quen trong quá khứ và thói quen đã quen thuộc ở hiện tại.",
+    "source": "Ngữ pháp tiếng Anh chuẩn.",
+    "verdict": "Sai",
+    "explain": "'Used to + V' chỉ thói quen trong quá khứ nay không còn nữa ('tôi đã từng dậy sớm'); còn 'be used to + V-ing' nghĩa là đã quen thuộc với việc gì ở hiện tại ('tôi đã quen với việc dậy sớm')."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả bài thơ Bài ca vỡ đất",
+    "quote": "AI nói bài thơ có hai câu nổi tiếng 'Bàn tay ta làm nên tất cả / Có sức người sỏi đá cũng thành cơm' là của nhà thơ Hoàng Trung Thông.",
+    "task": "Tra cứu tác giả bài thơ Bài ca vỡ đất.",
+    "source": "SGK Ngữ văn, Tuyển tập thơ Hoàng Trung Thông.",
+    "verdict": "Đúng",
+    "explain": "Hai câu thơ kinh điển biểu tượng cho tinh thần lao động cần cù xây dựng chủ nghĩa xã hội là của nhà thơ Hoàng Trung Thông trong bài thơ Bài ca vỡ đất (1948)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác phẩm Rừng xà nu",
+    "quote": "AI nói truyện ngắn Rừng xà nu lấy bối cảnh làng Xô Man ở Tây Nguyên kiên cường chống giặc do nhà văn Nguyễn Trung Thành sáng tác.",
+    "task": "Tra cứu hoàn cảnh ra đời của truyện ngắn Rừng xà nu.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Nguyễn Trung Thành (bút danh Nguyên Ngọc) viết Rừng xà nu năm 1965 tại chiến trường khu V ca ngợi sức sống bất diệt và tinh thần quật khởi của đồng bào các dân tộc Tây Nguyên."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả tập tùy bút Sông Đà",
+    "quote": "AI nói tập tùy bút 'Sông Đà' với bài ký nổi tiếng 'Người lái đò Sông Đà' do nhà văn Nguyễn Tuân sáng tác.",
+    "task": "Tra cứu phong cách nghệ thuật tài hoa, uyên bác của Nguyễn Tuân.",
+    "source": "SGK Ngữ văn 12.",
+    "verdict": "Đúng",
+    "explain": "Nguyễn Tuân xuất bản tập tùy bút Sông Đà (1960) sau chuyến đi thực tế gian khổ lên vùng Tây Bắc hùng vĩ, khắc họa dòng sông Đà vừa hung bạo vừa trữ tình."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thể thơ của tác phẩm Truyện Kiều",
+    "quote": "AI nói Truyện Kiều của Nguyễn Du được viết hoàn toàn bằng thể thơ song thất lục bát.",
+    "task": "Kiểm tra thể thơ dân tộc của Truyện Kiều.",
+    "source": "SGK Ngữ văn 9/11.",
+    "verdict": "Sai",
+    "explain": "Truyện Kiều gồm 3.254 câu thơ được viết bằng thể thơ LỤC BÁT truyền thống của dân tộc Việt Nam, không phải thể thơ song thất lục bát."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Tác giả tác phẩm Chuyện người con gái Nam Xương",
+    "quote": "AI nói tác phẩm Chuyện người con gái Nam Xương nằm trong tập Truyền kỳ mạn lục của danh sĩ Nguyễn Dữ sống ở thế kỷ XVI.",
+    "task": "Tra cứu tác gia văn học trung đại Việt Nam.",
+    "source": "SGK Ngữ văn 9/10.",
+    "verdict": "Đúng",
+    "explain": "Nguyễn Dữ là tác giả tập truyện Truyền kỳ mạn lục ('thiên cổ kỳ bút'), trong đó có Chuyện người con gái Nam Xương kể về nỗi oan khuất bi kịch của nàng Vũ Nương."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thành ngữ 'Được voi đòi tiên'",
+    "quote": "AI nói thành ngữ 'Được voi đòi tiên' miêu tả người có lòng tham vô đáy, được đáp ứng điều này lại đòi hỏi điều khác cao hơn, quá quắt hơn.",
+    "task": "Tra cứu nghĩa thành ngữ tiếng Việt.",
+    "source": "Từ điển Tiếng Việt (GS Hoàng Phê).",
+    "verdict": "Đúng",
+    "explain": "Thành ngữ 'Được voi đòi tiên' phê phán thói tham lam không biết điểm dừng của con người."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Phép đối trong thơ Đường luật",
+    "quote": "AI nói trong bài thơ thất ngôn bát cú Đường luật chuẩn, các câu 3-4 (thực) và 5-6 (luận) bắt buộc phải đối nhau cả về thanh và nghĩa.",
+    "task": "Kiểm tra luật thơ Đường luật thất ngôn bát cú.",
+    "source": "SGK Ngữ văn 10.",
+    "verdict": "Đúng",
+    "explain": "Quy phạm nghiêm ngặt của thơ Đường luật đòi hỏi hai câu thực (3 đối 4) và hai câu luận (5 đối 6) phải đối ngẫu hoàn chỉnh cả về thanh điệu (bằng - trắc) và từ loại, ngữ nghĩa."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Từ 'News' trong tiếng Anh",
+    "quote": "AI nói vì từ 'news' có chữ cái tận cùng là 's' nên động từ chia sau nó luôn luôn phải ở dạng số nhiều (ví dụ: The news are good).",
+    "task": "Kiểm tra tính chất danh từ số ít không đếm được của news.",
+    "source": "Từ điển Cambridge Dictionary, Oxford.",
+    "verdict": "Sai",
+    "explain": "'News' (tin tức) là danh từ không đếm được và luôn đi với động từ số ít: 'The news IS good', không dùng động từ số nhiều."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Phát âm đuôi '-ed' trong tiếng Anh",
+    "quote": "AI nói mọi động từ có quy tắc khi thêm đuôi '-ed' đều được phát âm là /id/.",
+    "task": "Kiểm tra 3 quy tắc phát âm đuôi -ed (/id/, /t/, /d/).",
+    "source": "SGK Tiếng Anh THPT, Từ điển ngữ âm.",
+    "verdict": "Sai",
+    "explain": "Đuôi -ed có 3 cách phát âm khác nhau: /id/ sau âm /t/, /d/ (như wanted); /t/ sau các phụ âm vô thanh (như watched, stopped); và /d/ sau các nguyên âm và phụ âm hữu thanh còn lại (như played, cleaned)."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Mệnh đề quan hệ không xác định với 'That'",
+    "quote": "AI nói trong mệnh đề quan hệ không xác định (mệnh đề có dấu phẩy ngăn cách), ta có thể thoải mái thay thế 'which' bằng 'that'.",
+    "task": "Kiểm tra quy tắc ngữ pháp về đại từ quan hệ 'that'.",
+    "source": "Ngữ pháp tiếng Anh nâng cao (Practical English Usage).",
+    "verdict": "Sai",
+    "explain": "Đại từ quan hệ 'that' không bao giờ được dùng trong mệnh đề quan hệ không xác định (non-defining relative clause, sau dấu phẩy) hoặc ngay sau giới từ."
+  },
+  {
+    "group": "Học tập",
+    "topic": "Ngữ văn & Tiếng Anh",
+    "title": "Thành ngữ 'Cơm niêu nước lọ'",
+    "quote": "AI nói thành ngữ 'Cơm niêu nước lọ' dùng để chỉ cuộc sống sung túc, ấm no, đầy đủ tiện nghi gia đình.",
+    "task": "Tra cứu ý nghĩa thành ngữ tiếng Việt cổ.",
+    "source": "Từ điển Thành ngữ và Tục ngữ tiếng Việt.",
+    "verdict": "Sai",
+    "explain": "Thành ngữ 'Cơm niêu nước lọ' dùng để miêu tả cảnh ngộ đơn độc, nghèo túng, thanh bần, chỉ đủ đun một niêu cơm nhỏ và chiếc lọ đựng nước qua ngày."
+  }
+]
