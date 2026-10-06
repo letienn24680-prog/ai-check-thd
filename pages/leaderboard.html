@@ -10,8 +10,25 @@
   <link rel="stylesheet" href="../site.css">
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
+  <script src="../auth-guard.js"></script>
   <style>
     .leader-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 11px}.leader-tab{padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:white;color:#53655b;font-size:10px;font-weight:800}.leader-tab.active{background:var(--forest);border-color:var(--forest);color:white}.leader-podium{display:flex;justify-content:center;align-items:end;gap:clamp(10px,4vw,44px);padding:27px 15px 21px;margin-bottom:14px;border:1px solid var(--line);border-radius:6px;background:radial-gradient(ellipse at 50% 100%,#e7efe4,transparent 70%),#fff}.podium-item{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:0}.podium-item.first{order:2}.podium-item.second{order:1}.podium-item.third{order:3}.podium-circle{width:clamp(92px,14vw,132px);height:clamp(92px,14vw,132px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;border:4px solid #b8c6c0;border-radius:50%;background:#fff;box-shadow:0 8px 20px #163d3514;text-align:center}.podium-item.first .podium-circle{width:clamp(106px,16vw,148px);height:clamp(106px,16vw,148px);border-color:#e9c45e;background:linear-gradient(145deg,#fff9e4,#fff)}.podium-item.second .podium-circle{border-color:#bdc9c6}.podium-item.third .podium-circle{border-color:#c99169}.podium-place{color:#68786d;font:800 9px "Space Grotesk",sans-serif}.podium-name{max-width:100%;overflow:hidden;color:var(--forest);font-size:clamp(9px,1vw,11px);font-weight:800;text-overflow:ellipsis;white-space:nowrap}.podium-score{color:var(--leaf);font:700 11px "Space Grotesk",sans-serif}.leader-board{overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:4px}.leader-row{display:grid;grid-template-columns:58px minmax(120px,1fr) minmax(90px,150px) minmax(110px,160px);gap:10px;padding:11px 14px;border-bottom:1px solid #edf1eb;align-items:center;font-size:10px}.leader-row:last-child{border-bottom:0}.leader-heading{background:#eaf1e8;color:#53665a;font-size:9px;font-weight:800}.rank{color:var(--leaf);font:700 14px "Space Grotesk",sans-serif}.leader-empty{padding:32px 18px;text-align:center;color:var(--muted);font-size:11px}.name-form{display:flex;align-items:end;gap:8px;max-width:420px}.name-cooldown{margin:8px 0 0;color:var(--muted);font-size:10px}.name-form input[readonly]{background:#f0f3ef;color:#68786d}.name-form .button:disabled{opacity:.58;cursor:not-allowed}.notice{margin-top:12px;padding:12px 14px;background:#fff6e6;color:#655a46;font-size:10px}@media(max-width:520px){.leader-row{grid-template-columns:35px minmax(70px,1fr) 78px 86px;gap:5px;padding:10px 7px;font-size:9px}.leader-heading{font-size:8px}.name-form{align-items:stretch;flex-direction:column}.name-form .button{width:100%}.leader-podium{gap:8px;padding:21px 5px 16px}.podium-circle{width:88px;height:88px;padding:7px;border-width:3px}.podium-item.first .podium-circle{width:100px;height:100px}.podium-name{font-size:9px}.podium-score{font-size:10px}}
+    [data-theme="dark"] .leader-tab{background:#0f2922;border-color:rgba(255,255,255,.12);color:#a2b7ac}
+    [data-theme="dark"] .leader-tab.active{background:#3ec888;border-color:#3ec888;color:#071713}
+    [data-theme="dark"] .leader-podium{background:radial-gradient(ellipse at 50% 100%,#103328,transparent 70%),#0d2620;border-color:rgba(255,255,255,.1)}
+    [data-theme="dark"] .podium-circle{background:#102d24;border-color:rgba(255,255,255,.15);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+    [data-theme="dark"] .podium-item.first .podium-circle{background:linear-gradient(145deg,#2b2512,#143329);border-color:#e9c45e}
+    [data-theme="dark"] .podium-item.second .podium-circle{background:linear-gradient(145deg,#122c25,#0a1f19);border-color:#8da499;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+    [data-theme="dark"] .podium-item.third .podium-circle{background:linear-gradient(145deg,#241d15,#0d211a);border-color:#c98b60;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+    [data-theme="dark"] .podium-place{color:#a2b7ac}
+    [data-theme="dark"] .podium-name{color:#ffffff}
+    [data-theme="dark"] .podium-score{color:#d9f26c}
+    [data-theme="dark"] .leader-board{background:#0d2620;border-color:rgba(255,255,255,.1)}
+    [data-theme="dark"] .leader-row{border-bottom-color:rgba(255,255,255,.08);color:#f0f7f3}
+    [data-theme="dark"] .leader-heading{background:#13352a;color:#d9f26c}
+    [data-theme="dark"] .rank{color:#3ec888}
+    [data-theme="dark"] .notice{background:#271f11;color:#fae3b4}
+    [data-theme="dark"] .name-form input[readonly]{background:#112d25;color:#a2b7ac}
   </style>
 </head>
 <body>
@@ -43,6 +60,10 @@
       const status = document.getElementById("leaderStatus");
       let records = [];
       let source = "thiết bị này";
+
+      if (!root.children.length) {
+        root.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;padding:50px 0;transform:scale(0.85)">${window.AICheckLoader ? window.AICheckLoader.getHtml() : "Đang tải..."}</div>`;
+      }
 
       if (window.AICheckCloud?.configured) {
         const result = await window.AICheckCloud.getLeaderboard(board);
@@ -151,7 +172,10 @@
       connectLeaderboard();
       render();
     });
-    document.getElementById("refreshBoard").addEventListener("click", render);
+    document.getElementById("refreshBoard").addEventListener("click", () => {
+      window.AICheckLoader?.show("Đang đồng bộ điểm số mới nhất...");
+      render().finally(() => setTimeout(() => window.AICheckLoader?.hide(), 450));
+    });
     connectLeaderboard();
     render();
     if (window.AICheckCloud?.configured) setInterval(render, 20000);

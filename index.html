@@ -4,38 +4,191 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#163d35">
-  <meta name="description" content="AI CHECK THĐ: trạm học tập, thực hành và đánh giá năng lực kiểm chứng thông tin AI.">
-  <title>AI CHECK THĐ | Trang chủ</title>
+  <meta name="description" content="AI CHECK THĐ: Trạm học tập, thực hành 60 tình huống và đánh giá năng lực kiểm chứng thông tin AI dành riêng cho học sinh THPT Trần Hưng Đạo.">
+  <title>AI CHECK THĐ | Trạm Kiểm Chứng Thông Tin 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="site-nav.css">
   <link rel="stylesheet" href="site-visual.css">
-  <style>.home-qr{display:flex;align-items:center;gap:12px;margin-top:18px;color:var(--forest);font-size:9px;font-weight:800}.home-qr img{width:74px;height:74px;padding:4px;background:white;border:1px solid var(--line)}.home-site-header .brand-name{display:none}</style>
+  <script src="auth-guard.js"></script>
+  <style>
+    .home-qr{display:flex;align-items:center;gap:12px;margin-top:24px;color:var(--forest);font-size:10px;font-weight:800}
+    .home-qr img{width:76px;height:76px;padding:4px;background:white;border-radius:8px;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+    [data-theme="dark"] .home-qr{color:#d9f26c}
+    
+    /* Metrics Counter Strip */
+    .metrics-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:28px 0 36px}
+    .metric-card{padding:18px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);backdrop-filter:blur(10px);text-align:center;transition:transform .2s ease,border-color .2s ease}
+    .metric-card:hover{transform:translateY(-3px);border-color:var(--leaf)}
+    [data-theme="dark"] .metric-card{background:rgba(13,34,28,.88);border-color:rgba(255,255,255,.1)}
+    .metric-num{font:800 clamp(24px,3.5vw,36px)/1 "Space Grotesk",sans-serif;color:var(--forest);margin-bottom:4px}
+    [data-theme="dark"] .metric-num{color:#d9f26c}
+    .metric-lbl{font-size:10.5px;color:var(--muted);font-weight:700}
+    
+    @media(max-width:768px){.metrics-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
 </head>
 <body>
-  <header class="site-header home-site-header"><div class="header-inner">
-    <a class="brand" href="index.html" aria-label="AI CHECK THĐ - trang chủ"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a>
-    <button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng chính"><a href="index.html" aria-current="page">Trang chủ</a><a href="pages/knowledge.html">Kiến thức</a><a href="pages/practice.html">Thực hành</a><a href="pages/assessment.html">Đánh giá</a><a href="pages/leaderboard.html">BXH</a><a href="pages/research.html">Nghiên cứu</a><a href="pages/resources.html">Tài nguyên</a></nav>
-  </div></header>
-  <main>
-    <section class="home-hero"><div class="home-copy"><div class="home-copy-inner">
-      <p class="eyebrow" style="color:var(--lime)">THPT TRẦN HƯNG ĐẠO · NGHIÊN CỨU KHOA HỌC</p>
-      <h1 class="home-title">AI CHECK<br><span>THĐ.</span></h1>
-      <p><strong>AI có thể trả lời. Bạn cần biết cách kiểm chứng.</strong> Không gian học tập giúp học sinh dừng lại, tìm bằng chứng và dùng thông tin AI có trách nhiệm.</p>
-      <div class="home-actions"><a class="button button-lime" href="pages/knowledge.html">Bắt đầu kiểm chứng →</a><a class="button button-outline" href="pages/assessment.html">Làm bài đánh giá ↗</a></div>
-      <div class="home-warning">Đừng tin ngay – Hãy kiểm chứng trước khi sử dụng.</div>
-    </div></div></section>
-    <div class="home-content">
-      <header class="page-header"><div><p class="eyebrow">CHỌN TRẠM</p><h2 class="page-title">Đi thẳng đến nội dung bạn cần.</h2><p class="page-lead">Mỗi khu vực là một trang riêng, có thể mở trực tiếp và quay lại trang chủ từ menu.</p></div><span class="page-count">HỌC · THỬ · ĐO</span></header>
-      <nav class="portal-grid" aria-label="Các trang chức năng">
-        <a class="portal-link" href="pages/knowledge.html"><small>01 / HỌC</small><strong>Kiến thức & 5 bước ↗</strong><span>Nhận diện rủi ro và làm theo quy trình kiểm chứng.</span></a>
-        <a class="portal-link" href="pages/practice.html"><small>02 / THỬ</small><strong>Thực hành & thư viện ↗</strong><span>Luyện tình huống ngẫu nhiên và xem lời giải có nguồn.</span></a>
-        <a class="portal-link" href="pages/assessment.html"><small>03 / ĐO</small><strong>Đánh giá & rubric ↗</strong><span>20 câu hỏi, điểm số theo kỹ năng, bốn mức kết quả.</span></a>
-        <a class="portal-link" href="pages/leaderboard.html"><small>04 / GHI NHẬN</small><strong>Bảng xếp hạng ↗</strong><span>Theo dõi riêng thành tích rubric, bài đo và thực hành.</span></a>
-        <a class="portal-link" href="pages/research.html"><small>05 / NGHIÊN CỨU</small><strong>Kết quả & đề tài ↗</strong><span>Xem tự động số người tham gia và kết quả trước–sau.</span></a>
-        <a class="portal-link" href="pages/resources.html"><small>06 / TÀI NGUYÊN</small><strong>Forms, infographic, video ↗</strong><span>Kết nối biểu mẫu và sản phẩm truyền thông của nhóm.</span></a>
+  <header class="site-header home-site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="AI CHECK THĐ - trang chủ">
+        <span class="brand-mark">AI</span>
+        <span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="siteNav" class="site-nav" aria-label="Điều hướng chính">
+        <a href="index.html" aria-current="page">Trang chủ</a>
+        <a href="pages/knowledge.html">Kiến thức</a>
+        <a href="pages/practice.html">Thực hành</a>
+        <a href="pages/assessment.html">Đánh giá</a>
+        <a href="pages/leaderboard.html">BXH</a>
+        <a href="pages/research.html">Nghiên cứu</a>
+        <a href="pages/resources.html">Tài nguyên</a>
       </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="home-hero">
+      <div class="home-copy">
+        <div class="home-copy-inner">
+          <p class="eyebrow" style="color:var(--lime)">THPT TRẦN HƯNG ĐẠO · NGHIÊN CỨU KHOA HỌC</p>
+          <h1 class="home-title">AI CHECK<br><span>THĐ.</span></h1>
+          <p><strong>AI có thể trả lời. Bạn cần biết cách kiểm chứng.</strong> Không gian học tập giúp học sinh dừng lại, tìm bằng chứng và dùng thông tin AI có trách nhiệm.</p>
+          <div class="home-actions">
+            <a class="button button-lime" href="pages/practice.html">Vào Đấu trường 60 Tình huống ⚡</a>
+            <a class="button button-outline" href="pages/knowledge.html">Quy trình 5 bước →</a>
+          </div>
+          <div class="home-warning">Đừng tin ngay – Hãy kiểm chứng trước khi sử dụng.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="home-content">
+      <!-- 👤 BENTO USER PROGRESS STRIP -->
+      <div class="bento-profile-strip" id="homeUserStrip">
+        <div class="bento-profile-left">
+          <div class="bento-avatar" id="homeUserAvatar">🎓</div>
+          <div>
+            <div class="bento-user-name" id="homeUserName">Chào bạn, Chiến binh Kiểm Chứng THĐ!</div>
+            <div class="bento-user-sub" id="homeUserStats">Khởi động ngay để tích lũy điểm kinh nghiệm và thăng hạng.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span class="gamify-badge gamify-badge-level" id="homeLevelBadge">🌱 Lv.1 Tập Sự</span>
+          <span class="gamify-badge gamify-badge-xp" id="homeXpBadge">⭐ 0 XP</span>
+          <span class="gamify-badge gamify-badge-streak" id="homeStreakBadge"><span class="flame-icon">🔥</span> 0 Chuỗi</span>
+          <a href="pages/practice.html" class="button button-dark" style="min-height:36px;padding:6px 14px;border-radius:20px;font-size:10.5px">Luyện ngay →</a>
+        </div>
+      </div>
+
+      <!-- 📊 METRICS COUNTER STRIP -->
+      <div class="metrics-strip">
+        <div class="metric-card">
+          <div class="metric-num">60</div>
+          <div class="metric-lbl">TÌNH HUỐNG THỰC CHIẾN</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">05</div>
+          <div class="metric-lbl">BƯỚC QUY TRÌNH CHUẨN</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">04</div>
+          <div class="metric-lbl">TIÊU CHÍ RUBRIC NĂNG LỰC</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-num">100%</div>
+          <div class="metric-lbl">HỌC SINH THPT TRẦN HƯNG ĐẠO</div>
+        </div>
+      </div>
+
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">CHỌN TRẠM</p>
+          <h2 class="page-title">Đi thẳng đến nội dung bạn cần.</h2>
+          <p class="page-lead">Mỗi khu vực là một trạm chức năng chuyên biệt, có thể mở trực tiếp và quay lại trang chủ từ thanh menu.</p>
+        </div>
+        <span class="page-count">HỌC · THỬ · ĐO · VINH DANH</span>
+      </header>
+
+      <!-- 🍱 BENTO PORTAL GRID 2026 -->
+      <nav class="bento-portal-grid" aria-label="Các trạm chức năng">
+        <a class="bento-card" href="pages/knowledge.html">
+          <div>
+            <div class="bento-card-header">
+              <span class="bento-card-step">01 / HỌC KIẾN THỨC</span>
+              <span class="bento-card-icon">📖</span>
+            </div>
+            <h3 class="bento-card-title">Kiến thức & 5 bước ↗</h3>
+            <p class="bento-card-desc">Nhận diện 4 loại rủi ro thông tin và làm chủ quy trình 5 bước kiểm chứng AI chuẩn quốc tế.</p>
+          </div>
+          <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">BẮT ĐẦU HỌC →</span>
+        </a>
+
+        <a class="bento-card bento-card-highlight" href="pages/practice.html">
+          <div>
+            <div class="bento-card-header">
+              <span class="bento-card-step">02 / ĐẤU TRƯỜNG THỰC HÀNH</span>
+              <span class="bento-card-icon" style="background:#e4fb7f;color:#102d28">⚡</span>
+            </div>
+            <h3 class="bento-card-title">Thực hành 60 Tình huống ↗</h3>
+            <p class="bento-card-desc">Luyện tập ngẫu nhiên với kho 60 câu hỏi Học tập, Đời sống, AI. Tích lũy XP, chuỗi Streak và nổ Confetti.</p>
+          </div>
+          <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">VÀO ĐẤU TRƯỜNG →</span>
+        </a>
+
+        <a class="bento-card" href="pages/assessment.html">
+          <div>
+            <div class="bento-card-header">
+              <span class="bento-card-step">03 / ĐO LƯỜNG</span>
+              <span class="bento-card-icon">📐</span>
+            </div>
+            <h3 class="bento-card-title">Đánh giá & Rubric ↗</h3>
+            <p class="bento-card-desc">Làm bài khảo sát 20 câu hỏi đo lường năng lực phản biện, chấm điểm tự động theo rubric 4 cấp độ.</p>
+          </div>
+          <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">LÀM BÀI KHẢO SÁT →</span>
+        </a>
+
+        <a class="bento-card" href="pages/leaderboard.html">
+          <div>
+            <div class="bento-card-header">
+              <span class="bento-card-step">04 / VINH DANH</span>
+              <span class="bento-card-icon">🏆</span>
+            </div>
+            <h3 class="bento-card-title">Bảng xếp hạng THĐ ↗</h3>
+            <p class="bento-card-desc">Bảng vàng vinh danh những cá nhân xuất sắc nhất trong các lượt luyện tập và bài đo năng lực toàn trường.</p>
+          </div>
+          <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">XEM BẢNG VÀNG →</span>
+        </a>
+
+        <a class="bento-card" href="pages/research.html">
+          <div>
+            <div class="bento-card-header">
+              <span class="bento-card-step">05 / NGHIÊN CỨU</span>
+              <span class="bento-card-icon">📊</span>
+            </div>
+            <h3 class="bento-card-title">Kết quả & Đề tài KHKT ↗</h3>
+            <p class="bento-card-desc">Xem dữ liệu phân tích khoa học, số lượng người tham gia thực tế và sự chuyển biến trước – sau can thiệp.</p>
+          </div>
+          <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">XEM BÁO CÁO →</span>
+        </a>
+
+        <a class="bento-card" href="pages/resources.html">
+          <div>
+            <div class="bento-card-header">
+              <span class="bento-card-step">06 / TÀI NGUYÊN</span>
+              <span class="bento-card-icon">📁</span>
+            </div>
+            <h3 class="bento-card-title">Forms, Infographic & Video ↗</h3>
+            <p class="bento-card-desc">Tải về cẩm nang bỏ túi, infographic infographic khổ lớn và kết nối tài nguyên truyền thông đề tài.</p>
+          </div>
+          <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">XEM TÀI NGUYÊN →</span>
+        </a>
+      </nav>
+
       <section class="home-about" aria-labelledby="aboutTitle">
         <div class="home-about-copy">
           <p class="eyebrow">VỀ DỰ ÁN</p>
@@ -49,6 +202,7 @@
           <article><span>03</span><div><h3>Công cụ</h3><p>Website học tập; không thay thế nguồn gốc hay chuyên gia.</p></div></article>
         </div>
       </section>
+
       <section class="home-faq" aria-labelledby="faqTitle">
         <header class="page-header"><div><p class="eyebrow">GIẢI ĐÁP NHANH</p><h2 class="page-title" id="faqTitle">Câu hỏi thường gặp.</h2><p class="page-lead">Một vài điều cần biết trước khi bắt đầu.</p></div></header>
         <div class="faq-list">
@@ -60,24 +214,92 @@
       </section>
     </div>
   </main>
+
   <footer class="site-footer">
     AI CHECK THĐ · Sản phẩm phục vụ nghiên cứu khoa học · THPT Trần Hưng Đạo
     <div style="margin-top:6px;font-size:10px">
       <a href="login.html" style="color:var(--lime);text-decoration:none;margin-right:12px">👤 Tài khoản</a>
     </div>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="auth-guard.js"></script>
+  <script src="site-nav.js"></script>
   <script>
+    // Đồng bộ thông tin cá nhân hóa trên Trang chủ
+    function syncHomeProfile() {
+      if (!window.AICheckGamification) return;
+      const stats = window.AICheckGamification.getStats();
+      const isEn = (window.AICheckI18n && window.AICheckI18n.getLang ? window.AICheckI18n.getLang() === 'en' : false);
+      
+      const avatarEl = document.getElementById("homeUserAvatar");
+      const nameEl = document.getElementById("homeUserName");
+      const statsEl = document.getElementById("homeUserStats");
+      const lvlEl = document.getElementById("homeLevelBadge");
+      const xpEl = document.getElementById("homeXpBadge");
+      const streakEl = document.getElementById("homeStreakBadge");
+
+      let localProf = {};
+      try { localProf = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
+      const userAvatar = localProf.avatar || localStorage.getItem("aicheck:avatar") || stats.levelIcon || "🎓";
+
+      if (avatarEl) {
+        if (userAvatar.startsWith("http") || userAvatar.startsWith("data:image")) {
+          avatarEl.innerHTML = `<img src="${userAvatar}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+        } else {
+          avatarEl.textContent = userAvatar;
+        }
+      }
+      if (lvlEl) lvlEl.textContent = `${stats.levelIcon} Lv.${stats.level} ${stats.levelTitle}`;
+      if (xpEl) xpEl.textContent = `⭐ ${stats.xp} XP`;
+      if (streakEl) streakEl.innerHTML = `<span class="flame-icon">🔥</span> ${stats.streak} ${isEn ? "Streak" : "Chuỗi"}`;
+
+      let playerName = localProf.display_name;
+      if (!playerName) {
+        try { playerName = JSON.parse(localStorage.getItem("aicheck:player") || '""'); } catch {}
+      }
+
+      const defaultWarrior = isEn ? "THD Warrior" : "Chiến binh THĐ";
+      if (window.AICheckCloud?.getUser) {
+        window.AICheckCloud.getUser().then(u => {
+          if (u) {
+            const displayName = localProf.display_name || u.user_metadata?.display_name || u.email?.split("@")[0] || defaultWarrior;
+            if (nameEl) nameEl.textContent = isEn ? `Welcome back, ${displayName}!` : `Chào mừng em trở lại, ${displayName}!`;
+            if (statsEl) statsEl.textContent = localProf.bio ? `"${localProf.bio}"` : (isEn ? `You are at Level ${stats.level} (${stats.levelTitle}). Need ${stats.nextLevelXp - stats.xp} more XP to level up!` : `Em đang ở Cấp ${stats.level} (${stats.levelTitle}). Cần thêm ${stats.nextLevelXp - stats.xp} XP để thăng hạng!`);
+          }
+        });
+      }
+      if (playerName && nameEl) {
+        nameEl.textContent = isEn ? `Welcome back, ${playerName}!` : `Chào mừng em trở lại, ${playerName}!`;
+        if (statsEl) statsEl.textContent = localProf.bio ? `"${localProf.bio}"` : (isEn ? `You are at Level ${stats.level} (${stats.levelTitle}). Keep up your streak!` : `Em đang ở Cấp ${stats.level} (${stats.levelTitle}). Tiếp tục chuỗi đúng nào!`);
+      }
+    }
+
+    // Mở modal hồ sơ khi click vào dải thông tin người dùng ở trang chủ
+    const homeStrip = document.getElementById("homeUserStrip");
+    if (homeStrip) {
+      homeStrip.style.cursor = "pointer";
+      homeStrip.title = "Bấm để tùy chỉnh hồ sơ cá nhân và ảnh đại diện ⚙️";
+      homeStrip.addEventListener("click", (e) => {
+        if (e.target.closest("a, button")) return;
+        window.openUserProfileModal?.();
+      });
+    }
+
     if (/^https?:/i.test(location.href)) {
       const home = document.createElement("div");
       home.className = "home-qr";
       home.innerHTML = `<img alt="QR truy cập AI CHECK THĐ" src="https://api.qrserver.com/v1/create-qr-code/?size=112x112&data=${encodeURIComponent(location.href)}"><span>QUÉT ĐỂ TRUY CẬP WEBSITE</span>`;
       document.querySelector(".home-content").append(home);
     }
+
+    syncHomeProfile();
+    window.addEventListener("aicheck:gamify-change", syncHomeProfile);
+    window.addEventListener("aicheck:profile-updated", syncHomeProfile);
+    window.addEventListener("aicheck:lang-change", syncHomeProfile);
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
-  <script src="cloud.js"></script>
-  <script src="auth-guard.js"></script>
-  <script src="site-nav.js"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../site.css">
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
+  <script src="../auth-guard.js"></script>
   <style>
     .research-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
     .stage-card{padding:18px;background:#fff;border:1px solid var(--line);border-radius:5px}
@@ -58,6 +59,21 @@
     .qr-row img{width:84px;height:84px;background:white}
     .qr-row small{color:var(--muted);font-size:9px}
     @media(max-width:700px){.research-grid,.research-facts,.forms-question-grid{grid-template-columns:1fr}.forms-summary-overview{grid-template-columns:1fr}.stage-card{padding:15px}.chart{gap:45px}}
+    [data-theme="dark"] .stage-card{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .stage-card h2{color:#ffffff}
+    [data-theme="dark"] .metric{background:#133328}
+    [data-theme="dark"] .metric strong{color:#d9f26c}
+    [data-theme="dark"] .chart-box{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .chart-box h2{color:#ffffff}
+    [data-theme="dark"] .chart{border-bottom-color:rgba(255,255,255,.15);background:repeating-linear-gradient(to bottom,transparent 0,transparent 42px,rgba(255,255,255,.06) 43px,rgba(255,255,255,.06) 44px)}
+    [data-theme="dark"] .bar span{color:#a2b7ac}
+    [data-theme="dark"] .forms-question-card{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .forms-question-title{color:#ffffff}
+    [data-theme="dark"] .forms-option-value{color:#d9f26c}
+    [data-theme="dark"] .forms-option-track{background:rgba(255,255,255,.08)}
+    [data-theme="dark"] .fact{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .fact b{color:#3ec888}
+    [data-theme="dark"] .fact p{color:#a2b7ac}
   </style>
 </head>
 <body>

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../site.css">
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
+  <script src="../auth-guard.js"></script>
   <style>
     .start-screen{padding:6px 0}
     .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
@@ -57,6 +58,31 @@
     .band{padding:9px;border:1px solid #ffffff2e;background:#ffffff0d;border-radius:5px;font-size:9px}
     .band b{display:block;color:var(--lime);font-size:10px}
     .quiz-hidden{display:none!important}
+    [data-theme="dark"] .start-card{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .start-card:hover{background:#14382e;border-color:#3ec888}
+    [data-theme="dark"] .start-card h3{color:#ffffff}
+    [data-theme="dark"] .start-card p{color:#a2b7ac}
+    [data-theme="dark"] .quiz-card{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .quiz-card h2,[data-theme="dark"] .q-text{color:#ffffff}
+    [data-theme="dark"] .quiz-card #quizIntro{color:#a2b7ac}
+    [data-theme="dark"] .q-meta{background:#14352a;color:#3ec888}
+    [data-theme="dark"] .question-number{background:#14352a;color:#d9f26c}
+    [data-theme="dark"] .quiz-progress-label{color:#cbdad1}
+    [data-theme="dark"] .quiz-progress-label strong{color:#d9f26c}
+    [data-theme="dark"] .quiz-card .progress{background:rgba(255,255,255,.08)}
+    [data-theme="dark"] .option-list .choice{background:#0f2922;border-color:rgba(255,255,255,.12);color:#f0f7f3}
+    [data-theme="dark"] .option-list .choice:hover{background:#163d33;border-color:#3ec888;color:#ffffff}
+    [data-theme="dark"] .option-list .choice.selected{background:#174537;border-color:#d9f26c;color:#ffffff}
+    [data-theme="dark"] .quiz-back-btn{border-color:rgba(255,255,255,.15);color:#d9f26c}
+    [data-theme="dark"] .quiz-back-btn:hover{background:#112d25}
+    [data-theme="dark"] .result-score{color:#d9f26c}
+    [data-theme="dark"] .result-level{color:#3ec888}
+    [data-theme="dark"] .result-note{background:#14352a;color:#d5e8dc}
+    [data-theme="dark"] .skill-label{color:#cbdad1}
+    [data-theme="dark"] .skill-track{background:rgba(255,255,255,.08)}
+    [data-theme="dark"] .quiz-footer{border-top-color:rgba(255,255,255,.1)}
+    [data-theme="dark"] .status{color:#a2b7ac}
+    [data-theme="dark"] #startScreen h2{color:#ffffff !important}
     @media(max-width:600px){.identity-row{grid-template-columns:minmax(0,1fr) auto;padding:12px}.identity-row .form-row{max-width:none}.quiz-card{padding:20px 16px}.quiz-heading{flex-direction:column;gap:9px}.mode-row{width:100%}.mode-button{flex:1;padding-inline:7px}.phase-picker{padding:13px}.phase-button{flex:1}.quiz-footer{align-items:stretch;flex-direction:column}.quiz-footer .button{width:100%}.bands{grid-template-columns:repeat(2,minmax(0,1fr))}.rubric-card>summary{padding:15px 16px}.rubric-content{padding:0 16px 16px}}
     @media(max-width:380px){.identity-row{grid-template-columns:1fr}.identity-row .button{width:100%}.phase-options{display:grid;grid-template-columns:1fr 1fr}}
     @media(prefers-reduced-motion:reduce){.mode-button,.phase-button,.quiz-progress-label,.quiz-card .progress span,.option-list .choice{transition:none!important}}
@@ -74,7 +100,7 @@
         <div id="startScreen" class="start-screen">
           <div style="margin-bottom:14px">
             <span class="tag" style="background:#eaf2e8;color:#286947;font-weight:800;margin-bottom:6px">THPT TRẦN HƯNG ĐẠO · KHẢO SÁT NĂNG LỰC</span>
-            <h2 style="margin:4px 0 6px;color:var(--forest);font:700 24px 'Space Grotesk',sans-serif">Chọn đợt đo để bắt đầu</h2>
+            <h2 style="margin:4px 0 6px;font:700 24px 'Space Grotesk',sans-serif">Chọn đợt đo để bắt đầu</h2>
             <p style="margin:0;color:var(--muted);font-size:12px">Bài đo gồm 20 câu hỏi tình huống chia đều cho 5 kỹ năng. Chọn đúng giai đoạn của bạn để kết quả được lưu và đồng bộ chính xác vào đề tài nghiên cứu.</p>
           </div>
 
@@ -209,6 +235,9 @@
         ? shuffle(skills.flatMap((_, s) => draw(bank.filter(item => item.s === s).map((item, i) => ({ ...item, id: `q${s}-${i}` })), 4, `quiz-v2-20-${s}`)))
         : shuffle(skills.map((_, s) => draw(rubricBank.filter(item => item.s === s), 1, `rubric-v2-clear-${s}`)[0]));
       
+      window.AICheckLoader?.show(mode === "assessment" ? "Đang tạo bộ 20 câu ngẫu nhiên..." : "Đang chuẩn bị thử thách Rubric...");
+      setTimeout(() => window.AICheckLoader?.hide(), 450);
+
       document.getElementById("startScreen").classList.add("quiz-hidden");
       document.getElementById("quizView").classList.remove("quiz-hidden");
       document.getElementById("resultView").classList.add("quiz-hidden");
@@ -276,6 +305,9 @@
       if (window.AICheckCloud?.processSyncQueue) {
         setTimeout(window.AICheckCloud.processSyncQueue, 1000);
       }
+
+      window.AICheckLoader?.show("Đang phân tích năng lực & ghi nhận điểm số...");
+      setTimeout(() => window.AICheckLoader?.hide(), 450);
 
       document.getElementById("quizView").classList.add("quiz-hidden");
       const result = document.getElementById("resultView");

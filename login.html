@@ -8,311 +8,1338 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="site-nav.css">
+  <link rel="stylesheet" href="site-visual.css">
   <style>
-    body{display:grid;place-items:center;min-height:100vh;background-color:var(--forest);color:white;padding:20px 10px}
-    .login-card{width:min(420px,95%);padding:32px 28px;background:white;color:var(--ink);border-radius:12px;box-shadow:var(--shadow)}
-    .login-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-    .back-home{color:var(--muted);font-size:11px;font-weight:700;text-decoration:none}
-    .back-home:hover{color:var(--forest);text-decoration:underline}
-    .brand-badge{display:flex;align-items:center;gap:10px}
-    .login-card h1{margin:0 0 6px;font:700 24px "Space Grotesk",sans-serif;color:var(--forest)}
-    .login-card p{margin:0 0 20px;font-size:12px;color:var(--muted)}
-    .tabs{display:flex;gap:16px;margin-bottom:20px;border-bottom:1px solid var(--line)}
-    .tab{padding:8px 0;border:0;background:none;font-weight:700;font-size:13px;color:var(--muted);cursor:pointer;position:relative}
-    .tab.active{color:var(--forest)}
-    .tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--forest)}
-    .form-group{margin-bottom:16px}
-    .form-group label{display:block;margin-bottom:6px;font-size:11px;font-weight:700;color:var(--muted)}
-    .form-group input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;font-size:13px}
-    .form-group input:focus{border-color:var(--forest);outline:2px solid #d9f26c}
-    .login-btn{width:100%;margin-top:8px;padding:12px;border:0;border-radius:6px;background:var(--forest);color:white;font-weight:700;font-size:13px;cursor:pointer;transition:background .2s}
-    .login-btn:hover{background:var(--leaf)}
-    .login-btn:disabled{opacity:0.6;cursor:not-allowed}
-    .guest-btn{width:100%;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:6px;background:#f8faf8;color:var(--forest);font-weight:700;font-size:12px;cursor:pointer;text-align:center;text-decoration:none;display:block}
-    .guest-btn:hover{background:#eaf2e8;border-color:#b9d0ba}
-    .support-link{display:block;margin-top:16px;text-align:center;font-size:11px;color:var(--muted);text-decoration:none}
-    .support-link:hover{text-decoration:underline}
-    #errorMsg{margin-top:12px;font-size:12px;color:#c84f36;text-align:center;min-height:18px}
-    .hidden{display:none}
-    .already-logged{padding:14px;background:#edf5eb;border-radius:8px;border:1px solid #c9decb;margin-bottom:18px;font-size:12px;color:#245437}
+    /* =========================================================
+       GIAO DIỆN ĐĂNG NHẬP HIỆN ĐẠI (From Uiverse.io by micaelgomestavares)
+       Tích hợp hệ sinh thái AI CHECK THĐ & Hỗ trợ chuẩn Dark / Light Mode
+       ========================================================= */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: radial-gradient(circle at 18% 18%, rgba(217, 242, 108, 0.16) 0%, transparent 42%),
+                  radial-gradient(circle at 82% 82%, rgba(36, 114, 79, 0.3) 0%, transparent 52%),
+                  linear-gradient(135deg, #0c2621 0%, #163d35 50%, #09201b 100%);
+      color: #151717;
+      padding: 70px 14px 40px;
+      position: relative;
+      overflow-x: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      transition: background 0.3s ease;
+    }
+
+    /* Thanh điều hướng nhanh trên cùng */
+    .login-top-bar {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .back-home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .back-home-link:hover {
+      background: rgba(255, 255, 255, 0.28);
+      transform: translateX(-2px);
+      color: #ffffff;
+    }
+
+    .theme-switch-holder {
+      display: flex;
+      align-items: center;
+    }
+
+    .theme-switch-holder .theme-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .theme-switch-holder .toggle {
+      transform: scale(0.68);
+      transform-origin: right center;
+      margin: 0;
+    }
+
+    /* Card Form chính từ mẫu Uiverse */
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background-color: #ffffff;
+      padding: 32px 30px 28px;
+      width: min(440px, 94vw);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.6);
+      position: relative;
+      animation: form-entrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+      transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    @keyframes form-entrance {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Brand Header bên trong Form */
+    .form-brand-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .brand-identity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-sq {
+      width: 32px;
+      height: 32px;
+      background: #d9f26c;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font: 800 13px "Space Grotesk", sans-serif;
+      color: #123e35;
+      box-shadow: 0 3px 8px rgba(18, 62, 53, 0.15);
+    }
+
+    .brand-names {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font: 700 14px "Space Grotesk", sans-serif;
+      color: #123e35;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: #718096;
+      font-weight: 500;
+    }
+
+    .auth-required-pill {
+      font-size: 10px;
+      font-weight: 700;
+      color: #24724f;
+      background: #edf5eb;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #c9decb;
+      white-space: nowrap;
+    }
+
+    /* Tiêu đề & mô tả form */
+    .form-heading-wrap {
+      margin-top: 2px;
+      margin-bottom: 4px;
+    }
+
+    .form-heading {
+      margin: 0 0 4px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #151717;
+      letter-spacing: -0.02em;
+    }
+
+    .form-desc {
+      margin: 0;
+      font-size: 12.5px;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    /* Nhóm nhãn */
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .flex-column > label {
+      color: #151717;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    /* Hộp Input */
+    .inputForm {
+      border: 1.5px solid #ecedec;
+      border-radius: 10px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      transition: 0.2s ease-in-out;
+      background: #ffffff;
+    }
+
+    .inputForm svg {
+      flex-shrink: 0;
+      color: #151717;
+      fill: currentColor;
+    }
+
+    .input {
+      margin-left: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+      height: 100%;
+      font-size: 14px;
+      color: #151717;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .input::placeholder {
+      font-family: inherit;
+      color: #94a3b8;
+    }
+
+    .input:focus {
+      outline: none;
+    }
+
+    .inputForm:focus-within {
+      border: 1.5px solid #2d79f3;
+      box-shadow: 0 0 0 3px rgba(45, 121, 243, 0.12);
+    }
+
+    /* Nút con mắt ẩn/hiện mật khẩu */
+    .eye-toggle-btn {
+      background: none !important;
+      border: none !important;
+      padding: 0 4px !important;
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: #64748b !important;
+      cursor: pointer !important;
+      height: 100% !important;
+      width: auto !important;
+      align-self: center !important;
+      transition: color 0.2s, opacity 0.2s;
+    }
+
+    .eye-toggle-btn:hover {
+      color: #151717 !important;
+    }
+
+    /* Hàng Remember me & Forgot Password */
+    .flex-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      justify-content: space-between;
+      margin-top: 2px;
+    }
+
+    .flex-row > div {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .flex-row > div > label {
+      font-size: 13px;
+      color: #151717;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .span {
+      font-size: 13px;
+      margin-left: 4px;
+      color: #2d79f3;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .span:hover {
+      text-decoration: underline;
+    }
+
+    /* Nút Đăng nhập / Đăng ký chính */
+    .button-submit {
+      margin: 14px 0 6px 0;
+      background-color: #151717;
+      border: none;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 10px;
+      height: 48px;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+    }
+
+    .button-submit:hover {
+      background-color: #252727;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+    }
+
+    .button-submit:active {
+      transform: scale(0.98);
+    }
+
+    .button-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Nút tiếp tục với tư cách Khách */
+    .guest-btn {
+      display: block;
+      text-align: center;
+      margin-top: 8px;
+      font-size: 12.5px;
+      color: #24724f;
+      background: #edf5eb;
+      padding: 11px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px dashed #b5d5be;
+      transition: all 0.2s ease;
+    }
+
+    .guest-btn:hover {
+      background: #dff0dc;
+      border-color: #24724f;
+      transform: translateY(-1px);
+    }
+
+    /* Dòng chữ chuyển đổi & Divider */
+    .p {
+      text-align: center;
+      color: #151717;
+      font-size: 13px;
+      margin: 4px 0;
+    }
+
+    .p.line {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 500;
+      margin: 10px 0 4px;
+    }
+
+    .p.line::before,
+    .p.line::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #ecedec;
+    }
+
+    .p.line::before { margin-right: 12px; }
+    .p.line::after { margin-left: 12px; }
+
+    /* Nút mạng xã hội (Google & Apple) */
+    .btn {
+      margin-top: 4px;
+      width: 100%;
+      height: 46px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      font-size: 13px;
+      gap: 9px;
+      border: 1px solid #ededef;
+      background-color: white;
+      color: #151717;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      border: 1px solid #2d79f3;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(45, 121, 243, 0.12);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Thông báo lỗi & kết quả */
+    #errorMsg {
+      font-size: 12px;
+      text-align: center;
+      min-height: 18px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Ghi chú NCKH bắt buộc */
+    .mandatory-note {
+      margin-top: 6px;
+      padding: 9px 12px;
+      background: #f4f8f4;
+      border-radius: 8px;
+      border-left: 3px solid #24724f;
+      font-size: 11px;
+      color: #274b3a;
+      line-height: 1.45;
+    }
+
+    /* Khối trạng thái nếu đã đăng nhập trước đó */
+    .already-logged {
+      padding: 12px 14px;
+      background: #edf5eb;
+      border-radius: 10px;
+      border: 1px solid #c9decb;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: #245437;
+      animation: form-entrance 0.3s ease-out;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Khối Quên mật khẩu & Xác minh OTP */
+    .support-form-card {
+      margin-top: 14px;
+      padding: 16px;
+      background: #f8faf9;
+      border: 1.5px solid #dce8e2;
+      border-radius: 14px;
+      animation: form-entrance 0.3s ease-out;
+    }
+
+    .support-form-card h3 {
+      margin: 0 0 6px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #123e35;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .support-form-card p {
+      margin: 0 0 12px;
+      font-size: 11.5px;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    .btn-otp {
+      width: 100%;
+      height: 42px;
+      margin-top: 8px;
+      background: #123e35;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-otp:hover {
+      background: #1c5944;
+      transform: translateY(-1px);
+    }
+
+    .btn-otp-confirm {
+      background: #24724f;
+    }
+
+    .btn-otp-confirm:hover {
+      background: #2f8e63;
+    }
+
+    .btn-support-admin {
+      background: none;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+      margin-top: 10px;
+      width: 100%;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-support-admin:hover {
+      background: #ffffff;
+      border-color: #94a3b8;
+    }
+
+    /* =========================================================
+       HỖ TRỢ DARK MODE (Chuẩn tone màu Forest & Lime của AI CHECK THĐ)
+       ========================================================= */
+    [data-theme="dark"] body {
+      background: radial-gradient(circle at 18% 18%, rgba(217, 242, 108, 0.12) 0%, transparent 42%),
+                  radial-gradient(circle at 82% 82%, rgba(36, 114, 79, 0.22) 0%, transparent 52%),
+                  linear-gradient(135deg, #071714 0%, #0c2621 50%, #051310 100%);
+      color: #eaf3ee;
+    }
+
+    [data-theme="dark"] .form {
+      background-color: #0d2821;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    [data-theme="dark"] .form-brand-row {
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="dark"] .brand-title {
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .brand-sub {
+      color: #a2b7ac;
+    }
+
+    [data-theme="dark"] .auth-required-pill {
+      background: #14382e;
+      border-color: #2a614e;
+      color: #d9f26c;
+    }
+
+    [data-theme="dark"] .form-heading {
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .form-desc {
+      color: #a2b7ac;
+    }
+
+    [data-theme="dark"] .flex-column > label {
+      color: #eaf3ee;
+    }
+
+    [data-theme="dark"] .inputForm {
+      background-color: #12332a;
+      border-color: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .inputForm svg {
+      color: #a2b7ac;
+    }
+
+    [data-theme="dark"] .input {
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .input::placeholder {
+      color: #6f8c7d;
+    }
+
+    [data-theme="dark"] .inputForm:focus-within {
+      border-color: #d9f26c;
+      box-shadow: 0 0 0 3px rgba(217, 242, 108, 0.18);
+    }
+
+    [data-theme="dark"] .eye-toggle-btn {
+      color: #a2b7ac !important;
+    }
+
+    [data-theme="dark"] .eye-toggle-btn:hover {
+      color: #d9f26c !important;
+    }
+
+    [data-theme="dark"] .flex-row > div > label,
+    [data-theme="dark"] .p {
+      color: #c4d7cc;
+    }
+
+    [data-theme="dark"] .span {
+      color: #d9f26c;
+    }
+
+    [data-theme="dark"] .button-submit {
+      background-color: #d9f26c;
+      color: #0c2621;
+      font-weight: 700;
+    }
+
+    [data-theme="dark"] .button-submit:hover {
+      background-color: #e6f78a;
+      box-shadow: 0 6px 18px rgba(217, 242, 108, 0.28);
+    }
+
+    [data-theme="dark"] .guest-btn {
+      background: #14382e;
+      color: #d9f26c;
+      border-color: #2a614e;
+    }
+
+    [data-theme="dark"] .guest-btn:hover {
+      background: #19463a;
+      border-color: #d9f26c;
+    }
+
+    [data-theme="dark"] .p.line {
+      color: #7d9688;
+    }
+
+    [data-theme="dark"] .p.line::before,
+    [data-theme="dark"] .p.line::after {
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    [data-theme="dark"] .btn {
+      background-color: #12332a;
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #eaf3ee;
+    }
+
+    [data-theme="dark"] .btn:hover {
+      border-color: #d9f26c;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .mandatory-note {
+      background: #102e25;
+      border-left-color: #d9f26c;
+      color: #d2e4d9;
+    }
+
+    [data-theme="dark"] .already-logged {
+      background: #14382e;
+      border-color: #2a614e;
+      color: #d9f26c;
+    }
+
+    [data-theme="dark"] .back-home-link {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    [data-theme="dark"] .support-form-card {
+      background: #12332a;
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    [data-theme="dark"] .support-form-card h3 {
+      color: #d9f26c;
+    }
+
+    [data-theme="dark"] .support-form-card p {
+      color: #a2b7ac;
+    }
+
+    [data-theme="dark"] .btn-otp {
+      background: #d9f26c;
+      color: #0c2621;
+    }
+
+    [data-theme="dark"] .btn-otp:hover {
+      background: #e6f78a;
+    }
+
+    [data-theme="dark"] .btn-support-admin {
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #c4d7cc;
+    }
+
+    [data-theme="dark"] .btn-support-admin:hover {
+      background: #19463a;
+      border-color: #d9f26c;
+    }
   </style>
 </head>
 <body>
-  <div class="login-card">
-    <div class="login-top">
-      <div class="brand-badge">
-        <div style="width:32px;height:32px;background:var(--lime);border-radius:8px;display:grid;place-items:center;font:700 12px 'Space Grotesk';color:var(--forest)">AI</div>
-        <span style="font:700 14px 'Space Grotesk';color:var(--forest)">AI CHECK THĐ</span>
+
+  <!-- Thanh điều hướng trên cùng với Nút về Trang chủ & Công tắc Day/Night -->
+  <div class="login-top-bar">
+    <a href="index.html" class="back-home-link" title="Quay về Trang chủ AI CHECK THĐ">
+      ← Trang chủ
+    </a>
+
+    <div class="theme-switch-holder">
+      <input class="theme-input" id="dnLogin" type="checkbox" aria-label="Chuyển chế độ Sáng / Tối" />
+      <label class="toggle" for="dnLogin" title="Chuyển chế độ Sáng / Tối">
+        <span class="toggle__handler">
+          <span class="crater crater--1"></span>
+          <span class="crater crater--2"></span>
+          <span class="crater crater--3"></span>
+        </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Form Đăng nhập / Đăng ký hiện đại chuẩn Uiverse.io -->
+  <form class="form" id="authForm" novalidate>
+    
+    <!-- Logo & Nhãn thương hiệu -->
+    <div class="form-brand-row">
+      <div class="brand-identity">
+        <div class="brand-sq">AI</div>
+        <div class="brand-names">
+          <span class="brand-title">AI CHECK THĐ</span>
+          <span class="brand-sub">Trạm Kiểm Chứng Thông Tin</span>
+        </div>
       </div>
-      <a href="index.html" class="back-home">← Về Trang chủ</a>
+      <span class="auth-required-pill">Bắt buộc tham gia</span>
     </div>
 
+    <!-- Thông báo nếu đã đăng nhập -->
     <div id="alreadyLoggedBox" class="already-logged hidden">
-      <strong>Bạn đã đăng nhập:</strong> <span id="currentLoggedUser"></span>
-      <div style="margin-top:10px;display:flex;gap:8px">
-        <a href="index.html" class="button button-dark" style="font-size:10px;flex:1">Vào Trang chủ →</a>
-        <button type="button" class="button button-outline" id="btnLogoutCurrent" style="font-size:10px">Đăng xuất</button>
+      <div style="font-weight:600">Đã đăng nhập: <strong id="currentLoggedUser"></strong></div>
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <a href="index.html" class="button button-dark" style="font-size:11px;flex:1;text-align:center;padding:6px 10px;text-decoration:none;border-radius:6px">Vào Trang chủ →</a>
+        <button type="button" class="button button-outline" id="btnLogoutCurrent" style="font-size:11px;padding:6px 10px;border-radius:6px;cursor:pointer">Đăng xuất</button>
       </div>
     </div>
 
-    <h1 id="formTitle">Xin chào!</h1>
-    <p id="formDesc">Đăng nhập tài khoản để đồng bộ điểm số và kết quả khảo sát.</p>
-    
-    <div class="tabs">
-      <button class="tab active" id="tabLogin" type="button">Đăng nhập</button>
-      <button class="tab" id="tabRegister" type="button">Đăng ký mới</button>
+    <!-- Tiêu đề form -->
+    <div class="form-heading-wrap">
+      <h1 class="form-heading" id="formHeading">Sign In</h1>
+      <p class="form-desc" id="formDesc">Đăng nhập tài khoản để đồng bộ thành tích học tập và BXH.</p>
     </div>
 
-    <form id="authForm">
-      <div class="form-group" id="nameGroup" style="display:none">
-        <label for="displayName">Biệt danh (hiển thị trên BXH)</label>
-        <input type="text" id="displayName" placeholder="Ví dụ: Sao Xanh 12A5" maxlength="24">
+    <!-- Trường Biệt danh / Họ tên (khi ở chế độ Sign Up) -->
+    <div class="flex-column" id="nameGroup" style="display:none">
+      <label for="displayName">Full Name / Biệt danh (BXH)</label>
+      <div class="inputForm">
+        <svg height="20" viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <input type="text" id="displayName" class="input" placeholder="Ví dụ: Minh 12A5" maxlength="24">
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" required placeholder="name@example.com" autocomplete="email">
+    </div>
+
+    <!-- Trường Email -->
+    <div class="flex-column">
+      <label for="email">Email</label>
+      <div class="inputForm">
+        <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
+          <g id="Layer_3" data-name="Layer 3">
+            <path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"></path>
+          </g>
+        </svg>
+        <input type="email" id="email" class="input" placeholder="Enter your Email" required autocomplete="email">
       </div>
-      <div class="form-group">
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password" minlength="6">
+    </div>
+
+    <!-- Trường Password -->
+    <div class="flex-column">
+      <label for="password">Password</label>
+      <div class="inputForm">
+        <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
+          <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path>
+        </svg>        
+        <input type="password" id="password" class="input" placeholder="Enter your Password" required autocomplete="current-password" minlength="6">
+        <button type="button" class="eye-toggle-btn" id="togglePasswordBtn" aria-label="Hiện hoặc ẩn mật khẩu" title="Hiện hoặc ẩn mật khẩu">
+          <svg viewBox="0 0 576 512" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
+            <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path>
+          </svg>
+        </button>
       </div>
-      <button type="submit" class="login-btn" id="submitBtn">Đăng nhập</button>
-      <div id="errorMsg" aria-live="polite"></div>
-    </form>
+    </div>
 
-    <a href="index.html" class="guest-btn" id="guestBtn">Tiếp tục với tư cách Khách (Không cần tài khoản) →</a>
+    <!-- Hàng Remember Me & Forgot Password -->
+    <div class="flex-row">
+      <div>
+        <input type="checkbox" id="rememberMe" style="width:16px;height:16px;cursor:pointer;accent-color:#151717">
+        <label for="rememberMe">Remember me</label>
+      </div>
+      <span class="span" id="forgotPassBtn" role="button" tabindex="0">Forgot password?</span>
+    </div>
 
-    <a href="#" class="support-link" id="forgotPass" onclick="document.getElementById('supportForm').classList.toggle('hidden'); return false;">Quên mật khẩu?</a>
-    
-    <!-- Form hỗ trợ ẩn -->
-    <div id="supportForm" class="hidden">
-  <hr style="margin:20px 0;border:0;border-top:1px solid var(--line)">
-  <p style="margin-bottom:10px;font-weight:700;color:var(--forest);font-size:12px">Xác minh đổi mật khẩu:</p>
+    <!-- Nút Submit -->
+    <button type="submit" class="button-submit" id="submitBtn">Sign In</button>
 
-  <!-- Bước 1: Nhập Email -->
-  <div class="form-group" id="stepEmailGroup">
-    <label for="supportEmail">Email đã đăng ký</label>
-    <input type="email" id="supportEmail" placeholder="email@example.com">
-    <button type="button" class="button button-outline" id="btnSendOTP" onclick="sendOTPCode()" style="width:100%;font-size:11px;margin-top:8px">Gửi mã xác minh về Email</button>
-  </div>
+    <!-- Nút tiếp tục với tư cách Khách (Không chặn quyền truy cập dữ liệu cũ) -->
+    <a href="index.html" class="guest-btn" id="guestBtn">Tiếp tục với tư cách Khách (Xem toàn bộ dữ liệu & bài học) →</a>
 
-  <!-- Bước 2: Nhập Mã OTP (Ẩn lúc đầu) -->
-  <div class="form-group" id="stepOTPGroup" style="display: none; margin-top: 10px;">
-    <label for="supportOTP">Mã xác minh (OTP 6 số)</label>
-    <input type="text" id="supportOTP" placeholder="Nhập mã 6 số từ Gmail">
-    <button type="button" class="button button-outline" id="btnVerifyOTP" onclick="verifyOTPCode()" style="width:100%;font-size:11px;margin-top:8px">Xác minh & Đổi mật khẩu</button>
-  </div>
-</div>
+    <!-- Thông báo trạng thái/lỗi -->
+    <div id="errorMsg" aria-live="polite"></div>
 
+    <!-- Khối Quên mật khẩu & Xác minh mã OTP 6 số qua Gmail (Ẩn lúc đầu) -->
+    <div id="forgotPasswordSection" class="support-form-card hidden">
+      <h3>🔑 Xác minh đổi mật khẩu qua Email</h3>
+      <p>Hệ thống sẽ gửi mã xác minh 6 số (OTP) về Gmail đã đăng ký trước khi cho phép đặt lại mật khẩu mới.</p>
+
+      <!-- Bước 1: Nhập Email để gửi OTP -->
+      <div id="stepEmailGroup">
+        <div class="flex-column">
+          <label for="supportEmail" style="font-size:12px">Email tài khoản</label>
+          <div class="inputForm" style="height:44px">
+            <svg height="18" viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <input type="email" id="supportEmail" class="input" placeholder="nhap-email@example.com" style="font-size:13px">
+          </div>
+        </div>
+        <button type="button" class="btn-otp" id="btnSendOTP" onclick="sendOTPCode()">
+          ✉️ Gửi mã xác minh về Email
+        </button>
+      </div>
+
+      <!-- Bước 2: Nhập Mã OTP (Ẩn, chỉ hiện khi đã gửi thành công mã về Email) -->
+      <div id="stepOTPGroup" style="display:none;margin-top:12px;border-top:1px dashed #cbd5e1;padding-top:12px">
+        <div class="flex-column">
+          <label for="supportOTP" style="font-size:12px;color:#24724f;font-weight:700">Mã xác minh (OTP 6 số từ Gmail)</label>
+          <div class="inputForm" style="height:44px;border-color:#24724f">
+            <svg height="18" viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <input type="text" id="supportOTP" class="input" placeholder="Nhập 6 số từ Gmail (VD: 123456)" maxlength="8" style="font-size:14px;font-weight:700;letter-spacing:2px">
+          </div>
+        </div>
+        <button type="button" class="btn-otp btn-otp-confirm" id="btnVerifyOTP" onclick="verifyOTPCode()">
+          ✅ Xác minh OTP & Đổi mật khẩu mới →
+        </button>
+      </div>
+
+      <!-- Dự phòng: Gửi yêu cầu cho Admin nếu gặp sự cố -->
+      <button type="button" class="btn-support-admin" id="btnToggleAdminBox" onclick="toggleAdminBox()">
+        Gặp sự cố không nhận được thư? Gửi yêu cầu Admin hỗ trợ ↓
+      </button>
+
+      <div id="adminSupportBox" style="display:none;margin-top:10px;padding-top:10px;border-top:1px dotted #ccc">
+        <div class="flex-column" style="margin-bottom:8px">
+          <label for="adminSupportName" style="font-size:11px">Tên của bạn</label>
+          <input type="text" id="adminSupportName" class="input" placeholder="Họ và tên hoặc lớp" style="border:1px solid #ccc;border-radius:6px;padding:6px 10px;height:36px;background:#fff">
+        </div>
+        <button type="button" class="btn-otp" style="height:36px;font-size:11px;background:#475569" onclick="sendAdminSupport()">
+          Gửi yêu cầu tới Admin THĐ
+        </button>
+      </div>
+    </div>
+
+    <!-- Chuyển đổi Sign In / Sign Up -->
+    <p class="p" id="switchAuthPrompt">
+      Don't have an account? <span class="span" id="switchAuthBtn">Sign Up</span>
+    </p>
+
+    <!-- Đường kẻ ngang phân cách -->
+    <p class="p line">Or With</p>
+
+    <!-- Các nút đăng nhập mạng xã hội -->
+    <div class="flex-row">
+      <button type="button" class="btn google" id="btnGoogleAuth" title="Đăng nhập với Google">
+        <svg version="1.1" width="20" height="20" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+          <path style="fill:#FBBB00;" d="M113.47,309.408L95.648,375.94l-65.139,1.378C11.042,341.211,0,299.9,0,256	c0-42.451,10.324-82.483,28.624-117.732h0.014l57.992,10.632l25.404,57.644c-5.317,15.501-8.215,32.141-8.215,49.456	C103.821,274.792,107.225,292.797,113.47,309.408z"></path>
+          <path style="fill:#518EF8;" d="M507.527,208.176C510.467,223.662,512,239.655,512,256c0,18.328-1.927,36.206-5.598,53.451	c-12.462,58.683-45.025,109.925-90.134,146.187l-0.014-0.014l-73.044-3.727l-10.338-64.535	c29.932-17.554,53.324-45.025,65.646-77.911h-136.89V208.176h138.887L507.527,208.176L507.527,208.176z"></path>
+          <path style="fill:#28B446;" d="M416.253,455.624l0.014,0.014C372.396,490.901,316.666,512,256,512	c-97.491,0-182.252-54.491-225.491-134.681l82.961-67.91c21.619,57.698,77.278,98.771,142.53,98.771	c28.047,0,54.323-7.582,76.87-20.818L416.253,455.624z"></path>
+          <path style="fill:#F14336;" d="M419.404,58.936l-82.933,67.896c-23.335-14.586-50.919-23.012-80.471-23.012	c-66.729,0-123.429,42.957-143.965,102.724l-83.397-68.276h-0.014C71.23,56.123,157.06,0,256,0	C318.115,0,375.068,22.126,419.404,58.936z"></path>
+        </svg>
+        Google
+      </button>
+
+      <button type="button" class="btn apple" id="btnAppleAuth" title="Đăng nhập với Apple">
+        <svg version="1.1" height="20" width="20" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 22.773 22.773" style="enable-background:new 0 0 22.773 22.773;" xml:space="preserve" fill="currentColor">
+          <g>
+            <path d="M15.769,0c0.053,0,0.106,0,0.162,0c0.13,1.606-0.483,2.806-1.228,3.675c-0.731,0.863-1.732,1.7-3.351,1.573 c-0.108-1.583,0.506-2.694,1.25-3.561C13.292,0.879,14.557,0.16,15.769,0z"></path>
+            <path d="M20.67,16.716c0,0.016,0,0.03,0,0.045c-0.455,1.378-1.104,2.559-1.896,3.655c-0.723,0.995-1.609,2.334-3.191,2.334 c-1.367,0-2.275-0.879-3.676-0.903c-1.482-0.024-2.297,0.735-3.652,0.926c-0.155,0-0.31,0-0.462,0 c-0.995-0.144-1.798-0.932-2.383-1.642c-1.725-2.098-3.058-4.808-3.306-8.276c0-0.34,0-0.679,0-1.019 c0.105-2.482,1.311-4.5,2.914-5.478c0.846-0.52,2.009-0.963,3.304-0.765c0.555,0.086,1.122,0.276,1.619,0.464 c0.471,0.181,1.06,0.502,1.618,0.485c0.378-0.011,0.754-0.208,1.135-0.347c1.116-0.403,2.21-0.865,3.652-0.648 c1.733,0.262,2.963,1.032,3.723,2.22c-1.466,0.933-2.625,2.339-2.427,4.74C17.818,14.688,19.086,15.964,20.67,16.716z"></path>
+          </g>
+        </svg>
+        Apple
+      </button>
+    </div>
+
+    <!-- Ghi chú NCKH -->
+    <div class="mandatory-note">
+      🔒 <strong>Yêu cầu NCKH:</strong> Để dữ liệu khảo sát & điểm năng lực kiểm chứng AI được lưu trữ khách quan, học sinh nên đăng ký/đăng nhập tài khoản trước khi vào Trang chủ.
+    </div>
+
+  </form>
+
+  <!-- Script tích hợp Supabase, Cloud Engine, Theme & Loader -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script src="cloud.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="site-nav.js"></script>
+
   <script>
-async function sendOTPCode() {
-  const emailInput = document.getElementById('supportEmail');
-  const email = emailInput ? emailInput.value.trim() : '';
+    // =========================================================
+    // LOGIC XỬ LÝ AUTH, GIAO DIỆN & TƯƠNG TÁC
+    // =========================================================
 
-  if (!email) {
-    alert("Vui lòng nhập Email đã đăng ký!");
-    return;
-  }
-
-  // Tự động khởi tạo và lấy client Supabase an toàn
-      if (!window.supabaseClient && typeof supabase !== 'undefined' && window.AICHECK_CONFIG) {
-        window.supabaseClient = supabase.createClient(window.AICHECK_CONFIG.supabaseUrl, window.AICHECK_CONFIG.supabaseAnonKey);
-      }
-      const client = window.supabaseClient || window.supabase;
-
-      if (!client || !client.auth) {
-        alert("Lỗi: Chưa kết nối được với Supabase. Vui lòng kiểm tra lại file supabase-config.js!");
-        return;
-      }
-
-  try {
-    const { data, error } = await client.auth.resetPasswordForEmail(email);
-
-    if (error) {
-      alert("Lỗi gửi mã: " + error.message);
-    } else {
-      alert("Mã xác minh đã được gửi về Gmail của bạn!");
-      const otpGroup = document.getElementById('stepOTPGroup');
-      if (otpGroup) {
-        otpGroup.style.display = 'block';
-      }
+    // 1. Quản lý trạng thái Sáng / Tối (Theme Switcher)
+    const dnLogin = document.getElementById('dnLogin');
+    if (dnLogin) {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      dnLogin.checked = currentTheme === 'dark';
+      dnLogin.addEventListener('change', () => {
+        const nextTheme = dnLogin.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        try { localStorage.setItem('aicheck:theme', nextTheme); } catch(e){}
+      });
     }
-  } catch (err) {
-    alert("Có lỗi xảy ra: " + err.message);
-  }
-}
 
-// 2. Hàm xác minh mã OTP
-async function verifyOTPCode() {
-  const emailInput = document.getElementById('supportEmail');
-  const otpInput = document.getElementById('supportOTP');
-  
-  const email = emailInput ? emailInput.value.trim() : '';
-  const otp = otpInput ? otpInput.value.trim() : '';
-
-  if (!otp) {
-    alert("Vui lòng nhập mã OTP!");
-    return;
-  }
-
-  const client = typeof supabaseClient !== 'undefined' ? supabaseClient : (typeof supabase !== 'undefined' ? supabase : null);
-
-  if (!client || !client.auth) {
-    alert("Lỗi: Chưa kết nối được với Supabase!");
-    return;
-  }
-
-  try {
-    const { data, error } = await client.auth.verifyOtp({
-      email: email,
-      token: otp,
-      type: 'recovery'
-    });
-
-    if (error) {
-      alert("Mã OTP không chính xác hoặc đã hết hạn!");
-    } else {
-      alert("Xác minh thành công! Đang chuyển đến trang đặt lại mật khẩu...");
-      window.location.href = "reset-password.html";
-    }
-  } catch (err) {
-    alert("Lỗi xác minh: " + err.message);
-  }
-}
+    // 2. Trạng thái Form (Sign In <-> Sign Up)
+    let isLogin = true;
     const authForm = document.getElementById('authForm');
-    const tabLogin = document.getElementById('tabLogin');
-    const tabRegister = document.getElementById('tabRegister');
     const nameGroup = document.getElementById('nameGroup');
-    const formTitle = document.getElementById('formTitle');
+    const formHeading = document.getElementById('formHeading');
     const formDesc = document.getElementById('formDesc');
     const submitBtn = document.getElementById('submitBtn');
     const errorMsg = document.getElementById('errorMsg');
+    const switchAuthPrompt = document.getElementById('switchAuthPrompt');
     const alreadyLoggedBox = document.getElementById('alreadyLoggedBox');
     const currentLoggedUser = document.getElementById('currentLoggedUser');
     const btnLogoutCurrent = document.getElementById('btnLogoutCurrent');
-    let isLogin = true;
+    const rememberMeCheck = document.getElementById('rememberMe');
 
-    // Kiểm tra trạng thái đã đăng nhập
-    async function checkExistingAuth() {
-      if (typeof window.AICheckCloud?.getUser !== 'function') return;
-      const user = await window.AICheckCloud.getUser();
-      if (user) {
-        alreadyLoggedBox.classList.remove('hidden');
-        currentLoggedUser.textContent = user.user_metadata?.display_name || user.email;
+    function updateAuthMode(loginMode) {
+      isLogin = loginMode;
+      errorMsg.textContent = '';
+
+      if (isLogin) {
+        nameGroup.style.display = 'none';
+        formHeading.textContent = 'Sign In';
+        formDesc.textContent = 'Đăng nhập tài khoản để đồng bộ thành tích học tập và BXH.';
+        submitBtn.textContent = 'Sign In';
+        switchAuthPrompt.innerHTML = 'Don\'t have an account? <span class="span" id="switchAuthBtn">Sign Up</span>';
+      } else {
+        nameGroup.style.display = 'flex';
+        formHeading.textContent = 'Sign Up';
+        formDesc.textContent = 'Tạo tài khoản để lưu thành tích vào BXH toàn trường.';
+        submitBtn.textContent = 'Sign Up';
+        switchAuthPrompt.innerHTML = 'Already have an account? <span class="span" id="switchAuthBtn">Sign In</span>';
       }
+
+      // Gắn lại sự kiện click cho nút chuyển đổi
+      const newSwitchBtn = document.getElementById('switchAuthBtn');
+      if (newSwitchBtn) {
+        newSwitchBtn.onclick = () => updateAuthMode(!isLogin);
+      }
+    }
+
+    // Khởi tạo sự kiện chuyển đổi ban đầu
+    const initSwitchBtn = document.getElementById('switchAuthBtn');
+    if (initSwitchBtn) {
+      initSwitchBtn.onclick = () => updateAuthMode(!isLogin);
+    }
+
+    // 3. Khôi phục Email ghi nhớ (Remember Me)
+    try {
+      const savedEmail = localStorage.getItem('aicheck:remember_email');
+      if (savedEmail) {
+        document.getElementById('email').value = savedEmail;
+        rememberMeCheck.checked = true;
+      }
+    } catch(e){}
+
+    // 4. Nút Ẩn/Hiện mật khẩu
+    const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+    const passwordInput = document.getElementById('password');
+    if (togglePasswordBtn && passwordInput) {
+      togglePasswordBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isPass = passwordInput.type === 'password';
+        passwordInput.type = isPass ? 'text' : 'password';
+        togglePasswordBtn.style.opacity = isPass ? '1' : '0.55';
+        togglePasswordBtn.title = isPass ? 'Ẩn mật khẩu' : 'Hiện mật khẩu';
+      });
+    }
+
+    // 5. Kiểm tra người dùng đã đăng nhập sẵn
+    async function checkExistingAuth() {
+      if (typeof window.AICheckCloud?.getUser !== 'function') {
+        setTimeout(checkExistingAuth, 150);
+        return;
+      }
+      try {
+        const user = await window.AICheckCloud.getUser();
+        if (user) {
+          alreadyLoggedBox.classList.remove('hidden');
+          currentLoggedUser.textContent = user.user_metadata?.display_name || user.email;
+        }
+      } catch(e){}
     }
     checkExistingAuth();
 
-    btnLogoutCurrent.onclick = async () => {
-      await window.AICheckCloud.signOut();
-    };
+    if (btnLogoutCurrent) {
+      btnLogoutCurrent.onclick = async () => {
+        window.AICheckLoader?.show("Đang đăng xuất...");
+        await window.AICheckCloud?.signOut();
+        location.reload();
+      };
+    }
 
-    tabLogin.onclick = () => {
-      isLogin = true;
-      tabLogin.classList.add('active');
-      tabRegister.classList.remove('active');
-      nameGroup.style.display = 'none';
-      formTitle.textContent = 'Mừng bạn quay lại';
-      formDesc.textContent = 'Đăng nhập tài khoản để đồng bộ điểm số và kết quả khảo sát.';
-      submitBtn.textContent = 'Đăng nhập';
-      errorMsg.textContent = '';
-    };
-
-    tabRegister.onclick = () => {
-      isLogin = false;
-      tabRegister.classList.add('active');
-      tabLogin.classList.remove('active');
-      nameGroup.style.display = 'block';
-      formTitle.textContent = 'Tạo tài khoản mới';
-      formDesc.textContent = 'Tạo tài khoản để lưu thành tích vào BXH toàn trường.';
-      submitBtn.textContent = 'Đăng ký ngay';
-      errorMsg.textContent = '';
-    };
-
+    // 6. Xử lý gửi Form (Sign In / Sign Up)
     authForm.onsubmit = async (e) => {
       e.preventDefault();
-      errorMsg.style.color = 'var(--forest)';
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        errorMsg.style.color = '#c84f36';
+        errorMsg.textContent = 'Vui lòng nhập đầy đủ Email và Mật khẩu!';
+        return;
+      }
+
+      errorMsg.style.color = '#123e35';
       errorMsg.textContent = 'Đang xử lý, vui lòng chờ…';
       submitBtn.disabled = true;
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      
+      window.AICheckLoader?.show(isLogin ? "Đang xác thực tài khoản..." : "Đang tạo tài khoản mới...");
+
       if (isLogin) {
         const { data, error } = await window.AICheckCloud.signIn(email, password);
         if (error) {
+          window.AICheckLoader?.hide();
           errorMsg.style.color = '#c84f36';
           errorMsg.textContent = 'Lỗi: ' + (error.message || error);
           submitBtn.disabled = false;
         } else {
+          // Ghi nhớ email nếu được chọn
+          try {
+            if (rememberMeCheck.checked) {
+              localStorage.setItem('aicheck:remember_email', email);
+            } else {
+              localStorage.removeItem('aicheck:remember_email');
+            }
+          } catch(e){}
+
+          window.AICheckLoader?.show("Đăng nhập thành công! Đang chuyển hướng…");
           errorMsg.style.color = '#28744f';
           errorMsg.textContent = 'Đăng nhập thành công! Đang chuyển hướng…';
           setTimeout(() => {
             const redirect = localStorage.getItem('aicheck:redirectAfterLogin');
             localStorage.removeItem('aicheck:redirectAfterLogin');
             location.href = redirect || 'index.html';
-          }, 500);
+          }, 450);
         }
       } else {
         const displayName = document.getElementById('displayName').value.trim();
         if (!displayName) {
+          window.AICheckLoader?.hide();
           errorMsg.style.color = '#c84f36';
-          errorMsg.textContent = 'Vui lòng nhập biệt danh để hiển thị trên BXH';
+          errorMsg.textContent = 'Vui lòng nhập tên hoặc biệt danh để hiển thị trên BXH!';
           submitBtn.disabled = false;
           return;
         }
+
         const { data, error } = await window.AICheckCloud.signUp(email, password, displayName);
         if (error) {
+          window.AICheckLoader?.hide();
           errorMsg.style.color = '#c84f36';
           errorMsg.textContent = 'Lỗi: ' + (error.message || error);
           submitBtn.disabled = false;
         } else {
-          errorMsg.style.color = '#28744f';
-          errorMsg.textContent = 'Đăng ký thành công! Hãy đăng nhập với thông tin vừa tạo.';
-          isLogin = true;
-          tabLogin.click();
-          submitBtn.disabled = false;
+          try {
+            if (rememberMeCheck.checked) {
+              localStorage.setItem('aicheck:remember_email', email);
+            }
+          } catch(e){}
+
+          if (data?.session) {
+            window.AICheckLoader?.show("Đăng ký thành công! Đang vào Trang chủ…");
+            errorMsg.style.color = '#28744f';
+            errorMsg.textContent = 'Đăng ký thành công! Đang chuyển hướng vào Trang chủ…';
+            setTimeout(() => {
+              const redirect = localStorage.getItem('aicheck:redirectAfterLogin');
+              localStorage.removeItem('aicheck:redirectAfterLogin');
+              location.href = redirect || 'index.html';
+            }, 600);
+          } else {
+            window.AICheckLoader?.hide();
+            errorMsg.style.color = '#28744f';
+            errorMsg.textContent = 'Đăng ký thành công! Mời bạn đăng nhập ngay.';
+            updateAuthMode(true);
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = '';
+            document.getElementById('password').focus();
+            submitBtn.disabled = false;
+          }
         }
       }
     };
 
-    const forgotPassBtn = document.getElementById('forgotPass');
-  if (forgotPassBtn) {
-    forgotPassBtn.onclick = (e) => {
-      e.preventDefault();
-      const supportForm = document.getElementById('supportForm');
-      if (supportForm) supportForm.classList.toggle('hidden');
-    };
-  }
+    // 7. Xử lý Quên mật khẩu & Gửi mã xác minh OTP (BẮT BUỘC XÁC MINH TRƯỚC KHI ĐỔI MK)
+    const forgotPassBtn = document.getElementById('forgotPassBtn');
+    const forgotPasswordSection = document.getElementById('forgotPasswordSection');
 
-  const sendSupportBtn = document.getElementById('sendSupport');
-  if (sendSupportBtn) {
-    sendSupportBtn.onclick = async () => {
-      const supportEmail = document.getElementById('supportEmail');
-      const supportName = document.getElementById('supportName');
+    if (forgotPassBtn) {
+      forgotPassBtn.addEventListener('click', () => {
+        forgotPasswordSection.classList.toggle('hidden');
+        if (!forgotPasswordSection.classList.contains('hidden')) {
+          // Pre-fill email nếu đã có ở ô trên
+          const mainEmail = document.getElementById('email').value.trim();
+          const supportEmail = document.getElementById('supportEmail');
+          if (mainEmail && supportEmail && !supportEmail.value) {
+            supportEmail.value = mainEmail;
+          }
+          supportEmail.focus();
+        }
+      });
+    }
 
-      const email = supportEmail ? supportEmail.value.trim() : '';
-      const name = supportName ? supportName.value.trim() : '';
+    // Lấy client Supabase an toàn và tin cậy
+    function getSupabaseClient() {
+      if (window.AICheckCloud?.client) return window.AICheckCloud.client;
+      if (window.supabaseClient) return window.supabaseClient;
+      if (typeof supabase !== 'undefined' && window.AICHECK_CONFIG) {
+        window.supabaseClient = supabase.createClient(window.AICHECK_CONFIG.supabaseUrl, window.AICHECK_CONFIG.supabaseAnonKey);
+        return window.supabaseClient;
+      }
+      return null;
+    }
 
-      if (!email) return alert('Vui lòng nhập email của bạn');
+    // Bước 1: Gửi mã OTP xác minh về Email
+    async function sendOTPCode() {
+      const emailInput = document.getElementById('supportEmail');
+      const email = emailInput ? emailInput.value.trim() : '';
 
-      if (window.AICheckCloud && window.AICheckCloud.sendSupportRequest) {
-        const res = await window.AICheckCloud.sendSupportRequest(email, name, 'Yêu cầu đặt lại mật khẩu');
-        if (res && res.error) {
-          alert('Lỗi: ' + (res.error.message || res.error));
+      if (!email) {
+        alert("Vui lòng nhập Email đã đăng ký để nhận mã xác minh!");
+        emailInput?.focus();
+        return;
+      }
+
+      const client = getSupabaseClient();
+      if (!client || !client.auth) {
+        alert("Lỗi kết nối: Chưa tìm thấy Supabase client. Vui lòng kiểm tra file supabase-config.js!");
+        return;
+      }
+
+      window.AICheckLoader?.show("Đang gửi mã xác minh về Gmail...");
+      const btnSend = document.getElementById('btnSendOTP');
+      if (btnSend) {
+        btnSend.disabled = true;
+        btnSend.textContent = "Đang gửi mã...";
+      }
+
+      try {
+        const { data, error } = await client.auth.resetPasswordForEmail(email);
+        window.AICheckLoader?.hide();
+
+        if (error) {
+          alert("Lỗi gửi mã OTP: " + (error.message || error));
+          if (btnSend) {
+            btnSend.disabled = false;
+            btnSend.textContent = "✉️ Gửi lại mã xác minh về Email";
+          }
         } else {
-          alert('Yêu cầu hỗ trợ của bạn đã được ghi nhận thành công! Admin sẽ hỗ trợ giải quyết sớm.');
-          const supportForm = document.getElementById('supportForm');
-          if (supportForm) supportForm.classList.add('hidden');
-          if (supportEmail) supportEmail.value = '';
-          if (supportName) supportName.value = '';
+          alert("✅ Mã xác minh (OTP 6 số) đã được gửi về hộp thư Gmail của bạn!\n\nVui lòng kiểm tra hộp thư đến (hoặc Thư rác / Spam) và nhập mã bên dưới để tiếp tục đổi mật khẩu.");
+          const stepOTP = document.getElementById('stepOTPGroup');
+          if (stepOTP) {
+            stepOTP.style.display = 'block';
+            document.getElementById('supportOTP')?.focus();
+          }
+          if (btnSend) {
+            btnSend.textContent = "✉️ Gửi lại mã xác minh";
+            btnSend.disabled = false;
+          }
+        }
+      } catch (err) {
+        window.AICheckLoader?.hide();
+        alert("Có lỗi xảy ra khi gửi yêu cầu: " + err.message);
+        if (btnSend) {
+          btnSend.disabled = false;
+          btnSend.textContent = "✉️ Gửi mã xác minh về Email";
         }
       }
-    };
-  }
+    }
+
+    // Bước 2: Xác minh mã OTP đã nhận
+    async function verifyOTPCode() {
+      const emailInput = document.getElementById('supportEmail');
+      const otpInput = document.getElementById('supportOTP');
+      
+      const email = emailInput ? emailInput.value.trim() : '';
+      const otp = otpInput ? otpInput.value.trim() : '';
+
+      if (!email) {
+        alert("Vui lòng nhập Email đã đăng ký!");
+        emailInput?.focus();
+        return;
+      }
+
+      if (!otp) {
+        alert("Vui lòng nhập mã OTP 6 số đã được gửi về Gmail!");
+        otpInput?.focus();
+        return;
+      }
+
+      const client = getSupabaseClient();
+      if (!client || !client.auth) {
+        alert("Lỗi kết nối Supabase!");
+        return;
+      }
+
+      window.AICheckLoader?.show("Đang xác minh mã OTP...");
+      const btnVerify = document.getElementById('btnVerifyOTP');
+      if (btnVerify) {
+        btnVerify.disabled = true;
+        btnVerify.textContent = "Đang kiểm tra mã...";
+      }
+
+      try {
+        const { data, error } = await client.auth.verifyOtp({
+          email: email,
+          token: otp,
+          type: 'recovery'
+        });
+
+        window.AICheckLoader?.hide();
+
+        if (error) {
+          alert("❌ Mã OTP không chính xác hoặc đã hết hạn!\n\nVui lòng kiểm tra lại mã 6 số mới nhất trong Gmail.");
+          if (btnVerify) {
+            btnVerify.disabled = false;
+            btnVerify.textContent = "✅ Xác minh OTP & Đổi mật khẩu mới →";
+          }
+        } else {
+          alert("🎉 Xác minh danh tính thành công!\n\nĐang chuyển sang trang đặt lại mật khẩu mới...");
+          try {
+            sessionStorage.setItem("aicheck:verified_recovery", "true");
+          } catch(e){}
+          window.location.href = "reset-password.html";
+        }
+      } catch (err) {
+        window.AICheckLoader?.hide();
+        alert("Lỗi xác minh: " + err.message);
+        if (btnVerify) {
+          btnVerify.disabled = false;
+          btnVerify.textContent = "✅ Xác minh OTP & Đổi mật khẩu mới →";
+        }
+      }
+    }
+
+    // Toggle hộp gửi hỗ trợ admin
+    function toggleAdminBox() {
+      const box = document.getElementById('adminSupportBox');
+      if (box) {
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      }
+    }
+
+    // Gửi hỗ trợ cho Admin THĐ
+    async function sendAdminSupport() {
+      const email = document.getElementById('supportEmail')?.value.trim();
+      const name = document.getElementById('adminSupportName')?.value.trim();
+      if (!email) return alert("Vui lòng nhập email ở ô phía trên!");
+
+      if (window.AICheckCloud?.sendSupportRequest) {
+        window.AICheckLoader?.show("Đang gửi yêu cầu hỗ trợ...");
+        const res = await window.AICheckCloud.sendSupportRequest(email, name, "Yêu cầu hỗ trợ cấp lại mật khẩu tài khoản");
+        window.AICheckLoader?.hide();
+        if (res && res.error && !res.local) {
+          alert("Lỗi: " + (res.error.message || res.error));
+        } else {
+          alert("✅ Yêu cầu hỗ trợ của bạn đã được ghi nhận thành công! Ban quản trị THĐ sẽ kiểm tra và phản hồi sớm.");
+          document.getElementById('adminSupportBox').style.display = 'none';
+        }
+      }
+    }
+
+    // 8. Xử lý Đăng nhập Google & Apple
+    const btnGoogleAuth = document.getElementById('btnGoogleAuth');
+    if (btnGoogleAuth) {
+      btnGoogleAuth.addEventListener('click', async () => {
+        const client = getSupabaseClient();
+        if (client && client.auth) {
+          try {
+            window.AICheckLoader?.show("Đang kết nối Google OAuth...");
+            const { error } = await client.auth.signInWithOAuth({
+              provider: 'google',
+              options: {
+                redirectTo: window.location.origin + window.location.pathname.replace('login.html', 'index.html')
+              }
+            });
+            if (error) {
+              window.AICheckLoader?.hide();
+              alert("Thông báo Google OAuth: " + error.message);
+            }
+          } catch(err) {
+            window.AICheckLoader?.hide();
+            alert("Thông báo kết nối: " + err.message);
+          }
+        } else {
+          alert("Hệ thống Google OAuth đang trong quá trình liên kết. Bạn có thể đăng nhập ngay với Email và Mật khẩu!");
+        }
+      });
+    }
+
+    const btnAppleAuth = document.getElementById('btnAppleAuth');
+    if (btnAppleAuth) {
+      btnAppleAuth.addEventListener('click', () => {
+        alert("Tính năng Đăng nhập qua Apple ID đang được cập nhật. Bạn vui lòng sử dụng Email và Mật khẩu để tham gia!");
+      });
+    }
   </script>
 </body>
 </html>

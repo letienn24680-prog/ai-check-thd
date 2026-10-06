@@ -4,65 +4,597 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#163d35">
-  <title>Thực hành & thư viện | AI CHECK THĐ</title>
+  <title>Thực hành & Thư viện 60 Tình huống | AI CHECK THĐ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../site.css">
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
+  <script src="../auth-guard.js"></script>
   <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
-  <style>.scenario-task{margin:9px 0 15px;padding:10px 12px;border-left:3px solid var(--orange);background:#fff7e8;color:#555b4c;font-size:10px;line-height:1.6}.panel-dark .button-outline{color:#fff;border-color:#d2dfd6}.panel-dark .button-outline:hover{background:#ffffff18}.practice-question-number{width:max-content;margin:13px 0 0;padding:5px 10px;border-radius:20px;background:#e9f2e8;color:#286947;font:700 10px "Space Grotesk","Be Vietnam Pro",sans-serif}.practice-choice-list{display:grid;grid-template-columns:1fr;gap:8px}.practice-choice-list .choice{width:100%;text-align:left;line-height:1.5}.practice-choice-list .choice.selected{border-color:#4b976b;background:#edf6eb;box-shadow:inset 0 0 0 1px #4b976b}.practice-choice-list .choice.correct{border-color:#4a9365;background:#e5f2e7}.practice-choice-list .choice.wrong{border-color:#dc7658;background:#fff0e8}.scenario-library{margin-top:28px;border:1px solid var(--line);border-radius:5px;background:rgba(255,255,255,.72)}.scenario-library summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer;list-style:none;color:var(--forest);font:700 15px "Space Grotesk",sans-serif}.scenario-library summary::-webkit-details-marker{display:none}.scenario-library summary::after{content:"＋";flex:none;color:var(--leaf);font:700 20px "Be Vietnam Pro",sans-serif}.scenario-library[open] summary::after{content:"−"}.scenario-library summary:hover{background:#eaf1e8}.scenario-library-content{padding:0 16px 16px}.scenario-library-content .panel-copy{margin-bottom:8px}</style>
   <style>
-    .practice-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(230px,.75fr);gap:14px}.quote{padding:16px;background:#edf3eb;border-left:3px solid #70a27a;color:#30473d;font:600 16px/1.55 "Space Grotesk",sans-serif}.question-label{margin:15px 0 7px;font-size:10px;font-weight:800}.choices{display:flex;flex-wrap:wrap;gap:7px}.practice-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}.feedback{min-height:38px;margin:12px 0 0;color:#386d4d;font-size:10px}.example-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.example{padding:12px;background:#fff;border:1px solid var(--line);color:#54665b;font-size:10px}.example strong{display:block;margin-bottom:5px;color:var(--forest)}.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.filter{padding:7px 10px;border:1px solid var(--line);border-radius:3px;background:#fff;color:#53655b;font-size:9px;font-weight:800}.filter.active{background:var(--forest);border-color:var(--forest);color:#fff}.scenario-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.scenario-button{min-height:68px;display:flex;gap:9px;align-items:flex-start;padding:11px;border:1px solid var(--line);border-radius:4px;background:#fff;text-align:left;color:var(--ink)}.scenario-button:hover{border-color:#75a681}.scenario-button span:first-child{color:var(--leaf);font:700 10px "Space Grotesk",sans-serif}.scenario-button strong{display:block;font-size:10px}.scenario-button small{color:var(--muted);font-size:9px}.modal{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;padding:18px;background:#102d28cc}.modal.open{display:flex}.modal-content{width:min(570px,100%);max-height:85vh;overflow:auto;padding:22px;background:var(--paper);border-radius:5px;box-shadow:var(--shadow)}.modal-top{display:flex;justify-content:space-between;align-items:center}.modal-close{width:34px;height:34px;border:1px solid var(--line);background:#fff;font-size:18px}.modal-content h2{margin:12px 0;font:700 22px/1.25 "Space Grotesk",sans-serif}.modal-content p,.modal-content div{font-size:10px}.detail{margin-top:8px;padding:11px;background:#eaf1e8;color:#435c4b}@media(max-width:820px){.scenario-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:680px){.practice-layout{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr}.example-row{grid-template-columns:1fr}.quote{font-size:14px}}
+    .scenario-task{margin:10px 0 16px;padding:12px 14px;border-left:3px solid var(--orange);background:#fff7e8;color:#555b4c;font-size:11px;line-height:1.6;border-radius:0 8px 8px 0;box-shadow:var(--shadow-sm)}
+    [data-theme="dark"] .scenario-task{background:#292112;color:#fce4ba;border-left-color:#e97850}
+    .panel-dark .button-outline{color:#fff;border-color:#d2dfd6}
+    .panel-dark .button-outline:hover{background:#ffffff18}
+    .practice-question-number{width:max-content;margin:12px 0 0;padding:5px 12px;border-radius:20px;background:#e9f2e8;color:#286947;font:700 11px "Space Grotesk","Be Vietnam Pro",sans-serif}
+    [data-theme="dark"] .practice-question-number{background:#133328;color:#d9f26c}
+    .practice-choice-list{display:grid;grid-template-columns:1fr;gap:9px}
+    .practice-choice-list .choice{width:100%;text-align:left;line-height:1.5;min-height:50px;border-radius:8px;padding:12px 14px}
+    .practice-choice-list .choice.selected{border-color:#4b976b;background:#edf6eb;box-shadow:inset 0 0 0 1px #4b976b,0 4px 12px rgba(75,151,107,.12)}
+    .practice-choice-list .choice.correct{border-color:#4a9365;background:#e5f2e7}
+    .practice-choice-list .choice.wrong{border-color:#dc7658;background:#fff0e8}
+    [data-theme="dark"] #trustChoices .choice,
+    [data-theme="dark"] .practice-choice-list .choice,
+    [data-theme="dark"] .choice{background:#0f2922 !important;border-color:rgba(255,255,255,.12) !important;color:#f0f7f3 !important;box-shadow:0 2px 6px rgba(0,0,0,.25) !important}
+    [data-theme="dark"] #trustChoices .choice:hover,
+    [data-theme="dark"] .practice-choice-list .choice:hover,
+    [data-theme="dark"] .choice:hover{background:#163d33 !important;border-color:#3ec888 !important;color:#ffffff !important}
+    [data-theme="dark"] #trustChoices .choice.selected,
+    [data-theme="dark"] .practice-choice-list .choice.selected,
+    [data-theme="dark"] .choice.selected{background:#174537 !important;border-color:#d9f26c !important;color:#ffffff !important;box-shadow:inset 0 0 0 1.5px #d9f26c,0 4px 14px rgba(217,242,108,.2) !important}
+    [data-theme="dark"] #trustChoices .choice.correct,
+    [data-theme="dark"] .practice-choice-list .choice.correct,
+    [data-theme="dark"] .choice.correct{background:#123828 !important;border-color:#3ec888 !important;color:#ffffff !important}
+    [data-theme="dark"] #trustChoices .choice.wrong,
+    [data-theme="dark"] .practice-choice-list .choice.wrong,
+    [data-theme="dark"] .choice.wrong{background:#381915 !important;border-color:#e97850 !important;color:#ffffff !important}
+    .scenario-library{margin-top:28px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);overflow:hidden;box-shadow:var(--shadow-sm)}
+    [data-theme="dark"] .scenario-library{background:rgba(13,34,28,.88);border-color:rgba(255,255,255,.1)}
+    .scenario-library summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;cursor:pointer;list-style:none;color:var(--forest);font:700 16px "Space Grotesk",sans-serif;transition:background .2s}
+    .scenario-library summary::-webkit-details-marker{display:none}
+    .scenario-library summary::after{content:"＋";flex:none;color:var(--leaf);font:700 20px "Be Vietnam Pro",sans-serif;transition:transform .2s}
+    .scenario-library[open] summary::after{content:"−"}
+    .scenario-library summary:hover{background:rgba(36,114,79,.06)}
+    [data-theme="dark"] .scenario-library summary{background:#102a22 !important;color:#ffffff !important;border-bottom:1px solid rgba(255,255,255,.08) !important}
+    [data-theme="dark"] .scenario-library summary:hover{background:#14352a !important}
+    [data-theme="dark"] .scenario-library summary::after{color:#d9f26c !important}
+    .scenario-library-content{padding:0 20px 20px}
+    .scenario-library-content .panel-copy{margin-bottom:12px}
+    .practice-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr);gap:16px}
+    .quote{position:relative;padding:18px 20px;background:#edf3eb;border-left:4px solid #70a27a;border-radius:0 10px 10px 0;color:#244033;font:600 16px/1.6 "Space Grotesk",sans-serif;box-shadow:var(--shadow-sm);margin:12px 0 16px}
+    [data-theme="dark"] .quote{background:#0e2a22 !important;border-left-color:#3ec888 !important;color:#f0f7f3 !important}
+    .question-label{margin:18px 0 8px;font-size:11px;font-weight:800;letter-spacing:0.02em;color:var(--color-leaf)}
+    [data-theme="dark"] .question-label{color:#d9f26c}
+    .choices{display:flex;flex-wrap:wrap;gap:8px}
+    .practice-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+    [data-theme="dark"] .practice-actions{border-top-color:rgba(255,255,255,.1)}
+    .feedback{min-height:38px;margin:14px 0 0;padding:12px 14px;border-radius:8px;background:rgba(36,114,79,.08);color:#1b573a;font-size:11px;line-height:1.6}
+    .feedback:empty{display:none}
+    [data-theme="dark"] .feedback{background:rgba(62,200,136,.12);color:#e2f3ea}
+    .example-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+    .example{padding:14px;background:#fff;border:1px solid var(--line);border-radius:8px;color:#54665b;font-size:11px;line-height:1.55}
+    [data-theme="dark"] .example{background:#0f2922;border-color:rgba(255,255,255,.1);color:#a5b9af}
+    .example strong{display:block;margin-bottom:6px;color:var(--forest)}
+    [data-theme="dark"] .example strong{color:#3ec888}
+    .filter-row{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+    .filter{padding:8px 13px;border:1px solid var(--line);border-radius:20px;background:#fff;color:#53655b;font-size:10px;font-weight:800;transition:all .2s ease}
+    .filter:hover{transform:translateY(-1px);border-color:var(--leaf)}
+    .filter.active{background:var(--forest);border-color:var(--forest);color:#fff;box-shadow:0 3px 10px rgba(18,59,50,.18)}
+    [data-theme="dark"] .filter{background:#112d25;border-color:rgba(255,255,255,.12);color:#a1b6ac}
+    [data-theme="dark"] .filter.active{background:#3ec888;border-color:#3ec888;color:#071713;box-shadow:0 0 12px rgba(62,200,136,.3)}
+    .scenario-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .scenario-button{min-height:74px;display:flex;gap:11px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:8px;background:#fff;text-align:left;color:var(--ink);transition:transform .2s,border-color .2s,box-shadow .2s}
+    .scenario-button:hover{transform:translateY(-2px);border-color:#75a681;box-shadow:0 6px 16px rgba(18,59,50,.08)}
+    [data-theme="dark"] .scenario-button{background:#102b23;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .scenario-button:hover{border-color:#3ec888;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+    .scenario-button span:first-child{color:var(--leaf);font:700 11px "Space Grotesk",sans-serif;padding:3px 7px;background:rgba(36,114,79,.08);border-radius:4px}
+    [data-theme="dark"] .scenario-button span:first-child{color:#d9f26c;background:rgba(217,242,108,.12)}
+    .scenario-button strong{display:block;font-size:11px;margin-bottom:3px}
+    .scenario-button small{color:var(--muted);font-size:9.5px}
+    .modal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:18px;background:#091d17cc;backdrop-filter:blur(8px)}
+    .modal.open{display:flex}
+    .modal-content{width:min(600px,100%);max-height:86vh;overflow:auto;padding:26px;background:var(--paper);border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.2)}
+    [data-theme="dark"] .modal-content{background:#0d2620;border-color:rgba(255,255,255,.12);color:#f0f7f3}
+    .modal-top{display:flex;justify-content:space-between;align-items:center}
+    .modal-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:20px;display:grid;place-items:center;cursor:pointer;transition:transform .2s,background .2s}
+    .modal-close:hover{transform:scale(1.1);background:#ffebe6}
+    [data-theme="dark"] .modal-close{background:#13332a;border-color:rgba(255,255,255,.15);color:#ffffff}
+    .modal-content h2{margin:14px 0;font:700 21px/1.3 "Space Grotesk",sans-serif}
+    .modal-content p,.modal-content div{font-size:11px;line-height:1.6}
+    .detail{margin-top:10px;padding:13px 15px;background:#eaf1e8;border-radius:8px;color:#354e3d}
+    [data-theme="dark"] .detail{background:#13352a;color:#d5e8dc}
+    .floating-xp-pill{position:fixed;pointer-events:none;z-index:999;font:800 15px "Space Grotesk",sans-serif;color:#163d35;background:#d9f26c;padding:5px 12px;border-radius:20px;box-shadow:0 4px 16px rgba(217,242,108,.6);animation:floatUpAndFade 1.2s cubic-bezier(0.2,0.8,0.2,1) forwards}
+    @keyframes floatUpAndFade{0%{opacity:0;transform:translateY(10px) scale(0.8)}20%{opacity:1;transform:translateY(0) scale(1.15)}80%{opacity:1;transform:translateY(-25px) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(0.9)}}
+    @media(max-width:860px){.scenario-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:680px){.practice-layout{grid-template-columns:1fr}.scenario-grid{grid-template-columns:1fr}.example-row{grid-template-columns:1fr}.quote{font-size:14.5px}}
   </style>
 </head>
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng"><a href="../index.html">Trang chủ</a><a href="knowledge.html">Kiến thức</a><a href="practice.html" aria-current="page">Thực hành</a><a href="assessment.html">Đánh giá</a><a href="leaderboard.html">BXH</a><a href="research.html">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
   <main class="page-shell">
-    <header class="page-header"><div><p class="eyebrow">02 / THỬ</p><h1 class="page-title">Check AI: luyện bằng tình huống.</h1><p class="page-lead">Mỗi thẻ đưa ra một phát biểu do AI cung cấp và nêu việc cần kiểm tra. Hãy đọc cả hai, chọn một kết luận cùng cách kiểm chứng phù hợp; hệ thống sẽ giải thích sau khi em trả lời.</p></div><span class="page-count">30 TÌNH HUỐNG · 3 CHỦ ĐỀ</span></header>
-    <div class="practice-layout">
-      <section class="panel" aria-labelledby="practiceTitle"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span class="tag" id="practiceTopic">ĐANG TẢI</span><span class="muted" id="practiceProgress">CÂU 1 / 8</span></div>
-        <h2 class="sr-only" id="practiceTitle">Câu hỏi tình huống</h2><p class="practice-question-number" id="practiceQuestionNumber"></p><p class="quote" id="practiceQuote"></p><p class="scenario-task" id="practiceTask"></p>
-        <p class="question-label">Dựa trên phát biểu AI ở trên, em chọn kết luận nào?</p><div class="choices" id="trustChoices"></div>
-        <p class="question-label">Cách nào phù hợp nhất để kiểm chứng phát biểu này?</p><div class="choices practice-choice-list" id="methodChoices"></div>
-        <div class="practice-actions"><span class="muted" id="practiceScore">Chọn kết luận và cách kiểm chứng</span><button class="button button-dark" id="practiceAction">Kiểm tra đáp án →</button></div><p class="feedback" id="practiceFeedback" aria-live="polite"></p><p class="muted" id="syncStatus" aria-live="polite"></p>
-        <div class="example-row"><article class="example"><strong>Ví dụ bổ sung · Sức khỏe</strong>“Nước chanh chữa khỏi mọi bệnh cảm cúm trong một ngày.” Hãy đối chiếu hướng dẫn y tế.</article><article class="example"><strong>Ví dụ bổ sung · Lịch sử</strong>“Câu nói đang lan truyền chắc chắn là nguyên văn của nhân vật lịch sử.” Hãy tìm văn bản gốc.</article></div>
-      </section>
-      <aside class="panel panel-dark"><p class="eyebrow" style="color:var(--lime)">LUYỆN TẬP THEO LƯỢT</p><h2 class="panel-title">Mỗi lượt là một đề mới.</h2><p class="panel-copy">Câu đã làm không lặp cho đến khi dùng hết thư viện. Lượt cuối có thể ngắn hơn để giữ nguyên nguyên tắc đó.</p><button class="button button-lime" id="newPractice">Bắt đầu lượt mới ↻</button><a class="button button-outline" id="googleFormLink" href="resources.html#formConfig" style="margin-top:8px">Mở Google Form ↗</a><p class="panel-copy" style="margin-top:14px">Các tình huống là tư liệu mô phỏng cho hoạt động học tập, không phải trích dẫn nghiên cứu thật nếu chưa kèm nguồn.</p></aside>
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">02 / THỬ NGHIỆM THỰC CHIẾN</p>
+        <h1 class="page-title">Check AI: Đấu trường 60 tình huống.</h1>
+        <p class="page-lead">Mỗi thẻ đưa ra một phát biểu do AI cung cấp và nêu việc cần kiểm tra. Hãy đọc cả hai, chọn một kết luận cùng cách kiểm chứng phù hợp; hệ thống sẽ phân tích sư phạm và tính điểm kinh nghiệm ngay sau khi em trả lời.</p>
+      </div>
+      <span class="page-count">60 TÌNH HUỐNG · 3 CHỦ ĐỀ</span>
+    </header>
+
+    <!-- 🎮 GAMIFICATION HUD BAR -->
+    <div class="gamify-hud" id="practiceGamifyHud">
+      <div class="gamify-hud-left">
+        <span class="gamify-badge gamify-badge-level" id="hudLevelBadge">🌱 Lv.1 Tập Sự</span>
+        <span class="gamify-badge gamify-badge-xp" id="hudXpBadge">⭐ 0 XP</span>
+        <span class="gamify-badge gamify-badge-streak" id="hudStreakBadge"><span class="flame-icon">🔥</span> Chuỗi: 0</span>
+      </div>
+      <div class="gamify-hud-right">
+        <button type="button" class="audio-btn" id="hudAudioToggle" title="Bật/Tắt âm thanh phản hồi">🔊 Âm thanh: Bật</button>
+      </div>
     </div>
-    <details class="scenario-library">
-      <summary id="libraryTitle">Thư viện tình huống · 30 tình huống</summary>
+
+    <div class="practice-layout">
+      <section class="panel practice-arena-shell" aria-labelledby="practiceTitle">
+        <!-- 📊 THANH TIẾN TRÌNH LUYỆN TẬP SINH ĐỘNG -->
+        <div class="arena-progress-wrap" title="Tiến trình làm bài trong lượt">
+          <div class="arena-progress-bar" id="arenaProgressBar"></div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <span class="tag-topic" id="practiceTopic">ĐANG TẢI...</span>
+          <span class="muted" id="practiceProgress" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px">CÂU 1 / 8</span>
+        </div>
+
+        <h2 class="sr-only" id="practiceTitle">Câu hỏi tình huống</h2>
+
+        <!-- 🚀 CONTAINER CÂU HỎI VỚI HIỆU ỨNG SLIDE TRANSITION -->
+        <div class="question-slide-box" id="questionSlideBox">
+          <p class="practice-question-number" id="practiceQuestionNumber"></p>
+          <p class="quote" id="practiceQuote"></p>
+          <p class="scenario-task" id="practiceTask"></p>
+
+          <p class="question-label">Bước 1: Dựa trên phát biểu AI ở trên, em chọn kết luận nào?</p>
+          <div class="choices" id="trustChoices"></div>
+
+          <p class="question-label">Bước 2: Cách nào phù hợp nhất để kiểm chứng phát biểu này?</p>
+          <div class="choices practice-choice-list" id="methodChoices"></div>
+        </div>
+
+        <div class="practice-actions">
+          <span class="muted" id="practiceScore" style="font-size:11px">Chọn kết luận và cách kiểm chứng</span>
+          <button class="button button-dark" id="practiceAction">Kiểm tra đáp án →</button>
+        </div>
+
+        <p class="feedback" id="practiceFeedback" aria-live="polite"></p>
+        <p class="muted" id="syncStatus" aria-live="polite" style="font-size:10px;margin-top:8px"></p>
+
+        <div class="example-row">
+          <article class="example"><strong>Ví dụ bổ sung · Sức khỏe</strong>“Nước chanh chữa khỏi mọi bệnh cảm cúm trong một ngày.” Hãy đối chiếu hướng dẫn y tế.</article>
+          <article class="example"><strong>Ví dụ bổ sung · Lịch sử</strong>“Câu nói đang lan truyền chắc chắn là nguyên văn của nhân vật lịch sử.” Hãy tìm văn bản gốc.</article>
+        </div>
+      </section>
+
+      <aside class="panel panel-dark">
+        <p class="eyebrow" style="color:var(--lime)">LUYỆN TẬP THEO LƯỢT</p>
+        <h2 class="panel-title">Mỗi lượt là một đề mới.</h2>
+        <p class="panel-copy">Câu đã làm không lặp cho đến khi dùng hết kho 60 tình huống. Lượt cuối có thể ngắn hơn để giữ nguyên nguyên tắc đó.</p>
+        <button class="button button-lime" id="newPractice" style="width:100%;margin-top:14px">Bắt đầu lượt mới ↻</button>
+        <a class="button button-outline" id="googleFormLink" href="resources.html#formConfig" style="width:100%;margin-top:8px">Mở Google Form ↗</a>
+        <p class="panel-copy" style="margin-top:16px;line-height:1.5">Các tình huống là tư liệu mô phỏng cho hoạt động học tập, không phải trích dẫn nghiên cứu thật nếu chưa kèm nguồn.</p>
+      </aside>
+    </div>
+
+    <!-- 📚 THƯ VIỆN 60 TÌNH HUỐNG VỚI TÌM KIẾM TỨC THÌ -->
+    <details class="scenario-library" open>
+      <summary id="libraryTitle">Thư viện tình huống · 60 tình huống</summary>
       <div class="scenario-library-content">
-        <p class="panel-copy">Chọn một thẻ để xem nhiệm vụ, nguồn đối chiếu, kết luận tham khảo và giải thích.</p>
-        <div class="filter-row" id="filters"><button class="filter active" data-filter="Tất cả">Tất cả · 30</button><button class="filter" data-filter="Học tập">Học tập · 10</button><button class="filter" data-filter="Đời sống">Đời sống · 10</button><button class="filter" data-filter="AI">AI · 10</button></div>
+        <p class="panel-copy">Chọn một thẻ để xem nhiệm vụ, nguồn đối chiếu, kết luận tham khảo và giải thích chi tiết.</p>
+
+        <!-- 🔍 THANH TÌM KIẾM TỨC THÌ -->
+        <div class="scenario-search-box">
+          <span class="scenario-search-icon">🔍</span>
+          <input type="text" id="scenarioSearchInput" class="scenario-search-input" placeholder="Tìm kiếm nhanh trong 60 tình huống (ví dụ: Deepfake, Fansipan, trà sữa, đề thi, AI...)">
+        </div>
+
+        <div class="filter-row" id="filters">
+          <button class="filter active" data-filter="Tất cả">Tất cả · 60</button>
+          <button class="filter" data-filter="Học tập">Học tập · 20</button>
+          <button class="filter" data-filter="Đời sống">Đời sống · 20</button>
+          <button class="filter" data-filter="AI">AI · 20</button>
+        </div>
         <div class="scenario-grid" id="scenarioGrid"></div>
       </div>
     </details>
   </main>
+
   <footer class="site-footer">AI CHECK THĐ · Thực hành và thư viện tình huống</footer>
-  <div class="modal" id="scenarioModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-content"><div class="modal-top"><span class="tag" id="modalCategory"></span><button class="modal-close" id="closeModal" aria-label="Đóng">×</button></div><h2 id="modalTitle"></h2><p><strong>Nhiệm vụ kiểm chứng:</strong> <span id="modalTask"></span></p><div class="detail"><strong>Nguồn đối chiếu:</strong> <span id="modalSource"></span></div><div class="detail"><strong>Kết luận:</strong> <span id="modalVerdict"></span><br><br><strong>Giải thích:</strong> <span id="modalExplanation"></span></div></div></div>
+
+  <!-- 🪟 MODAL CHI TIẾT TÌNH HUỐNG -->
+  <div class="modal" id="scenarioModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <div class="modal-top">
+        <span class="tag-topic" id="modalCategory"></span>
+        <button class="modal-close" id="closeModal" aria-label="Đóng">×</button>
+      </div>
+      <h2 id="modalTitle"></h2>
+      <p><strong>Nhiệm vụ kiểm chứng:</strong> <span id="modalTask"></span></p>
+      <div class="detail"><strong>Nguồn đối chiếu:</strong> <span id="modalSource"></span></div>
+      <div class="detail">
+        <strong>Kết luận:</strong> <span id="modalVerdict"></span><br><br>
+        <strong>Giải thích:</strong> <span id="modalExplanation"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
+  <script src="../site-nav.js"></script>
   <script src="practice-data.js"></script>
   <script>
     const scenarios = window.AICheckScenarios;
     const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(`aicheck:${key}`)) ?? fallback; } catch { return fallback; } };
     const write = (key, value) => localStorage.setItem(`aicheck:${key}`, JSON.stringify(value));
     const shuffle = items => { const result = [...items]; for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [result[i], result[j]] = [result[j], result[i]]; } return result; };
+    
     let set = [], index = 0, trustChoice = null, methodChoice = null, correct = 0, checked = false, complete = false;
-    function startRound() { let used = read("used:practice", []); let remaining = scenarios.map((item, itemIndex) => ({ ...item, id: `s${itemIndex}` })).filter(item => !used.includes(item.id)); if (!remaining.length) { used = []; remaining = scenarios.map((item, itemIndex) => ({ ...item, id: `s${itemIndex}` })); } set = shuffle(remaining).slice(0, Math.min(8, remaining.length)); write("used:practice", [...used, ...set.map(item => item.id)]); index = 0; correct = 0; complete = false; renderQuestion(); }
-    function renderChoices(container, labels, group) { container.replaceChildren(); labels.forEach((label, optionIndex) => { const button = document.createElement("button"); button.type = "button"; button.className = "choice"; button.textContent = label; button.addEventListener("click", () => { container.querySelectorAll("button").forEach(option => option.classList.remove("selected")); button.classList.add("selected"); if (group === "trust") trustChoice = { index: optionIndex, button }; else methodChoice = { index: optionIndex, button }; }); container.append(button); }); }
-    function renderMethodChoices(container, options) { container.replaceChildren(); options.forEach(opt => { const button = document.createElement("button"); button.type = "button"; button.className = "choice"; button.textContent = opt.text; button.addEventListener("click", () => { container.querySelectorAll("button").forEach(b => b.classList.remove("selected")); button.classList.add("selected"); methodChoice = { isCorrect: opt.isCorrect, button }; }); container.append(button); }); }
-    function renderQuestion() { const item = set[index]; trustChoice = null; methodChoice = null; checked = false; document.getElementById("practiceTopic").textContent = `${item.group.toUpperCase()} · ${item.topic.toUpperCase()}`; document.getElementById("practiceProgress").textContent = `CÂU ${index + 1} / ${set.length}`; document.getElementById("practiceQuestionNumber").textContent = `Câu ${index + 1} / ${set.length}`; document.getElementById("practiceQuote").textContent = `“${item.quote}”`; document.getElementById("practiceTask").textContent = ""; document.getElementById("practiceTask").hidden = true; document.getElementById("practiceScore").textContent = "Chọn một kết luận và một cách kiểm chứng"; document.getElementById("practiceFeedback").textContent = ""; renderChoices(document.getElementById("trustChoices"), ["Đúng", "Sai", "Chưa đủ căn cứ", "Cần kiểm chứng thêm"], "trust"); const methodList = shuffle([{ text: item.task, isCorrect: true }, { text: `Chấp nhận phát biểu “${item.quote}” là đúng mà chưa kiểm tra thêm.`, isCorrect: false }, { text: `Chỉ hỏi một chatbot khác về phát biểu “${item.quote}”, không đối chiếu nguồn hoặc tài liệu gốc.`, isCorrect: false }]); renderMethodChoices(document.getElementById("methodChoices"), methodList); document.getElementById("practiceAction").textContent = "Kiểm tra đáp án →"; }
-    function saveResult(score) { const name = read("player", "") || window.AICheckCloud?.getDisplayName() || "Bạn"; const records = read("records", []); let row = records.find(item => item.name.toLowerCase() === name.toLowerCase()); if (!row) { row = { name }; records.push(row); } row.practice = Math.max(row.practice || 0, score); row.date = new Date().toISOString().slice(0, 10); write("records", records); const cloud = window.AICheckCloud; const status = document.getElementById("syncStatus"); if (!cloud?.configured) { status.textContent = "Supabase chưa cấu hình; điểm vẫn lưu trên thiết bị này."; return; } status.textContent = "Đang đồng bộ điểm lên BXH chung…"; cloud.saveScore({ name: cloud.getDisplayName(name), activity: "practice", score }).then(result => { status.textContent = result.synced ? "Đã đồng bộ điểm lên BXH chung." : "Chưa đồng bộ được; điểm vẫn lưu trên thiết bị này."; }).catch(() => { status.textContent = "Mất kết nối; điểm vẫn lưu trên thiết bị này."; }); }
-    function advance() { if (complete) { startRound(); return; } const item = set[index]; if (!checked) { if (!trustChoice || !methodChoice) { document.getElementById("practiceFeedback").textContent = "Hãy chọn một kết luận và một cách kiểm chứng."; return; } const answerIndex = ["Đúng", "Sai", "Chưa đủ căn cứ", "Cần kiểm chứng thêm"].indexOf(item.verdict); const trustCorrect = trustChoice.index === answerIndex; const methodCorrect = Boolean(methodChoice.isCorrect); checked = true; if (trustCorrect && methodCorrect) correct++; trustChoice.button.classList.add(trustCorrect ? "correct" : "wrong"); methodChoice.button.classList.add(methodCorrect ? "correct" : "wrong"); document.querySelectorAll("#trustChoices button,#methodChoices button").forEach(button => button.disabled = true); const task = document.getElementById("practiceTask"); task.hidden = false; task.textContent = `Nhiệm vụ kiểm chứng phù hợp: ${item.task}`; document.getElementById("practiceFeedback").textContent = `${trustCorrect && methodCorrect ? "Chính xác." : "Hãy đối chiếu lại."} ${item.verdict}. ${item.explain} Nguồn phù hợp: ${item.source}`; document.getElementById("practiceScore").textContent = `Đúng cả hai lựa chọn: ${correct} / ${set.length}`; document.getElementById("practiceAction").textContent = index === set.length - 1 ? "Xem kết quả →" : "Câu tiếp theo →"; return; } if (index < set.length - 1) { index++; renderQuestion(); return; } const score = Math.round(correct / set.length * 100); saveResult(score); complete = true; document.getElementById("practiceQuote").textContent = `Hoàn thành ${correct}/${set.length} tình huống chính xác · ${score}/100`; document.getElementById("practiceQuestionNumber").textContent = "Đã hoàn thành lượt thực hành"; document.getElementById("trustChoices").replaceChildren(); document.getElementById("methodChoices").replaceChildren(); document.getElementById("practiceFeedback").textContent = "Kết quả đã được ghi vào BXH tình huống trên thiết bị này."; document.getElementById("practiceAction").textContent = "Lượt mới ↻"; }
-    function renderLibrary(filter = "Tất cả") { const grid = document.getElementById("scenarioGrid"); grid.replaceChildren(); scenarios.forEach((item, itemIndex) => { if (filter !== "Tất cả" && item.group !== filter) return; const button = document.createElement("button"); button.className = "scenario-button"; button.type = "button"; button.innerHTML = `<span>${String(itemIndex + 1).padStart(2, "0")}</span><span><strong>${item.title}</strong><small>${item.group} · ${item.topic}</small></span>`; button.addEventListener("click", () => openScenario(item)); grid.append(button); }); }
-    function openScenario(item) { document.getElementById("modalCategory").textContent = `${item.group} · ${item.topic}`; document.getElementById("modalTitle").textContent = `“${item.quote}”`; document.getElementById("modalTask").textContent = item.task; document.getElementById("modalSource").textContent = item.source; document.getElementById("modalVerdict").textContent = item.verdict; document.getElementById("modalExplanation").textContent = item.explain; document.getElementById("scenarioModal").classList.add("open"); document.getElementById("closeModal").focus(); }
-    document.getElementById("practiceAction").addEventListener("click", advance); document.getElementById("newPractice").addEventListener("click", startRound); document.getElementById("filters").addEventListener("click", event => { const button = event.target.closest("[data-filter]"); if (!button) return; document.querySelectorAll(".filter").forEach(filter => filter.classList.toggle("active", filter === button)); renderLibrary(button.dataset.filter); }); document.getElementById("closeModal").addEventListener("click", () => document.getElementById("scenarioModal").classList.remove("open")); document.getElementById("scenarioModal").addEventListener("click", event => { if (event.target.id === "scenarioModal") event.currentTarget.classList.remove("open"); }); document.addEventListener("keydown", event => { if (event.key === "Escape") document.getElementById("scenarioModal").classList.remove("open"); });
+    let currentFilter = "Tất cả";
+    let currentSearchTerm = "";
+
+    // 🎮 Cập nhật giao diện Gamification HUD
+    function updateGamifyHud() {
+      if (!window.AICheckGamification) return;
+      const stats = window.AICheckGamification.getStats();
+      const isEn = (window.AICheckI18n && window.AICheckI18n.getLang ? window.AICheckI18n.getLang() === "en" : false);
+      const levelEl = document.getElementById("hudLevelBadge");
+      const xpEl = document.getElementById("hudXpBadge");
+      const streakEl = document.getElementById("hudStreakBadge");
+      const audioBtn = document.getElementById("hudAudioToggle");
+      if (levelEl) levelEl.textContent = `${stats.levelIcon} Lv.${stats.level} ${stats.levelTitle}`;
+      if (xpEl) xpEl.textContent = `⭐ ${stats.xp} XP`;
+      if (streakEl) streakEl.innerHTML = `<span class="flame-icon">🔥</span> ${isEn ? "Streak:" : "Chuỗi:"} ${stats.streak} ${isEn ? (stats.streak > 1 ? "Days" : "Day") : "Ngày"}`;
+      if (audioBtn) audioBtn.textContent = stats.soundEnabled ? (isEn ? "🔊 Sound: On" : "🔊 Âm thanh: Bật") : (isEn ? "🔇 Sound: Off" : "🔇 Âm thanh: Tắt");
+    }
+
+    function showFloatingXp(amount) {
+      if (!amount) return;
+      const pill = document.createElement("div");
+      pill.className = "floating-xp-pill";
+      pill.textContent = `+${amount} XP!`;
+      const actionBtn = document.getElementById("practiceAction");
+      if (actionBtn) {
+        const rect = actionBtn.getBoundingClientRect();
+        pill.style.left = `${rect.left + rect.width / 2 - 40}px`;
+        pill.style.top = `${rect.top - 15}px`;
+      } else {
+        pill.style.right = "24px";
+        pill.style.top = "80px";
+      }
+      document.body.appendChild(pill);
+      setTimeout(() => pill.remove(), 1200);
+    }
+
+    function startRound() { 
+      let used = read("used:practice", []); 
+      let remaining = scenarios.map((item, itemIndex) => ({ ...item, id: `s${itemIndex}` })).filter(item => !used.includes(item.id)); 
+      if (!remaining.length) { 
+        used = []; 
+        remaining = scenarios.map((item, itemIndex) => ({ ...item, id: `s${itemIndex}` })); 
+      } 
+      set = shuffle(remaining).slice(0, Math.min(8, remaining.length)); 
+      write("used:practice", [...used, ...set.map(item => item.id)]); 
+      index = 0; 
+      correct = 0; 
+      complete = false; 
+      renderQuestion(); 
+      updateGamifyHud();
+    }
+
+    function renderChoices(container, labels, group) { 
+      container.replaceChildren(); 
+      labels.forEach((label, optionIndex) => { 
+        const button = document.createElement("button"); 
+        button.type = "button"; 
+        button.className = "choice"; 
+        
+        let icon = "";
+        if (label === "Đúng") icon = "✅ ";
+        else if (label === "Sai") icon = "❌ ";
+        else if (label === "Chưa đủ căn cứ") icon = "⚖️ ";
+        else if (label === "Cần kiểm chứng thêm") icon = "🔍 ";
+
+        button.innerHTML = `<span>${icon}${label}</span>`; 
+        button.addEventListener("click", () => { 
+          window.AICheckAudio?.playClick();
+          container.querySelectorAll("button").forEach(option => option.classList.remove("selected")); 
+          button.classList.add("selected"); 
+          if (group === "trust") trustChoice = { index: optionIndex, button }; 
+          else methodChoice = { index: optionIndex, button }; 
+        }); 
+        container.append(button); 
+      }); 
+    }
+
+    function renderMethodChoices(container, options) { 
+      container.replaceChildren(); 
+      options.forEach(opt => { 
+        const button = document.createElement("button"); 
+        button.type = "button"; 
+        button.className = "choice"; 
+        button.textContent = opt.text; 
+        button.addEventListener("click", () => { 
+          window.AICheckAudio?.playClick();
+          container.querySelectorAll("button").forEach(b => b.classList.remove("selected")); 
+          button.classList.add("selected"); 
+          methodChoice = { isCorrect: opt.isCorrect, button }; 
+        }); 
+        container.append(button); 
+      }); 
+    }
+
+    function renderQuestion() { 
+      const item = set[index]; 
+      trustChoice = null; 
+      methodChoice = null; 
+      checked = false; 
+
+      // Cập nhật thanh tiến trình %
+      const progressPct = Math.round(((index + 1) / set.length) * 100);
+      const progressBar = document.getElementById("arenaProgressBar");
+      if (progressBar) progressBar.style.width = `${progressPct}%`;
+
+      // Cập nhật Badge chủ đề
+      const topicEl = document.getElementById("practiceTopic");
+      topicEl.className = "tag-topic";
+      if (item.group === "Học tập") topicEl.classList.add("tag-topic-hoctap");
+      else if (item.group === "Đời sống") topicEl.classList.add("tag-topic-doisong");
+      else if (item.group === "AI") topicEl.classList.add("tag-topic-ai");
+      topicEl.textContent = `${item.group.toUpperCase()} · ${item.topic.toUpperCase()}`; 
+
+      document.getElementById("practiceProgress").textContent = `CÂU ${index + 1} / ${set.length}`; 
+      document.getElementById("practiceQuestionNumber").textContent = `Tình huống ${index + 1} / ${set.length}`; 
+      document.getElementById("practiceQuote").textContent = `“${item.quote}”`; 
+      document.getElementById("practiceTask").textContent = ""; 
+      document.getElementById("practiceTask").hidden = true; 
+      document.getElementById("practiceScore").textContent = "Chọn một kết luận và một cách kiểm chứng"; 
+      document.getElementById("practiceFeedback").textContent = ""; 
+      
+      renderChoices(document.getElementById("trustChoices"), ["Đúng", "Sai", "Chưa đủ căn cứ", "Cần kiểm chứng thêm"], "trust"); 
+      
+      const methodList = shuffle([
+        { text: item.task, isCorrect: true }, 
+        { text: `Chấp nhận phát biểu “${item.quote}” là đúng mà chưa kiểm tra thêm.`, isCorrect: false }, 
+        { text: `Chỉ hỏi một chatbot khác về phát biểu “${item.quote}”, không đối chiếu nguồn hoặc tài liệu gốc.`, isCorrect: false }
+      ]); 
+      renderMethodChoices(document.getElementById("methodChoices"), methodList); 
+      document.getElementById("practiceAction").textContent = "Kiểm tra đáp án →"; 
+
+      // Hiệu ứng Slide-in mượt mà
+      const slideBox = document.getElementById("questionSlideBox");
+      if (slideBox) {
+        slideBox.classList.remove("is-animating-in");
+        slideBox.classList.add("is-animating-in");
+        setTimeout(() => slideBox.classList.remove("is-animating-in"), 300);
+      }
+    }
+
+    function saveResult(score) { 
+      const name = read("player", "") || window.AICheckCloud?.getDisplayName() || "Bạn"; 
+      const records = read("records", []); 
+      let row = records.find(item => item.name.toLowerCase() === name.toLowerCase()); 
+      if (!row) { 
+        row = { name }; 
+        records.push(row); 
+      } 
+      row.practice = Math.max(row.practice || 0, score); 
+      row.date = new Date().toISOString().slice(0, 10); 
+      write("records", records); 
+      
+      const cloud = window.AICheckCloud; 
+      const status = document.getElementById("syncStatus"); 
+      if (!cloud?.configured) { 
+        status.textContent = "Supabase chưa cấu hình; điểm vẫn lưu trên thiết bị này."; 
+        return; 
+      } 
+      status.textContent = "Đang đồng bộ điểm lên BXH chung…"; 
+      cloud.saveScore({ name: cloud.getDisplayName(name), activity: "practice", score }).then(result => { 
+        status.textContent = result.synced ? "Đã đồng bộ điểm lên BXH chung." : "Chưa đồng bộ được; điểm vẫn lưu trên thiết bị này."; 
+      }).catch(() => { 
+        status.textContent = "Mất kết nối; điểm vẫn lưu trên thiết bị này."; 
+      }); 
+    }
+
+    function advance() { 
+      if (complete) { 
+        startRound(); 
+        return; 
+      } 
+      const item = set[index]; 
+      if (!checked) { 
+        if (!trustChoice || !methodChoice) { 
+          document.getElementById("practiceFeedback").textContent = "Hãy chọn một kết luận và một cách kiểm chứng."; 
+          window.AICheckAudio?.playWrong();
+          return; 
+        } 
+        const answerIndex = ["Đúng", "Sai", "Chưa đủ căn cứ", "Cần kiểm chứng thêm"].indexOf(item.verdict); 
+        const trustCorrect = trustChoice.index === answerIndex; 
+        const methodCorrect = Boolean(methodChoice.isCorrect); 
+        checked = true; 
+        
+        const isBothCorrect = trustCorrect && methodCorrect;
+        if (isBothCorrect) correct++; 
+        
+        trustChoice.button.classList.add(trustCorrect ? "correct" : "wrong"); 
+        methodChoice.button.classList.add(methodCorrect ? "correct" : "wrong"); 
+        document.querySelectorAll("#trustChoices button,#methodChoices button").forEach(button => button.disabled = true); 
+        
+        const task = document.getElementById("practiceTask"); 
+        task.hidden = false; 
+        task.textContent = `Nhiệm vụ kiểm chứng phù hợp: ${item.task}`; 
+        
+        document.getElementById("practiceFeedback").textContent = `${isBothCorrect ? "🎯 Chính xác xuất sắc!" : "⚠️ Hãy đối chiếu lại."} Đáp án: ${item.verdict}. ${item.explain} Nguồn đối chứng: ${item.source}`; 
+        document.getElementById("practiceScore").textContent = `Đúng cả hai lựa chọn: ${correct} / ${set.length}`; 
+        document.getElementById("practiceAction").textContent = index === set.length - 1 ? "Xem kết quả →" : "Câu tiếp theo →"; 
+        
+        // 🎮 Ghi nhận Gamification: XP & Streak & Sound
+        if (window.AICheckGamification) {
+          const gamifyRes = window.AICheckGamification.recordAnswer(isBothCorrect);
+          updateGamifyHud();
+          if (isBothCorrect) {
+            showFloatingXp(gamifyRes.xpEarned);
+          }
+        }
+        return; 
+      } 
+
+      if (index < set.length - 1) { 
+        index++; 
+        renderQuestion(); 
+        return; 
+      } 
+
+      // Hoàn thành lượt làm bài (8 câu)
+      const score = Math.round(correct / set.length * 100); 
+      saveResult(score); 
+      complete = true; 
+
+      // Gamification hoàn thành lượt
+      let roundBonus = 0;
+      if (window.AICheckGamification) {
+        const roundRes = window.AICheckGamification.completeRound(correct, set.length);
+        roundBonus = roundRes.bonusXp;
+        updateGamifyHud();
+      }
+
+      document.getElementById("practiceQuote").textContent = `🎉 Hoàn thành lượt luyện tập! Kết quả: ${correct}/${set.length} tình huống chính xác (${score}/100)${roundBonus ? ` · +${roundBonus} XP thưởng!` : ""}`; 
+      document.getElementById("practiceQuestionNumber").textContent = "Đã hoàn thành lượt thực hành"; 
+      document.getElementById("trustChoices").replaceChildren(); 
+      document.getElementById("methodChoices").replaceChildren(); 
+      document.getElementById("practiceFeedback").textContent = "Thành tích đã được ghi nhận vào BXH THĐ. Em có thể tiếp tục lượt mới để rèn luyện các tình huống tiếp theo!"; 
+      document.getElementById("practiceAction").textContent = "Lượt mới ↻"; 
+      
+      const progressBar = document.getElementById("arenaProgressBar");
+      if (progressBar) progressBar.style.width = "100%";
+    }
+
+    function renderLibrary(filter = currentFilter, searchKeyword = currentSearchTerm) { 
+      currentFilter = filter;
+      currentSearchTerm = searchKeyword;
+      const grid = document.getElementById("scenarioGrid"); 
+      grid.replaceChildren(); 
+      
+      const cleanKw = searchKeyword.trim().toLowerCase();
+
+      scenarios.forEach((item, itemIndex) => { 
+        if (filter !== "Tất cả" && item.group !== filter) return; 
+        if (cleanKw) {
+          const matchTitle = item.title.toLowerCase().includes(cleanKw);
+          const matchQuote = item.quote.toLowerCase().includes(cleanKw);
+          const matchTopic = item.topic.toLowerCase().includes(cleanKw);
+          const matchExplain = item.explain.toLowerCase().includes(cleanKw);
+          if (!matchTitle && !matchQuote && !matchTopic && !matchExplain) return;
+        }
+
+        const button = document.createElement("button"); 
+        button.className = "scenario-button"; 
+        button.type = "button"; 
+        button.innerHTML = `<span>${String(itemIndex + 1).padStart(2, "0")}</span><span><strong>${item.title}</strong><small>${item.group} · ${item.topic}</small></span>`; 
+        button.addEventListener("click", () => {
+          window.AICheckAudio?.playClick();
+          openScenario(item);
+        }); 
+        grid.append(button); 
+      }); 
+
+      if (!grid.children.length) {
+        const emptyMsg = document.createElement("p");
+        emptyMsg.className = "muted";
+        emptyMsg.style.gridColumn = "1/-1";
+        emptyMsg.style.padding = "20px";
+        emptyMsg.style.textAlign = "center";
+        emptyMsg.textContent = "Không tìm thấy tình huống phù hợp với từ khóa này.";
+        grid.append(emptyMsg);
+      }
+    }
+
+    function openScenario(item) { 
+      document.getElementById("modalCategory").textContent = `${item.group} · ${item.topic}`; 
+      document.getElementById("modalTitle").textContent = `“${item.quote}”`; 
+      document.getElementById("modalTask").textContent = item.task; 
+      document.getElementById("modalSource").textContent = item.source; 
+      document.getElementById("modalVerdict").textContent = item.verdict; 
+      document.getElementById("modalExplanation").textContent = item.explain; 
+      document.getElementById("scenarioModal").classList.add("open"); 
+      document.getElementById("closeModal").focus(); 
+    }
+
+    document.getElementById("practiceAction").addEventListener("click", advance); 
+    document.getElementById("newPractice").addEventListener("click", () => {
+      window.AICheckAudio?.playClick();
+      window.AICheckLoader?.show("Đang chuẩn bị đề luyện tập mới...");
+      setTimeout(() => {
+        startRound();
+        window.AICheckLoader?.hide();
+      }, 500);
+    }); 
+    
+    document.getElementById("filters").addEventListener("click", event => { 
+      const button = event.target.closest("[data-filter]"); 
+      if (!button) return; 
+      window.AICheckAudio?.playClick();
+      document.querySelectorAll(".filter").forEach(filter => filter.classList.toggle("active", filter === button)); 
+      renderLibrary(button.dataset.filter, currentSearchTerm); 
+    }); 
+
+    // Ô tìm kiếm tức thì trong thư viện 60 tình huống
+    const searchInput = document.getElementById("scenarioSearchInput");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        renderLibrary(currentFilter, e.target.value);
+      });
+    }
+
+    // Toggle âm thanh HUD
+    document.getElementById("hudAudioToggle")?.addEventListener("click", () => {
+      if (window.AICheckAudio) {
+        window.AICheckAudio.toggle();
+        updateGamifyHud();
+      }
+    });
+
+    document.getElementById("closeModal").addEventListener("click", () => document.getElementById("scenarioModal").classList.remove("open")); 
+    document.getElementById("scenarioModal").addEventListener("click", event => { 
+      if (event.target.id === "scenarioModal") event.currentTarget.classList.remove("open"); 
+    }); 
+    document.addEventListener("keydown", event => { 
+      if (event.key === "Escape") document.getElementById("scenarioModal").classList.remove("open"); 
+    });
+
     const googleFormUrl = read("googleFormUrl", "") || window.AICHECK_CONFIG?.googleFormUrl || "";
-    if (googleFormUrl) { const link = document.getElementById("googleFormLink"); link.href = googleFormUrl; link.target = "_blank"; link.rel = "noopener noreferrer"; }
-    renderLibrary(); startRound();
+    if (googleFormUrl) { 
+      const link = document.getElementById("googleFormLink"); 
+      link.href = googleFormUrl; 
+      link.target = "_blank"; 
+      link.rel = "noopener noreferrer"; 
+    }
+
+    function updateCounts() {
+      const total = scenarios.length;
+      const ht = scenarios.filter(s => s.group === "Học tập").length;
+      const ds = scenarios.filter(s => s.group === "Đời sống").length;
+      const ai = scenarios.filter(s => s.group === "AI").length;
+      const pageCount = document.querySelector(".page-count");
+      if (pageCount) pageCount.textContent = `${total} TÌNH HUỐNG · 3 CHỦ ĐỀ`;
+      const libTitle = document.getElementById("libraryTitle");
+      if (libTitle) libTitle.textContent = `Thư viện tình huống · ${total} tình huống`;
+      const btnAll = document.querySelector('[data-filter="Tất cả"]');
+      if (btnAll) btnAll.textContent = `Tất cả · ${total}`;
+      const btnHt = document.querySelector('[data-filter="Học tập"]');
+      if (btnHt) btnHt.textContent = `Học tập · ${ht}`;
+      const btnDs = document.querySelector('[data-filter="Đời sống"]');
+      if (btnDs) btnDs.textContent = `Đời sống · ${ds}`;
+      const btnAi = document.querySelector('[data-filter="AI"]');
+      if (btnAi) btnAi.textContent = `AI · ${ai}`;
+    }
+
+    // Lắng nghe sự kiện cập nhật Gamification từ toàn cục
+    window.addEventListener("aicheck:gamify-change", updateGamifyHud);
+
+    updateCounts(); 
+    renderLibrary(); 
+    startRound();
   </script>
   <script src="../site-nav.js"></script>
 </body>

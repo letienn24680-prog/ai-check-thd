@@ -93,6 +93,18 @@
           try { localStorage.setItem("aicheck:player", JSON.stringify(name.trim().slice(0, 24))); } catch {}
         }
         processSyncQueue(); // Thử sync ngay sau khi login
+
+        // Đồng bộ và kiểm tra chuỗi ngày đăng nhập nếu có gamification engine
+        try {
+          if (data.user.user_metadata?.gamification && window.AICheckGamification?.restoreFromCloud) {
+            window.AICheckGamification.restoreFromCloud(data.user.user_metadata.gamification);
+          }
+          if (window.AICheckGamification?.checkDailyLoginStreak) {
+            window.AICheckGamification.checkDailyLoginStreak(data.user);
+          }
+        } catch (e) {
+          console.warn("Lỗi kiểm tra chuỗi đăng nhập:", e);
+        }
       }
       return { data, error };
     } catch (err) {
@@ -101,9 +113,19 @@
   }
 
   async function signOut() {
-    if (!client) return;
-    try { await client.auth.signOut(); } catch {}
-    location.reload();
+    try {
+      if (client) await client.auth.signOut();
+    } catch {}
+    try {
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith("sb-") && key.endsWith("-auth-token")) {
+          localStorage.removeItem(key);
+        }
+      }
+    } catch {}
+    const isPagesDir = location.pathname.includes("/pages/");
+    location.href = isPagesDir ? "../login.html" : "login.html";
   }
 
   async function getUser() {
@@ -347,6 +369,147 @@
     }
   }
 
+  // --- HỆ THỐNG HỒ SƠ CÁ NHÂN (USER PROFILE & SETTINGS) ---
+  async function getProfile() {
+    let local = {};
+    try { local = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
+
+    const user = await getUser();
+    if (!user) {
+      return { data: Object.keys(local).length ? local : null, error: null };
+    }
+
+    const defaultProfile = {
+      id: user.id,
+      email: user.email,
+      display_name: local.display_name || user.user_metadata?.display_name || user.email?.split("@")[0] || "Học sinh",
+      avatar: local.avatar || user.user_metadata?.avatar || "🎓",
+      class_name: local.class_name || user.user_metadata?.class_name || "",
+      school: local.school || user.user_metadata?.school || "THPT Trần Hưng Đạo",
+      birthdate: local.birthdate || user.user_metadata?.birthdate || "",
+      bio: local.bio || user.user_metadata?.bio || ""
+    };
+
+    if (!client) {
+      localStorage.setItem("aicheck:user_profile", JSON.stringify(defaultProfile));
+      return { data: defaultProfile, error: null };
+    }
+
+    try {
+      const { data, error } = await client.from("user_profiles").select("*").eq("id", user.id).maybeSingle();
+      if (data && !error) {
+        const merged = {
+          id: user.id,
+          email: user.email,
+          display_name: data.display_name || defaultProfile.display_name,
+          avatar: data.avatar || defaultProfile.avatar,
+          class_name: data.class_name || defaultProfile.class_name,
+          school: data.school || defaultProfile.school,
+          birthdate: data.birthdate || defaultProfile.birthdate,
+          bio: data.bio || defaultProfile.bio
+        };
+        localStorage.setItem("aicheck:user_profile", JSON.stringify(merged));
+        return { data: merged, error: null };
+      }
+    } catch (e) {
+      console.warn("Không thể tải bảng user_profiles, dùng auth metadata:", e);
+    }
+
+    localStorage.setItem("aicheck:user_profile", JSON.stringify(defaultProfile));
+    return { data: defaultProfile, error: null };
+  }
+
+  async function updateProfile(fields) {
+    let current = {};
+    try { current = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
+    const updated = {
+      ...current,
+      ...fields,
+      updated_at: new Date().toISOString()
+    };
+
+    localStorage.setItem("aicheck:user_profile", JSON.stringify(updated));
+    if (fields.display_name) {
+      try {
+        localStorage.setItem("aicheck:player", JSON.stringify(fields.display_name.trim().slice(0, 24)));
+      } catch {}
+    }
+    if (fields.avatar) {
+      try {
+        localStorage.setItem("aicheck:avatar", fields.avatar);
+      } catch {}
+    }
+
+    if (!client) {
+      return { data: updated, error: null, local: true };
+    }
+
+    try {
+      const user = await getUser();
+      if (!user) return { data: updated, error: null, local: true };
+
+      // 1. Cập nhật Auth user_metadata
+      const { error: authErr } = await client.auth.updateUser({
+        data: {
+          display_name: fields.display_name,
+          avatar: fields.avatar,
+          class_name: fields.class_name,
+          school: fields.school,
+          birthdate: fields.birthdate,
+          bio: fields.bio
+        }
+      });
+      if (authErr) console.warn("Lỗi updateUser Auth:", authErr);
+
+      // 2. Cập nhật bảng user_profiles
+      try {
+        await client.from("user_profiles").upsert({
+          id: user.id,
+          email: user.email,
+          display_name: fields.display_name,
+          avatar: fields.avatar,
+          class_name: fields.class_name,
+          school: fields.school,
+          birthdate: fields.birthdate || null,
+          bio: fields.bio,
+          updated_at: new Date().toISOString()
+        });
+      } catch (dbErr) {
+        console.warn("Lỗi upsert bảng user_profiles:", dbErr);
+      }
+
+      return { data: updated, error: null };
+    } catch (err) {
+      return { data: updated, error: err };
+    }
+  }
+
+  async function updatePassword(newPassword) {
+    if (!client) return { error: { message: "Chưa cấu hình kết nối Supabase Cloud" } };
+    try {
+      const { data, error } = await client.auth.updateUser({ password: newPassword });
+      return { data, error };
+    } catch (err) {
+      return { error: { message: err.message || "Lỗi cập nhật mật khẩu" } };
+    }
+  }
+
+  async function syncGamification(gamifyData) {
+    if (!client || !gamifyData) return { synced: false };
+    try {
+      const user = await getUser();
+      if (!user) return { synced: false, reason: "not-logged-in" };
+      const { error } = await client.auth.updateUser({
+        data: { gamification: gamifyData }
+      });
+      if (error) throw error;
+      return { synced: true };
+    } catch (e) {
+      console.warn("Lỗi đồng bộ Gamification lên Cloud:", e);
+      return { synced: false, error: e };
+    }
+  }
+
   window.AICheckCloud = {
     configured,
     client,
@@ -364,9 +527,13 @@
     signOut,
     getUser,
     isAdmin,
+    getProfile,
+    updateProfile,
+    updatePassword,
     sendSupportRequest,
     resolveSupportRequest,
     getLocalSupportRequests,
-    processSyncQueue
+    processSyncQueue,
+    syncGamification
   };
 })();
