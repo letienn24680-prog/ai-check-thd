@@ -11,7 +11,14 @@ if (typeof supabase !== 'undefined') {
   if (!window.supabaseClient) {
     window.supabaseClient = supabase.createClient(
       window.AICHECK_CONFIG.supabaseUrl, 
-      window.AICHECK_CONFIG.supabaseAnonKey
+      window.AICHECK_CONFIG.supabaseAnonKey,
+      {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true
+        }
+      }
     );
   }
   // KHÔNG gán window.supabase = window.supabaseClient nữa!

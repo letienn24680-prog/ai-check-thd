@@ -1013,6 +1013,21 @@
 
     // 5. Kiểm tra người dùng đã đăng nhập sẵn
     async function checkExistingAuth() {
+      // Kiểm tra thông báo lỗi từ URL callback nếu có (ví dụ: người dùng hủy kết nối OAuth)
+      try {
+        const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+        const searchParams = new URLSearchParams(window.location.search);
+        const urlError = hashParams.get('error_description') || searchParams.get('error_description') || 
+                         hashParams.get('error') || searchParams.get('error');
+        if (urlError) {
+          if (errorMsg) {
+            errorMsg.style.color = '#c84f36';
+            errorMsg.textContent = 'Thông báo xác thực: ' + decodeURIComponent(urlError.replace(/\+/g, ' '));
+          }
+          try { history.replaceState(null, '', window.location.pathname); } catch {}
+        }
+      } catch {}
+
       if (typeof window.AICheckCloud?.getUser !== 'function') {
         setTimeout(checkExistingAuth, 150);
         return;
@@ -1361,38 +1376,85 @@
       }
     }
 
-    // 8. Xử lý Đăng nhập Google & Apple
-    const btnGoogleAuth = document.getElementById('btnGoogleAuth');
-    if (btnGoogleAuth) {
-      btnGoogleAuth.addEventListener('click', async () => {
+    // 8. Xử lý Đăng nhập mạng xã hội (Google & Apple OAuth)
+    async function handleOAuthLogin(provider) {
+      const providerName = provider === 'google' ? 'Google' : 'Apple';
+
+      // Kiểm tra môi trường file://
+      if (window.location.protocol === 'file:') {
+        alert(
+          "⚠️ LƯU Ý KHI KIỂM THỬ TRÊN MÁY TÍNH:\n\n" +
+          "Google và Apple OAuth theo tiêu chuẩn an toàn bắt buộc chạy qua máy chủ HTTP/HTTPS (ví dụ: Live Server trong VS Code, localhost:5500, http://127.0.0.1:8000 hoặc domain web khi deploy).\n\n" +
+          "Bạn không thể đăng nhập Google/Apple khi mở file trực tiếp bằng giao thức file:///.\n\n" +
+          "👉 Hãy mở trang web qua Live Server (http://127.0.0.1:5500) hoặc deploy web lên Vercel/Cloudflare để thử nghiệm tính năng này nhé!"
+        );
+        return;
+      }
+
+      window.AICheckLoader?.show(`Đang kết nối ${providerName} OAuth...`);
+
+      if (window.AICheckCloud?.signInWithOAuth) {
+        const { data, error } = await window.AICheckCloud.signInWithOAuth(provider);
+        if (error) {
+          window.AICheckLoader?.hide();
+          console.error(`Lỗi ${providerName} OAuth:`, error);
+
+          if (error.message?.includes("provider is not enabled") || error.message?.includes("Unsupported provider") || error.message?.includes("validation_failed")) {
+            alert(
+              `⚠️ THÔNG BÁO TÍCH HỢP SUPABASE:\n\n` +
+              `Provider "${providerName}" cần được bật trong Supabase Dashboard của bạn:\n\n` +
+              `1. Vào Supabase Dashboard -> Authentication -> Providers -> ${providerName}\n` +
+              `2. Bật công tắc (Enable) và nhập Client ID & Secret của ${providerName}.\n` +
+              `3. Thêm Callback URL: ${window.AICHECK_CONFIG?.supabaseUrl || "https://pyxmhccvfysjtlxkdryr.supabase.co"}/auth/v1/callback\n` +
+              `4. Thêm URL website của bạn vào mục Authentication -> URL Configuration -> Redirect URLs.`
+            );
+          } else {
+            alert(`Lỗi kết nối ${providerName}: ` + (error.message || error));
+          }
+        }
+      } else {
         const client = getSupabaseClient();
-        if (client && client.auth) {
+        if (client?.auth) {
           try {
-            window.AICheckLoader?.show("Đang kết nối Google OAuth...");
+            let redirectPath = window.location.pathname.replace(/login\.html$/i, 'index.html');
+            if (!redirectPath.endsWith(".html") && !redirectPath.endsWith("/")) redirectPath += "/";
+            const redirectUrl = new URL(redirectPath, window.location.origin).href;
+
             const { error } = await client.auth.signInWithOAuth({
-              provider: 'google',
+              provider: provider,
               options: {
-                redirectTo: window.location.origin + window.location.pathname.replace('login.html', 'index.html')
+                redirectTo: redirectUrl,
+                queryParams: provider === 'google' ? { access_type: 'offline', prompt: 'consent' } : undefined
               }
             });
             if (error) {
               window.AICheckLoader?.hide();
-              alert("Thông báo Google OAuth: " + error.message);
+              alert(`Lỗi ${providerName}: ` + (error.message || error));
             }
           } catch(err) {
             window.AICheckLoader?.hide();
-            alert("Thông báo kết nối: " + err.message);
+            alert(`Lỗi ${providerName}: ` + err.message);
           }
         } else {
-          alert("Hệ thống Google OAuth đang trong quá trình liên kết. Bạn có thể đăng nhập ngay với Email và Mật khẩu!");
+          window.AICheckLoader?.hide();
+          alert("Hệ thống chưa kết nối được Supabase Client!");
         }
+      }
+    }
+
+    const btnGoogleAuth = document.getElementById('btnGoogleAuth');
+    if (btnGoogleAuth) {
+      btnGoogleAuth.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleOAuthLogin('google');
       });
     }
 
     const btnAppleAuth = document.getElementById('btnAppleAuth');
     if (btnAppleAuth) {
-      btnAppleAuth.addEventListener('click', () => {
-        alert("Tính năng Đăng nhập qua Apple ID đang được cập nhật. Bạn vui lòng sử dụng Email và Mật khẩu để tham gia!");
+      btnAppleAuth.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleOAuthLogin('apple');
       });
     }
   </script>

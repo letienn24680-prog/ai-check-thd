@@ -2,7 +2,15 @@
   const config = window.AICHECK_CONFIG || {};
   const sdk = window.supabase;
     const configured = Boolean(config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient);
-  const client = configured ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null;
+  const client = configured 
+    ? (window.supabaseClient || sdk.createClient(config.supabaseUrl, config.supabaseAnonKey, {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true
+        }
+      })) 
+    : null;
 
   // --- HỆ THỐNG OFFLINE QUEUE ---
   function getSyncQueue() {
@@ -110,6 +118,102 @@
     } catch (err) {
       return { error: { message: err.message || "Lỗi đăng nhập" } };
     }
+  }
+
+  // --- ĐĂNG NHẬP OAUTH (GOOGLE & APPLE) ---
+  async function signInWithOAuth(provider) {
+    if (!client) return { error: { message: "Chưa cấu hình kết nối Supabase Cloud" } };
+    try {
+      if (window.location.protocol === 'file:') {
+        return {
+          error: {
+            message: "Tính năng đăng nhập Google/Apple yêu cầu chạy website qua giao thức web HTTP/HTTPS (ví dụ: Live Server, localhost, Vercel...), không thể chạy trực tiếp từ file:// trong máy tính."
+          }
+        };
+      }
+
+      // Xác định URL chuyển hướng về trang chủ
+      const isPagesDir = location.pathname.includes("/pages/");
+      let redirectPath = isPagesDir 
+        ? location.pathname.replace(/\/pages\/[^/]+$/i, '/index.html')
+        : location.pathname.replace(/login\.html$/i, 'index.html');
+      
+      if (!redirectPath.endsWith(".html") && !redirectPath.endsWith("/")) {
+        redirectPath += "/";
+      }
+
+      const redirectUrl = new URL(redirectPath, window.location.origin).href;
+
+      const { data, error } = await client.auth.signInWithOAuth({
+        provider: provider, // 'google' | 'apple'
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: provider === 'google' ? {
+            access_type: 'offline',
+            prompt: 'consent'
+          } : undefined
+        }
+      });
+
+      return { data, error };
+    } catch (err) {
+      return { error: { message: err.message || "Lỗi kết nối OAuth" } };
+    }
+  }
+
+  // Tự động lắng nghe và đồng bộ thông tin khi đăng nhập (đặc biệt khi hoàn tất Google / Apple OAuth)
+  if (client?.auth?.onAuthStateChange) {
+    client.auth.onAuthStateChange(async (event, session) => {
+      if ((event === 'SIGNED_IN' || event === 'USER_UPDATED') && session?.user) {
+        const user = session.user;
+        const oauthName = user.user_metadata?.full_name || user.user_metadata?.name || user.user_metadata?.display_name || user.email?.split("@")[0] || "";
+        const oauthAvatar = user.user_metadata?.avatar_url || user.user_metadata?.picture;
+
+        if (oauthName) {
+          try { localStorage.setItem("aicheck:player", JSON.stringify(oauthName.trim().slice(0, 24))); } catch {}
+        }
+        if (oauthAvatar) {
+          try { localStorage.setItem("aicheck:avatar", oauthAvatar); } catch {}
+        }
+
+        // Tự động tạo hoặc cập nhật hồ sơ trong bảng user_profiles
+        try {
+          const { data: profile } = await client.from('user_profiles').select('id, display_name, avatar').eq('id', user.id).maybeSingle();
+          if (!profile) {
+            let userIp = 'Không xác định';
+            try {
+              const ipRes = await fetch('https://api.ipify.org?format=json');
+              const ipData = await ipRes.json();
+              userIp = ipData.ip;
+            } catch {}
+            await client.from('user_profiles').insert([{
+              id: user.id,
+              email: user.email,
+              display_name: oauthName,
+              avatar: oauthAvatar || "🎓",
+              role: 'student',
+              register_ip: userIp
+            }]);
+          } else if (oauthAvatar && !profile.avatar) {
+            await client.from('user_profiles').update({ avatar: oauthAvatar }).eq('id', user.id);
+          }
+        } catch (err) {
+          console.warn("Lưu profile OAuth:", err);
+        }
+
+        // Đồng bộ gamification nếu có
+        try {
+          if (user.user_metadata?.gamification && window.AICheckGamification?.restoreFromCloud) {
+            window.AICheckGamification.restoreFromCloud(user.user_metadata.gamification);
+          }
+          if (window.AICheckGamification?.checkDailyLoginStreak) {
+            window.AICheckGamification.checkDailyLoginStreak(user);
+          }
+        } catch {}
+
+        window.dispatchEvent(new CustomEvent("aicheck:profile-updated", { detail: { user } }));
+      }
+    });
   }
 
   async function signOut() {
@@ -524,6 +628,7 @@
     // Auth & Quản trị
     signUp,
     signIn,
+    signInWithOAuth,
     signOut,
     getUser,
     isAdmin,

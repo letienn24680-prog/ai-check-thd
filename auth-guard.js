@@ -17,8 +17,19 @@
                      currentPath.endsWith("du-an-khkt") ||
                      currentPath.endsWith("du-an-khkt/");
 
-  // Kiểm tra nhanh token Supabase trong localStorage để chuyển hướng tức thì (Zero-Flicker)
+  // Kiểm tra nhanh token Supabase trong localStorage hoặc URL OAuth callback để chuyển hướng tức thì (Zero-Flicker)
   function hasLocalAuthToken() {
+    // 1. Kiểm tra nếu URL đang mang token hoặc authorization code từ Google / Apple OAuth callback
+    try {
+      if (location.hash && (location.hash.includes("access_token") || location.hash.includes("refresh_token"))) {
+        return true;
+      }
+      if (location.search && (location.search.includes("code=") || location.search.includes("token="))) {
+        return true;
+      }
+    } catch {}
+
+    // 2. Kiểm tra token đã lưu trong localStorage
     try {
       for (let i = 0; i < localStorage.length; i++) {
         const k = localStorage.key(i);
@@ -49,7 +60,15 @@
     }
 
     try {
-      const user = await window.AICheckCloud.getUser();
+      const isOAuthCallback = (location.hash && location.hash.includes("access_token")) || 
+                              (location.search && location.search.includes("code="));
+
+      let user = await window.AICheckCloud.getUser();
+      // Nếu vừa từ Google/Apple OAuth redirect về, đợi thêm một lát để client Supabase xử lý hash/code
+      if (!user && isOAuthCallback) {
+        await new Promise(r => setTimeout(r, 350));
+        user = await window.AICheckCloud.getUser();
+      }
 
       // BẢO VỆ TRANG CHỦ: Nếu không có user hợp lệ từ Cloud -> Chuyển hướng sang login.html
       if (isHomePage && !user) {
@@ -60,11 +79,41 @@
         return;
       }
 
-      // Đồng bộ tên hiển thị nếu đã đăng nhập
+      // Đồng bộ thông tin cá nhân từ Google/Apple OAuth vào hồ sơ
       if (user) {
-        const displayName = user.user_metadata?.display_name || user.email?.split("@")[0];
+        // Làm sạch URL (xóa hash access_token trên thanh địa chỉ để URL gọn gàng)
+        if (location.hash && location.hash.includes("access_token")) {
+          try {
+            history.replaceState(null, "", location.pathname + location.search);
+          } catch {}
+        }
+
+        const displayName = user.user_metadata?.full_name || 
+                            user.user_metadata?.name || 
+                            user.user_metadata?.display_name || 
+                            user.email?.split("@")[0] || "";
+        const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture;
+
         if (displayName && !localStorage.getItem("aicheck:player")) {
-          localStorage.setItem("aicheck:player", JSON.stringify(displayName));
+          try { localStorage.setItem("aicheck:player", JSON.stringify(displayName.trim().slice(0, 24))); } catch {}
+        }
+
+        let localProf = {};
+        try { localProf = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
+        let profUpdated = false;
+
+        if (!localProf.display_name && displayName) {
+          localProf.display_name = displayName;
+          profUpdated = true;
+        }
+        if (!localProf.avatar && avatarUrl) {
+          localProf.avatar = avatarUrl;
+          profUpdated = true;
+          try { localStorage.setItem("aicheck:avatar", avatarUrl); } catch {}
+        }
+        if (profUpdated) {
+          try { localStorage.setItem("aicheck:user_profile", JSON.stringify(localProf)); } catch {}
+          window.dispatchEvent(new CustomEvent("aicheck:profile-updated", { detail: { user } }));
         }
       }
 
