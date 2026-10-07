@@ -329,121 +329,165 @@
   color: #ff8c69;
 }
 
-/* Các link điều hướng bên trong Drawer */
+/* Các link điều hướng bên trong Drawer - Bento Grid 2 cột siêu gọn đẹp */
+.site-nav-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 .header-inner .site-nav a.site-nav-link {
   display: flex !important;
   align-items: center;
-  gap: 12px;
-  padding: 11px 14px !important;
-  min-height: 54px;
-  border-radius: 12px;
+  gap: 8px;
+  padding: 7px 10px !important;
+  min-height: 42px;
+  border-radius: 10px;
   background: #ffffff !important;
-  border: 1px solid rgba(22, 61, 53, 0.12) !important;
+  border: 1px solid rgba(22, 61, 53, 0.1) !important;
   text-decoration: none !important;
   color: var(--ink) !important;
-  transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 1px 4px rgba(16, 45, 40, 0.04);
+  transition: all 0.16s ease;
+  box-shadow: 0 1px 3px rgba(16, 45, 40, 0.04);
   text-align: left !important;
+  box-sizing: border-box !important;
 }
 .header-inner .site-nav a.site-nav-link:hover {
   background: #edf5ee !important;
   border-color: rgba(36, 114, 79, 0.4) !important;
-  transform: translateX(3px);
-  box-shadow: 0 4px 14px rgba(22, 61, 53, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(22, 61, 53, 0.08);
 }
 .header-inner .site-nav a.site-nav-link[aria-current="page"] {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.38), rgba(217, 242, 108, 0.12)) !important;
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.35), rgba(217, 242, 108, 0.1)) !important;
   border: 1.5px solid var(--leaf) !important;
   font-weight: 800;
-  box-shadow: 0 3px 10px rgba(217, 242, 108, 0.3);
+  box-shadow: 0 2px 8px rgba(217, 242, 108, 0.25);
 }
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link {
   background: #11342a !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
   color: #e4eee8 !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link:hover {
   background: #174236 !important;
   border-color: rgba(217, 242, 108, 0.35) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-}
-
-/* Tab Đăng nhập / Tài khoản nổi bật ở hàng đầu tiên của menu */
-.header-inner .site-nav a.site-nav-link.site-nav-login-tab {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.22), rgba(36, 114, 79, 0.08)) !important;
-  border: 1.5px solid rgba(36, 114, 79, 0.32) !important;
-  margin-bottom: 2px;
-}
-.header-inner .site-nav a.site-nav-link.site-nav-login-tab:hover {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.38), rgba(36, 114, 79, 0.16)) !important;
-  border-color: var(--leaf) !important;
-}
-[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.15), rgba(22, 61, 53, 0.6)) !important;
-  border-color: rgba(217, 242, 108, 0.32) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link[aria-current="page"] {
   background: linear-gradient(135deg, rgba(217, 242, 108, 0.2), rgba(18, 59, 50, 0.75)) !important;
   border-color: #d9f26c !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 16px rgba(217, 242, 108, 0.25);
 }
 
+/* Thẻ Tài nguyên trải rộng 2 cột ở đáy */
+.site-nav-tile-wide {
+  grid-column: 1 / -1 !important;
+}
+
+/* Tab Đăng nhập / Tài khoản nổi bật ở hàng đầu tiên (Full-width) */
+.header-inner .site-nav a.site-nav-link.site-nav-login-tab {
+  width: 100% !important;
+  padding: 8px 12px !important;
+  min-height: 44px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.22), rgba(36, 114, 79, 0.07)) !important;
+  border: 1.5px solid rgba(36, 114, 79, 0.25) !important;
+  margin-bottom: 2px !important;
+}
+.header-inner .site-nav a.site-nav-link.site-nav-login-tab:hover {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.36), rgba(36, 114, 79, 0.14)) !important;
+  border-color: var(--leaf) !important;
+}
+[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.14), rgba(22, 61, 53, 0.55)) !important;
+  border-color: rgba(217, 242, 108, 0.28) !important;
+}
+
+/* Icon Badges màu sắc nhận diện tinh tế */
 .site-nav-link .nav-icon-badge {
-  width: 36px;
-  height: 36px;
-  display: inline-grid;
-  place-items: center;
-  background: #f1f7f1;
-  border: 1px solid rgba(22, 61, 53, 0.1);
-  border-radius: 9px;
-  font-size: 17px;
-  flex: none;
-  transition: transform 0.2s ease;
+  width: 28px !important;
+  height: 28px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  border-radius: 7px !important;
+  font-size: 14px !important;
+  flex: none !important;
+  transition: transform 0.2s ease !important;
+}
+.site-nav-login-tab .nav-icon-badge {
+  width: 30px !important;
+  height: 30px !important;
+  font-size: 15px !important;
+  border-radius: 8px !important;
 }
 .site-nav a.site-nav-link:hover .nav-icon-badge {
   transform: scale(1.12);
 }
-[data-theme="dark"] .site-nav-link .nav-icon-badge {
-  background: #0d2821;
-  border-color: rgba(255, 255, 255, 0.12);
-}
 
+.icon-home { background: rgba(16, 185, 129, 0.12) !important; border: 1px solid rgba(16, 185, 129, 0.2) !important; }
+.icon-knowledge { background: rgba(59, 130, 246, 0.12) !important; border: 1px solid rgba(59, 130, 246, 0.2) !important; }
+.icon-practice { background: rgba(245, 158, 11, 0.12) !important; border: 1px solid rgba(245, 158, 11, 0.2) !important; }
+.icon-assessment { background: rgba(132, 204, 22, 0.14) !important; border: 1px solid rgba(132, 204, 22, 0.22) !important; }
+.icon-leaderboard { background: rgba(234, 179, 8, 0.14) !important; border: 1px solid rgba(234, 179, 8, 0.25) !important; }
+.icon-research { background: rgba(139, 92, 246, 0.12) !important; border: 1px solid rgba(139, 92, 246, 0.2) !important; }
+.icon-resources { background: rgba(6, 182, 212, 0.12) !important; border: 1px solid rgba(6, 182, 212, 0.2) !important; }
+.icon-login { background: rgba(36, 114, 79, 0.12) !important; border: 1px solid rgba(36, 114, 79, 0.2) !important; }
+
+[data-theme="dark"] .icon-home { background: rgba(16, 185, 129, 0.2) !important; }
+[data-theme="dark"] .icon-knowledge { background: rgba(59, 130, 246, 0.2) !important; }
+[data-theme="dark"] .icon-practice { background: rgba(245, 158, 11, 0.2) !important; }
+[data-theme="dark"] .icon-assessment { background: rgba(132, 204, 22, 0.22) !important; }
+[data-theme="dark"] .icon-leaderboard { background: rgba(234, 179, 8, 0.22) !important; }
+[data-theme="dark"] .icon-research { background: rgba(139, 92, 246, 0.2) !important; }
+[data-theme="dark"] .icon-resources { background: rgba(6, 182, 212, 0.2) !important; }
+[data-theme="dark"] .icon-login { background: rgba(217, 242, 108, 0.16) !important; }
+
+/* Nội dung tiêu đề và mô tả ngắn gọn */
 .site-nav-link .nav-item-content {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   text-align: left;
 }
 .site-nav-link .nav-item-title {
-  font: 700 13.5px/1.2 "Space Grotesk", sans-serif;
+  font: 700 12px/1.2 "Space Grotesk", sans-serif !important;
   color: var(--forest) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 [data-theme="dark"] .site-nav-link .nav-item-title {
   color: #ffffff !important;
 }
 .site-nav-link .nav-item-desc {
-  font-size: 11px;
-  color: #486256 !important;
-  font-weight: 500;
-  line-height: 1.25;
+  font-size: 9.5px !important;
+  color: #556c60 !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 [data-theme="dark"] .site-nav-link .nav-item-desc {
   color: #9cb5a8 !important;
 }
 
 .site-nav-link .nav-item-arrow {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--muted);
-  opacity: 0.5;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.6;
   flex: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 .site-nav a.site-nav-link:hover .nav-item-arrow {
   opacity: 1;
-  transform: translateX(3px);
+  transform: rotate(45deg);
   color: var(--leaf);
 }
 [data-theme="dark"] .site-nav a.site-nav-link:hover .nav-item-arrow {
@@ -452,14 +496,15 @@
 
 /* Footer trong Drawer */
 .site-nav-footer {
-  margin-top: 6px;
-  padding-top: 10px;
+  margin-top: 4px;
+  padding-top: 8px;
   border-top: 1px solid rgba(22, 61, 53, 0.08);
   text-align: center;
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 700;
   color: var(--muted);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
 }
 [data-theme="dark"] .site-nav-footer {
   border-top-color: rgba(255, 255, 255, 0.08);
@@ -583,27 +628,28 @@
     max-height: calc(100svh - 76px) !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
-    padding: 14px 12px !important;
+    padding: 12px 10px !important;
     border-radius: 18px !important;
     z-index: 10005 !important;
     background: #ffffff !important;
     border: 1px solid rgba(22, 61, 53, 0.16) !important;
     box-shadow: 0 16px 48px rgba(10, 35, 28, 0.32), 0 0 0 1px rgba(22, 61, 53, 0.08) !important;
+    gap: 6px !important;
   }
   [data-theme="dark"] .header-inner .site-nav.is-open {
     background: #0d2821 !important;
     border-color: rgba(255, 255, 255, 0.16) !important;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(217, 242, 108, 0.2) !important;
   }
-  .header-inner .site-nav a.site-nav-link {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    padding: 10px 12px !important;
-    min-height: 48px !important;
-    text-align: left !important;
-    white-space: normal !important;
-    border-radius: 12px !important;
+  .header-inner .site-nav a.site-nav-link.site-nav-tile {
+    min-height: 40px !important;
+    padding: 6px 8px !important;
+    border-radius: 9px !important;
+  }
+  .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
+    min-height: 42px !important;
+    padding: 7px 10px !important;
+    border-radius: 11px !important;
   }
 }
 
@@ -708,7 +754,7 @@
 
 /* 2. Modal Card */
 .profile-modal-card {
-  width: min(530px, 100%);
+  width: min(580px, 100%);
   max-height: 90vh;
   overflow-y: auto;
   background: #ffffff;
@@ -955,6 +1001,113 @@
   color: #d9f26c;
 }
 
+/* Thẻ trạng thái tài khoản & Nút Đăng xuất trực tiếp */
+.profile-account-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(36, 114, 79, 0.05);
+  border: 1px solid rgba(36, 114, 79, 0.16);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  gap: 12px;
+  transition: all 0.2s ease;
+}
+[data-theme="dark"] .profile-account-card {
+  background: rgba(62, 200, 136, 0.06);
+  border-color: rgba(62, 200, 136, 0.18);
+}
+.profile-account-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.profile-account-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.status-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: status-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  flex-shrink: 0;
+}
+@keyframes status-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+.profile-account-status {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  letter-spacing: 0.02em;
+}
+[data-theme="dark"] .profile-account-status {
+  color: #a2b7ac;
+}
+.profile-account-email {
+  font-size: 12px;
+  color: #123e35;
+  font-weight: 700;
+  word-break: break-all;
+}
+[data-theme="dark"] .profile-account-email {
+  color: #f0fdf4;
+}
+
+/* Nút đăng xuất nhỏ gọn trên thẻ tài khoản */
+.btn-profile-logout-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 11px;
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.06);
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.btn-profile-logout-sm:hover {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+  box-shadow: 0 3px 10px rgba(220, 38, 38, 0.25);
+  transform: translateY(-1px);
+}
+[data-theme="dark"] .btn-profile-logout-sm {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+[data-theme="dark"] .btn-profile-logout-sm:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+  box-shadow: 0 3px 12px rgba(239, 68, 68, 0.35);
+}
+
 /* Form Controls */
 .profile-form-grid {
   display: grid;
@@ -1023,7 +1176,7 @@
   line-height: 1.4;
 }
 
-/* 6. Modal Footer */
+/* 6. Modal Footer - Căn phải 2 nút Hủy và Lưu */
 .profile-modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -1031,9 +1184,65 @@
   gap: 10px;
   padding: 16px 24px 20px;
   border-top: 1px solid rgba(18, 59, 50, 0.08);
+  box-sizing: border-box;
 }
 [data-theme="dark"] .profile-modal-footer {
   border-top-color: rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Đồng bộ kích thước các nút trong footer */
+.profile-modal-footer .button {
+  min-height: 38px !important;
+  height: 38px !important;
+  padding: 0 18px !important;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+.btn-profile-cancel {
+  border: 1px solid rgba(18, 59, 50, 0.18) !important;
+  background: rgba(18, 59, 50, 0.04) !important;
+  color: var(--color-primary-dark) !important;
+}
+[data-theme="dark"] .btn-profile-cancel {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #cbdad1 !important;
+}
+.btn-profile-cancel:hover {
+  background: rgba(18, 59, 50, 0.09) !important;
+}
+[data-theme="dark"] .btn-profile-cancel:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 420px) {
+  .profile-modal-footer {
+    padding: 14px 16px 18px;
+    gap: 8px;
+  }
+  .profile-modal-footer .button {
+    padding: 0 14px !important;
+    font-size: 11.5px !important;
+  }
+}
+select.profile-input {
+  cursor: pointer;
+}
+select.profile-input option {
+  background: #ffffff;
+  color: #123e35;
+}
+[data-theme="dark"] select.profile-input option {
+  background: #0d2620;
+  color: #ffffff;
 }
 .btn-save-profile {
   position: relative;

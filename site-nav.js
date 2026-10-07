@@ -592,21 +592,21 @@
         themeDark: "Chuyển sang giao diện Tối",
         level: "Cấp",
         nav_login: "Đăng nhập",
-        nav_login_desc: "Xác thực tài khoản để vào trang chủ & đồng bộ BXH",
+        nav_login_desc: "Vào trang chủ & Lưu BXH",
         nav_home: "Trang chủ",
-        nav_home_desc: "Tổng quan & Bản đồ tư duy kiểm chứng",
+        nav_home_desc: "Tổng quan",
         nav_knowledge: "Kiến thức",
-        nav_knowledge_desc: "4 Chuyên đề cốt lõi & Nhận diện lỗi AI",
+        nav_knowledge_desc: "4 Chuyên đề",
         nav_practice: "Thực hành",
-        nav_practice_desc: "Huấn luyện tương tác & Bóc mẽ Deepfake",
+        nav_practice_desc: "Tình huống AI",
         nav_assessment: "Đánh giá",
-        nav_assessment_desc: "4 Bộ đề chuẩn hóa & Cấp chứng chỉ",
-        nav_leaderboard: "BXH",
-        nav_leaderboard_desc: "Bảng vinh danh & Thăng hạng XP toàn trường",
+        nav_assessment_desc: "Thi chứng chỉ",
+        nav_leaderboard: "Xếp hạng",
+        nav_leaderboard_desc: "Bảng vàng XP",
         nav_research: "Nghiên cứu",
-        nav_research_desc: "Báo cáo KHKT & Khảo sát THPT Trần Hưng Đạo",
+        nav_research_desc: "Báo cáo KHKT",
         nav_resources: "Tài nguyên",
-        nav_resources_desc: "Cẩm nang học tập, Infographic & AI Tools",
+        nav_resources_desc: "Cẩm nang & Tools",
         // Profile Modal
         profileModalTitle: "HỒ SƠ CÁ NHÂN",
         profileModalSubtitle: "Tùy chỉnh thông tin & bảo mật tài khoản",
@@ -647,21 +647,21 @@
         themeDark: "Switch to Dark Theme",
         level: "Lv.",
         nav_login: "Log in",
-        nav_login_desc: "Sign in to access homepage & sync leaderboard",
+        nav_login_desc: "Sign in & Sync XP",
         nav_home: "Home",
-        nav_home_desc: "Overview & Fact-check Mindmap",
+        nav_home_desc: "Overview",
         nav_knowledge: "Knowledge",
-        nav_knowledge_desc: "4 Core Modules & AI Hallucination",
+        nav_knowledge_desc: "4 Topics",
         nav_practice: "Practice",
-        nav_practice_desc: "Interactive Training & Deepfake",
+        nav_practice_desc: "AI Training",
         nav_assessment: "Assessment",
-        nav_assessment_desc: "Standardized Tests & Certificate",
-        nav_leaderboard: "Leaderboard",
-        nav_leaderboard_desc: "Hall of Fame & Schoolwide Ranking",
+        nav_assessment_desc: "Certificates",
+        nav_leaderboard: "Ranking",
+        nav_leaderboard_desc: "Leaderboard",
         nav_research: "Research",
-        nav_research_desc: "Scientific Report & THD Survey",
+        nav_research_desc: "Science Report",
         nav_resources: "Resources",
-        nav_resources_desc: "Handbook, Infographic & AI Tools",
+        nav_resources_desc: "Handbook & Tools",
         // Profile Modal
         profileModalTitle: "USER PROFILE",
         profileModalSubtitle: "Personal Information & Account Security",
@@ -1471,44 +1471,52 @@
   // 3. ĐỊNH NGHĨA VÀ TRANG TRÍ CÁC MỤC ĐIỀU HƯỚNG TRONG MENU ☰
   const NAV_DEFINITIONS = {
     login: {
-      icon: "🔐",
-      vi: { title: "Đăng nhập", desc: "Xác thực tài khoản để vào trang chủ & đồng bộ BXH" },
-      en: { title: "Log in", desc: "Sign in to access homepage & sync leaderboard" }
+      icon: "👤",
+      colorClass: "icon-login",
+      vi: { title: "Tài khoản", desc: "Hồ sơ & Cài đặt" },
+      en: { title: "Account", desc: "Profile & Settings" }
     },
     home: {
       icon: "🏠",
-      vi: { title: "Trang chủ", desc: "Tổng quan & Bản đồ tư duy kiểm chứng" },
-      en: { title: "Home", desc: "Overview & Fact-check Mindmap" }
+      colorClass: "icon-home",
+      vi: { title: "Trang chủ", desc: "Tổng quan" },
+      en: { title: "Home", desc: "Overview" }
     },
     knowledge: {
       icon: "📖",
-      vi: { title: "Kiến thức", desc: "4 Chuyên đề cốt lõi & Nhận diện lỗi AI" },
-      en: { title: "Knowledge", desc: "4 Core Modules & AI Hallucination" }
+      colorClass: "icon-knowledge",
+      vi: { title: "Kiến thức", desc: "4 Chuyên đề" },
+      en: { title: "Knowledge", desc: "4 Topics" }
     },
     practice: {
       icon: "⚡",
-      vi: { title: "Thực hành", desc: "Huấn luyện tương tác & Bóc mẽ Deepfake" },
-      en: { title: "Practice", desc: "Interactive Training & Deepfake" }
+      colorClass: "icon-practice",
+      vi: { title: "Thực hành", desc: "Tình huống AI" },
+      en: { title: "Practice", desc: "AI Lab" }
     },
     assessment: {
-      icon: "📐",
-      vi: { title: "Đánh giá", desc: "4 Bộ đề chuẩn hóa & Cấp chứng chỉ" },
-      en: { title: "Assessment", desc: "Standardized Tests & Certificate" }
+      icon: "🎯",
+      colorClass: "icon-assessment",
+      vi: { title: "Đánh giá", desc: "Thi chứng chỉ" },
+      en: { title: "Assessment", desc: "Certificates" }
     },
     leaderboard: {
       icon: "🏆",
-      vi: { title: "BXH", desc: "Bảng vinh danh & Thăng hạng XP toàn trường" },
-      en: { title: "Leaderboard", desc: "Hall of Fame & Schoolwide Ranking" }
+      colorClass: "icon-leaderboard",
+      vi: { title: "Xếp hạng", desc: "Bảng vàng XP" },
+      en: { title: "Ranking", desc: "Leaderboard" }
     },
     research: {
       icon: "📊",
-      vi: { title: "Nghiên cứu", desc: "Báo cáo KHKT & Khảo sát THPT Trần Hưng Đạo" },
-      en: { title: "Research", desc: "Scientific Report & THD Survey" }
+      colorClass: "icon-research",
+      vi: { title: "Nghiên cứu", desc: "Báo cáo KHKT" },
+      en: { title: "Research", desc: "Report & THD" }
     },
     resources: {
       icon: "📁",
-      vi: { title: "Tài nguyên", desc: "Cẩm nang học tập, Infographic & AI Tools" },
-      en: { title: "Resources", desc: "Handbook, Infographic & AI Tools" }
+      colorClass: "icon-resources",
+      vi: { title: "Tài nguyên", desc: "Cẩm nang & Tools" },
+      en: { title: "Resources", desc: "Handbook & Tools" }
     }
   };
 
@@ -1520,7 +1528,7 @@
     if (href.includes("knowledge.html") || text.includes("kiến thức") || text === "knowledge") return "knowledge";
     if (href.includes("practice.html") || text.includes("thực hành") || text === "practice") return "practice";
     if (href.includes("assessment.html") || text.includes("đánh giá") || text === "assessment") return "assessment";
-    if (href.includes("leaderboard.html") || text.includes("bxh") || text === "leaderboard") return "leaderboard";
+    if (href.includes("leaderboard.html") || text.includes("bxh") || text.includes("xếp hạng") || text === "leaderboard") return "leaderboard";
     if (href.includes("research.html") || text.includes("nghiên cứu") || text === "research") return "research";
     if (href.includes("resources.html") || text.includes("tài nguyên") || text === "resources") return "resources";
     return null;
@@ -1579,17 +1587,35 @@
       const item = NAV_DEFINITIONS[key];
       if (!item) return;
 
-      link.className = `site-nav-link ${key === "login" ? "site-nav-login-tab" : ""}`;
+      const isLogin = (key === "login");
+      const isWide = (key === "resources");
+      link.className = `site-nav-link ${isLogin ? "site-nav-login-tab" : "site-nav-tile"} ${isWide ? "site-nav-tile-wide" : ""}`;
       link.setAttribute("data-nav-key", key);
       link.innerHTML = `
-        <span class="nav-icon-badge">${item.icon}</span>
+        <span class="nav-icon-badge ${item.colorClass || ''}">${item.icon}</span>
         <span class="nav-item-content">
           <strong class="nav-item-title">${item[lang].title}</strong>
           <small class="nav-item-desc">${item[lang].desc}</small>
         </span>
-        <span class="nav-item-arrow" aria-hidden="true">→</span>
+        ${isLogin ? '<span class="nav-item-arrow" aria-hidden="true">⚙️</span>' : ''}
       `;
     });
+
+    // Gom các mục học tập vào Grid 2 cột
+    let gridWrap = nav.querySelector(".site-nav-grid");
+    if (!gridWrap) {
+      gridWrap = document.createElement("div");
+      gridWrap.className = "site-nav-grid";
+      const tiles = Array.from(nav.querySelectorAll(".site-nav-tile"));
+      if (tiles.length > 0) {
+        if (loginLink && loginLink.parentNode === nav) {
+          loginLink.after(gridWrap);
+        } else {
+          nav.appendChild(gridWrap);
+        }
+        tiles.forEach(t => gridWrap.appendChild(t));
+      }
+    }
 
     // Tạo Footer cho Drawer
     if (!nav.querySelector(".site-nav-footer")) {
@@ -1873,7 +1899,27 @@
                 </div>
               </div>
 
+              <!-- Thẻ trạng thái tài khoản & Nút đăng xuất trực tiếp -->
+              <div class="profile-account-card" id="profileAccountCard">
+                <div class="profile-account-left">
+                  <div class="profile-account-status-badge">
+                    <span class="status-pulse-dot"></span>
+                    <span class="profile-account-status">Đang đăng nhập:</span>
+                  </div>
+                  <strong class="profile-account-email" id="profileAccountEmailDisplay">Đang tải...</strong>
+                </div>
+                <button type="button" class="btn-profile-logout-sm" id="btnProfileLogoutCard" title="Đăng xuất khỏi tài khoản ngay">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+
               <div class="profile-form-grid">
+                <!-- Hàng 1: Họ tên & Email -->
                 <div class="profile-form-group">
                   <label class="profile-label" for="profileInputName">
                     <span>Họ và tên / Biệt danh</span>
@@ -1890,6 +1936,42 @@
                   <input type="text" id="profileInputEmail" class="profile-input" readonly placeholder="Khách vãng lai">
                 </div>
 
+                <!-- Hàng 2: Mã học sinh & Giới tính -->
+                <div class="profile-form-group">
+                  <label class="profile-label" for="profileInputStudentId">
+                    <span>Mã học sinh / SBD</span>
+                  </label>
+                  <input type="text" id="profileInputStudentId" class="profile-input" maxlength="24" placeholder="Ví dụ: THD-2024-089">
+                </div>
+
+                <div class="profile-form-group">
+                  <label class="profile-label" for="profileSelectGender">
+                    <span>Giới tính</span>
+                  </label>
+                  <select id="profileSelectGender" class="profile-input">
+                    <option value="">-- Chọn giới tính --</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác / Tùy chọn</option>
+                  </select>
+                </div>
+
+                <!-- Hàng 3: Ngày sinh & Số điện thoại / Zalo -->
+                <div class="profile-form-group">
+                  <label class="profile-label" for="profileInputBirthdate">
+                    <span>Ngày sinh</span>
+                  </label>
+                  <input type="date" id="profileInputBirthdate" class="profile-input">
+                </div>
+
+                <div class="profile-form-group">
+                  <label class="profile-label" for="profileInputPhone">
+                    <span>Số điện thoại / Zalo</span>
+                  </label>
+                  <input type="tel" id="profileInputPhone" class="profile-input" maxlength="15" placeholder="Ví dụ: 0912 345 678">
+                </div>
+
+                <!-- Hàng 4: Lớp học & Trường học -->
                 <div class="profile-form-group">
                   <label class="profile-label" for="profileInputClass">
                     <span>Lớp học</span>
@@ -1904,19 +1986,36 @@
                   <input type="text" id="profileInputSchool" class="profile-input" maxlength="60" placeholder="THPT Trần Hưng Đạo">
                 </div>
 
-                <div class="profile-form-group full-width">
-                  <label class="profile-label" for="profileInputBirthdate">
-                    <span>Ngày sinh</span>
+                <!-- Hàng 5: Tỉnh/Thành phố & Môn thế mạnh -->
+                <div class="profile-form-group">
+                  <label class="profile-label" for="profileInputCity">
+                    <span>Tỉnh / Thành phố</span>
                   </label>
-                  <input type="date" id="profileInputBirthdate" class="profile-input">
+                  <input type="text" id="profileInputCity" class="profile-input" maxlength="40" placeholder="Ví dụ: Nam Định, Hà Nội...">
                 </div>
 
+                <div class="profile-form-group">
+                  <label class="profile-label" for="profileInputFavoriteSubject">
+                    <span>Môn học / Lĩnh vực thế mạnh</span>
+                  </label>
+                  <input type="text" id="profileInputFavoriteSubject" class="profile-input" maxlength="50" placeholder="Ví dụ: Tin học, Toán, Khoa học dữ liệu...">
+                </div>
+
+                <!-- Hàng 6: Mục tiêu NCKH & AI (full-width) -->
+                <div class="profile-form-group full-width">
+                  <label class="profile-label" for="profileInputTarget">
+                    <span>Mục tiêu NCKH & Năng lực AI mong muốn</span>
+                  </label>
+                  <input type="text" id="profileInputTarget" class="profile-input" maxlength="120" placeholder="Ví dụ: Đạt chứng chỉ Kiểm chứng AI Xuất sắc, Top 10 BXH toàn trường...">
+                </div>
+
+                <!-- Hàng 7: Châm ngôn / Bio (full-width) -->
                 <div class="profile-form-group full-width">
                   <label class="profile-label" for="profileInputBio">
-                    <span>Câu nói yêu thích / Châm ngôn (Motto)</span>
+                    <span>Câu nói yêu thích / Châm ngôn học tập (Motto)</span>
                   </label>
                   <textarea id="profileInputBio" class="profile-textarea" rows="2" maxlength="160" placeholder="Ví dụ: Kiểm chứng thông tin trước khi tin - Tư duy phản biện thời đại AI."></textarea>
-                  <span class="profile-hint">Tối đa 160 ký tự. Sẽ lưu cùng hồ sơ học tập của em.</span>
+                  <span class="profile-hint">Tối đa 160 ký tự. Sẽ lưu đồng bộ cùng hồ sơ học tập của em.</span>
                 </div>
               </div>
             </div>
@@ -1927,6 +2026,14 @@
                 ℹ️ Bạn đang dùng chế độ <strong>Khách vãng lai</strong>. Hãy đăng nhập tài khoản Supabase Cloud để sử dụng tính năng Đổi mật khẩu.
               </div>
               <div id="profileSecurityFormFields">
+                <div class="profile-form-group">
+                  <label class="profile-label" for="profileInputCurrentPassword">
+                    <span>Mật khẩu hiện tại</span>
+                    <span style="color:#e97850">*</span>
+                  </label>
+                  <input type="password" id="profileInputCurrentPassword" class="profile-input" placeholder="Nhập mật khẩu đang sử dụng" autocomplete="current-password">
+                </div>
+
                 <div class="profile-form-group">
                   <label class="profile-label" for="profileInputNewPassword">
                     <span>Mật khẩu mới</span>
@@ -1944,7 +2051,7 @@
                 </div>
 
                 <div class="profile-hint" style="margin-top:10px;line-height:1.6">
-                  🔒 <strong>Bảo mật tài khoản:</strong> Mật khẩu mới cần tối thiểu 6 ký tự. Hãy ghi nhớ để đăng nhập trong các phiên làm việc tiếp theo.
+                  🔒 <strong>Bảo mật tài khoản:</strong> Cần xác nhận đúng mật khẩu hiện tại trước khi cập nhật mật khẩu mới.
                 </div>
               </div>
             </div>
@@ -1952,9 +2059,14 @@
 
           <!-- Footer -->
           <div class="profile-modal-footer">
-            <button type="button" class="button button-outline" id="btnCancelProfileModal">Hủy bỏ</button>
+            <button type="button" class="button button-outline btn-profile-cancel" id="btnCancelProfileModal">Hủy bỏ</button>
             <button type="button" class="button button-lime btn-save-profile" id="btnSaveProfileModal">
-              <span>💾 Lưu thay đổi</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              <span>Lưu thay đổi</span>
             </button>
           </div>
         </div>
@@ -2056,7 +2168,9 @@
 
       const saveBtn = document.getElementById("btnSaveProfileModal");
       if (saveBtn) {
-        saveBtn.innerHTML = tab === "info" ? `<span>💾 Lưu thông tin</span>` : `<span>🔐 Cập nhật mật khẩu</span>`;
+        saveBtn.innerHTML = tab === "info" 
+          ? `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg><span>Lưu thay đổi</span>` 
+          : `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span>Cập nhật mật khẩu</span>`;
       }
     }
 
@@ -2086,6 +2200,12 @@
         const schoolInput = document.getElementById("profileInputSchool");
         const birthInput = document.getElementById("profileInputBirthdate");
         const bioInput = document.getElementById("profileInputBio");
+        const studentIdInput = document.getElementById("profileInputStudentId");
+        const genderSelect = document.getElementById("profileSelectGender");
+        const phoneInput = document.getElementById("profileInputPhone");
+        const cityInput = document.getElementById("profileInputCity");
+        const subjectInput = document.getElementById("profileInputFavoriteSubject");
+        const targetInput = document.getElementById("profileInputTarget");
 
         const displayName = String(nameInput?.value || "").trim();
         if (!displayName) {
@@ -2102,7 +2222,13 @@
             class_name: String(classInput?.value || "").trim(),
             school: String(schoolInput?.value || "THPT Trần Hưng Đạo").trim(),
             birthdate: birthInput?.value || "",
-            bio: String(bioInput?.value || "").trim()
+            bio: String(bioInput?.value || "").trim(),
+            student_id: String(studentIdInput?.value || "").trim(),
+            gender: String(genderSelect?.value || "").trim(),
+            phone: String(phoneInput?.value || "").trim(),
+            city: String(cityInput?.value || "").trim(),
+            favorite_subject: String(subjectInput?.value || "").trim(),
+            target_goal: String(targetInput?.value || "").trim()
           };
 
           const res = await window.AICheckCloud.updateProfile(fields);
@@ -2130,16 +2256,32 @@
           return;
         }
 
+        const currentPassInput = document.getElementById("profileInputCurrentPassword");
         const newPassInput = document.getElementById("profileInputNewPassword");
         const confirmPassInput = document.getElementById("profileInputConfirmPassword");
+
+        const currentPass = String(currentPassInput?.value || "").trim();
         const newPass = String(newPassInput?.value || "");
         const confirmPass = String(confirmPassInput?.value || "");
+
+        if (!currentPass) {
+          showProfileToast("Vui lòng nhập mật khẩu hiện tại!", "error");
+          currentPassInput?.focus();
+          return;
+        }
 
         if (!newPass || newPass.length < 6) {
           showProfileToast("Mật khẩu mới phải có tối thiểu 6 ký tự!", "error");
           newPassInput?.focus();
           return;
         }
+
+        if (currentPass === newPass) {
+          showProfileToast("Mật khẩu mới không được trùng với mật khẩu hiện tại!", "error");
+          newPassInput?.focus();
+          return;
+        }
+
         if (newPass !== confirmPass) {
           showProfileToast("Mật khẩu xác nhận không khớp!", "error");
           confirmPassInput?.focus();
@@ -2148,15 +2290,19 @@
 
         btnSave.classList.add("is-loading");
         try {
-          const res = await window.AICheckCloud.updatePassword(newPass);
+          const res = await window.AICheckCloud.updatePassword(newPass, currentPass);
           btnSave.classList.remove("is-loading");
           if (res?.error) {
-            showProfileToast("Lỗi đổi mật khẩu: " + (res.error.message || "Thất bại"), "error");
+            showProfileToast(res.error.message || "Lỗi cập nhật mật khẩu", "error");
+            if (res.error.message?.includes("hiện tại")) {
+              currentPassInput?.focus();
+            }
           } else {
             showProfileToast("Đổi mật khẩu thành công! Hãy ghi nhớ mật khẩu mới nhé.", "success");
+            if (currentPassInput) currentPassInput.value = "";
             newPassInput.value = "";
             confirmPassInput.value = "";
-            setTimeout(closeModal, 500);
+            setTimeout(closeModal, 600);
           }
         } catch (err) {
           btnSave.classList.remove("is-loading");
@@ -2165,12 +2311,38 @@
       }
     });
 
+    // Nút Đăng xuất trong Modal (hỗ trợ cả nút ở thẻ tài khoản và nút ở footer)
+    const handleProfileLogout = async () => {
+      const confirmed = confirm("Bạn có chắc chắn muốn đăng xuất tài khoản khỏi hệ thống AI CHECK THĐ?");
+      if (!confirmed) return;
+      closeModal();
+      window.AICheckLoader?.show?.("Đang đăng xuất tài khoản...");
+      if (window.AICheckCloud?.signOut) {
+        await window.AICheckCloud.signOut();
+      } else {
+        try {
+          for (let i = localStorage.length - 1; i >= 0; i--) {
+            const key = localStorage.key(i);
+            if (key && (key.startsWith("sb-") || key.startsWith("aicheck:"))) {
+              localStorage.removeItem(key);
+            }
+          }
+        } catch {}
+        const isPagesDir = location.pathname.includes("/pages/");
+        location.href = isPagesDir ? "../login.html" : "login.html";
+      }
+    };
+
+    document.getElementById("btnProfileLogout")?.addEventListener("click", handleProfileLogout);
+    document.getElementById("btnProfileLogoutCard")?.addEventListener("click", handleProfileLogout);
+
     // Xuất hàm mở modal ra window
     window.openUserProfileModal = async function() {
       const backdrop = document.getElementById("profileModalBackdrop");
       if (!backdrop) return;
 
       setProfileTab("info");
+      if (document.getElementById("profileInputCurrentPassword")) document.getElementById("profileInputCurrentPassword").value = "";
       document.getElementById("profileInputNewPassword").value = "";
       document.getElementById("profileInputConfirmPassword").value = "";
       document.getElementById("profileAvatarUrlRow").style.display = "none";
@@ -2195,10 +2367,16 @@
 
       const nameVal = prof.display_name || user?.user_metadata?.display_name || user?.email?.split("@")[0] || localPlayer || "";
       const emailVal = user?.email || (localPlayer ? "Chế độ Khách (Offline)" : "Chưa đăng nhập");
-      const classVal = prof.class_name || "";
-      const schoolVal = prof.school || "THPT Trần Hưng Đạo";
-      const birthVal = prof.birthdate || "";
-      const bioVal = prof.bio || "";
+      const classVal = prof.class_name || user?.user_metadata?.class_name || "";
+      const schoolVal = prof.school || user?.user_metadata?.school || "THPT Trần Hưng Đạo";
+      const birthVal = prof.birthdate || user?.user_metadata?.birthdate || "";
+      const bioVal = prof.bio || user?.user_metadata?.bio || "";
+      const studentIdVal = prof.student_id || user?.user_metadata?.student_id || "";
+      const genderVal = prof.gender || user?.user_metadata?.gender || "";
+      const phoneVal = prof.phone || user?.user_metadata?.phone || "";
+      const cityVal = prof.city || user?.user_metadata?.city || "";
+      const subjectVal = prof.favorite_subject || user?.user_metadata?.favorite_subject || "";
+      const targetVal = prof.target_goal || user?.user_metadata?.target_goal || "";
       profileCurrentAvatar = prof.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "🎓";
 
       document.getElementById("profileInputName").value = nameVal;
@@ -2207,6 +2385,16 @@
       document.getElementById("profileInputSchool").value = schoolVal;
       document.getElementById("profileInputBirthdate").value = birthVal;
       document.getElementById("profileInputBio").value = bioVal;
+
+      if (document.getElementById("profileInputStudentId")) document.getElementById("profileInputStudentId").value = studentIdVal;
+      if (document.getElementById("profileSelectGender")) document.getElementById("profileSelectGender").value = genderVal;
+      if (document.getElementById("profileInputPhone")) document.getElementById("profileInputPhone").value = phoneVal;
+      if (document.getElementById("profileInputCity")) document.getElementById("profileInputCity").value = cityVal;
+      if (document.getElementById("profileInputFavoriteSubject")) document.getElementById("profileInputFavoriteSubject").value = subjectVal;
+      if (document.getElementById("profileInputTarget")) document.getElementById("profileInputTarget").value = targetVal;
+      if (document.getElementById("profileAccountEmailDisplay")) {
+        document.getElementById("profileAccountEmailDisplay").textContent = user ? user.email : (localPlayer ? "Khách vãng lai" : "Chưa đăng nhập");
+      }
 
       renderAvatarToElement(document.getElementById("profileAvatarPreview"), profileCurrentAvatar);
       updateEmojiSelection();
@@ -2353,7 +2541,7 @@
           const iconEl = loginTab.querySelector(".nav-icon-badge");
           const arrowEl = loginTab.querySelector(".nav-item-arrow");
           if (titleEl) titleEl.textContent = `${isEn ? "Account: " : "Tài khoản: "}${name.slice(0, 14)}`;
-          if (descEl) descEl.textContent = isEn ? "Profile & Security settings" : "Hồ sơ cá nhân & Cài đặt tài khoản";
+          if (descEl) descEl.textContent = isEn ? "Profile & Settings" : "🟢 Hồ sơ & Cài đặt";
           if (iconEl) iconEl.textContent = "👤";
           if (arrowEl) arrowEl.textContent = "⚙️";
           loginTab.onclick = (e) => {
@@ -2368,8 +2556,8 @@
           const descEl = loginTab.querySelector(".nav-item-desc");
           const iconEl = loginTab.querySelector(".nav-icon-badge");
           const arrowEl = loginTab.querySelector(".nav-item-arrow");
-          if (titleEl) titleEl.textContent = isEn ? "Log in (Required)" : "Đăng nhập (Bắt buộc)";
-          if (descEl) descEl.textContent = isEn ? "Sign in to enter Homepage & sync" : "Đăng nhập để vào trang chủ & đồng bộ";
+          if (titleEl) titleEl.textContent = isEn ? "Log in" : "Đăng nhập";
+          if (descEl) descEl.textContent = isEn ? "Sign in & Sync XP" : "Vào trang chủ & Lưu BXH";
           if (iconEl) iconEl.textContent = "🔐";
           if (arrowEl) arrowEl.textContent = "→";
           loginTab.onclick = null;

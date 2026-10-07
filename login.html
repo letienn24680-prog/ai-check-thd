@@ -10,6 +10,13 @@
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="site-nav.css">
   <link rel="stylesheet" href="site-visual.css">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('aicheck:theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', savedTheme || (prefersDark ? 'dark' : 'light'));
+    } catch(e){}
+  </script>
   <style>
     /* =========================================================
        GIAO DIỆN ĐĂNG NHẬP HIỆN ĐẠI (From Uiverse.io by micaelgomestavares)
@@ -73,21 +80,223 @@
       color: #ffffff;
     }
 
+    /* Tối ưu nút công tắc Chuyển chế độ Sáng / Tối (Theme Switcher) */
     .theme-switch-holder {
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 48px;
+      height: 28px;
+      overflow: visible;
     }
 
     .theme-switch-holder .theme-input {
       position: absolute;
       opacity: 0;
+      width: 0;
+      height: 0;
       pointer-events: none;
     }
 
+    /* Thu nhỏ kích thước lại cho tinh tế, không bị to thô */
     .theme-switch-holder .toggle {
-      transform: scale(0.68);
-      transform-origin: right center;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      width: 90px;
+      height: 50px;
+      background-color: #83d8ff;
+      border-radius: 84px;
+      transition: background-color 350ms cubic-bezier(0.445, 0.05, 0.55, 0.95), transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transform: scale(0.46);
+      transform-origin: center center;
       margin: 0;
+      user-select: none;
+    }
+
+    .theme-switch-holder .toggle:hover {
+      transform: scale(0.49);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+    }
+
+    /* Ẩn chữ AM / PM thừa */
+    .theme-switch-holder .toggle:before,
+    .theme-switch-holder .toggle:after {
+      display: none !important;
+    }
+
+    /* Quả cầu handler (Mặt trời ban ngày) */
+    .theme-switch-holder .toggle__handler {
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      top: 3px;
+      left: 3px;
+      width: 44px;
+      height: 44px;
+      background-color: #ffcf96;
+      border-radius: 50px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transform: rotate(-45deg);
+    }
+
+    .theme-switch-holder .toggle__handler .crater {
+      position: absolute;
+      background-color: #e8cda5;
+      opacity: 0;
+      transition: opacity 250ms ease-in-out;
+      border-radius: 100%;
+    }
+
+    .theme-switch-holder .toggle__handler .crater--1 {
+      top: 18px;
+      left: 10px;
+      width: 4px;
+      height: 4px;
+    }
+
+    .theme-switch-holder .toggle__handler .crater--2 {
+      top: 28px;
+      left: 22px;
+      width: 6px;
+      height: 6px;
+    }
+
+    .theme-switch-holder .toggle__handler .crater--3 {
+      top: 10px;
+      left: 25px;
+      width: 8px;
+      height: 8px;
+    }
+
+    .theme-switch-holder .star {
+      position: absolute;
+      background-color: #fff;
+      transition: all 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      border-radius: 50%;
+    }
+
+    .theme-switch-holder .star--1 {
+      top: 10px;
+      left: 35px;
+      z-index: 0;
+      width: 30px;
+      height: 3px;
+    }
+
+    .theme-switch-holder .star--2 {
+      top: 18px;
+      left: 28px;
+      z-index: 1;
+      width: 30px;
+      height: 3px;
+    }
+
+    .theme-switch-holder .star--3 {
+      top: 27px;
+      left: 40px;
+      z-index: 0;
+      width: 30px;
+      height: 3px;
+    }
+
+    .theme-switch-holder .star--4,
+    .theme-switch-holder .star--5,
+    .theme-switch-holder .star--6 {
+      opacity: 0;
+      transition: all 300ms 0s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    }
+
+    .theme-switch-holder .star--4 {
+      top: 16px;
+      left: 11px;
+      z-index: 0;
+      width: 2px;
+      height: 2px;
+      transform: translate3d(3px, 0, 0);
+    }
+
+    .theme-switch-holder .star--5 {
+      top: 32px;
+      left: 17px;
+      z-index: 0;
+      width: 3px;
+      height: 3px;
+      transform: translate3d(3px, 0, 0);
+    }
+
+    .theme-switch-holder .star--6 {
+      top: 36px;
+      left: 28px;
+      z-index: 0;
+      width: 2px;
+      height: 2px;
+      transform: translate3d(3px, 0, 0);
+    }
+
+    /* Hiệu ứng trượt chuyển sang Dark Mode (Mặt trăng ban đêm & sao trời) */
+    #dnLogin:checked + .toggle,
+    .theme-input:checked + .toggle {
+      background-color: #2b394e !important;
+    }
+
+    #dnLogin:checked + .toggle .toggle__handler,
+    .theme-input:checked + .toggle .toggle__handler {
+      background-color: #ffe5b5 !important;
+      transform: translate3d(40px, 0, 0) rotate(0deg) !important;
+    }
+
+    #dnLogin:checked + .toggle .toggle__handler .crater,
+    .theme-input:checked + .toggle .toggle__handler .crater {
+      opacity: 1 !important;
+    }
+
+    #dnLogin:checked + .toggle .star--1,
+    .theme-input:checked + .toggle .star--1 {
+      width: 2px !important;
+      height: 2px !important;
+    }
+
+    #dnLogin:checked + .toggle .star--2,
+    .theme-input:checked + .toggle .star--2 {
+      width: 4px !important;
+      height: 4px !important;
+      transform: translate3d(-5px, 0, 0) !important;
+    }
+
+    #dnLogin:checked + .toggle .star--3,
+    .theme-input:checked + .toggle .star--3 {
+      width: 2px !important;
+      height: 2px !important;
+      transform: translate3d(-7px, 0, 0) !important;
+    }
+
+    #dnLogin:checked + .toggle .star--4,
+    #dnLogin:checked + .toggle .star--5,
+    #dnLogin:checked + .toggle .star--6,
+    .theme-input:checked + .toggle .star--4,
+    .theme-input:checked + .toggle .star--5,
+    .theme-input:checked + .toggle .star--6 {
+      opacity: 1 !important;
+      transform: translate3d(0, 0, 0) !important;
+    }
+
+    #dnLogin:checked + .toggle .star--4,
+    .theme-input:checked + .toggle .star--4 {
+      transition: all 300ms 200ms cubic-bezier(0.445, 0.05, 0.55, 0.95) !important;
+    }
+
+    #dnLogin:checked + .toggle .star--5,
+    .theme-input:checked + .toggle .star--5 {
+      transition: all 300ms 300ms cubic-bezier(0.445, 0.05, 0.55, 0.95) !important;
+    }
+
+    #dnLogin:checked + .toggle .star--6,
+    .theme-input:checked + .toggle .star--6 {
+      transition: all 300ms 400ms cubic-bezier(0.445, 0.05, 0.55, 0.95) !important;
     }
 
     /* Card Form chính từ mẫu Uiverse */
@@ -417,6 +626,12 @@
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(45, 121, 243, 0.12);
     }
+    .btn.google:hover {
+      border-color: #4285f4;
+    }
+    .btn.facebook:hover {
+      border-color: #1877f2;
+    }
 
     .btn:active {
       transform: scale(0.98);
@@ -664,6 +879,14 @@
       border-color: #d9f26c;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
+    [data-theme="dark"] .btn.google:hover {
+      border-color: #4285f4;
+      box-shadow: 0 4px 14px rgba(66, 133, 244, 0.28);
+    }
+    [data-theme="dark"] .btn.facebook:hover {
+      border-color: #1877f2;
+      box-shadow: 0 4px 14px rgba(24, 119, 242, 0.28);
+    }
 
     [data-theme="dark"] .mandatory-note {
       background: #102e25;
@@ -767,13 +990,13 @@
 
     <!-- Tiêu đề form -->
     <div class="form-heading-wrap">
-      <h1 class="form-heading" id="formHeading">Sign In</h1>
+      <h1 class="form-heading" id="formHeading">Đăng nhập</h1>
       <p class="form-desc" id="formDesc">Đăng nhập tài khoản để đồng bộ thành tích học tập và BXH.</p>
     </div>
 
-    <!-- Trường Biệt danh / Họ tên (khi ở chế độ Sign Up) -->
+    <!-- Trường Biệt danh / Họ tên (khi ở chế độ Đăng ký) -->
     <div class="flex-column" id="nameGroup" style="display:none">
-      <label for="displayName">Full Name / Biệt danh (BXH)</label>
+      <label for="displayName">Họ và tên / Biệt danh (BXH)</label>
       <div class="inputForm">
         <svg height="20" viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -785,26 +1008,26 @@
 
     <!-- Trường Email -->
     <div class="flex-column">
-      <label for="email">Email</label>
+      <label for="email">Địa chỉ Email</label>
       <div class="inputForm">
         <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
           <g id="Layer_3" data-name="Layer 3">
             <path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"></path>
           </g>
         </svg>
-        <input type="email" id="email" class="input" placeholder="Enter your Email" required autocomplete="email">
+        <input type="email" id="email" class="input" placeholder="Nhập địa chỉ Email của bạn" required autocomplete="email">
       </div>
     </div>
 
     <!-- Trường Password -->
     <div class="flex-column">
-      <label for="password">Password</label>
+      <label for="password">Mật khẩu</label>
       <div class="inputForm">
         <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
           <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
           <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path>
         </svg>        
-        <input type="password" id="password" class="input" placeholder="Enter your Password" required autocomplete="current-password" minlength="6">
+        <input type="password" id="password" class="input" placeholder="Nhập mật khẩu của bạn" required autocomplete="current-password" minlength="6">
         <button type="button" class="eye-toggle-btn" id="togglePasswordBtn" aria-label="Hiện hoặc ẩn mật khẩu" title="Hiện hoặc ẩn mật khẩu">
           <svg viewBox="0 0 576 512" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
             <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path>
@@ -817,13 +1040,13 @@
     <div class="flex-row">
       <div>
         <input type="checkbox" id="rememberMe" style="width:16px;height:16px;cursor:pointer;accent-color:#151717">
-        <label for="rememberMe">Remember me</label>
+        <label for="rememberMe">Ghi nhớ đăng nhập</label>
       </div>
-      <span class="span" id="forgotPassBtn" role="button" tabindex="0">Forgot password?</span>
+      <span class="span" id="forgotPassBtn" role="button" tabindex="0">Quên mật khẩu?</span>
     </div>
 
     <!-- Nút Submit -->
-    <button type="submit" class="button-submit" id="submitBtn">Sign In</button>
+    <button type="submit" class="button-submit" id="submitBtn">Đăng nhập</button>
 
     <!-- Thông báo trạng thái/lỗi -->
     <div id="errorMsg" aria-live="polite"></div>
@@ -883,13 +1106,13 @@
       </div>
     </div>
 
-    <!-- Chuyển đổi Sign In / Sign Up -->
+    <!-- Chuyển đổi Đăng nhập / Đăng ký -->
     <p class="p" id="switchAuthPrompt">
-      Don't have an account? <span class="span" id="switchAuthBtn">Sign Up</span>
+      Chưa có tài khoản? <span class="span" id="switchAuthBtn">Đăng ký ngay</span>
     </p>
 
     <!-- Đường kẻ ngang phân cách -->
-    <p class="p line">Or With</p>
+    <p class="p line">Hoặc tiếp tục với</p>
 
     <!-- Các nút đăng nhập mạng xã hội -->
     <div class="flex-row">
@@ -903,22 +1126,14 @@
         Google
       </button>
 
-      <button type="button" class="btn apple" id="btnAppleAuth" title="Đăng nhập với Apple">
-        <svg version="1.1" height="20" width="20" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 22.773 22.773" style="enable-background:new 0 0 22.773 22.773;" xml:space="preserve" fill="currentColor">
-          <g>
-            <path d="M15.769,0c0.053,0,0.106,0,0.162,0c0.13,1.606-0.483,2.806-1.228,3.675c-0.731,0.863-1.732,1.7-3.351,1.573 c-0.108-1.583,0.506-2.694,1.25-3.561C13.292,0.879,14.557,0.16,15.769,0z"></path>
-            <path d="M20.67,16.716c0,0.016,0,0.03,0,0.045c-0.455,1.378-1.104,2.559-1.896,3.655c-0.723,0.995-1.609,2.334-3.191,2.334 c-1.367,0-2.275-0.879-3.676-0.903c-1.482-0.024-2.297,0.735-3.652,0.926c-0.155,0-0.31,0-0.462,0 c-0.995-0.144-1.798-0.932-2.383-1.642c-1.725-2.098-3.058-4.808-3.306-8.276c0-0.34,0-0.679,0-1.019 c0.105-2.482,1.311-4.5,2.914-5.478c0.846-0.52,2.009-0.963,3.304-0.765c0.555,0.086,1.122,0.276,1.619,0.464 c0.471,0.181,1.06,0.502,1.618,0.485c0.378-0.011,0.754-0.208,1.135-0.347c1.116-0.403,2.21-0.865,3.652-0.648 c1.733,0.262,2.963,1.032,3.723,2.22c-1.466,0.933-2.625,2.339-2.427,4.74C17.818,14.688,19.086,15.964,20.67,16.716z"></path>
-          </g>
+      <button type="button" class="btn facebook" id="btnFacebookAuth" title="Đăng nhập với Facebook">
+        <svg version="1.1" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          <path fill="#ffffff" d="M16.671 15.469l.532-3.47h-3.328v-2.25c0-.949.465-1.874 1.956-1.874h1.564V4.922s-1.374-.235-2.686-.235c-2.741 0-4.533 1.662-4.533 4.669v2.643H7.078v3.47h3.098v8.385a12.09 12.09 0 003.824 0v-8.385h2.671z"/>
         </svg>
-        Apple
+        Facebook
       </button>
     </div>
-
-    <!-- Ghi chú NCKH -->
-    <div class="mandatory-note">
-      🔒 <strong>Yêu cầu NCKH:</strong> Để dữ liệu khảo sát & điểm năng lực kiểm chứng AI được lưu trữ khách quan, học sinh nên đăng ký/đăng nhập tài khoản trước khi vào Trang chủ.
-    </div>
-
   </form>
 
   <!-- Script tích hợp Supabase, Cloud Engine, Theme & Loader -->
@@ -932,15 +1147,33 @@
     // LOGIC XỬ LÝ AUTH, GIAO DIỆN & TƯƠNG TÁC
     // =========================================================
 
-    // 1. Quản lý trạng thái Sáng / Tối (Theme Switcher)
+    // 1. Quản lý trạng thái Sáng / Tối (Theme Switcher với Animation mượt mà)
     const dnLogin = document.getElementById('dnLogin');
+    const dnToggleLabel = document.querySelector('label[for="dnLogin"]');
     if (dnLogin) {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      dnLogin.checked = currentTheme === 'dark';
+      const syncTheme = () => {
+        const cur = document.documentElement.getAttribute('data-theme') || 
+                    localStorage.getItem('aicheck:theme') || 'light';
+        const isDark = (cur === 'dark');
+        dnLogin.checked = isDark;
+        if (dnToggleLabel) {
+          dnToggleLabel.title = isDark ? "Chuyển sang giao diện Sáng (Ban ngày)" : "Chuyển sang giao diện Tối (Ban đêm)";
+        }
+      };
+      syncTheme();
+
       dnLogin.addEventListener('change', () => {
+        window.AICheckAudio?.playClick?.();
         const nextTheme = dnLogin.checked ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', nextTheme);
         try { localStorage.setItem('aicheck:theme', nextTheme); } catch(e){}
+        if (dnToggleLabel) {
+          dnToggleLabel.title = (nextTheme === 'dark') ? "Chuyển sang giao diện Sáng (Ban ngày)" : "Chuyển sang giao diện Tối (Ban đêm)";
+        }
+      });
+
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'aicheck:theme') syncTheme();
       });
     }
 
@@ -958,22 +1191,47 @@
     const btnLogoutCurrent = document.getElementById('btnLogoutCurrent');
     const rememberMeCheck = document.getElementById('rememberMe');
 
+    // Hàm dịch thông báo lỗi xác thực sang tiếng Việt
+    function translateAuthError(err) {
+      if (!err) return 'Đã có lỗi xảy ra. Vui lòng thử lại!';
+      const msg = (err.message || String(err)).toLowerCase();
+      if (msg.includes('invalid login credentials') || msg.includes('invalid_grant')) {
+        return 'Email hoặc mật khẩu không chính xác!';
+      }
+      if (msg.includes('email not confirmed')) {
+        return 'Email chưa được kích hoạt. Vui lòng kiểm tra hộp thư của bạn!';
+      }
+      if (msg.includes('user already registered') || msg.includes('already exists')) {
+        return 'Email này đã có tài khoản. Mời bạn chọn Đăng nhập!';
+      }
+      if (msg.includes('password should be at least') || msg.includes('weak_password')) {
+        return 'Mật khẩu phải có ít nhất 6 ký tự!';
+      }
+      if (msg.includes('valid email') || msg.includes('invalid format')) {
+        return 'Địa chỉ email không hợp lệ!';
+      }
+      if (msg.includes('rate limit') || msg.includes('too many requests')) {
+        return 'Thao tác quá nhanh, vui lòng chờ trong giây lát rồi thử lại!';
+      }
+      return 'Lỗi: ' + (err.message || err);
+    }
+
     function updateAuthMode(loginMode) {
       isLogin = loginMode;
       errorMsg.textContent = '';
 
       if (isLogin) {
         nameGroup.style.display = 'none';
-        formHeading.textContent = 'Sign In';
+        formHeading.textContent = 'Đăng nhập';
         formDesc.textContent = 'Đăng nhập tài khoản để đồng bộ thành tích học tập và BXH.';
-        submitBtn.textContent = 'Sign In';
-        switchAuthPrompt.innerHTML = 'Don\'t have an account? <span class="span" id="switchAuthBtn">Sign Up</span>';
+        submitBtn.textContent = 'Đăng nhập';
+        switchAuthPrompt.innerHTML = 'Chưa có tài khoản? <span class="span" id="switchAuthBtn">Đăng ký ngay</span>';
       } else {
         nameGroup.style.display = 'flex';
-        formHeading.textContent = 'Sign Up';
+        formHeading.textContent = 'Đăng ký tài khoản';
         formDesc.textContent = 'Tạo tài khoản để lưu thành tích vào BXH toàn trường.';
-        submitBtn.textContent = 'Sign Up';
-        switchAuthPrompt.innerHTML = 'Already have an account? <span class="span" id="switchAuthBtn">Sign In</span>';
+        submitBtn.textContent = 'Đăng ký tài khoản';
+        switchAuthPrompt.innerHTML = 'Đã có tài khoản? <span class="span" id="switchAuthBtn">Đăng nhập ngay</span>';
       }
 
       // Gắn lại sự kiện click cho nút chuyển đổi
@@ -1126,7 +1384,7 @@
             startCooldown(60);
           } else {
             errorMsg.style.color = '#c84f36';
-            errorMsg.textContent = `Lỗi: ${error.message || error} (Đã sai ${fails}/5 lần)`;
+            errorMsg.textContent = `${translateAuthError(error)} (Đã thử sai ${fails}/5 lần)`;
             submitBtn.disabled = false;
           }
         } else {
@@ -1166,7 +1424,7 @@
         if (error) {
           window.AICheckLoader?.hide();
           errorMsg.style.color = '#c84f36';
-          errorMsg.textContent = 'Lỗi: ' + (error.message || error);
+          errorMsg.textContent = translateAuthError(error);
           submitBtn.disabled = false;
         } else {
           try {
@@ -1376,17 +1634,17 @@
       }
     }
 
-    // 8. Xử lý Đăng nhập mạng xã hội (Google & Apple OAuth)
+    // 8. Xử lý Đăng nhập mạng xã hội (Google & Facebook OAuth)
     async function handleOAuthLogin(provider) {
-      const providerName = provider === 'google' ? 'Google' : 'Apple';
+      const providerName = provider === 'google' ? 'Google' : (provider === 'facebook' ? 'Facebook' : provider);
 
       // Kiểm tra môi trường file://
       if (window.location.protocol === 'file:') {
         alert(
           "⚠️ LƯU Ý KHI KIỂM THỬ TRÊN MÁY TÍNH:\n\n" +
-          "Google và Apple OAuth theo tiêu chuẩn an toàn bắt buộc chạy qua máy chủ HTTP/HTTPS (ví dụ: Live Server trong VS Code, localhost:5500, http://127.0.0.1:8000 hoặc domain web khi deploy).\n\n" +
-          "Bạn không thể đăng nhập Google/Apple khi mở file trực tiếp bằng giao thức file:///.\n\n" +
-          "👉 Hãy mở trang web qua Live Server (http://127.0.0.1:5500) hoặc deploy web lên Vercel/Cloudflare để thử nghiệm tính năng này nhé!"
+          "Google và Facebook OAuth theo tiêu chuẩn an toàn bắt buộc chạy qua máy chủ HTTP/HTTPS (ví dụ: Live Server trong VS Code, localhost:5500, http://127.0.0.1:8000 hoặc domain web khi deploy Netlify/Vercel).\n\n" +
+          "Bạn không thể đăng nhập Google/Facebook khi mở file trực tiếp bằng giao thức file:///.\n\n" +
+          "👉 Hãy mở trang web qua Live Server (http://127.0.0.1:5500) hoặc link Netlify để sử dụng tính năng này nhé!"
         );
         return;
       }
@@ -1450,11 +1708,11 @@
       });
     }
 
-    const btnAppleAuth = document.getElementById('btnAppleAuth');
-    if (btnAppleAuth) {
-      btnAppleAuth.addEventListener('click', (e) => {
+    const btnFacebookAuth = document.getElementById('btnFacebookAuth');
+    if (btnFacebookAuth) {
+      btnFacebookAuth.addEventListener('click', (e) => {
         e.preventDefault();
-        handleOAuthLogin('apple');
+        handleOAuthLogin('facebook');
       });
     }
   </script>

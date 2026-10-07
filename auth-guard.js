@@ -19,7 +19,7 @@
 
   // Kiểm tra nhanh token Supabase trong localStorage hoặc URL OAuth callback để chuyển hướng tức thì (Zero-Flicker)
   function hasLocalAuthToken() {
-    // 1. Kiểm tra nếu URL đang mang token hoặc authorization code từ Google / Apple OAuth callback
+    // 1. Kiểm tra nếu URL đang mang token hoặc authorization code từ Google / Facebook OAuth callback
     try {
       if (location.hash && (location.hash.includes("access_token") || location.hash.includes("refresh_token"))) {
         return true;
@@ -64,7 +64,7 @@
                               (location.search && location.search.includes("code="));
 
       let user = await window.AICheckCloud.getUser();
-      // Nếu vừa từ Google/Apple OAuth redirect về, đợi thêm một lát để client Supabase xử lý hash/code
+      // Nếu vừa từ Google/Facebook OAuth redirect về, đợi thêm một lát để client Supabase xử lý hash/code
       if (!user && isOAuthCallback) {
         await new Promise(r => setTimeout(r, 350));
         user = await window.AICheckCloud.getUser();
@@ -79,7 +79,7 @@
         return;
       }
 
-      // Đồng bộ thông tin cá nhân từ Google/Apple OAuth vào hồ sơ
+      // Đồng bộ thông tin cá nhân từ Google/Facebook OAuth vào hồ sơ
       if (user) {
         // Làm sạch URL (xóa hash access_token trên thanh địa chỉ để URL gọn gàng)
         if (location.hash && location.hash.includes("access_token")) {

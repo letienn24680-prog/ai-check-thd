@@ -120,14 +120,14 @@
     }
   }
 
-  // --- ĐĂNG NHẬP OAUTH (GOOGLE & APPLE) ---
+  // --- ĐĂNG NHẬP OAUTH (GOOGLE & FACEBOOK) ---
   async function signInWithOAuth(provider) {
     if (!client) return { error: { message: "Chưa cấu hình kết nối Supabase Cloud" } };
     try {
       if (window.location.protocol === 'file:') {
         return {
           error: {
-            message: "Tính năng đăng nhập Google/Apple yêu cầu chạy website qua giao thức web HTTP/HTTPS (ví dụ: Live Server, localhost, Vercel...), không thể chạy trực tiếp từ file:// trong máy tính."
+            message: "Tính năng đăng nhập Google/Facebook yêu cầu chạy website qua giao thức web HTTP/HTTPS (ví dụ: Live Server, localhost, Netlify, Vercel...), không thể chạy trực tiếp từ file:// trong máy tính."
           }
         };
       }
@@ -145,7 +145,7 @@
       const redirectUrl = new URL(redirectPath, window.location.origin).href;
 
       const { data, error } = await client.auth.signInWithOAuth({
-        provider: provider, // 'google' | 'apple'
+        provider: provider, // 'google' | 'facebook'
         options: {
           redirectTo: redirectUrl,
           queryParams: provider === 'google' ? {
@@ -491,7 +491,13 @@
       class_name: local.class_name || user.user_metadata?.class_name || "",
       school: local.school || user.user_metadata?.school || "THPT Trần Hưng Đạo",
       birthdate: local.birthdate || user.user_metadata?.birthdate || "",
-      bio: local.bio || user.user_metadata?.bio || ""
+      bio: local.bio || user.user_metadata?.bio || "",
+      student_id: local.student_id || user.user_metadata?.student_id || "",
+      gender: local.gender || user.user_metadata?.gender || "",
+      phone: local.phone || user.user_metadata?.phone || "",
+      city: local.city || user.user_metadata?.city || "",
+      favorite_subject: local.favorite_subject || user.user_metadata?.favorite_subject || "",
+      target_goal: local.target_goal || user.user_metadata?.target_goal || ""
     };
 
     if (!client) {
@@ -503,14 +509,9 @@
       const { data, error } = await client.from("user_profiles").select("*").eq("id", user.id).maybeSingle();
       if (data && !error) {
         const merged = {
-          id: user.id,
-          email: user.email,
-          display_name: data.display_name || defaultProfile.display_name,
-          avatar: data.avatar || defaultProfile.avatar,
-          class_name: data.class_name || defaultProfile.class_name,
-          school: data.school || defaultProfile.school,
-          birthdate: data.birthdate || defaultProfile.birthdate,
-          bio: data.bio || defaultProfile.bio
+          ...defaultProfile,
+          ...data,
+          ...local
         };
         localStorage.setItem("aicheck:user_profile", JSON.stringify(merged));
         return { data: merged, error: null };
@@ -555,12 +556,8 @@
       // 1. Cập nhật Auth user_metadata
       const { error: authErr } = await client.auth.updateUser({
         data: {
-          display_name: fields.display_name,
-          avatar: fields.avatar,
-          class_name: fields.class_name,
-          school: fields.school,
-          birthdate: fields.birthdate,
-          bio: fields.bio
+          ...(user.user_metadata || {}),
+          ...fields
         }
       });
       if (authErr) console.warn("Lỗi updateUser Auth:", authErr);
@@ -588,9 +585,22 @@
     }
   }
 
-  async function updatePassword(newPassword) {
+  async function updatePassword(newPassword, currentPassword) {
     if (!client) return { error: { message: "Chưa cấu hình kết nối Supabase Cloud" } };
     try {
+      const user = await getUser();
+      if (!user) return { error: { message: "Bạn chưa đăng nhập vào hệ thống" } };
+
+      if (currentPassword) {
+        const { error: verifyErr } = await client.auth.signInWithPassword({
+          email: user.email,
+          password: currentPassword
+        });
+        if (verifyErr) {
+          return { error: { message: "Mật khẩu hiện tại không chính xác. Vui lòng kiểm tra lại!" } };
+        }
+      }
+
       const { data, error } = await client.auth.updateUser({ password: newPassword });
       return { data, error };
     } catch (err) {
