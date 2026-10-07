@@ -13,6 +13,39 @@
     document.documentElement.setAttribute("data-theme", initialTheme);
   } catch {}
 
+  // 0.1. CƠ CHẾ BẢO VỆ CHỐNG SPAM F5 LIÊN TỤC (CLIENT-SIDE ANTI-DoS)
+  try {
+    const F5_WINDOW = 10000; // 10 giây
+    const F5_MAX = 5;        // Tối đa 5 lần F5 trong 10 giây
+    const now = Date.now();
+    let f5History = JSON.parse(sessionStorage.getItem("aicheck:f5_log") || "[]");
+    f5History = f5History.filter(t => (now - t) <= F5_WINDOW);
+    f5History.push(now);
+    sessionStorage.setItem("aicheck:f5_log", JSON.stringify(f5History));
+
+    if (f5History.length > F5_MAX) {
+      const showNotice = () => {
+        if (document.getElementById("antiDosBanner")) return;
+        const b = document.createElement("div");
+        b.id = "antiDosBanner";
+        b.style.cssText = "position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;background:#c84f36;color:#ffffff;padding:12px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.35);font-family:'Be Vietnam Pro',sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;gap:12px;max-width:92vw;";
+        b.innerHTML = "<span style='font-size:22px'>🛡️</span><div><div style='font-weight:700;font-size:14px;margin-bottom:2px'>CẢNH BÁO BẢO VỆ MÁY CHỦ (ANTI-DoS)</div><div>Phát hiện thao tác làm mới F5 liên tục (" + f5History.length + " lần/10s). Vui lòng không spam để tránh nghẽn máy chủ!</div></div>";
+        document.body.appendChild(b);
+        setTimeout(() => {
+          b.style.transition = "opacity 0.5s ease";
+          b.style.opacity = "0";
+          setTimeout(() => b.remove(), 500);
+        }, 7000);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", showNotice);
+      } else {
+        showNotice();
+      }
+    }
+  } catch(e) {}
+
   // ==========================================================================
   // A. WEB AUDIO SYNTHESIZER (Không cần file mp3 ngoài, 100% Offline, Zero-Latency)
   // ==========================================================================
@@ -558,6 +591,8 @@
         themeLight: "Chuyển sang giao diện Sáng",
         themeDark: "Chuyển sang giao diện Tối",
         level: "Cấp",
+        nav_login: "Đăng nhập",
+        nav_login_desc: "Xác thực tài khoản để vào trang chủ & đồng bộ BXH",
         nav_home: "Trang chủ",
         nav_home_desc: "Tổng quan & Bản đồ tư duy kiểm chứng",
         nav_knowledge: "Kiến thức",
@@ -611,6 +646,8 @@
         themeLight: "Switch to Light Theme",
         themeDark: "Switch to Dark Theme",
         level: "Lv.",
+        nav_login: "Log in",
+        nav_login_desc: "Sign in to access homepage & sync leaderboard",
         nav_home: "Home",
         nav_home_desc: "Overview & Fact-check Mindmap",
         nav_knowledge: "Knowledge",
@@ -1332,10 +1369,13 @@
       const menuSubtitle = document.getElementById("siteNavFooterText");
       if (menuSubtitle) menuSubtitle.textContent = this.t("menuSubtitle");
 
-      // 4. Cập nhật 7 liên kết điều hướng
+      // 4. Cập nhật các liên kết điều hướng
       document.querySelectorAll(".site-nav-link").forEach(link => {
         const key = link.getAttribute("data-nav-key");
         if (key) {
+          if (key === "login" && link.getAttribute("href") === "#profile") {
+            return; // Đã đăng nhập -> giữ nguyên tên và trạng thái tài khoản
+          }
           const titleEl = link.querySelector(".nav-item-title");
           const descEl = link.querySelector(".nav-item-desc");
           if (titleEl) titleEl.textContent = this.t("nav_" + key);
@@ -1428,8 +1468,13 @@
     });
   }
 
-  // 3. ĐỊNH NGHĨA VÀ TRANG TRÍ 7 MỤC ĐIỀU HƯỚNG TRONG MENU ☰
+  // 3. ĐỊNH NGHĨA VÀ TRANG TRÍ CÁC MỤC ĐIỀU HƯỚNG TRONG MENU ☰
   const NAV_DEFINITIONS = {
+    login: {
+      icon: "🔐",
+      vi: { title: "Đăng nhập", desc: "Xác thực tài khoản để vào trang chủ & đồng bộ BXH" },
+      en: { title: "Log in", desc: "Sign in to access homepage & sync leaderboard" }
+    },
     home: {
       icon: "🏠",
       vi: { title: "Trang chủ", desc: "Tổng quan & Bản đồ tư duy kiểm chứng" },
@@ -1470,6 +1515,7 @@
   function getNavKey(link) {
     const href = (link.getAttribute("href") || "").toLowerCase();
     const text = (link.textContent || "").trim().toLowerCase();
+    if (href.includes("login.html") || text.includes("đăng nhập") || text === "login" || text === "log in") return "login";
     if (href.includes("index.html") || text.includes("trang chủ") || text === "home") return "home";
     if (href.includes("knowledge.html") || text.includes("kiến thức") || text === "knowledge") return "knowledge";
     if (href.includes("practice.html") || text.includes("thực hành") || text === "practice") return "practice";
@@ -1498,7 +1544,33 @@
       nav.prepend(header);
     }
 
-    // Format 7 items
+    // ĐẢM BẢO MỤC ĐĂNG NHẬP LUÔN NẰM Ở HÀNG ĐẦU TIÊN CỦA MENU
+    const isPagesDir = location.pathname.includes("/pages/");
+    const loginHref = isPagesDir ? "../login.html" : "login.html";
+
+    let loginLink = nav.querySelector('a[data-nav-key="login"]') || 
+                    Array.from(nav.querySelectorAll("a")).find(a => (a.getAttribute("href") || "").includes("login.html"));
+    
+    if (!loginLink) {
+      loginLink = document.createElement("a");
+      loginLink.href = loginHref;
+      loginLink.setAttribute("data-nav-key", "login");
+      loginLink.textContent = "Đăng nhập";
+      
+      const firstA = nav.querySelector("a");
+      if (firstA) {
+        nav.insertBefore(loginLink, firstA);
+      } else {
+        nav.appendChild(loginLink);
+      }
+    } else {
+      const firstA = nav.querySelector("a:not([data-nav-key='login'])");
+      if (firstA && loginLink.nextSibling !== firstA) {
+        nav.insertBefore(loginLink, firstA);
+      }
+    }
+
+    // Format các mục điều hướng
     const lang = AICheckI18n.getLang();
     nav.querySelectorAll("a").forEach(link => {
       if (link.classList.contains("nav-auth-link")) return;
@@ -1507,7 +1579,7 @@
       const item = NAV_DEFINITIONS[key];
       if (!item) return;
 
-      link.className = "site-nav-link";
+      link.className = `site-nav-link ${key === "login" ? "site-nav-login-tab" : ""}`;
       link.setAttribute("data-nav-key", key);
       link.innerHTML = `
         <span class="nav-icon-badge">${item.icon}</span>
@@ -2265,6 +2337,42 @@
             ${gamifyPill}
             <a href="${loginHref}" class="nav-auth-link" title="${AICheckI18n.t('login')}">${AICheckI18n.t('login')}</a>
           `;
+        }
+      }
+
+      // Đồng bộ tab Đăng nhập / Tài khoản ở HÀNG ĐẦU TIÊN của menu điều hướng
+      const loginTab = document.querySelector('a[data-nav-key="login"]');
+      if (loginTab) {
+        const isEn = (window.AICheckI18n && window.AICheckI18n.getLang ? window.AICheckI18n.getLang() === "en" : false);
+        if (user) {
+          const name = localProf.display_name || user.user_metadata?.display_name || user.email?.split("@")[0] || (isEn ? "Member" : "Thành viên");
+          loginTab.href = "#profile";
+          loginTab.setAttribute("aria-label", isEn ? "User Account Settings" : "Tùy chỉnh thông tin tài khoản");
+          const titleEl = loginTab.querySelector(".nav-item-title");
+          const descEl = loginTab.querySelector(".nav-item-desc");
+          const iconEl = loginTab.querySelector(".nav-icon-badge");
+          const arrowEl = loginTab.querySelector(".nav-item-arrow");
+          if (titleEl) titleEl.textContent = `${isEn ? "Account: " : "Tài khoản: "}${name.slice(0, 14)}`;
+          if (descEl) descEl.textContent = isEn ? "Profile & Security settings" : "Hồ sơ cá nhân & Cài đặt tài khoản";
+          if (iconEl) iconEl.textContent = "👤";
+          if (arrowEl) arrowEl.textContent = "⚙️";
+          loginTab.onclick = (e) => {
+            e.preventDefault();
+            window.closeSiteNav?.();
+            window.openUserProfileModal?.();
+          };
+        } else {
+          loginTab.href = loginHref;
+          loginTab.setAttribute("aria-label", isEn ? "Log in to system" : "Đăng nhập hệ thống");
+          const titleEl = loginTab.querySelector(".nav-item-title");
+          const descEl = loginTab.querySelector(".nav-item-desc");
+          const iconEl = loginTab.querySelector(".nav-icon-badge");
+          const arrowEl = loginTab.querySelector(".nav-item-arrow");
+          if (titleEl) titleEl.textContent = isEn ? "Log in (Required)" : "Đăng nhập (Bắt buộc)";
+          if (descEl) descEl.textContent = isEn ? "Sign in to enter Homepage & sync" : "Đăng nhập để vào trang chủ & đồng bộ";
+          if (iconEl) iconEl.textContent = "🔐";
+          if (arrowEl) arrowEl.textContent = "→";
+          loginTab.onclick = null;
         }
       }
     }

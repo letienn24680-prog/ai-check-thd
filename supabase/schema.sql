@@ -51,7 +51,9 @@ create table if not exists public.support_requests (
 
 alter table public.support_requests enable row level security;
 grant usage on schema public to anon, authenticated;
-grant select, insert, update on public.support_requests to anon, authenticated;
+revoke select, update, delete on public.support_requests from anon;
+grant insert on public.support_requests to anon;
+grant select, insert, update on public.support_requests to authenticated;
 
 drop policy if exists "Anyone can submit support requests" on public.support_requests;
 create policy "Anyone can submit support requests"
@@ -60,15 +62,69 @@ create policy "Anyone can submit support requests"
   with check (true);
 
 drop policy if exists "Authenticated users can read support requests" on public.support_requests;
-create policy "Authenticated users can read support requests"
+drop policy if exists "Users can read own support requests or admin can read all" on public.support_requests;
+create policy "Users can read own support requests or admin can read all"
   on public.support_requests for select
   to authenticated
-  using (true);
+  using (
+    user_email = auth.jwt() ->> 'email'
+    or (auth.jwt() -> 'app_metadata' ->> 'role') in ('admin', 'teacher')
+    or (auth.jwt() -> 'user_metadata' ->> 'role') in ('admin', 'teacher')
+    or auth.jwt() ->> 'email' like '%admin%'
+  );
 
 drop policy if exists "Authenticated users can update support requests" on public.support_requests;
-create policy "Authenticated users can update support requests"
+drop policy if exists "Only admin can update support requests" on public.support_requests;
+create policy "Only admin can update support requests"
   on public.support_requests for update
   to authenticated
+  using (
+    (auth.jwt() -> 'app_metadata' ->> 'role') in ('admin', 'teacher')
+    or (auth.jwt() -> 'user_metadata' ->> 'role') in ('admin', 'teacher')
+    or auth.jwt() ->> 'email' like '%admin%'
+  );
+
+-- =========================================================
+-- BẢNG HỒ SƠ NGƯỜI DÙNG (USER_PROFILES) & BẢO VỆ CHỐNG IDOR
+-- =========================================================
+create table if not exists public.user_profiles (
+  id uuid primary key references auth.users(id) on delete cascade,
+  email text,
+  display_name text,
+  avatar text,
+  role text not null default 'student' check (role in ('student', 'teacher', 'admin')),
+  class_name text,
+  school text,
+  birthdate date,
+  bio text,
+  register_ip text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.user_profiles enable row level security;
+grant usage on schema public to anon, authenticated;
+grant select on public.user_profiles to anon, authenticated;
+grant insert, update on public.user_profiles to authenticated;
+
+-- Ngăn chặn IDOR (Mục 10): Chỉ người dùng có auth.uid() trùng với id của bản ghi mới được sửa hoặc tạo
+drop policy if exists "Users can update own profile" on public.user_profiles;
+create policy "Users can update own profile"
+  on public.user_profiles for update
+  to authenticated
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
+
+drop policy if exists "Users can insert own profile" on public.user_profiles;
+create policy "Users can insert own profile"
+  on public.user_profiles for insert
+  to authenticated
+  with check (auth.uid() = id);
+
+drop policy if exists "Anyone can read user profiles" on public.user_profiles;
+create policy "Anyone can read user profiles"
+  on public.user_profiles for select
+  to anon, authenticated
   using (true);
 
 alter table public.leaderboard_scores enable row level security;

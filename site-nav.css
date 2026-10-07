@@ -368,6 +368,21 @@
   border-color: rgba(217, 242, 108, 0.35) !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
+
+/* Tab Đăng nhập / Tài khoản nổi bật ở hàng đầu tiên của menu */
+.header-inner .site-nav a.site-nav-link.site-nav-login-tab {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.22), rgba(36, 114, 79, 0.08)) !important;
+  border: 1.5px solid rgba(36, 114, 79, 0.32) !important;
+  margin-bottom: 2px;
+}
+.header-inner .site-nav a.site-nav-link.site-nav-login-tab:hover {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.38), rgba(36, 114, 79, 0.16)) !important;
+  border-color: var(--leaf) !important;
+}
+[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.15), rgba(22, 61, 53, 0.6)) !important;
+  border-color: rgba(217, 242, 108, 0.32) !important;
+}
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link[aria-current="page"] {
   background: linear-gradient(135deg, rgba(217, 242, 108, 0.2), rgba(18, 59, 50, 0.75)) !important;
   border-color: #d9f26c !important;

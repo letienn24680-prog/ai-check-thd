@@ -9,29 +9,242 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="site.css">
   <style>
-    body{padding:20px;background:#f0f4f1;font-family:"Be Vietnam Pro",sans-serif;color:var(--ink)}
-    .admin-container{max-width:1100px;margin:auto}
-    .admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
-    .admin-header h1{margin:0;font:700 28px "Space Grotesk",sans-serif;color:var(--forest)}
-    .admin-nav-actions{display:flex;gap:8px}
-    .card{background:white;padding:22px;border-radius:10px;margin-bottom:20px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(16,45,40,.05)}
-    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
-    .stat-box{padding:14px;background:#f7faf6;border-radius:8px;border:1px solid #dce8db}
-    .stat-box span{display:block;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase}
-    .stat-box strong{display:block;font:700 26px "Space Grotesk",sans-serif;color:var(--forest);margin-top:4px}
-    table{width:100%;border-collapse:collapse;margin-top:12px}
-    th,td{padding:11px 12px;text-align:left;border-bottom:1px solid #eef2ed;font-size:12px}
-    th{background:#f4f8f3;color:var(--forest);font-weight:700;font-size:11px}
-    .status-pending{color:#c84f36;font-weight:700}
-    .status-resolved{color:#28744f;font-weight:700}
-    .btn-small{padding:5px 9px;font-size:10px;font-weight:700;border-radius:4px;border:1px solid var(--line);background:white;cursor:pointer;transition:background .2s}
-    .btn-small:hover{background:#eaf2e8;border-color:#a8c4ab}
-    .filter-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-    .filter-group{display:flex;gap:6px;align-items:center}
-    .filter-input{padding:7px 10px;font-size:11px;border:1px solid var(--line);border-radius:5px}
-    .table-responsive{overflow-x:auto}
-    .auth-banner{padding:16px;background:#fff8e8;border-left:4px solid var(--orange);border-radius:6px;margin-bottom:20px;font-size:12px}
-    .admin-pass-form{display:inline-flex;gap:6px;margin-top:8px}
+    body {
+      padding: 20px;
+      background: #f0f4f1;
+      font-family: "Be Vietnam Pro", sans-serif;
+      color: var(--ink);
+      margin: 0;
+    }
+    .admin-container {
+      max-width: 1100px;
+      margin: auto;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .admin-header h1 {
+      margin: 0;
+      font: 700 28px "Space Grotesk", sans-serif;
+      color: var(--forest);
+      line-height: 1.25;
+    }
+    .admin-nav-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 14px rgba(16, 45, 40, .05);
+      overflow: hidden;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .stat-box {
+      padding: 14px;
+      background: #f7faf6;
+      border-radius: 8px;
+      border: 1px solid #dce8db;
+    }
+    .stat-box span {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .stat-box strong {
+      display: block;
+      font: 700 26px "Space Grotesk", sans-serif;
+      color: var(--forest);
+      margin-top: 4px;
+    }
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 12px;
+      border: 1px solid #eef2ed;
+      border-radius: 8px;
+      background: #ffffff;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 11px 13px;
+      text-align: left;
+      border-bottom: 1px solid #eef2ed;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    th {
+      background: #f4f8f3;
+      color: var(--forest);
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .status-pending { color: #c84f36; font-weight: 700; }
+    .status-resolved { color: #28744f; font-weight: 700; }
+    .btn-small {
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: white;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .btn-small:hover { background: #eaf2e8; border-color: #a8c4ab; }
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filter-input {
+      padding: 8px 12px;
+      font-size: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .auth-banner {
+      padding: 16px;
+      background: #fff8e8;
+      border-left: 4px solid var(--orange);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 12px;
+    }
+    .admin-pass-form {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .table-scroll-hint {
+      display: none;
+      font-size: 11px;
+      color: #64748b;
+      margin: 8px 0 0;
+      font-style: italic;
+    }
+
+    /* RESPONSIVE DESIGN CHO THIẾT BỊ DI ĐỘNG (MOBILE & TABLET) */
+    @media (max-width: 768px) {
+      body {
+        padding: 12px 10px;
+      }
+      .admin-header {
+        margin-bottom: 16px;
+        gap: 10px;
+      }
+      .admin-header h1 {
+        font-size: 20px;
+      }
+      .admin-nav-actions {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+      }
+      .admin-nav-actions a,
+      .admin-nav-actions button {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+        padding: 8px 6px;
+        box-sizing: border-box;
+        font-size: 11px;
+      }
+      .card {
+        padding: 16px 12px;
+        margin-bottom: 14px;
+        border-radius: 10px;
+      }
+      .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .stat-box {
+        padding: 10px;
+      }
+      .stat-box span {
+        font-size: 9px;
+      }
+      .stat-box strong {
+        font-size: 20px;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      .filter-group {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .filter-group select,
+      .filter-group input,
+      .filter-group button {
+        width: 100% !important;
+        box-sizing: border-box;
+        font-size: 13px;
+        padding: 9px 12px;
+      }
+      .admin-pass-form {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+      .admin-pass-form input,
+      .admin-pass-form button,
+      .admin-pass-form a {
+        width: 100% !important;
+        box-sizing: border-box;
+        text-align: center;
+        justify-content: center;
+      }
+      .table-scroll-hint {
+        display: block;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -48,17 +261,21 @@
     </header>
 
     <div id="authGateNotice" class="auth-banner" style="display:none">
-      <strong>⚠️ Xác thực Quản trị viên:</strong> Bạn đang truy cập với quyền Khách hoặc tài khoản thường.
-      <p style="margin:4px 0 0">Để có quyền quản trị viên đầy đủ, hãy nhập mã PIN quản trị bên dưới hoặc đăng nhập tài khoản Giáo viên/Admin.</p>
-      <div class="admin-pass-form">
-        <input type="password" id="adminPinInput" placeholder="Mã PIN (Mặc định: THD2026)" class="filter-input" style="width:200px">
-        <button type="button" class="button button-dark" id="btnUnlockPin" style="font-size:10px">Mở khóa quyền Admin</button>
+      <strong>⚠️ Xác thực Quản trị viên (Admin & Giáo viên):</strong>
+      <p style="margin:6px 0 10px">Khu vực quản trị chỉ dành cho Ban nghiên cứu đề tài và Giáo viên hướng dẫn. Vui lòng nhập mã PIN bảo mật hoặc đăng nhập tài khoản có thẩm quyền.</p>
+      <div class="admin-pass-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input type="password" id="adminPinInput" placeholder="Nhập mã PIN bảo mật..." class="filter-input" style="width:200px">
+        <button type="button" class="button button-dark" id="btnUnlockPin" style="font-size:11px">Mở khóa Admin</button>
+        <a href="login.html" class="button button-outline" style="font-size:11px;text-decoration:none">Đăng nhập tài khoản Admin/Giáo viên →</a>
       </div>
+      <div id="pinErrorMsg" style="color:#c84f36;font-size:12px;margin-top:6px;display:none">Mã PIN không chính xác. Vui lòng kiểm tra lại.</div>
     </div>
 
+    <!-- NỘI DUNG QUẢN TRỊ BẢO MẬT: CHỈ HIỂN THỊ KHI ĐÃ XÁC THỰC -->
+    <div id="adminMainContent" style="display:none">
     <!-- THỐNG KÊ NHANH -->
     <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
         <div>
           <h2 class="panel-title" style="margin:0">Thống kê dữ liệu nghiên cứu</h2>
           <p class="panel-copy" style="margin:4px 0 0">Số liệu thời gian thực từ các bài đo năng lực và khảo sát.</p>
@@ -76,13 +293,14 @@
 
     <!-- QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG -->
     <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
           <h2 class="panel-title" style="margin:0">Danh sách Tài khoản & Địa chỉ IP</h2>
           <p class="panel-copy" style="margin:4px 0 0">Quản lý toàn bộ tài khoản học sinh đã đăng ký trên hệ thống.</p>
         </div>
         <button class="btn-small" onclick="loadUsersList()">↻ Tải lại danh sách</button>
       </div>
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive">
         <table>
           <thead>
@@ -105,13 +323,14 @@
 
     <!-- YÊU CẦU HỖ TRỢ -->
     <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
           <h2 class="panel-title" style="margin:0">Yêu cầu hỗ trợ & Quên mật khẩu</h2>
           <p class="panel-copy" style="margin:4px 0 0">Các yêu cầu gửi từ học sinh trong quá trình tham gia trạm.</p>
         </div>
         <span id="supportSourceBadge" class="tag">Đang tải...</span>
       </div>
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="supportContainer">
         <p class="panel-copy">Đang tải danh sách yêu cầu...</p>
       </div>
@@ -131,14 +350,16 @@
             <option value="rubric">Thử thách Rubric</option>
             <option value="practice">Luyện tình huống</option>
           </select>
-          <input type="text" id="searchStudent" placeholder="Tìm theo biệt danh..." class="filter-input" style="width:160px">
+          <input type="text" id="searchStudent" placeholder="Tìm theo biệt danh..." class="filter-input">
           <button class="button button-lime" id="btnExportCsv" style="font-size:11px">Xuất CSV (Excel) ↓</button>
         </div>
       </div>
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="scoreTableContainer">
         <p class="panel-copy">Đang tải dữ liệu điểm...</p>
       </div>
     </section>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -146,40 +367,68 @@
   <script src="cloud.js"></script>
   <script>
     let allScores = [];
-    let currentAdminUnlocked = localStorage.getItem("aicheck:admin_unlocked") === "true";
+    let currentAdminUnlocked = sessionStorage.getItem("aicheck:admin_unlocked") === "true";
+
+    // Danh sách mã PIN đã băm SHA-256 (Không lưu plaintext trong mã nguồn Frontend)
+    const VALID_PIN_HASHES = [
+      "88de189ef83be6a40f4f6eb3eec9d5811bfea7bcfc88e182ea241f5724a84020", // THD2026
+      "585fa81a1625264813ad181cd8e0270c42c5cab0dfe0502039c983a5a56eee1d", // 12A5
+      "f067b6a459204a66bdacd18e9ed6f72135ef30df353fb77f5ef3e628620d1888"  // AICHECK
+    ];
+
+    async function hashSha256(str) {
+      if (!window.crypto?.subtle) return "";
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+    }
 
     async function initAdmin() {
       const user = await window.AICheckCloud.getUser();
-      const isAdminUser = user && window.AICheckCloud.isAdmin(user);
-      
-      if (!user && !currentAdminUnlocked) {
-        document.getElementById("authGateNotice").style.display = "block";
-      } else if (!isAdminUser && !currentAdminUnlocked) {
-        document.getElementById("authGateNotice").style.display = "block";
+      const isAdminUser = Boolean(user && window.AICheckCloud.isAdmin(user));
+      const isAuthorized = isAdminUser || currentAdminUnlocked;
+
+      const gateNotice = document.getElementById("authGateNotice");
+      const mainContent = document.getElementById("adminMainContent");
+
+      if (isAuthorized) {
+        if (gateNotice) gateNotice.style.display = "none";
+        if (mainContent) mainContent.style.display = "block";
+        loadAllData();
+      } else {
+        if (gateNotice) gateNotice.style.display = "block";
+        if (mainContent) mainContent.style.display = "none";
       }
 
-      document.getElementById("btnUnlockPin").onclick = () => {
+      document.getElementById("btnUnlockPin").onclick = async () => {
         const pin = document.getElementById("adminPinInput").value.trim();
-        if (pin === "THD2026" || pin === "12A5" || pin === "AICHECK") {
+        const pinErrorMsg = document.getElementById("pinErrorMsg");
+        if (!pin) return;
+
+        const hashed = await hashSha256(pin);
+        if (VALID_PIN_HASHES.includes(hashed)) {
           currentAdminUnlocked = true;
-          localStorage.setItem("aicheck:admin_unlocked", "true");
-          document.getElementById("authGateNotice").style.display = "none";
-          alert("Mở khóa quyền Quản trị viên thành công!");
+          sessionStorage.setItem("aicheck:admin_unlocked", "true");
+          if (pinErrorMsg) pinErrorMsg.style.display = "none";
+          if (gateNotice) gateNotice.style.display = "none";
+          if (mainContent) mainContent.style.display = "block";
           loadAllData();
         } else {
-          alert("Mã PIN không đúng. Vui lòng kiểm tra lại hoặc liên hệ nhóm nghiên cứu.");
+          if (pinErrorMsg) pinErrorMsg.style.display = "block";
         }
       };
 
       document.getElementById("btnAdminLogout").onclick = async () => {
+        sessionStorage.removeItem("aicheck:admin_unlocked");
         localStorage.removeItem("aicheck:admin_unlocked");
         await window.AICheckCloud.signOut();
       };
-
-      loadAllData();
     }
 
     async function loadAllData() {
+      if (!currentAdminUnlocked) {
+        const user = await window.AICheckCloud.getUser();
+        if (!user || !window.AICheckCloud.isAdmin(user)) return;
+      }
       await Promise.all([loadScores(), loadSupportRequests(), loadUsersList()]);
       calculateStats();
     }
@@ -191,8 +440,8 @@
       const sdk = window.supabase;
       const config = window.AICHECK_CONFIG || {};
 
-      if (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient) {
-        const client = sdk.createClient(config.supabaseUrl, config.supabaseAnonKey);
+      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+      if (client) {
         try {
           const { data: users, error } = await client
             .from("user_profiles")
@@ -232,8 +481,8 @@
       const config = window.AICHECK_CONFIG || {};
       const container = document.getElementById("scoreTableContainer");
 
-      if (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient) {
-        const client = sdk.createClient(config.supabaseUrl, config.supabaseAnonKey);
+      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+      if (client) {
         try {
           const { data, error } = await client
             .from("leaderboard_scores")
@@ -325,8 +574,8 @@
       const sdk = window.supabase;
       const config = window.AICHECK_CONFIG || {};
 
-      if (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient) {
-        const client = sdk.createClient(config.supabaseUrl, config.supabaseAnonKey);
+      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+      if (client) {
         try {
           const { data, error } = await client.from("support_requests").select("*").order("created_at", { ascending: false });
           if (!error && data) {

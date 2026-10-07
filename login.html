@@ -717,11 +717,11 @@
 </head>
 <body>
 
-  <!-- Thanh điều hướng trên cùng với Nút về Trang chủ & Công tắc Day/Night -->
+  <!-- Thanh điều hướng trên cùng với Nhãn Cổng xác thực & Công tắc Day/Night -->
   <div class="login-top-bar">
-    <a href="index.html" class="back-home-link" title="Quay về Trang chủ AI CHECK THĐ">
-      ← Trang chủ
-    </a>
+    <span class="back-home-link" style="cursor:default;user-select:none" title="AI CHECK THĐ - Cổng Đăng Nhập & Bảo Mật">
+      🔐 AI CHECK THĐ · Cổng Đăng Nhập
+    </span>
 
     <div class="theme-switch-holder">
       <input class="theme-input" id="dnLogin" type="checkbox" aria-label="Chuyển chế độ Sáng / Tối" />
@@ -824,9 +824,6 @@
 
     <!-- Nút Submit -->
     <button type="submit" class="button-submit" id="submitBtn">Sign In</button>
-
-    <!-- Nút tiếp tục với tư cách Khách (Không chặn quyền truy cập dữ liệu cũ) -->
-    <a href="index.html" class="guest-btn" id="guestBtn">Tiếp tục với tư cách Khách (Xem toàn bộ dữ liệu & bài học) →</a>
 
     <!-- Thông báo trạng thái/lỗi -->
     <div id="errorMsg" aria-live="polite"></div>
@@ -1038,6 +1035,47 @@
       };
     }
 
+    // 5.1. Cơ chế Rate Limit chống Brute-Force đăng nhập (Client-side cooldown)
+    let cooldownTimer = null;
+    function checkLoginRateLimit() {
+      const lockUntil = parseInt(sessionStorage.getItem('aicheck:login_lock_until') || '0', 10);
+      const now = Date.now();
+      if (lockUntil > now) {
+        startCooldown(Math.ceil((lockUntil - now) / 1000));
+        return false;
+      }
+      return true;
+    }
+
+    function startCooldown(seconds) {
+      if (cooldownTimer) clearInterval(cooldownTimer);
+      submitBtn.disabled = true;
+      let remain = seconds;
+      
+      const updateMsg = () => {
+        errorMsg.style.color = '#c84f36';
+        errorMsg.textContent = `Bạn đã thử đăng nhập sai quá 5 lần. Vui lòng chờ ${remain}s trước khi thử lại.`;
+      };
+      updateMsg();
+
+      cooldownTimer = setInterval(() => {
+        remain--;
+        if (remain <= 0) {
+          clearInterval(cooldownTimer);
+          cooldownTimer = null;
+          sessionStorage.removeItem('aicheck:login_lock_until');
+          sessionStorage.removeItem('aicheck:login_fail_count');
+          submitBtn.disabled = false;
+          errorMsg.textContent = '';
+        } else {
+          updateMsg();
+        }
+      }, 1000);
+    }
+
+    // Kiểm tra cooldown ngay khi tải trang
+    checkLoginRateLimit();
+
     // 6. Xử lý gửi Form (Sign In / Sign Up)
     authForm.onsubmit = async (e) => {
       e.preventDefault();
@@ -1047,6 +1085,10 @@
       if (!email || !password) {
         errorMsg.style.color = '#c84f36';
         errorMsg.textContent = 'Vui lòng nhập đầy đủ Email và Mật khẩu!';
+        return;
+      }
+
+      if (isLogin && !checkLoginRateLimit()) {
         return;
       }
 
@@ -1060,10 +1102,23 @@
         const { data, error } = await window.AICheckCloud.signIn(email, password);
         if (error) {
           window.AICheckLoader?.hide();
-          errorMsg.style.color = '#c84f36';
-          errorMsg.textContent = 'Lỗi: ' + (error.message || error);
-          submitBtn.disabled = false;
+          const fails = parseInt(sessionStorage.getItem('aicheck:login_fail_count') || '0', 10) + 1;
+          sessionStorage.setItem('aicheck:login_fail_count', fails);
+
+          if (fails >= 5) {
+            const lockTime = Date.now() + 60000;
+            sessionStorage.setItem('aicheck:login_lock_until', lockTime);
+            startCooldown(60);
+          } else {
+            errorMsg.style.color = '#c84f36';
+            errorMsg.textContent = `Lỗi: ${error.message || error} (Đã sai ${fails}/5 lần)`;
+            submitBtn.disabled = false;
+          }
         } else {
+          // Reset bộ đếm rate limit khi đăng nhập thành công
+          sessionStorage.removeItem('aicheck:login_fail_count');
+          sessionStorage.removeItem('aicheck:login_lock_until');
+
           // Ghi nhớ email nếu được chọn
           try {
             if (rememberMeCheck.checked) {

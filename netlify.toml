@@ -1,2 +1,56 @@
 [build]
   publish = "."
+
+# 1. BẮT BUỘC CHUYỂN HƯỚNG HTTP SANG HTTPS (FORCE HTTPS)
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true
+
+# 2. ĐỊNH TUYẾN TỚI SERVERLESS FUNCTION (RATE LIMITING API)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# 3. BỘ SECURITY HEADERS CHUẨN PRODUCTION
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Chống Clickjacking / iframe injection
+    X-Frame-Options = "SAMEORIGIN"
+    # Chống MIME-sniffing
+    X-Content-Type-Options = "nosniff"
+    # Bật XSS Filter trên trình duyệt cũ
+    X-XSS-Protection = "1; mode=block"
+    # Bảo vệ thông tin Referrer nhạy cảm
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Giới hạn quyền truy cập thiết bị (Micro, Camera, Vị trí)
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    # Buộc trình duyệt luôn kết nối qua HTTPS (HSTS - 1 năm)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Content Security Policy (CSP) an toàn cho ứng dụng
+    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; font-src 'self' https://fonts.gstatic.com https: data:; frame-src 'self' https://docs.google.com https:;"
+
+# 4. CDN CACHING CHO TÀI NGUYÊN TĨNH (CHỐNG SẬP KHI HÀNG NGHÌN NGƯỜI TRUY CẬP ĐỒNG THỜI)
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
