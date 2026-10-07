@@ -1,4 +1,32 @@
 /* ==========================================================================
+   HEADER BRAND & LOGO (ẨN CHỮ, CHỈ GIỮ LẠI ICON "AI" TRÊN CẢ PC VÀ MOBILE)
+   ========================================================================== */
+.brand-name,
+.header-inner .brand-name,
+.home-site-header .brand-name {
+  display: none !important;
+}
+
+.brand,
+.header-inner .brand {
+  gap: 0 !important;
+  text-decoration: none !important;
+  flex: none !important;
+}
+
+.brand .brand-mark,
+.header-inner .brand .brand-mark {
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease;
+}
+
+.brand:hover .brand-mark,
+.header-inner .brand:hover .brand-mark {
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(217, 242, 108, 0.45);
+}
+
+/* ==========================================================================
    HEADER RIGHT TOOLBAR & CONTROLS (VI/EN, THEME, USER BADGE, HAMBURGER)
    ========================================================================== */
 .header-right {
@@ -241,12 +269,12 @@
   max-height: calc(100vh - 90px);
   overflow-y: auto;
   z-index: 10005 !important;
-  padding: 16px;
+  padding: 12px 14px;
   background: #ffffff !important;
   border: 1px solid rgba(22, 61, 53, 0.14);
-  border-radius: 20px;
+  border-radius: 18px;
   box-shadow: 0 20px 48px rgba(10, 35, 28, 0.22), 0 4px 16px rgba(10, 35, 28, 0.08);
-  gap: 8px;
+  gap: 6px;
   animation: nav-flyout-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -272,9 +300,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 12px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid rgba(22, 61, 53, 0.1);
+  padding-bottom: 8px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid rgba(22, 61, 53, 0.08);
 }
 [data-theme="dark"] .site-nav-header {
   border-bottom-color: rgba(255, 255, 255, 0.08);
@@ -282,10 +310,10 @@
 .site-nav-header-left {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 .site-nav-badge {
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.8px;
   color: var(--leaf);
@@ -296,40 +324,23 @@
 }
 .site-nav-title {
   margin: 0;
-  font: 700 16px/1.2 "Space Grotesk", sans-serif;
+  font: 700 14px/1.2 "Space Grotesk", sans-serif;
   color: var(--forest);
+  letter-spacing: 0.3px;
 }
 [data-theme="dark"] .site-nav-title {
   color: #ffffff;
 }
-.site-nav-close {
-  width: 32px;
-  height: 32px;
-  display: inline-grid;
-  place-items: center;
-  background: rgba(22, 61, 53, 0.06);
-  border: 0;
-  border-radius: 9px;
-  color: var(--forest);
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.site-nav-close:hover {
-  background: rgba(200, 79, 54, 0.12);
-  color: #c84f36;
-}
-[data-theme="dark"] .site-nav-close {
-  background: rgba(255, 255, 255, 0.08);
-  color: #d9f26c;
-}
-[data-theme="dark"] .site-nav-close:hover {
-  background: rgba(233, 120, 80, 0.2);
-  color: #ff8c69;
+/* Ẩn / Xóa nút đóng ✕ bên cạnh MENU ĐIỀU HƯỚNG theo yêu cầu */
+.site-nav-close,
+#btnSiteNavClose {
+  display: none !important;
 }
 
-/* Các link điều hướng bên trong Drawer - Bento Grid 2 cột siêu gọn đẹp */
+
+/* ==========================================================================
+   BENTO GRID 2 CỘT SIÊU TINH GỌN, HIỆN ĐẠI (ĐỒNG BỘ PC & MOBILE)
+   ========================================================================== */
 .site-nav-grid {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -338,73 +349,78 @@
   box-sizing: border-box !important;
 }
 
-.header-inner .site-nav a.site-nav-link {
+/* Tab Đăng nhập / Tài khoản nổi bật ở hàng đầu tiên (Full-width) */
+.header-inner .site-nav a.site-nav-link.site-nav-login-tab {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  width: 100% !important;
+  padding: 8px 12px !important;
+  min-height: 42px !important;
+  border-radius: 11px !important;
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.22), rgba(36, 114, 79, 0.07)) !important;
+  border: 1.5px solid rgba(36, 114, 79, 0.25) !important;
+  text-decoration: none !important;
+  color: var(--ink) !important;
+  box-sizing: border-box !important;
+  margin-bottom: 2px !important;
+  transition: all 0.18s ease;
+}
+.header-inner .site-nav a.site-nav-link.site-nav-login-tab:hover {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.36), rgba(36, 114, 79, 0.14)) !important;
+  border-color: var(--leaf) !important;
+  box-shadow: 0 3px 10px rgba(22, 61, 53, 0.08);
+}
+[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.14), rgba(22, 61, 53, 0.55)) !important;
+  border-color: rgba(217, 242, 108, 0.28) !important;
+  color: #ffffff !important;
+}
+
+/* Các thẻ học tập trong Grid 2 cột - Tinh gọn, thanh thoát */
+.header-inner .site-nav a.site-nav-link.site-nav-tile {
   display: flex !important;
   align-items: center;
   gap: 8px;
-  padding: 7px 10px !important;
-  min-height: 42px;
+  padding: 6px 9px !important;
+  min-height: 40px;
+  width: 100% !important;
   border-radius: 10px;
   background: #ffffff !important;
   border: 1px solid rgba(22, 61, 53, 0.1) !important;
   text-decoration: none !important;
   color: var(--ink) !important;
   transition: all 0.16s ease;
-  box-shadow: 0 1px 3px rgba(16, 45, 40, 0.04);
+  box-shadow: 0 1px 3px rgba(16, 45, 40, 0.03);
   text-align: left !important;
   box-sizing: border-box !important;
 }
-.header-inner .site-nav a.site-nav-link:hover {
+.header-inner .site-nav a.site-nav-link.site-nav-tile:hover {
   background: #edf5ee !important;
   border-color: rgba(36, 114, 79, 0.4) !important;
   transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(22, 61, 53, 0.08);
+  box-shadow: 0 3px 8px rgba(22, 61, 53, 0.08);
 }
-.header-inner .site-nav a.site-nav-link[aria-current="page"] {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.35), rgba(217, 242, 108, 0.1)) !important;
+.header-inner .site-nav a.site-nav-link.site-nav-tile[aria-current="page"] {
+  background: linear-gradient(135deg, rgba(217, 242, 108, 0.32), rgba(217, 242, 108, 0.1)) !important;
   border: 1.5px solid var(--leaf) !important;
-  font-weight: 800;
   box-shadow: 0 2px 8px rgba(217, 242, 108, 0.25);
 }
-[data-theme="dark"] .header-inner .site-nav a.site-nav-link {
+[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-tile {
   background: #11342a !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
   color: #e4eee8 !important;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
-[data-theme="dark"] .header-inner .site-nav a.site-nav-link:hover {
+[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-tile:hover {
   background: #174236 !important;
   border-color: rgba(217, 242, 108, 0.35) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
-[data-theme="dark"] .header-inner .site-nav a.site-nav-link[aria-current="page"] {
+[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-tile[aria-current="page"] {
   background: linear-gradient(135deg, rgba(217, 242, 108, 0.2), rgba(18, 59, 50, 0.75)) !important;
   border-color: #d9f26c !important;
   color: #ffffff !important;
-}
-
-/* Thẻ Tài nguyên trải rộng 2 cột ở đáy */
-.site-nav-tile-wide {
-  grid-column: 1 / -1 !important;
-}
-
-/* Tab Đăng nhập / Tài khoản nổi bật ở hàng đầu tiên (Full-width) */
-.header-inner .site-nav a.site-nav-link.site-nav-login-tab {
-  width: 100% !important;
-  padding: 8px 12px !important;
-  min-height: 44px !important;
-  border-radius: 12px !important;
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.22), rgba(36, 114, 79, 0.07)) !important;
-  border: 1.5px solid rgba(36, 114, 79, 0.25) !important;
-  margin-bottom: 2px !important;
-}
-.header-inner .site-nav a.site-nav-link.site-nav-login-tab:hover {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.36), rgba(36, 114, 79, 0.14)) !important;
-  border-color: var(--leaf) !important;
-}
-[data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.14), rgba(22, 61, 53, 0.55)) !important;
-  border-color: rgba(217, 242, 108, 0.28) !important;
 }
 
 /* Icon Badges màu sắc nhận diện tinh tế */
@@ -477,19 +493,26 @@
   text-overflow: ellipsis !important;
 }
 [data-theme="dark"] .site-nav-link .nav-item-desc {
-  color: #9cb5a8 !important;
+  color: #9cb8a9 !important;
+}
+.site-nav-login-tab .nav-item-title {
+  font-size: 13px !important;
+}
+.site-nav-login-tab .nav-item-desc {
+  font-size: 10px !important;
 }
 
 .site-nav-link .nav-item-arrow {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
-  opacity: 0.6;
+  opacity: 0.7;
   flex: none;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, color 0.2s ease;
+  margin-left: auto;
 }
 .site-nav a.site-nav-link:hover .nav-item-arrow {
   opacity: 1;
-  transform: rotate(45deg);
+  transform: translateX(3px);
   color: var(--leaf);
 }
 [data-theme="dark"] .site-nav a.site-nav-link:hover .nav-item-arrow {
@@ -554,8 +577,8 @@
   .header-inner .brand {
     width: auto !important;
     min-width: 0 !important;
-    flex: 0 1 auto !important;
-    gap: 6px !important;
+    flex: 0 0 auto !important;
+    gap: 0 !important;
   }
   .header-inner .brand-mark {
     width: 32px !important;
@@ -565,11 +588,6 @@
     flex-shrink: 0 !important;
   }
   .header-inner .brand-name {
-    font-size: 12px !important;
-    line-height: 1.15 !important;
-    white-space: nowrap !important;
-  }
-  .header-inner .brand-name small {
     display: none !important;
   }
   .header-right {
@@ -644,14 +662,15 @@
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(217, 242, 108, 0.2) !important;
   }
   .header-inner .site-nav a.site-nav-link.site-nav-tile {
-    min-height: 40px !important;
-    padding: 6px 8px !important;
+    min-height: 38px !important;
+    padding: 5px 8px !important;
     border-radius: 9px !important;
+    gap: 7px !important;
   }
   .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
-    min-height: 42px !important;
-    padding: 7px 10px !important;
-    border-radius: 11px !important;
+    min-height: 40px !important;
+    padding: 6px 10px !important;
+    border-radius: 10px !important;
   }
 }
 
@@ -666,7 +685,7 @@
     font-size: 12px !important;
   }
   .header-inner .brand-name {
-    font-size: 11px !important;
+    display: none !important;
   }
   /* Trên màn hình < 480px: chỉ hiển thị Lv trong gamify pill */
   .nav-gamify-pill span:not(:first-child) {

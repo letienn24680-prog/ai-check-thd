@@ -591,8 +591,8 @@
         themeLight: "Chuyển sang giao diện Sáng",
         themeDark: "Chuyển sang giao diện Tối",
         level: "Cấp",
-        nav_login: "Đăng nhập",
-        nav_login_desc: "Vào trang chủ & Lưu BXH",
+        nav_login: "Tài khoản",
+        nav_login_desc: "Hồ sơ & Cài đặt",
         nav_home: "Trang chủ",
         nav_home_desc: "Tổng quan",
         nav_knowledge: "Kiến thức",
@@ -601,7 +601,9 @@
         nav_practice_desc: "Tình huống AI",
         nav_assessment: "Đánh giá",
         nav_assessment_desc: "Thi chứng chỉ",
-        nav_leaderboard: "Xếp hạng",
+        nav_exam: "Phòng thi",
+        nav_exam_desc: "Làm bài thi",
+        nav_leaderboard: "BXH",
         nav_leaderboard_desc: "Bảng vàng XP",
         nav_research: "Nghiên cứu",
         nav_research_desc: "Báo cáo KHKT",
@@ -646,18 +648,20 @@
         themeLight: "Switch to Light Theme",
         themeDark: "Switch to Dark Theme",
         level: "Lv.",
-        nav_login: "Log in",
-        nav_login_desc: "Sign in & Sync XP",
+        nav_login: "Account",
+        nav_login_desc: "Profile & Settings",
         nav_home: "Home",
         nav_home_desc: "Overview",
         nav_knowledge: "Knowledge",
         nav_knowledge_desc: "4 Topics",
         nav_practice: "Practice",
-        nav_practice_desc: "AI Training",
+        nav_practice_desc: "AI Lab",
         nav_assessment: "Assessment",
         nav_assessment_desc: "Certificates",
-        nav_leaderboard: "Ranking",
-        nav_leaderboard_desc: "Leaderboard",
+        nav_exam: "Exam Room",
+        nav_exam_desc: "Online Tests",
+        nav_leaderboard: "Leaderboard",
+        nav_leaderboard_desc: "Ranking XP",
         nav_research: "Research",
         nav_research_desc: "Science Report",
         nav_resources: "Resources",
@@ -1468,7 +1472,7 @@
     });
   }
 
-  // 3. ĐỊNH NGHĨA VÀ TRANG TRÍ CÁC MỤC ĐIỀU HƯỚNG TRONG MENU ☰
+  // 3. ĐỊNH NGHĨA VÀ TRANG TRÍ CÁC MỤC ĐIỀU HƯỚNG TRONG MENU ☰ (BENTO GRID TINH GỌN PC & MOBILE)
   const NAV_DEFINITIONS = {
     login: {
       icon: "👤",
@@ -1495,7 +1499,7 @@
       en: { title: "Practice", desc: "AI Lab" }
     },
     assessment: {
-      icon: "🎯",
+      icon: "📐",
       colorClass: "icon-assessment",
       vi: { title: "Đánh giá", desc: "Thi chứng chỉ" },
       en: { title: "Assessment", desc: "Certificates" }
@@ -1503,20 +1507,20 @@
     exam: {
       icon: "📝",
       colorClass: "icon-exam",
-      vi: { title: "Phòng thi", desc: "Làm bài tập" },
-      en: { title: "Exam Room", desc: "Online Test" }
+      vi: { title: "Phòng thi", desc: "Làm bài thi" },
+      en: { title: "Exam Room", desc: "Online Tests" }
     },
     leaderboard: {
       icon: "🏆",
       colorClass: "icon-leaderboard",
-      vi: { title: "Xếp hạng", desc: "Bảng vàng XP" },
-      en: { title: "Ranking", desc: "Leaderboard" }
+      vi: { title: "BXH", desc: "Bảng vàng XP" },
+      en: { title: "Leaderboard", desc: "Ranking XP" }
     },
     research: {
       icon: "📊",
       colorClass: "icon-research",
       vi: { title: "Nghiên cứu", desc: "Báo cáo KHKT" },
-      en: { title: "Research", desc: "Report & THD" }
+      en: { title: "Research", desc: "Science Report" }
     },
     resources: {
       icon: "📁",
@@ -1534,7 +1538,7 @@
     if (href.includes("knowledge.html") || text.includes("kiến thức") || text === "knowledge") return "knowledge";
     if (href.includes("practice.html") || text.includes("thực hành") || text === "practice") return "practice";
     if (href.includes("assessment.html") || text.includes("đánh giá") || text === "assessment") return "assessment";
-    if (href.includes("exam.html") || text.includes("phòng thi") || text === "exam") return "exam";
+    if (href.includes("exam.html") || text.includes("phòng thi") || text.includes("phong thi") || text === "exam") return "exam";
     if (href.includes("leaderboard.html") || text.includes("bxh") || text.includes("xếp hạng") || text === "leaderboard") return "leaderboard";
     if (href.includes("research.html") || text.includes("nghiên cứu") || text === "research") return "research";
     if (href.includes("resources.html") || text.includes("tài nguyên") || text === "resources") return "resources";
@@ -1545,7 +1549,7 @@
     if (!nav || nav.dataset.decorated === "true") return;
     nav.dataset.decorated = "true";
 
-    // Tạo Header cho Drawer
+    // Tạo Header cho Drawer (Đã xóa nút ✕ bên cạnh MENU ĐIỀU HƯỚNG)
     if (!nav.querySelector(".site-nav-header")) {
       const header = document.createElement("div");
       header.className = "site-nav-header";
@@ -1554,9 +1558,12 @@
           <span class="site-nav-badge">AI CHECK THĐ</span>
           <h3 class="site-nav-title" id="siteNavTitle">${AICheckI18n.t("menuTitle")}</h3>
         </div>
-        <button type="button" class="site-nav-close" id="btnSiteNavClose" aria-label="Đóng menu">✕</button>
       `;
       nav.prepend(header);
+    }
+    const existingCloseBtn = nav.querySelector(".site-nav-close, #btnSiteNavClose");
+    if (existingCloseBtn) {
+      existingCloseBtn.remove();
     }
 
     // ĐẢM BẢO MỤC ĐĂNG NHẬP LUÔN NẰM Ở HÀNG ĐẦU TIÊN CỦA MENU
@@ -1585,7 +1592,7 @@
       }
     }
 
-    // ĐẢM BẢO MỤC PHÒNG THI LUÔN CÓ MẶT TRONG MENU
+    // ĐẢM BẢO MỤC PHÒNG THI LUÔN CÓ MẶT VÀ NẰM LIỀN KỀ SAU MỤC ĐÁNH GIÁ
     let examLink = nav.querySelector('a[data-nav-key="exam"]') || 
                    Array.from(nav.querySelectorAll("a")).find(a => (a.getAttribute("href") || "").includes("exam.html"));
     if (!examLink) {
@@ -1602,7 +1609,7 @@
       }
     }
 
-    // Format các mục điều hướng
+    // Format tất cả các mục điều hướng thành dạng Bento Grid 2 cột siêu tinh gọn (Đồng bộ PC & Mobile)
     const lang = AICheckI18n.getLang();
     nav.querySelectorAll("a").forEach(link => {
       if (link.classList.contains("nav-auth-link")) return;
@@ -1612,8 +1619,7 @@
       if (!item) return;
 
       const isLogin = (key === "login");
-      const isWide = false; // 8 mục chia đều 4 hàng 2 cột hoàn hảo
-      link.className = `site-nav-link ${isLogin ? "site-nav-login-tab" : "site-nav-tile"} ${isWide ? "site-nav-tile-wide" : ""}`;
+      link.className = `site-nav-link ${isLogin ? "site-nav-login-tab" : "site-nav-tile"}`;
       link.setAttribute("data-nav-key", key);
       link.innerHTML = `
         <span class="nav-icon-badge ${item.colorClass || ''}">${item.icon}</span>
@@ -1625,7 +1631,7 @@
       `;
     });
 
-    // Gom các mục học tập vào Grid 2 cột
+    // Gom 8 mục học tập vào Grid 2 cột tinh gọn
     let gridWrap = nav.querySelector(".site-nav-grid");
     if (!gridWrap) {
       gridWrap = document.createElement("div");
@@ -2991,7 +2997,7 @@
           const iconEl = loginTab.querySelector(".nav-icon-badge");
           const arrowEl = loginTab.querySelector(".nav-item-arrow");
           if (titleEl) titleEl.textContent = `${isEn ? "Account: " : "Tài khoản: "}${name.slice(0, 14)}`;
-          if (descEl) descEl.textContent = isEn ? "Profile & Settings" : "🟢 Hồ sơ & Cài đặt";
+          if (descEl) descEl.textContent = isEn ? "Profile & Settings" : "Hồ sơ & Cài đặt";
           if (iconEl) iconEl.textContent = "👤";
           if (arrowEl) arrowEl.textContent = "⚙️";
           loginTab.onclick = (e) => {
@@ -3007,7 +3013,7 @@
           const iconEl = loginTab.querySelector(".nav-icon-badge");
           const arrowEl = loginTab.querySelector(".nav-item-arrow");
           if (titleEl) titleEl.textContent = isEn ? "Log in" : "Đăng nhập";
-          if (descEl) descEl.textContent = isEn ? "Sign in & Sync XP" : "Vào trang chủ & Lưu BXH";
+          if (descEl) descEl.textContent = isEn ? "Sign in & Sync XP" : "Đăng nhập & Lưu BXH";
           if (iconEl) iconEl.textContent = "🔐";
           if (arrowEl) arrowEl.textContent = "→";
           loginTab.onclick = null;
