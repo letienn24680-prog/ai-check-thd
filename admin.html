@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="site-nav.css">
   <style>
     body {
       padding: 20px;
@@ -84,7 +85,7 @@
     }
     table {
       width: 100%;
-      min-width: 720px;
+      min-width: 840px;
       border-collapse: collapse;
     }
     th, td {
@@ -245,6 +246,279 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ========================================================= */
+    /* STYLES CHO QUẢN LÝ ĐỀ THI & MODAL SETUP PHÒNG THI         */
+    /* ========================================================= */
+    .exam-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .exam-admin-card {
+      border: 1px solid #dce8db;
+      border-radius: 10px;
+      padding: 16px;
+      background: #fbfdfb;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+    .exam-admin-card:hover {
+      border-color: var(--forest);
+      box-shadow: 0 4px 14px rgba(16,45,40,0.08);
+      transform: translateY(-2px);
+    }
+    .exam-card-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--forest);
+      margin: 0 0 6px;
+    }
+    .exam-card-meta {
+      display: flex;
+      gap: 8px;
+      font-size: 11px;
+      color: #64748b;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .exam-card-meta span {
+      background: #edf4ed;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      color: #1b5438;
+    }
+    .exam-card-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #eef2ed;
+      flex-wrap: wrap;
+    }
+    .btn-action-exam {
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: all 0.2s;
+    }
+    .btn-action-exam:hover {
+      background: #eaf2e8;
+      border-color: var(--forest);
+    }
+    .btn-action-primary {
+      background: var(--forest);
+      color: var(--lime);
+      border-color: var(--forest);
+    }
+    .btn-action-primary:hover {
+      background: #19463b;
+      color: #ffffff;
+    }
+    .btn-action-danger {
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+    .btn-action-danger:hover {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+
+    /* MODAL SETUP ĐỀ THI */
+    .admin-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 30, 25, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .admin-modal-content {
+      background: #ffffff;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 880px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border: 1px solid #dce8db;
+    }
+    .admin-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #eef2ed;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-modal-title {
+      margin: 0;
+      font: 700 18px "Space Grotesk", sans-serif;
+      color: var(--forest);
+    }
+    .admin-modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .admin-modal-footer {
+      padding: 14px 20px;
+      border-top: 1px solid #eef2ed;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #f9fbf9;
+      border-radius: 0 0 14px 14px;
+      flex-wrap: wrap;
+    }
+
+    /* FORM SETUP CÂU HỎI TRẮC NGHIỆM */
+    .q-setup-card {
+      background: #ffffff;
+      border: 1px solid #dce8db;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .q-setup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .q-setup-num {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--forest);
+      background: #eaf3ea;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .q-textarea {
+      width: 100%;
+      min-height: 60px;
+      padding: 8px 12px;
+      border: 1px solid #dce8db;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 12.5px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    .q-options-setup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    @media (max-width: 640px) {
+      .q-options-setup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .opt-setup-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8faf8;
+      border: 1px solid #e2ece1;
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+    .opt-setup-badge {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--forest);
+      width: 22px;
+    }
+    .opt-setup-input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 12px;
+      font-family: inherit;
+      flex: 1;
+      color: #172b26;
+    }
+
+    /* Ô VUÔNG DƯỚI GÓC BÊN PHẢI ĐIỀU CHỈNH ĐÁP ÁN ĐÚNG/SAI */
+    .q-correct-selector-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed #e2ece1;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .correct-label-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .square-picker-group {
+      display: flex;
+      gap: 8px;
+    }
+    .square-picker-item {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+    }
+    .square-picker-item input[type="radio"] {
+      display: none;
+    }
+    .square-picker-box {
+      width: 32px;
+      height: 32px;
+      border: 2px solid #cbd5e1;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      transition: all 0.15s ease-out;
+    }
+    .square-picker-item input[type="radio"]:checked + .square-picker-box {
+      background: #10b981;
+      border-color: #059669;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+      transform: scale(1.06);
+    }
   </style>
 </head>
 <body>
@@ -336,6 +610,187 @@
       </div>
     </section>
 
+    <!-- CẤP MÃ ADMIN & QUẢN LÝ MÃ TRUY CẬP QUẢN TRỊ -->
+    <section class="card" id="adminCodesSection">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+        <div>
+          <h2 class="panel-title" style="margin:0">🔑 Cấp mã Admin & Quản lý Quyền truy cập</h2>
+          <p class="panel-copy" style="margin:4px 0 0">
+            Cấp mã PIN / mật mã truy cập riêng cho Giáo viên hướng dẫn hoặc Quản trị viên để mở khóa bảng điều khiển Admin.
+          </p>
+        </div>
+        <button class="btn-small" onclick="loadAdminCodesTable()">↻ Làm mới danh sách</button>
+      </div>
+
+      <!-- FORM CẤP MÃ MỚI & GỬI THÔNG BÁO TỚI TÀI KHOẢN -->
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
+        <div style="font-weight:800;font-size:13px;color:var(--forest);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+          <span>➕</span> Cấp mã Admin & Tự động gửi thông báo đến tài khoản người nhận:
+        </div>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;margin-bottom:12px">
+          <!-- BƯỚC 1: TẠO MÃ ADMIN -->
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;color:var(--forest);margin-bottom:4px">
+              1️⃣ TẠO MÃ ADMIN (PIN):
+            </label>
+            <div style="display:flex;gap:6px">
+              <input type="text" id="newAdminCodeInput" class="filter-input" placeholder="Nhập mã PIN (VD: GV2026, THD88...)" style="font-weight:800;letter-spacing:1px;flex:1">
+              <button type="button" class="btn-small" onclick="generateRandomAdminCode()" title="Tự động sinh mã ngẫu nhiên">🎲 Sinh mã</button>
+            </div>
+            <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Mã bảo mật dùng để mở khóa quyền Admin</small>
+          </div>
+
+          <!-- BƯỚC 2: GHI CHÚ / VAI TRÒ -->
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;color:var(--forest);margin-bottom:4px">
+              2️⃣ GHI CHÚ / VAI TRÒ NGƯỜI NHẬN:
+            </label>
+            <input type="text" id="newAdminCodeLabel" class="filter-input" placeholder="Ví dụ: Thầy Nam - GV Hướng dẫn KHKT" style="width:100%">
+            <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Lý do cấp, chức vụ hoặc đơn vị công tác</small>
+          </div>
+
+          <!-- BƯỚC 3: GMAIL / TÀI KHOẢN NGƯỜI NHẬN -->
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;color:var(--forest);margin-bottom:4px">
+              3️⃣ GMAIL / TÀI KHOẢN NHẬN MÃ (TRÊN WEB):
+            </label>
+            <input type="text" id="newAdminCodeRecipient" list="adminRecipientDatalist" class="filter-input" placeholder="Chọn hoặc nhập Gmail (VD: vuongquan24680@gmail.com, giaovien1)..." style="width:100%">
+            <datalist id="adminRecipientDatalist">
+              <option value="giaovien1">Tài khoản Giáo viên (giaovien1)</option>
+              <option value="adminthd">Tài khoản Quản trị THĐ (adminthd)</option>
+              <option value="all">Tất cả tài khoản hệ thống (all)</option>
+            </datalist>
+            <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Hệ thống sẽ gửi thông báo kèm liên kết vào chuông 🔔 của Gmail này</small>
+          </div>
+        </div>
+
+        <!-- DANH SÁCH GMAIL CHỌN NHANH (QUICK CHIPS - CHỈ HIỆN GMAIL) -->
+        <div style="margin-bottom:12px;background:#ffffff;border:1px dashed #cbd5e1;border-radius:6px;padding:8px 10px;font-size:11px">
+          <span style="font-weight:700;color:var(--forest);margin-right:6px">👥 Chọn nhanh Gmail tài khoản trên web:</span>
+          <span id="adminRecipientQuickChips" style="display:inline-flex;flex-wrap:wrap;gap:6px;margin-top:4px;vertical-align:middle">
+            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('giaovien1')">👨‍🏫 giaovien1</button>
+            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('adminthd')">🛡️ adminthd</button>
+            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('all')">📢 all (Tất cả)</button>
+          </span>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:6px">
+          <div style="font-size:11px;color:#64748b">
+            💡 <em>Thông báo cấp mã và liên kết vào trang Admin sẽ lập tức được lưu vào icon Chuông 🔔 của tài khoản người nhận.</em>
+          </div>
+          <button type="button" class="button button-lime" onclick="addNewAdminCode()" style="font-size:12px;font-weight:800;padding:9px 18px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px">
+            🚀 Cấp mã & Gửi thông báo đến tài khoản ✓
+          </button>
+        </div>
+        
+        <div id="adminCodeNotice" style="margin-top:10px;padding:9px 13px;border-radius:6px;background:#ecfdf5;border:1px solid #a7f3d0;color:#047857;font-size:12px;font-weight:700;display:none"></div>
+      </div>
+
+      <!-- BẢNG DANH SÁCH MÃ ADMIN -->
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <div class="table-responsive" id="adminCodesTableContainer">
+        <p class="panel-copy">Đang tải danh sách mã Admin...</p>
+      </div>
+    </section>
+
+    <!-- QUẢN LÝ ĐỀ THI & PHÒNG LÀM BÀI TRỰC TUYẾN -->
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
+        <div>
+          <h2 class="panel-title" style="margin:0">Quản lý Đề thi & Phòng làm bài tập trực tuyến</h2>
+          <p class="panel-copy" style="margin:4px 0 0">Tạo, tải lên đề thi không giới hạn số câu (10, 20, 30...), cài đặt thời gian và setup đáp án đúng/sai.</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="button button-lime" onclick="openCreateExamModal()" style="font-size:11px;display:inline-flex;align-items:center;gap:6px">
+            <span>➕</span> Upload / Tạo đề thi mới
+          </button>
+          <button class="btn-small" onclick="loadAdminExams()">↻ Làm mới</button>
+        </div>
+      </div>
+
+      <!-- DANH SÁCH CÁC LOẠI ĐỀ THI ĐÃ UP LÊN -->
+      <div class="exam-cards-grid" id="adminExamsGrid">
+        <p class="panel-copy" style="grid-column:1/-1;text-align:center;padding:20px">Đang tải danh sách đề thi...</p>
+      </div>
+    </section>
+
+    <!-- LỊCH SỬ THI & GIÁM SÁT VI PHẠM PHÒNG THI -->
+    <section class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
+        <div>
+          <h2 class="panel-title" style="margin:0">Lịch sử Thi & Giám sát Vi phạm Toàn màn hình</h2>
+          <p class="panel-copy" style="margin:4px 0 0">Ghi nhận chi tiết số lần thí sinh thoát toàn màn hình, bấm F11, Esc hoặc chuyển tab khi làm bài.</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn-small" onclick="loadExamResultsTable()">↻ Làm mới lịch sử</button>
+          <button class="btn-small" onclick="clearAllExamResults()" style="color:#b91c1c">Xóa lịch sử thi</button>
+        </div>
+      </div>
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <div class="table-responsive" id="examResultsTableContainer">
+        <p class="panel-copy">Đang tải lịch sử bài thi...</p>
+      </div>
+    </section>
+
+    <!-- DANH SÁCH THÍ SINH ĐÃ LÀM BÀI THI (ĐẠT & CHƯA ĐẠT YÊU CẦU) -->
+    <section class="card" id="examStudentsSummarySection">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+        <div>
+          <h2 class="panel-title" style="margin:0">Danh sách Thí sinh đã làm bài thi (Cả Đạt & Chưa đạt yêu cầu)</h2>
+          <p class="panel-copy" style="margin:4px 0 0">
+            Lưu trữ danh sách toàn bộ thí sinh đã tham gia phòng thi trực tuyến, đối chiếu điểm đạt được với ngưỡng điểm chuẩn của từng đề.
+          </p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <button class="button button-lime" onclick="exportExamStudentsCsv()" style="font-size:11px;display:inline-flex;align-items:center;gap:6px">
+            Xuất Excel / CSV thí sinh ↓
+          </button>
+          <button class="btn-small" onclick="loadExamStudentsSummaryTable()">↻ Làm mới</button>
+        </div>
+      </div>
+
+      <!-- 4 THẺ THỐNG KÊ TỔNG QUAN -->
+      <div class="stat-grid" id="examStudentsStatsOverview" style="margin-top:0;margin-bottom:14px">
+        <div class="stat-box">
+          <span>Tổng số lượt thi đã làm</span>
+          <strong id="examStatTotal">0</strong>
+        </div>
+        <div class="stat-box" style="border-color:#a7f3d0;background:#f0fdf4">
+          <span style="color:#047857">✓ Đã đạt yêu cầu</span>
+          <strong id="examStatPassed" style="color:#047857">0</strong>
+        </div>
+        <div class="stat-box" style="border-color:#fecaca;background:#fef2f2">
+          <span style="color:#b91c1c">✕ Chưa đạt yêu cầu</span>
+          <strong id="examStatFailed" style="color:#b91c1c">0</strong>
+        </div>
+        <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
+          <span style="color:#b45309">Tỷ lệ hoàn thành đạt</span>
+          <strong id="examStatRate" style="color:#b45309">0%</strong>
+        </div>
+      </div>
+
+      <!-- THANH LỌC VÀ TÌM KIẾM -->
+      <div class="filter-bar" style="margin-bottom:10px">
+        <div class="filter-group">
+          <select id="filterExamStatus" class="filter-input" onchange="renderExamStudentsTable()">
+            <option value="all">Tất cả (Cả đạt & chưa đạt)</option>
+            <option value="passed">✓ Đã đạt yêu cầu</option>
+            <option value="failed">✕ Chưa đạt yêu cầu</option>
+          </select>
+          <select id="filterExamTitle" class="filter-input" onchange="renderExamStudentsTable()">
+            <option value="all">Tất cả đề thi</option>
+          </select>
+          <input type="text" id="searchExamStudent" class="filter-input" placeholder="Tìm theo biệt danh thí sinh..." oninput="renderExamStudentsTable()">
+        </div>
+      </div>
+
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <div class="table-responsive" id="examStudentsTableContainer">
+        <p class="panel-copy">Đang tải danh sách thí sinh...</p>
+      </div>
+    </section>
+
     <!-- DANH SÁCH ĐIỂM CHI TIẾT -->
     <section class="card">
       <div class="filter-bar">
@@ -346,6 +801,7 @@
         <div class="filter-group">
           <select id="filterActivity" class="filter-input">
             <option value="all">Tất cả hoạt động</option>
+            <option value="exam">Phòng thi trực tuyến</option>
             <option value="assessment">Đánh giá 20 câu</option>
             <option value="rubric">Thử thách Rubric</option>
             <option value="practice">Luyện tình huống</option>
@@ -362,9 +818,140 @@
     </div>
   </div>
 
+  <!-- MODAL SETUP / TẠO VÀ SỬA ĐỀ THI -->
+  <div id="examSetupModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title" id="examModalHeaderTitle">Setup Đề Thi & Phòng Làm Bài Tập</h3>
+        <button type="button" class="btn-small" onclick="closeExamSetupModal()">✕ Đóng</button>
+      </div>
+      
+      <div class="admin-modal-body">
+        <input type="hidden" id="setupExamId">
+        
+        <!-- THÔNG TIN CHUNG CỦA ĐỀ THI -->
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:var(--forest)">TÊN ĐỀ THI / BÀI TẬP:</label>
+            <input type="text" id="setupExamTitle" placeholder="Ví dụ: Đề kiểm tra trắc nghiệm AI THĐ - Đợt 1..." class="filter-input" style="width:100%">
+          </div>
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:var(--forest)">THỜI GIAN LÀM BÀI (PHÚT):</label>
+            <input type="number" id="setupExamDuration" min="1" max="180" value="30" class="filter-input" style="width:100%">
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:var(--forest)">MÔ TẢ / HƯỚNG DẪN BÀI THI:</label>
+          <input type="text" id="setupExamDesc" placeholder="Lời dặn dò cho học sinh trước khi làm bài..." class="filter-input" style="width:100%">
+        </div>
+
+        <!-- THIẾT LẬP ĐIỂM SỐ & NGƯỠNG ĐẠT HOÀN THÀNH -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8faf8;padding:12px;border-radius:8px;border:1px solid #dce8db;margin:12px 0">
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:var(--forest)">
+              🎯 ĐIỂM CHO MỖI CÂU HỎI (ĐIỂM):
+            </label>
+            <input type="number" id="setupPointsPerQ" min="0.1" step="0.5" value="2" class="filter-input" style="width:100%" oninput="updateSetupScoreSummary()">
+            <small style="display:block;color:#64748b;font-size:10.5px;margin-top:2px">Ví dụ: Mỗi câu 2 điểm (30 câu = 60đ)</small>
+          </div>
+          <div>
+            <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:var(--forest)">
+              🏆 ĐIỂM TỐI THIỂU ĐỂ HOÀN THÀNH (NGƯỠNG ĐẠT):
+            </label>
+            <input type="number" id="setupPassingScore" min="1" step="1" value="30" class="filter-input" style="width:100%" oninput="updateSetupScoreSummary()">
+            <small style="display:block;color:#64748b;font-size:10.5px;margin-top:2px">Ví dụ: Phải trên 30đ mới hoàn thành bài</small>
+          </div>
+          <div style="grid-column:1/-1;background:#ffffff;border:1px solid #c8e0cc;border-radius:6px;padding:8px 12px;font-size:11.5px;color:#1e593a;font-weight:700;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px" id="setupScoreSummaryBox">
+            <span>📊 Tổng điểm tối đa: <b id="summaryMaxScoreText">60 điểm</b> (<span id="summaryQCountText">30 câu</span> × <span id="summaryPointPerQText">2đ</span>)</span>
+            <span>Ngưỡng đạt hoàn thành: <b id="summaryPassingScoreText" style="color:#b45309">≥ 30 điểm</b></span>
+          </div>
+        </div>
+
+        <!-- DANH SÁCH CÂU HỎI ĐỘNG (KHÔNG GIỚI HẠN SỐ LƯỢNG) -->
+        <div style="border-top:1px solid #eef2ed;padding-top:16px;margin-top:6px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+            <h4 style="margin:0;font-family:'Space Grotesk',sans-serif;color:var(--forest);font-size:15px">
+              Danh sách câu hỏi (<span id="setupQuestionCount">0</span> câu)
+            </h4>
+            <div style="display:flex;gap:8px">
+              <button type="button" class="button button-lime" onclick="addNewQuestionToSetup()" style="font-size:11px">
+                ➕ Thêm câu hỏi
+              </button>
+              <button type="button" class="btn-small" onclick="openFastImportModal()" style="font-size:11px">
+                📥 Nhập nhanh từ văn bản
+              </button>
+            </div>
+          </div>
+
+          <!-- CONTAINER CHỨA CÁC CÂU HỎI -->
+          <div id="questionsSetupContainer">
+            <!-- Render động qua JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-modal-footer">
+        <button type="button" class="btn-small" onclick="closeExamSetupModal()">Hủy bỏ</button>
+        <button type="button" class="button button-dark" onclick="saveExamFromSetup()" style="font-size:11px">
+          💾 Lưu đề thi vào hệ thống
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL NHẬP NHANH VĂN BẢN (FAST IMPORT) -->
+  <div id="fastImportModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content" style="max-width:640px">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">Nhập nhanh danh sách câu hỏi</h3>
+        <button type="button" class="btn-small" onclick="closeFastImportModal()">✕ Đóng</button>
+      </div>
+      <div class="admin-modal-body">
+        <p style="font-size:12px;color:#64748b;margin:0 0 10px">
+          Dán nội dung các câu hỏi theo định dạng chuẩn bên dưới (hỗ trợ nhập 10, 20, 30 câu chỉ trong vài giây):
+        </p>
+        <div style="background:#f8faf8;padding:10px;border-radius:6px;font-size:11px;color:#334155;margin-bottom:10px;font-family:monospace">
+          Câu 1: Nội dung câu hỏi 1?<br>
+          A. Đáp án thứ nhất<br>
+          B. Đáp án thứ hai<br>
+          C. Đáp án thứ ba<br>
+          D. Đáp án thứ tư<br>
+          Đáp án: B<br><br>
+          Câu 2: Nội dung câu hỏi 2...
+        </div>
+        <textarea id="fastImportTextarea" class="q-textarea" style="min-height:220px" placeholder="Dán nội dung đề thi vào đây..."></textarea>
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="btn-small" onclick="closeFastImportModal()">Hủy</button>
+        <button type="button" class="button button-lime" onclick="processFastImport()" style="font-size:11px">
+          ⚡ Phân tích & Thêm vào đề thi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL XEM CHI TIẾT VI PHẠM -->
+  <div id="violationDetailModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content" style="max-width:560px">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title" style="color:#b91c1c">Chi tiết Vi phạm Phòng thi</h3>
+        <button type="button" class="btn-small" onclick="closeViolationDetailModal()">✕ Đóng</button>
+      </div>
+      <div class="admin-modal-body" id="violationDetailModalBody">
+        <!-- Render chi tiết từng lần vi phạm -->
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="btn-small" onclick="closeViolationDetailModal()">Đóng</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="cloud.js"></script>
+  <script src="site-nav.js"></script>
+  <script src="pages/exam-store.js"></script>
   <script>
     let allScores = [];
     let currentAdminUnlocked = sessionStorage.getItem("aicheck:admin_unlocked") === "true";
@@ -376,23 +963,84 @@
       "f067b6a459204a66bdacd18e9ed6f72135ef30df353fb77f5ef3e628620d1888"  // AICHECK
     ];
 
+    const DEFAULT_ADMIN_CODES = [
+      { id: "code_master_thd", code: "THD2026", label: "Tài khoản Quản trị THĐ (Mặc định)", createdAt: "2026-01-01", isProtected: true },
+      { id: "code_adminthd", code: "adminthd", label: "Tài khoản Quản trị viên (adminthd)", createdAt: "2026-01-01", isProtected: true },
+      { id: "code_12a5", code: "12A5", label: "Mã Ban nghiên cứu 12A5", createdAt: "2026-01-01", isProtected: true },
+      { id: "code_aicheck", code: "AICHECK", label: "Mã Hệ thống AI CHECK", createdAt: "2026-01-01", isProtected: true }
+    ];
+
+    function getCustomAdminCodes() {
+      try {
+        const raw = localStorage.getItem("aicheck:custom_admin_codes");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch {}
+      saveCustomAdminCodes(DEFAULT_ADMIN_CODES);
+      return DEFAULT_ADMIN_CODES;
+    }
+
+    function saveCustomAdminCodes(list) {
+      try {
+        localStorage.setItem("aicheck:custom_admin_codes", JSON.stringify(list));
+      } catch (e) {
+        console.error("Lỗi lưu custom admin codes:", e);
+      }
+    }
+
     async function hashSha256(str) {
       if (!window.crypto?.subtle) return "";
       const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
     }
 
+    function showAdminWelcomeToast(msg) {
+      const toast = document.createElement("div");
+      toast.style.cssText = "position:fixed;top:20px;right:20px;z-index:99999;background:#047857;color:#ffffff;padding:12px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.25);font-weight:700;font-size:13px;display:flex;align-items:center;gap:10px;font-family:'Be Vietnam Pro',sans-serif;";
+      toast.innerHTML = `<span style="font-size:20px">🎉</span><span>${escapeHtml(msg)}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = "opacity 0.4s ease";
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 400);
+      }, 5000);
+    }
+
     async function initAdmin() {
       const user = await window.AICheckCloud.getUser();
       const isAdminUser = Boolean(user && window.AICheckCloud.isAdmin(user));
-      const isAuthorized = isAdminUser || currentAdminUnlocked;
+      let isAuthorized = isAdminUser || currentAdminUnlocked;
 
       const gateNotice = document.getElementById("authGateNotice");
       const mainContent = document.getElementById("adminMainContent");
 
+      // Tự động kiểm tra mã PIN từ liên kết URL (?pin=... hoặc ?code=...)
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlPin = (urlParams.get("pin") || urlParams.get("code") || "").trim();
+      if (urlPin) {
+        const pinInput = document.getElementById("adminPinInput");
+        if (pinInput) pinInput.value = urlPin;
+        const hashed = await hashSha256(urlPin);
+        const isDefaultHash = VALID_PIN_HASHES.includes(hashed);
+        const isMaster = urlPin.toLowerCase() === "thd2026" || urlPin.toLowerCase() === "adminthd";
+
+        const customCodes = getCustomAdminCodes();
+        const matchedCustom = customCodes.some(c => c.code && c.code.trim().toLowerCase() === urlPin.toLowerCase());
+
+        if (isDefaultHash || isMaster || matchedCustom) {
+          isAuthorized = true;
+          currentAdminUnlocked = true;
+          sessionStorage.setItem("aicheck:admin_unlocked", "true");
+          showAdminWelcomeToast(`Mở khóa Admin thành công với mã PIN: ${urlPin}`);
+        }
+      }
+
       if (isAuthorized) {
         if (gateNotice) gateNotice.style.display = "none";
         if (mainContent) mainContent.style.display = "block";
+        updateRecipientDatalist();
         loadAllData();
       } else {
         if (gateNotice) gateNotice.style.display = "block";
@@ -405,7 +1053,13 @@
         if (!pin) return;
 
         const hashed = await hashSha256(pin);
-        if (VALID_PIN_HASHES.includes(hashed)) {
+        const isDefaultHash = VALID_PIN_HASHES.includes(hashed);
+        const isMaster = pin.toLowerCase() === "thd2026" || pin.toLowerCase() === "adminthd";
+
+        const customCodes = getCustomAdminCodes();
+        const matchedCustom = customCodes.some(c => c.code && c.code.trim().toLowerCase() === pin.toLowerCase());
+
+        if (isDefaultHash || isMaster || matchedCustom) {
           currentAdminUnlocked = true;
           sessionStorage.setItem("aicheck:admin_unlocked", "true");
           if (pinErrorMsg) pinErrorMsg.style.display = "none";
@@ -429,7 +1083,15 @@
         const user = await window.AICheckCloud.getUser();
         if (!user || !window.AICheckCloud.isAdmin(user)) return;
       }
-      await Promise.all([loadScores(), loadSupportRequests(), loadUsersList()]);
+      await Promise.all([
+        loadScores(),
+        loadSupportRequests(),
+        loadUsersList()
+      ]);
+      loadAdminExams();
+      loadAdminCodesTable();
+      loadExamResultsTable();
+      loadExamStudentsSummaryTable();
       calculateStats();
     }
     
@@ -467,6 +1129,7 @@
               <td><span class="tag">${escapeHtml(user.role || "student")}</span></td>
             </tr>
           `).join("");
+          updateRecipientDatalist(users);
           return;
         } catch (e) {
           console.warn("Lỗi khi kết nối lấy user_profiles:", e);
@@ -504,6 +1167,7 @@
           const localRecords = JSON.parse(localStorage.getItem("aicheck:records") || "[]");
           allScores = localRecords.flatMap(r => {
             const list = [];
+            if (r.exam != null) list.push({ display_name: r.name, activity: "exam", score: r.exam, phase: null, created_at: r.date || new Date().toISOString() });
             if (r.assessment != null) list.push({ display_name: r.name, activity: "assessment", score: r.assessment, phase: r.postAssessment ? "post" : "pre", created_at: r.date || new Date().toISOString() });
             if (r.rubric != null) list.push({ display_name: r.name, activity: "rubric", score: r.rubric, phase: null, created_at: r.date || new Date().toISOString() });
             if (r.practice != null) list.push({ display_name: r.name, activity: "practice", score: r.practice, phase: null, created_at: r.date || new Date().toISOString() });
@@ -548,7 +1212,7 @@
             const score = Number(s.score || 0);
             const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
             const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
-            const actLabel = s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
+            const actLabel = s.activity === "exam" ? "Phòng thi trực tuyến" : s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
             const phaseLabel = s.phase === "pre" ? "Trước can thiệp" : s.phase === "post" ? "Sau can thiệp" : "—";
             const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
             return `<tr>
@@ -676,7 +1340,7 @@
       allScores.forEach((s, i) => {
         const score = Number(s.score || 0);
         const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
-        const actLabel = s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
+        const actLabel = s.activity === "exam" ? "Phòng thi trực tuyến" : s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
         const phaseLabel = s.phase === "pre" ? "Trước can thiệp" : s.phase === "post" ? "Sau can thiệp" : "";
         const time = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
         csvContent += `"${i+1}","${(s.display_name||'').replace(/"/g,'""')}","${actLabel}","${phaseLabel}","${score}","${level}","${time}"\n`;
@@ -694,6 +1358,1018 @@
 
     document.getElementById("filterActivity").onchange = renderScoreTable;
     document.getElementById("searchStudent").oninput = renderScoreTable;
+
+    // =========================================================================
+    // QUẢN LÝ ĐỀ THI & PHÒNG LÀM BÀI TRỰC TUYẾN (EXAM MANAGEMENT)
+    // =========================================================================
+    let currentEditingQuestions = [];
+
+    function loadAdminExams() {
+      const container = document.getElementById("adminExamsGrid");
+      if (!container || !window.AICheckExamStore) return;
+
+      const exams = window.AICheckExamStore.getExams();
+      if (!exams || exams.length === 0) {
+        container.innerHTML = '<p class="panel-copy" style="grid-column:1/-1;text-align:center;padding:20px">Chưa có đề thi nào trong hệ thống. Bấm "+ Upload / Tạo đề thi mới" để bắt đầu.</p>';
+        return;
+      }
+
+      container.innerHTML = exams.map(exam => {
+        const qCount = exam.questions?.length || 0;
+        const dur = exam.durationMinutes || 30;
+        const examUrl = `pages/exam.html?id=${encodeURIComponent(exam.id)}`;
+        const pointsPerQ = Number(exam.pointsPerQuestion) > 0 ? Number(exam.pointsPerQuestion) : 2;
+        const maxScore = qCount * pointsPerQ;
+        const passingScore = exam.passingScore != null ? Number(exam.passingScore) : Math.ceil(maxScore * 0.5);
+
+        return `
+          <div class="exam-admin-card">
+            <div>
+              <h3 class="exam-card-title">${escapeHtml(exam.title)}</h3>
+              <p style="font-size:12px;color:#64748b;margin:0 0 10px;line-height:1.5">${escapeHtml(exam.description || "Đề thi trắc nghiệm")}</p>
+              <div class="exam-card-meta">
+                <span>📚 ${qCount} câu hỏi</span>
+                <span>⏱️ ${dur} phút</span>
+                <span>🎯 ${pointsPerQ}đ/câu</span>
+                <span style="background:#e0f2fe;color:#0369a1;font-weight:700">🏆 Đạt: ≥ ${passingScore}/${maxScore}đ</span>
+                <span>📅 ${exam.createdAt ? new Date(exam.createdAt).toLocaleDateString("vi-VN") : "Gần đây"}</span>
+              </div>
+            </div>
+            <div class="exam-card-actions">
+              <a href="${examUrl}" target="_blank" class="btn-action-exam btn-action-primary">
+                🚀 Vào phòng thi
+              </a>
+              <button type="button" class="btn-action-exam" onclick="openEditExamModal('${exam.id}')">
+                ✏️ Chỉnh sửa
+              </button>
+              <button type="button" class="btn-action-exam" onclick="copyExamLink('${exam.id}')">
+                📋 Link thi
+              </button>
+              <button type="button" class="btn-action-exam btn-action-danger" onclick="deleteAdminExam('${exam.id}')">
+                🗑️ Xóa
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function copyExamLink(examId) {
+      const fullUrl = `${window.location.origin}${window.location.pathname.replace("admin.html", "")}pages/exam.html?id=${encodeURIComponent(examId)}`;
+      navigator.clipboard.writeText(fullUrl).then(() => {
+        alert(`Đã sao chép liên kết phòng thi:\n${fullUrl}\n\nBạn có thể gửi liên kết này cho học sinh làm bài.`);
+      }).catch(() => {
+        prompt("Sao chép liên kết phòng thi dưới đây:", fullUrl);
+      });
+    }
+
+    function deleteAdminExam(examId) {
+      if (!confirm("Bạn có chắc chắn muốn xóa đề thi này không?")) return;
+      window.AICheckExamStore.deleteExam(examId);
+      loadAdminExams();
+    }
+
+    // --- MODAL SETUP ĐỀ THI ---
+    function updateSetupScoreSummary() {
+      const qCount = currentEditingQuestions.length || 0;
+      const pointsPerQ = parseFloat(document.getElementById("setupPointsPerQ")?.value) || 2;
+      const maxScore = Math.round(qCount * pointsPerQ * 10) / 10;
+      const passVal = document.getElementById("setupPassingScore")?.value;
+      const passingScore = passVal !== "" && !isNaN(passVal) ? parseFloat(passVal) : Math.ceil(maxScore * 0.5);
+
+      const maxEl = document.getElementById("summaryMaxScoreText");
+      const qEl = document.getElementById("summaryQCountText");
+      const pEl = document.getElementById("summaryPointPerQText");
+      const passEl = document.getElementById("summaryPassingScoreText");
+
+      if (maxEl) maxEl.textContent = `${maxScore} điểm`;
+      if (qEl) qEl.textContent = `${qCount} câu`;
+      if (pEl) pEl.textContent = `${pointsPerQ}đ`;
+      if (passEl) passEl.textContent = `≥ ${passingScore} điểm`;
+    }
+
+    function openCreateExamModal() {
+      document.getElementById("examModalHeaderTitle").textContent = "Tạo / Upload Đề Thi Mới";
+      document.getElementById("setupExamId").value = "exam_" + Date.now();
+      document.getElementById("setupExamTitle").value = "";
+      document.getElementById("setupExamDuration").value = "30";
+      document.getElementById("setupExamDesc").value = "";
+      document.getElementById("setupPointsPerQ").value = "2";
+      document.getElementById("setupPassingScore").value = "30";
+
+      currentEditingQuestions = [];
+      // Khởi tạo sẵn 1 câu hỏi đầu tiên
+      addNewQuestionToSetup();
+      updateSetupScoreSummary();
+
+      document.getElementById("examSetupModal").style.display = "flex";
+    }
+
+    function openEditExamModal(examId) {
+      const exam = window.AICheckExamStore.getExamById(examId);
+      if (!exam) return alert("Không tìm thấy đề thi!");
+
+      document.getElementById("examModalHeaderTitle").textContent = "Chỉnh Sửa Đề Thi: " + exam.title;
+      document.getElementById("setupExamId").value = exam.id;
+      document.getElementById("setupExamTitle").value = exam.title || "";
+      document.getElementById("setupExamDuration").value = exam.durationMinutes || 30;
+      document.getElementById("setupExamDesc").value = exam.description || "";
+
+      const pointsPerQ = Number(exam.pointsPerQuestion) > 0 ? Number(exam.pointsPerQuestion) : 2;
+      const totalQ = exam.questions?.length || 10;
+      const maxScore = totalQ * pointsPerQ;
+      const passingScore = exam.passingScore != null ? Number(exam.passingScore) : Math.ceil(maxScore * 0.5);
+
+      document.getElementById("setupPointsPerQ").value = pointsPerQ;
+      document.getElementById("setupPassingScore").value = passingScore;
+
+      currentEditingQuestions = JSON.parse(JSON.stringify(exam.questions || []));
+      if (currentEditingQuestions.length === 0) {
+        addNewQuestionToSetup();
+      } else {
+        renderQuestionsSetupList();
+      }
+
+      updateSetupScoreSummary();
+      document.getElementById("examSetupModal").style.display = "flex";
+    }
+
+    function closeExamSetupModal() {
+      document.getElementById("examSetupModal").style.display = "none";
+    }
+
+    function renderQuestionsSetupList() {
+      const container = document.getElementById("questionsSetupContainer");
+      const countEl = document.getElementById("setupQuestionCount");
+      countEl.textContent = currentEditingQuestions.length;
+      updateSetupScoreSummary();
+
+      container.innerHTML = currentEditingQuestions.map((q, idx) => {
+        const correct = q.correctAnswer !== undefined ? q.correctAnswer : 0;
+        const optA = q.options?.[0] || "";
+        const optB = q.options?.[1] || "";
+        const optC = q.options?.[2] || "";
+        const optD = q.options?.[3] || "";
+
+        return `
+          <div class="q-setup-card" id="q_card_${idx}">
+            <div class="q-setup-header">
+              <span class="q-setup-num">Câu hỏi ${idx + 1}</span>
+              <button type="button" class="btn-action-exam btn-action-danger" onclick="removeQuestionFromSetup(${idx})">
+                🗑️ Xóa câu
+              </button>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:#475569">Nội dung câu hỏi:</label>
+              <textarea class="q-textarea" id="q_text_${idx}" placeholder="Nhập câu hỏi...">${escapeHtml(q.question || "")}</textarea>
+            </div>
+
+            <!-- 4 PHƯƠNG ÁN TRẮC NGHIỆM -->
+            <label style="display:block;font-size:11px;font-weight:700;margin:10px 0 4px;color:#475569">4 Phương án trả lời trắc nghiệm:</label>
+            <div class="q-options-setup-grid">
+              <div class="opt-setup-field">
+                <span class="opt-setup-badge">A.</span>
+                <input type="text" class="opt-setup-input" id="q_opt_${idx}_0" value="${escapeHtml(optA)}" placeholder="Nhập phương án A...">
+              </div>
+              <div class="opt-setup-field">
+                <span class="opt-setup-badge">B.</span>
+                <input type="text" class="opt-setup-input" id="q_opt_${idx}_1" value="${escapeHtml(optB)}" placeholder="Nhập phương án B...">
+              </div>
+              <div class="opt-setup-field">
+                <span class="opt-setup-badge">C.</span>
+                <input type="text" class="opt-setup-input" id="q_opt_${idx}_2" value="${escapeHtml(optC)}" placeholder="Nhập phương án C...">
+              </div>
+              <div class="opt-setup-field">
+                <span class="opt-setup-badge">D.</span>
+                <input type="text" class="opt-setup-input" id="q_opt_${idx}_3" value="${escapeHtml(optD)}" placeholder="Nhập phương án D...">
+              </div>
+            </div>
+
+            <!-- Ô VUÔNG GÓC DƯỚI BÊN PHẢI ĐIỀU CHỈNH ĐÁP ÁN ĐÚNG/SAI -->
+            <div class="q-correct-selector-bar">
+              <span class="correct-label-note">👉 Ô VUÔNG CHỌN ĐÁP ÁN ĐÚNG:</span>
+              <div class="square-picker-group">
+                <label class="square-picker-item" title="Chọn A là đáp án đúng">
+                  <input type="radio" name="q_correct_${idx}" value="0" ${correct === 0 ? "checked" : ""}>
+                  <div class="square-picker-box">A</div>
+                </label>
+                <label class="square-picker-item" title="Chọn B là đáp án đúng">
+                  <input type="radio" name="q_correct_${idx}" value="1" ${correct === 1 ? "checked" : ""}>
+                  <div class="square-picker-box">B</div>
+                </label>
+                <label class="square-picker-item" title="Chọn C là đáp án đúng">
+                  <input type="radio" name="q_correct_${idx}" value="2" ${correct === 2 ? "checked" : ""}>
+                  <div class="square-picker-box">C</div>
+                </label>
+                <label class="square-picker-item" title="Chọn D là đáp án đúng">
+                  <input type="radio" name="q_correct_${idx}" value="3" ${correct === 3 ? "checked" : ""}>
+                  <div class="square-picker-box">D</div>
+                </label>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function syncCurrentQuestionsFromDOM() {
+      currentEditingQuestions.forEach((q, idx) => {
+        const textEl = document.getElementById(`q_text_${idx}`);
+        if (textEl) q.question = textEl.value.trim();
+
+        const optA = document.getElementById(`q_opt_${idx}_0`);
+        const optB = document.getElementById(`q_opt_${idx}_1`);
+        const optC = document.getElementById(`q_opt_${idx}_2`);
+        const optD = document.getElementById(`q_opt_${idx}_3`);
+
+        q.options = [
+          optA ? optA.value.trim() : "",
+          optB ? optB.value.trim() : "",
+          optC ? optC.value.trim() : "",
+          optD ? optD.value.trim() : ""
+        ];
+
+        const checkedRadio = document.querySelector(`input[name="q_correct_${idx}"]:checked`);
+        q.correctAnswer = checkedRadio ? parseInt(checkedRadio.value, 10) : 0;
+      });
+    }
+
+    function addNewQuestionToSetup() {
+      syncCurrentQuestionsFromDOM();
+      currentEditingQuestions.push({
+        id: "q_" + Date.now() + "_" + currentEditingQuestions.length,
+        question: "",
+        options: ["", "", "", ""],
+        correctAnswer: 0
+      });
+      renderQuestionsSetupList();
+      const container = document.getElementById("questionsSetupContainer");
+      if (container && container.lastElementChild) {
+        container.lastElementChild.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }
+
+    function removeQuestionFromSetup(idx) {
+      syncCurrentQuestionsFromDOM();
+      if (currentEditingQuestions.length <= 1) {
+        return alert("Đề thi cần có tối thiểu 1 câu hỏi!");
+      }
+      currentEditingQuestions.splice(idx, 1);
+      renderQuestionsSetupList();
+    }
+
+    function saveExamFromSetup() {
+      syncCurrentQuestionsFromDOM();
+
+      const examId = document.getElementById("setupExamId").value.trim();
+      const title = document.getElementById("setupExamTitle").value.trim();
+      const duration = parseInt(document.getElementById("setupExamDuration").value, 10) || 30;
+      const desc = document.getElementById("setupExamDesc").value.trim();
+      const pointsPerQ = parseFloat(document.getElementById("setupPointsPerQ").value) || 2;
+      const maxScore = Math.round(currentEditingQuestions.length * pointsPerQ * 10) / 10;
+      const passVal = document.getElementById("setupPassingScore").value;
+      const passingScore = passVal !== "" && !isNaN(passVal) ? parseFloat(passVal) : Math.ceil(maxScore * 0.5);
+
+      if (!title) {
+        return alert("Vui lòng nhập Tên đề thi!");
+      }
+      if (currentEditingQuestions.length === 0) {
+        return alert("Vui lòng thêm ít nhất 1 câu hỏi vào đề thi!");
+      }
+      if (pointsPerQ <= 0) {
+        return alert("Điểm cho mỗi câu hỏi phải lớn hơn 0!");
+      }
+      if (passingScore <= 0 || passingScore > maxScore) {
+        return alert(`Điểm tối thiểu hoàn thành (ngưỡng đạt) phải từ 1 đến ${maxScore} điểm!`);
+      }
+
+      for (let i = 0; i < currentEditingQuestions.length; i++) {
+        const q = currentEditingQuestions[i];
+        if (!q.question) {
+          return alert(`Câu hỏi số ${i + 1} chưa có nội dung! Vui lòng nhập nội dung câu hỏi.`);
+        }
+      }
+
+      const examObj = {
+        id: examId,
+        title: title,
+        durationMinutes: duration,
+        description: desc,
+        pointsPerQuestion: pointsPerQ,
+        passingScore: passingScore,
+        questions: currentEditingQuestions,
+        createdAt: new Date().toISOString()
+      };
+
+      window.AICheckExamStore.saveExam(examObj);
+      closeExamSetupModal();
+      loadAdminExams();
+      alert("✓ Đã lưu đề thi thành công vào hệ thống!");
+    }
+
+    // --- MODAL NHẬP NHANH VĂN BẢN (FAST IMPORT) ---
+    function openFastImportModal() {
+      document.getElementById("fastImportTextarea").value = "";
+      document.getElementById("fastImportModal").style.display = "flex";
+    }
+
+    function closeFastImportModal() {
+      document.getElementById("fastImportModal").style.display = "none";
+    }
+
+    function processFastImport() {
+      const text = document.getElementById("fastImportTextarea").value.trim();
+      if (!text) return alert("Vui lòng dán nội dung đề thi!");
+
+      const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+      const parsedQuestions = [];
+      let curQ = null;
+
+      lines.forEach(line => {
+        const qMatch = line.match(/^(?:Câu\s*\d+[\.\:]|\d+[\.\:])\s*(.*)$/i);
+        if (qMatch) {
+          if (curQ && curQ.question) parsedQuestions.push(curQ);
+          curQ = {
+            id: "q_" + Date.now() + "_" + parsedQuestions.length,
+            question: qMatch[1] || line,
+            options: ["", "", "", ""],
+            correctAnswer: 0
+          };
+          return;
+        }
+
+        if (!curQ) {
+          curQ = {
+            id: "q_" + Date.now() + "_0",
+            question: line,
+            options: ["", "", "", ""],
+            correctAnswer: 0
+          };
+          return;
+        }
+
+        const optMatch = line.match(/^([A-D])[\.\:\)]\s*(.*)$/i);
+        if (optMatch) {
+          const letter = optMatch[1].toUpperCase();
+          const optIdx = { "A": 0, "B": 1, "C": 2, "D": 3 }[letter];
+          if (optIdx !== undefined) {
+            curQ.options[optIdx] = optMatch[2];
+          }
+          return;
+        }
+
+        const ansMatch = line.match(/^(?:Đáp án(?:\s*đúng)?[\.\:]\s*)([A-D])/i);
+        if (ansMatch) {
+          const letter = ansMatch[1].toUpperCase();
+          const optIdx = { "A": 0, "B": 1, "C": 2, "D": 3 }[letter];
+          if (optIdx !== undefined) curQ.correctAnswer = optIdx;
+          return;
+        }
+
+        if (curQ.options.every(o => !o)) {
+          curQ.question += "\n" + line;
+        }
+      });
+
+      if (curQ && curQ.question) parsedQuestions.push(curQ);
+
+      if (parsedQuestions.length === 0) {
+        return alert("Không nhận diện được câu hỏi nào theo định dạng! Vui lòng kiểm tra lại văn bản.");
+      }
+
+      syncCurrentQuestionsFromDOM();
+      currentEditingQuestions = [...currentEditingQuestions.filter(q => q.question), ...parsedQuestions];
+      renderQuestionsSetupList();
+      closeFastImportModal();
+      alert(`✓ Đã nhập thành công ${parsedQuestions.length} câu hỏi vào đề thi!`);
+    }
+
+    // --- BẢNG LỊCH SỬ THI & GIÁM SÁT VI PHẠM ---
+    function loadExamResultsTable() {
+      const container = document.getElementById("examResultsTableContainer");
+      if (!container || !window.AICheckExamStore) return;
+
+      const results = window.AICheckExamStore.getResults();
+      if (!results || results.length === 0) {
+        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có lượt thi nào được ghi nhận.</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Thí sinh</th>
+              <th>Đề thi</th>
+              <th>Số câu làm đúng</th>
+              <th>Điểm đạt được</th>
+              <th>Trạng thái</th>
+              <th>Vi phạm Toàn màn hình</th>
+              <th>Thời gian làm</th>
+              <th>Ngày nộp bài</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${results.map((r, idx) => {
+              const violCount = r.violationsCount || 0;
+              const violBadge = violCount === 0
+                ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
+                : `<button class="btn-small" style="color:#b91c1c;border-color:#fca5a5;background:#fef2f2" onclick="viewViolationDetail('${r.id}')">⚠️ ${violCount} lần vi phạm (Xem)</button>`;
+
+              const correctCount = r.correctCount != null ? r.correctCount : 0;
+              const totalQ = r.totalQuestions || 20;
+              const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
+              const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
+              const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
+              const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
+              const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
+
+              const statusBadge = isPassed
+                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Hoàn thành (Đạt)</span>`
+                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">✕ Chưa đáp ứng (<${passingScore}đ)</span>`;
+
+              return `
+                <tr>
+                  <td>${idx + 1}</td>
+                  <td><strong>${escapeHtml(r.studentName || "—")}</strong></td>
+                  <td>${escapeHtml(r.examTitle || "Đề thi")}</td>
+                  <td><strong style="color:var(--forest);font-size:13px">${correctCount}</strong> / ${totalQ} câu</td>
+                  <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / ${maxScore} đ</td>
+                  <td>${statusBadge}</td>
+                  <td>${violBadge}</td>
+                  <td style="color:#64748b">${escapeHtml(r.timeSpentFormatted || "—")}</td>
+                  <td style="color:#64748b">${r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "—"}</td>
+                  <td>
+                    <button class="btn-small" style="color:#b91c1c" onclick="deleteExamResultItem('${r.id}')">Xóa</button>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function viewViolationDetail(resultId) {
+      const results = window.AICheckExamStore.getResults();
+      const r = results.find(item => item.id === resultId);
+      if (!r) return;
+
+      const modalBody = document.getElementById("violationDetailModalBody");
+      const list = r.violations || [];
+
+      if (list.length === 0) {
+        modalBody.innerHTML = `<p style="font-size:13px;color:#10b981">Thí sinh ${escapeHtml(r.studentName)} không có vi phạm nào trong suốt quá trình làm bài.</p>`;
+      } else {
+        modalBody.innerHTML = `
+          <div style="margin-bottom:14px;font-size:13px">
+            Thí sinh: <strong>${escapeHtml(r.studentName)}</strong> · Đề: <strong>${escapeHtml(r.examTitle)}</strong>
+            <br>Tổng số lần vi phạm: <strong style="color:#b91c1c">${list.length} lần</strong>
+          </div>
+          <table style="width:100%;font-size:12px">
+            <thead>
+              <tr>
+                <th style="width:70px">Lần #</th>
+                <th style="width:90px">Thời gian</th>
+                <th>Hành vi vi phạm ghi nhận</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${list.map((v, i) => `
+                <tr>
+                  <td>${i + 1}</td>
+                  <td><code style="background:#fef2f2;color:#b91c1c;padding:2px 4px;border-radius:4px">${escapeHtml(v.time || "—")}</code></td>
+                  <td style="color:#334155">${escapeHtml(v.reason || "Thoát toàn màn hình / Chuyển tab")}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      document.getElementById("violationDetailModal").style.display = "flex";
+    }
+
+    function closeViolationDetailModal() {
+      document.getElementById("violationDetailModal").style.display = "none";
+    }
+
+    function deleteExamResultItem(resultId) {
+      if (!confirm("Bạn có chắc chắn muốn xóa kết quả thi này?")) return;
+      window.AICheckExamStore.deleteResult(resultId);
+      loadExamResultsTable();
+      loadExamStudentsSummaryTable();
+    }
+
+    function clearAllExamResults() {
+      if (!confirm("⚠️ CẢNH BÁO: Thao tác này sẽ xóa toàn bộ lịch sử bài thi và dữ liệu giám sát vi phạm trên thiết bị này. Bạn có chắc chắn muốn tiếp tục?")) return;
+      window.AICheckExamStore.clearAllResults();
+      loadExamResultsTable();
+      loadExamStudentsSummaryTable();
+    }
+
+    // =========================================================================
+    // QUẢN LÝ DANH SÁCH THÍ SINH ĐÃ LÀM BÀI (ĐẠT & CHƯA ĐẠT YÊU CẦU)
+    // =========================================================================
+    let allExamResultsCache = [];
+
+    function loadExamStudentsSummaryTable() {
+      if (!window.AICheckExamStore) return;
+      allExamResultsCache = window.AICheckExamStore.getResults() || [];
+
+      // Cập nhật dropdown các đề thi trong bộ lọc
+      const titleSelect = document.getElementById("filterExamTitle");
+      if (titleSelect) {
+        const currentVal = titleSelect.value || "all";
+        const titles = Array.from(new Set(allExamResultsCache.map(r => r.examTitle).filter(Boolean)));
+        titleSelect.innerHTML = `<option value="all">Tất cả đề thi (${titles.length})</option>` +
+          titles.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
+        if (titles.includes(currentVal)) titleSelect.value = currentVal;
+      }
+
+      // Cập nhật thẻ thống kê nhanh
+      updateExamStudentsStats(allExamResultsCache);
+
+      // Render bảng danh sách chi tiết
+      renderExamStudentsTable();
+    }
+
+    function updateExamStudentsStats(results) {
+      const total = results.length;
+      let passedCount = 0;
+      let failedCount = 0;
+
+      results.forEach(r => {
+        const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
+        const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
+        const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
+        const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
+        const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
+        const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
+        const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
+
+        if (isPassed) {
+          passedCount++;
+        } else {
+          failedCount++;
+        }
+      });
+
+      const rate = total > 0 ? Math.round((passedCount / total) * 100) : 0;
+
+      const elTotal = document.getElementById("examStatTotal");
+      const elPassed = document.getElementById("examStatPassed");
+      const elFailed = document.getElementById("examStatFailed");
+      const elRate = document.getElementById("examStatRate");
+
+      if (elTotal) elTotal.textContent = `${total} lượt`;
+      if (elPassed) elPassed.textContent = `${passedCount} người`;
+      if (elFailed) elFailed.textContent = `${failedCount} người`;
+      if (elRate) elRate.textContent = `${rate}%`;
+    }
+
+    function renderExamStudentsTable() {
+      const container = document.getElementById("examStudentsTableContainer");
+      if (!container) return;
+
+      const statusFilter = document.getElementById("filterExamStatus") ? document.getElementById("filterExamStatus").value : "all";
+      const titleFilter = document.getElementById("filterExamTitle") ? document.getElementById("filterExamTitle").value : "all";
+      const search = document.getElementById("searchExamStudent") ? document.getElementById("searchExamStudent").value.trim().toLowerCase() : "";
+
+      let filtered = allExamResultsCache.filter(r => {
+        const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
+        const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
+        const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
+        const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
+        const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
+        const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
+        const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
+
+        // Lọc trạng thái Đạt / Chưa đạt
+        if (statusFilter === "passed" && !isPassed) return false;
+        if (statusFilter === "failed" && isPassed) return false;
+
+        // Lọc đề thi
+        if (titleFilter !== "all" && r.examTitle !== titleFilter) return false;
+
+        // Tìm kiếm biệt danh
+        if (search && !(r.studentName && r.studentName.toLowerCase().includes(search))) return false;
+
+        return true;
+      });
+
+      if (!filtered.length) {
+        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có thí sinh nào phù hợp với bộ lọc.</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Thí sinh (Biệt danh)</th>
+              <th>Đề thi</th>
+              <th>Điểm đạt được</th>
+              <th>Ngưỡng đạt yêu cầu</th>
+              <th>Kết quả phân loại</th>
+              <th>Số câu làm đúng</th>
+              <th>Thời gian làm</th>
+              <th>Ngày nộp bài</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.map((r, idx) => {
+              const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
+              const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
+              const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
+              const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
+              const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
+              const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
+              const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
+
+              const statusBadge = isPassed
+                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐÃ ĐẠT YÊU CẦU</span>`
+                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">✕ CHƯA ĐẠT YÊU CẦU</span>`;
+
+              const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
+              const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "—";
+
+              return `
+                <tr>
+                  <td>${idx + 1}</td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <span style="font-size:14px">👤</span>
+                      <strong>${escapeHtml(r.studentName || "Thí sinh THĐ")}</strong>
+                    </div>
+                  </td>
+                  <td>${escapeHtml(r.examTitle || "Đề thi trực tuyến")}</td>
+                  <td>
+                    <span style="font-family:'Space Grotesk';font-weight:800;font-size:15px;color:var(--forest)">${score}</span> / ${maxScore} đ
+                    <small style="color:#64748b;margin-left:4px">(${pct}%)</small>
+                  </td>
+                  <td>
+                    <span style="font-size:11px;color:#475569">≥ <strong>${passingScore}</strong> / ${maxScore} đ</span>
+                  </td>
+                  <td>${statusBadge}</td>
+                  <td>
+                    <strong style="color:var(--forest)">${correctCount}</strong> / ${totalQ} câu
+                  </td>
+                  <td style="color:#64748b">${escapeHtml(r.timeSpentFormatted || "—")}</td>
+                  <td style="color:#64748b">${timeStr}</td>
+                  <td>
+                    <button class="btn-small" style="color:#b91c1c" onclick="deleteExamSummaryStudent('${r.id}')">Xóa</button>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function deleteExamSummaryStudent(resultId) {
+      if (!confirm("Bạn có chắc chắn muốn xóa bản ghi của thí sinh này?")) return;
+      window.AICheckExamStore.deleteResult(resultId);
+      loadExamResultsTable();
+      loadExamStudentsSummaryTable();
+    }
+
+    function exportExamStudentsCsv() {
+      if (!allExamResultsCache.length) return alert("Chưa có danh sách thí sinh để xuất file Excel/CSV.");
+
+      let csvContent = "\uFEFFSTT,Biệt danh thí sinh,Đề thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Thời gian làm bài,Ngày giờ nộp bài\n";
+      allExamResultsCache.forEach((r, idx) => {
+        const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
+        const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
+        const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
+        const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
+        const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
+        const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
+        const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
+        const statusText = isPassed ? "ĐÃ ĐẠT YÊU CẦU" : "CHƯA ĐẠT YÊU CẦU";
+        const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "";
+
+        csvContent += `"${idx + 1}","${(r.studentName || '').replace(/"/g, '""')}","${(r.examTitle || '').replace(/"/g, '""')}","${score}","${maxScore}","${passingScore}","${statusText}","${correctCount}","${totalQ}","${r.timeSpentFormatted || ''}","${timeStr}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `Danh_Sach_Thi_Sinh_Phong_Thi_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // =========================================================================
+    // QUẢN LÝ CẤP MÃ ADMIN & QUYỀN TRUY CẬP QUẢN TRỊ
+    // =========================================================================
+    let userEmailToNameMap = {};
+
+    function selectRecipientChip(acc) {
+      const input = document.getElementById("newAdminCodeRecipient");
+      if (input) {
+        input.value = acc;
+        input.focus();
+      }
+      // Tự động điền họ tên học sinh vào ô Ghi chú (nếu ô ghi chú còn trống)
+      const labelInput = document.getElementById("newAdminCodeLabel");
+      const knownName = userEmailToNameMap[String(acc).toLowerCase().trim()];
+      if (labelInput && !labelInput.value.trim() && knownName) {
+        labelInput.value = knownName;
+      }
+    }
+
+    function updateRecipientDatalist(users = []) {
+      const datalist = document.getElementById("adminRecipientDatalist");
+      const chipsContainer = document.getElementById("adminRecipientQuickChips");
+      
+      // Tập hợp CHỈ chứa Gmail / Email (hoặc các tài khoản hệ thống đặc biệt), TUYỆT ĐỐI KHÔNG chứa họ tên
+      const emailSet = new Set(["all", "adminthd", "giaovien1"]);
+
+      if (Array.isArray(users)) {
+        users.forEach(u => {
+          if (u.email && typeof u.email === "string") {
+            const em = u.email.trim();
+            if (em) {
+              emailSet.add(em);
+              if (u.display_name && typeof u.display_name === "string") {
+                userEmailToNameMap[em.toLowerCase()] = u.display_name.trim();
+              }
+            }
+          }
+        });
+      }
+
+      // Chỉ lấy thêm từ các mã đã cấp nếu đó là Gmail/Email hợp lệ hoặc tài khoản hệ thống (loại bỏ họ tên cũ)
+      const codes = getCustomAdminCodes();
+      codes.forEach(c => {
+        if (c.recipient && typeof c.recipient === "string") {
+          const rec = c.recipient.trim();
+          if (rec.includes("@") || ["all", "adminthd", "giaovien1"].includes(rec.toLowerCase())) {
+            emailSet.add(rec);
+          }
+        }
+      });
+
+      if (datalist) {
+        datalist.innerHTML = Array.from(emailSet).map(item => `<option value="${escapeHtml(item)}"></option>`).join("");
+      }
+
+      if (chipsContainer) {
+        // Chỉ hiển thị danh sách Gmail / Email dạng nút chọn nhanh
+        const chipList = Array.from(emailSet);
+        chipsContainer.innerHTML = chipList.map(item => {
+          const isEmail = item.includes("@");
+          const icon = item === "adminthd" ? "🛡️" : item === "all" ? "📢" : isEmail ? "📧" : "👨‍🏫";
+          const knownName = userEmailToNameMap[item.toLowerCase()];
+          const tip = knownName ? `Tài khoản: ${escapeHtml(knownName)} (${escapeHtml(item)})` : `Gmail: ${escapeHtml(item)}`;
+          return `<button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" title="${tip}" onclick="selectRecipientChip('${escapeHtml(item)}')">${icon} ${escapeHtml(item)}</button>`;
+        }).join("");
+      }
+    }
+
+    function loadAdminCodesTable() {
+      const container = document.getElementById("adminCodesTableContainer");
+      if (!container) return;
+      const codes = getCustomAdminCodes();
+
+      if (!codes.length) {
+        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có mã Admin nào được tạo.</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Mã truy cập Admin (PIN)</th>
+              <th>Gmail / Tài khoản người nhận</th>
+              <th>Ghi chú / Tên người được cấp</th>
+              <th>Trạng thái</th>
+              <th>Ngày cấp</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${codes.map((c, idx) => {
+              const codeMaskId = `mask-code-${c.id}`;
+              const isProt = (c.id === "code_master_thd");
+              const recipientDisplay = c.recipient || (c.id === "code_adminthd" ? "adminthd" : "Tất cả / Hệ thống");
+              const isEmail = recipientDisplay.includes("@");
+              return `
+                <tr>
+                  <td>${idx + 1}</td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <code id="${codeMaskId}" style="background:#f1f5f9;color:var(--forest);font-weight:800;font-size:13px;padding:3px 8px;border-radius:4px;letter-spacing:1px">••••••••</code>
+                      <button type="button" class="btn-small" onclick="toggleMaskAdminCode('${c.id}', '${escapeHtml(c.code)}')">👁️</button>
+                      <button type="button" class="btn-small" onclick="copyAdminCode('${escapeHtml(c.code)}')" title="Sao chép mã PIN">📋 Copy PIN</button>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="tag" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;font-weight:700">
+                      ${isEmail ? "📧" : "👤"} ${escapeHtml(recipientDisplay)}
+                    </span>
+                  </td>
+                  <td><strong>${escapeHtml(c.label || "Quản trị viên")}</strong></td>
+                  <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Đang hoạt động</span></td>
+                  <td style="color:#64748b">${c.createdAt || "Hệ thống"}</td>
+                  <td>
+                    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                      <button type="button" class="btn-small" onclick="copyAdminUnlockLink('${escapeHtml(c.code)}')" title="Sao chép liên kết mở khóa kèm mã PIN">
+                        🔗 Link mở khóa
+                      </button>
+                      <button type="button" class="btn-small" onclick="resendAdminNotification('${escapeHtml(c.code)}', '${escapeHtml(c.recipient || 'all')}', '${escapeHtml(c.label || '')}')" title="Gửi lại thông báo đến tài khoản">
+                        ✉️ Gửi lại
+                      </button>
+                      ${isProt 
+                        ? `<span style="font-size:11px;color:#94a3b8;font-style:italic">Mã Master</span>` 
+                        : `<button type="button" class="btn-small" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;font-weight:700" onclick="deleteAdminCode('${c.id}')" title="Xóa mã này khi tài khoản không còn dùng nữa">🗑️ Xóa mã này</button>`
+                      }
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function toggleMaskAdminCode(id, plainCode) {
+      const el = document.getElementById(`mask-code-${id}`);
+      if (!el) return;
+      if (el.textContent === "••••••••") {
+        el.textContent = plainCode;
+        el.style.color = "#047857";
+      } else {
+        el.textContent = "••••••••";
+        el.style.color = "var(--forest)";
+      }
+    }
+
+    function copyAdminCode(code) {
+      navigator.clipboard?.writeText(code).then(() => {
+        alert(`✓ Đã sao chép mã Admin: "${code}" vào bộ nhớ tạm!`);
+      }).catch(() => {
+        prompt("Sao chép mã Admin:", code);
+      });
+    }
+
+    function copyAdminUnlockLink(code) {
+      const fullUrl = `${window.location.origin}${window.location.pathname}?pin=${encodeURIComponent(code)}`;
+      navigator.clipboard?.writeText(fullUrl).then(() => {
+        alert(`✓ Đã sao chép liên kết mở khóa Admin:\n${fullUrl}\n\nBạn có thể gửi liên kết này trực tiếp cho người nhận.`);
+      }).catch(() => {
+        prompt("Sao chép liên kết mở khóa Admin dưới đây:", fullUrl);
+      });
+    }
+
+    function resendAdminNotification(code, recipient, label) {
+      if (!window.AICheckNotificationStore) return;
+      const rec = recipient || "all";
+      const relativeAdminUrl = `admin.html?pin=${encodeURIComponent(code)}`;
+      window.AICheckNotificationStore.sendNotification({
+        recipient: rec,
+        sender: "Ban Quản trị THĐ (adminthd)",
+        type: "admin_grant",
+        title: "🔑 Bạn được cấp quyền Quản trị viên (Admin)",
+        message: `Chào <strong>${escapeHtml(label || rec)}</strong>, bạn vừa được Quản trị viên gửi lại quyền truy cập Bảng điều khiển Quản trị với mã PIN: <strong>${escapeHtml(code)}</strong>. Bấm nút bên dưới để mở khóa và truy cập ngay:`,
+        adminPin: code,
+        link: relativeAdminUrl
+      });
+      alert(`✓ Đã gửi lại thông báo kèm mã PIN và liên kết mở khóa đến tài khoản: "${rec}"!`);
+    }
+
+    function generateRandomAdminCode() {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let res = "THD_";
+      for (let i = 0; i < 6; i++) {
+        res += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      const input = document.getElementById("newAdminCodeInput");
+      if (input) input.value = res;
+    }
+
+    function addNewAdminCode() {
+      const recipientInput = document.getElementById("newAdminCodeRecipient");
+      const codeInput = document.getElementById("newAdminCodeInput");
+      const labelInput = document.getElementById("newAdminCodeLabel");
+      const notice = document.getElementById("adminCodeNotice");
+
+      const codeVal = codeInput ? codeInput.value.trim() : "";
+      const labelVal = labelInput ? labelInput.value.trim() : "";
+      const recipientVal = recipientInput ? recipientInput.value.trim() : "";
+
+      if (!codeVal) {
+        alert("Vui lòng nhập mã PIN hoặc bấm sinh mã ngẫu nhiên!");
+        codeInput?.focus();
+        return;
+      }
+      if (codeVal.length < 3) {
+        alert("Mã truy cập phải có tối thiểu 3 ký tự!");
+        codeInput?.focus();
+        return;
+      }
+
+      if (!recipientVal) {
+        alert("Vui lòng nhập hoặc chọn Gmail người nhận trên web!");
+        recipientInput?.focus();
+        return;
+      }
+
+      const list = getCustomAdminCodes();
+      const exists = list.some(c => c.code.toLowerCase() === codeVal.toLowerCase());
+      if (exists) {
+        alert(`Mã truy cập "${codeVal}" đã tồn tại trong danh sách! Vui lòng chọn mã khác.`);
+        return;
+      }
+
+      const knownName = userEmailToNameMap[recipientVal.toLowerCase().trim()];
+      const finalLabel = labelVal || knownName || `Cấp cho: ${recipientVal}`;
+
+      const newItem = {
+        id: "code_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+        code: codeVal,
+        recipient: recipientVal,
+        label: finalLabel,
+        createdAt: new Date().toLocaleDateString("vi-VN"),
+        isProtected: false
+      };
+
+      list.push(newItem);
+      saveCustomAdminCodes(list);
+      loadAdminCodesTable();
+
+      // GỬI THÔNG BÁO VÀ LIÊN KẾT MỞ KHÓA VÀO ICON CHUÔNG CỦA TÀI KHOẢN NGƯỜI NHẬN
+      if (window.AICheckNotificationStore) {
+        const relativeAdminUrl = `admin.html?pin=${encodeURIComponent(codeVal)}`;
+        window.AICheckNotificationStore.sendNotification({
+          recipient: recipientVal,
+          sender: "Ban Quản trị THĐ (adminthd)",
+          type: "admin_grant",
+          title: "🔑 Bạn được cấp quyền Quản trị viên (Admin)",
+          message: `Chào <strong>${escapeHtml(labelVal || recipientVal)}</strong>, bạn vừa được Quản trị viên cấp quyền Quản trị viên (Admin Portal) với mã PIN truy cập: <strong>${escapeHtml(codeVal)}</strong>. Bấm nút bên dưới để mở khóa và truy cập trực tiếp:`,
+          adminPin: codeVal,
+          link: relativeAdminUrl
+        });
+      }
+
+      if (recipientInput) recipientInput.value = "";
+      if (codeInput) codeInput.value = "";
+      if (labelInput) labelInput.value = "";
+
+      if (notice) {
+        notice.style.display = "block";
+        notice.style.background = "#ecfdf5";
+        notice.style.borderColor = "#a7f3d0";
+        notice.style.color = "#047857";
+        notice.innerHTML = `✓ Đã tạo mã <strong>${escapeHtml(codeVal)}</strong> thành công và tự động gửi thông báo đến icon Chuông 🔔 của tài khoản: <strong>${escapeHtml(recipientVal)}</strong>!`;
+        setTimeout(() => { notice.style.display = "none"; }, 6000);
+      }
+    }
+
+    function deleteAdminCode(id) {
+      const list = getCustomAdminCodes();
+      const item = list.find(c => c.id === id);
+      if (!item) return;
+
+      if (!confirm(`Bạn có chắc chắn muốn XÓA mã Admin "${item.code}" cấp cho "${item.recipient || item.label}" khi tài khoản này không còn dùng nữa không?\n\n⚠️ LƯU Ý:\n- Mã này sẽ bị xóa khỏi hệ thống và không thể mở khóa Admin được nữa.\n- Thông báo cấp mã và nút mở Admin trong icon Chuông của tài khoản "${item.recipient || item.label}" sẽ tự động bị xóa bỏ.`)) {
+        return;
+      }
+
+      // 1. Xóa khỏi danh sách custom_admin_codes
+      const updated = list.filter(c => c.id !== id);
+      saveCustomAdminCodes(updated);
+
+      // 2. Xóa thông báo cấp mã này khỏi AICheckNotificationStore (xóa trong icon chuông của tài khoản đó)
+      if (window.AICheckNotificationStore) {
+        window.AICheckNotificationStore.deleteNotificationByPin(item.code);
+      }
+
+      // 3. Tải lại bảng mã
+      loadAdminCodesTable();
+
+      // 4. Thông báo thành công
+      const notice = document.getElementById("adminCodeNotice");
+      if (notice) {
+        notice.style.display = "block";
+        notice.style.background = "#fee2e2";
+        notice.style.borderColor = "#fca5a5";
+        notice.style.color = "#b91c1c";
+        notice.innerHTML = `✓ Đã XÓA mã Admin <strong>${escapeHtml(item.code)}</strong> và thu hồi quyền của tài khoản <strong>${escapeHtml(item.recipient || item.label)}</strong> thành công!`;
+        setTimeout(() => { notice.style.display = "none"; }, 6000);
+      }
+    }
 
     initAdmin();
   </script>

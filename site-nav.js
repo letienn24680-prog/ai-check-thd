@@ -1500,6 +1500,12 @@
       vi: { title: "Đánh giá", desc: "Thi chứng chỉ" },
       en: { title: "Assessment", desc: "Certificates" }
     },
+    exam: {
+      icon: "📝",
+      colorClass: "icon-exam",
+      vi: { title: "Phòng thi", desc: "Làm bài tập" },
+      en: { title: "Exam Room", desc: "Online Test" }
+    },
     leaderboard: {
       icon: "🏆",
       colorClass: "icon-leaderboard",
@@ -1528,6 +1534,7 @@
     if (href.includes("knowledge.html") || text.includes("kiến thức") || text === "knowledge") return "knowledge";
     if (href.includes("practice.html") || text.includes("thực hành") || text === "practice") return "practice";
     if (href.includes("assessment.html") || text.includes("đánh giá") || text === "assessment") return "assessment";
+    if (href.includes("exam.html") || text.includes("phòng thi") || text === "exam") return "exam";
     if (href.includes("leaderboard.html") || text.includes("bxh") || text.includes("xếp hạng") || text === "leaderboard") return "leaderboard";
     if (href.includes("research.html") || text.includes("nghiên cứu") || text === "research") return "research";
     if (href.includes("resources.html") || text.includes("tài nguyên") || text === "resources") return "resources";
@@ -1578,6 +1585,23 @@
       }
     }
 
+    // ĐẢM BẢO MỤC PHÒNG THI LUÔN CÓ MẶT TRONG MENU
+    let examLink = nav.querySelector('a[data-nav-key="exam"]') || 
+                   Array.from(nav.querySelectorAll("a")).find(a => (a.getAttribute("href") || "").includes("exam.html"));
+    if (!examLink) {
+      examLink = document.createElement("a");
+      examLink.href = isPagesDir ? "exam.html" : "pages/exam.html";
+      examLink.setAttribute("data-nav-key", "exam");
+      examLink.textContent = "Phòng thi";
+      const assessLink = nav.querySelector('a[data-nav-key="assessment"]') || 
+                         Array.from(nav.querySelectorAll("a")).find(a => (a.getAttribute("href") || "").includes("assessment.html"));
+      if (assessLink && assessLink.nextSibling) {
+        nav.insertBefore(examLink, assessLink.nextSibling);
+      } else {
+        nav.appendChild(examLink);
+      }
+    }
+
     // Format các mục điều hướng
     const lang = AICheckI18n.getLang();
     nav.querySelectorAll("a").forEach(link => {
@@ -1588,7 +1612,7 @@
       if (!item) return;
 
       const isLogin = (key === "login");
-      const isWide = (key === "resources");
+      const isWide = false; // 8 mục chia đều 4 hàng 2 cột hoàn hảo
       link.className = `site-nav-link ${isLogin ? "site-nav-login-tab" : "site-nav-tile"} ${isWide ? "site-nav-tile-wide" : ""}`;
       link.setAttribute("data-nav-key", key);
       link.innerHTML = `
@@ -2421,12 +2445,420 @@
   }
 
   // ==========================================================================
-  // F. GẮN HUY HIỆU TÀI KHOẢN, XP & STREAK VÀO HEADER (TÍCH HỢP PROFILE MODAL)
+  // F0. HỆ THỐNG THÔNG BÁO & TIN NHẮN TỰ ĐỘNG (NOTIFICATION ENGINE)
+  // Quản lý thông báo, cấp mã Admin, tin nhắn hệ thống & đồng bộ thời gian thực
+  // ==========================================================================
+  const AICheckNotificationStore = {
+    STORAGE_KEY: "aicheck:system_notifications",
+
+    getAll() {
+      try {
+        const raw = localStorage.getItem(this.STORAGE_KEY);
+        if (raw) {
+          const list = JSON.parse(raw);
+          if (Array.isArray(list)) return list;
+        }
+      } catch {}
+      const defaults = [
+        {
+          id: "notif_welcome",
+          recipient: "all",
+          sender: "Ban Quản trị THĐ",
+          type: "system",
+          title: "🎉 Chào mừng bạn đến với AI CHECK THĐ!",
+          message: "Hệ thống trạm kiểm chứng thông tin AI đã kích hoạt chuỗi tính năng mới: Phòng thi trắc nghiệm trực tuyến, Bảng xếp hạng XP và Thông báo tự động.",
+          createdAt: new Date().toISOString(),
+          readBy: []
+        }
+      ];
+      this.saveAll(defaults);
+      return defaults;
+    },
+
+    saveAll(list) {
+      try {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(list));
+        window.dispatchEvent(new CustomEvent("aicheck:notification-change", { detail: list }));
+      } catch (e) {
+        console.error("Lỗi lưu notifications:", e);
+      }
+    },
+
+    stripAccents(str) {
+      if (!str) return "";
+      return String(str)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/Đ/g, "D")
+        .toLowerCase()
+        .trim();
+    },
+
+    getUserIdentifiers(user) {
+      const ids = new Set(["all"]);
+      const addIdentifier = (val) => {
+        if (!val) return;
+        const s = String(val).trim().toLowerCase();
+        if (s) {
+          ids.add(s);
+          const noAccent = this.stripAccents(s);
+          if (noAccent) ids.add(noAccent);
+        }
+      };
+
+      if (user) {
+        addIdentifier(user.id);
+        if (user.email) {
+          addIdentifier(user.email);
+          addIdentifier(user.email.split("@")[0]);
+        }
+        addIdentifier(user.user_metadata?.display_name);
+        addIdentifier(user.user_metadata?.username);
+      }
+      try {
+        const prof = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}");
+        addIdentifier(prof.display_name);
+        if (prof.email) {
+          addIdentifier(prof.email);
+          addIdentifier(prof.email.split("@")[0]);
+        }
+        addIdentifier(prof.student_id);
+      } catch {}
+      try {
+        const localPlayer = JSON.parse(localStorage.getItem("aicheck:player") || '""');
+        addIdentifier(localPlayer);
+      } catch {}
+      try {
+        const masterAdmin = JSON.parse(sessionStorage.getItem("master_admin_session") || "null");
+        if (masterAdmin?.email) {
+          addIdentifier(masterAdmin.email);
+          addIdentifier(masterAdmin.email.split("@")[0]);
+          addIdentifier("adminthd");
+        }
+      } catch {}
+      return ids;
+    },
+
+    getNotificationsForUser(user) {
+      const list = this.getAll();
+      const myIds = this.getUserIdentifiers(user);
+      const isAdmin = Boolean(
+        (user && window.AICheckCloud?.isAdmin && window.AICheckCloud.isAdmin(user)) ||
+        sessionStorage.getItem("aicheck:admin_unlocked") === "true" ||
+        myIds.has("adminthd")
+      );
+
+      return list.filter(n => {
+        if (!n.recipient) return false;
+        const rec = n.recipient.toLowerCase().trim();
+        const recNoAccent = this.stripAccents(rec);
+        if (rec === "all" || recNoAccent === "all" || recNoAccent === "tat ca") return true;
+        if (isAdmin && (rec === "admin" || rec === "adminthd")) return true;
+        return myIds.has(rec) || myIds.has(recNoAccent);
+      });
+    },
+
+    isRead(notif, user) {
+      if (!notif) return true;
+      const myIds = this.getUserIdentifiers(user);
+      if (Array.isArray(notif.readBy)) {
+        for (const id of notif.readBy) {
+          if (myIds.has(String(id).toLowerCase().trim())) return true;
+        }
+      }
+      return false;
+    },
+
+    getUnreadCount(user) {
+      const userNotifs = this.getNotificationsForUser(user);
+      return userNotifs.filter(n => !this.isRead(n, user)).length;
+    },
+
+    sendNotification({ recipient, sender = "Ban Quản trị THĐ", type = "system", title, message, adminPin = null, link = null }) {
+      if (!recipient || !title) return null;
+      const list = this.getAll();
+      const newNotif = {
+        id: "notif_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+        recipient: recipient.trim(),
+        sender: sender.trim(),
+        type,
+        title: title.trim(),
+        message: message.trim(),
+        adminPin: adminPin ? adminPin.trim() : null,
+        link: link ? link.trim() : null,
+        createdAt: new Date().toISOString(),
+        readBy: []
+      };
+      list.unshift(newNotif);
+      this.saveAll(list);
+      return newNotif;
+    },
+
+    markAsRead(notifId, user) {
+      const list = this.getAll();
+      const notif = list.find(n => n.id === notifId);
+      if (!notif) return;
+      if (!Array.isArray(notif.readBy)) notif.readBy = [];
+      const myIds = Array.from(this.getUserIdentifiers(user));
+      const userKey = user?.email || user?.user_metadata?.display_name || myIds[1] || "user";
+      if (!notif.readBy.includes(userKey)) {
+        notif.readBy.push(userKey);
+        this.saveAll(list);
+      }
+    },
+
+    markAllAsRead(user) {
+      const list = this.getAll();
+      const myIds = Array.from(this.getUserIdentifiers(user));
+      const userKey = user?.email || user?.user_metadata?.display_name || myIds[1] || "user";
+      let changed = false;
+      list.forEach(n => {
+        const rec = (n.recipient || "").toLowerCase().trim();
+        const recNoAccent = this.stripAccents(rec);
+        if (myIds.includes(rec) || myIds.includes(recNoAccent) || rec === "all" || (myIds.includes("adminthd") && (rec === "admin" || rec === "adminthd"))) {
+          if (!Array.isArray(n.readBy)) n.readBy = [];
+          if (!n.readBy.includes(userKey)) {
+            n.readBy.push(userKey);
+            changed = true;
+          }
+        }
+      });
+      if (changed) this.saveAll(list);
+    },
+
+    deleteNotification(notifId) {
+      let list = this.getAll();
+      list = list.filter(n => n.id !== notifId);
+      this.saveAll(list);
+    },
+
+    deleteNotificationByPin(pin) {
+      if (!pin) return;
+      let list = this.getAll();
+      const targetPin = String(pin).trim().toLowerCase();
+      const beforeCount = list.length;
+      list = list.filter(n => {
+        if (n.adminPin && String(n.adminPin).trim().toLowerCase() === targetPin) return false;
+        return true;
+      });
+      if (list.length !== beforeCount) {
+        this.saveAll(list);
+      }
+    },
+
+    copyText(text) {
+      if (!text) return;
+      navigator.clipboard?.writeText(text).then(() => {
+        alert(`✓ Đã sao chép: "${text}" vào bộ nhớ tạm!`);
+      }).catch(() => {
+        prompt("Sao chép nội dung:", text);
+      });
+    }
+  };
+  window.AICheckNotificationStore = AICheckNotificationStore;
+
+  function formatNotifTimeAgo(isoString) {
+    if (!isoString) return "";
+    try {
+      const diff = Date.now() - new Date(isoString).getTime();
+      const min = Math.floor(diff / 60000);
+      if (min < 1) return "Vừa xong";
+      if (min < 60) return `${min} phút trước`;
+      const hours = Math.floor(diff / 3600000);
+      if (hours < 24) return `${hours} giờ trước`;
+      const days = Math.floor(diff / 86400000);
+      if (days < 30) return `${days} ngày trước`;
+      return new Date(isoString).toLocaleDateString("vi-VN");
+    } catch {
+      return "";
+    }
+  }
+
+  let currentNotifUser = null;
+
+  function toggleNotifDropdown(user) {
+    currentNotifUser = user;
+    let dd = document.getElementById("navNotifDropdown");
+    if (!dd) {
+      dd = document.createElement("div");
+      dd.id = "navNotifDropdown";
+      dd.className = "notif-dropdown";
+      dd.style.display = "none";
+      dd.innerHTML = `
+        <div class="notif-header">
+          <h4><span>🔔</span> Thông báo hệ thống</h4>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button type="button" class="btn-small" id="btnMarkAllNotifsRead" style="font-size:10px;padding:3px 8px;cursor:pointer">Đã đọc tất cả</button>
+            <button type="button" class="btn-small" id="btnCloseNotifDropdown" style="font-size:10px;padding:3px 8px;cursor:pointer">✕</button>
+          </div>
+        </div>
+        <div class="notif-body" id="navNotifBody"></div>
+      `;
+      document.body.appendChild(dd);
+
+      dd.querySelector("#btnCloseNotifDropdown")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dd.style.display = "none";
+      });
+
+      dd.querySelector("#btnMarkAllNotifsRead")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        window.AICheckNotificationStore?.markAllAsRead(currentNotifUser);
+        window.AICheckAudio?.playClick();
+        renderNotifDropdownList(currentNotifUser);
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!dd.contains(e.target) && !e.target.closest("#btnNavNotifications")) {
+          dd.style.display = "none";
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && dd.style.display !== "none") {
+          dd.style.display = "none";
+        }
+      });
+    }
+
+    const isOpen = dd.style.display !== "none";
+    if (isOpen) {
+      dd.style.display = "none";
+    } else {
+      window.AICheckAudio?.playClick();
+      renderNotifDropdownList(user);
+      dd.style.display = "flex";
+    }
+  }
+
+  function renderNotifDropdownList(user = currentNotifUser) {
+    const body = document.getElementById("navNotifBody");
+    if (!body || !window.AICheckNotificationStore) return;
+
+    const notifs = window.AICheckNotificationStore.getNotificationsForUser(user);
+    if (!notifs.length) {
+      body.innerHTML = `
+        <div style="text-align:center;padding:32px 14px;color:var(--muted);font-size:12px">
+          <span style="font-size:28px;display:block;margin-bottom:8px">🔕</span>
+          Chưa có thông báo hoặc tin nhắn mới nào.
+        </div>
+      `;
+      return;
+    }
+
+    const isPagesDir = location.pathname.includes("/pages/");
+
+    body.innerHTML = notifs.map(n => {
+      const isUnread = !window.AICheckNotificationStore.isRead(n, user);
+      let targetLink = n.link || "";
+      if (targetLink && !targetLink.startsWith("http")) {
+        if (isPagesDir && !targetLink.startsWith("../")) {
+          targetLink = `../${targetLink}`;
+        } else if (!isPagesDir && targetLink.startsWith("../")) {
+          targetLink = targetLink.replace(/^\.\.\//, "");
+        }
+      }
+
+      return `
+        <div class="notif-card ${isUnread ? 'unread' : ''}" data-notif-id="${n.id}">
+          <div class="notif-card-header">
+            <span class="notif-title">${escapeHtml(n.title)}</span>
+            <span class="notif-time">${formatNotifTimeAgo(n.createdAt)}</span>
+          </div>
+          <div class="notif-msg">${n.message}</div>
+          ${n.adminPin ? `
+            <div class="notif-code-box">
+              <div>
+                <small style="color:#047857;display:block;font-size:9.5px;font-weight:700">MÃ PIN ADMIN CỦA BẠN:</small>
+                <span class="notif-code-text">${escapeHtml(n.adminPin)}</span>
+              </div>
+              <button type="button" class="btn-small" onclick="window.AICheckNotificationStore.copyText('${escapeHtml(n.adminPin)}')">📋 Copy</button>
+            </div>
+          ` : ''}
+          ${targetLink ? `
+            <a href="${targetLink}" class="notif-action-btn" data-notif-link-id="${n.id}">
+              👉 Mở Trang Quản trị Admin ngay
+            </a>
+          ` : ''}
+        </div>
+      `;
+    }).join("");
+
+    body.querySelectorAll(".notif-card").forEach(card => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("button") || e.target.closest("a")) return;
+        const id = card.getAttribute("data-notif-id");
+        if (id && card.classList.contains("unread")) {
+          window.AICheckNotificationStore?.markAsRead(id, user);
+          card.classList.remove("unread");
+          updateNotifBadgeOnly(user);
+        }
+      });
+    });
+
+    body.querySelectorAll(".notif-action-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-notif-link-id");
+        if (id) {
+          window.AICheckNotificationStore?.markAsRead(id, user);
+          updateNotifBadgeOnly(user);
+        }
+      });
+    });
+  }
+
+  function updateNotifBadgeOnly(user = currentNotifUser) {
+    const badge = document.getElementById("navNotifBadge");
+    if (!badge || !window.AICheckNotificationStore) return;
+    const unreadCount = window.AICheckNotificationStore.getUnreadCount(user);
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount > 9 ? "9+" : unreadCount;
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+    }
+  }
+
+  // ==========================================================================
+  // F. GẮN HUY HIỆU TÀI KHOẢN, XP & STREAK VÀO HEADER (TÍCH HỢP PROFILE & NOTIFICATIONS)
   // ==========================================================================
   async function attachAuthBadge() {
-    if (document.getElementById("navAuthContainer")) return;
+    if (document.getElementById("navAuthContainer") || document.getElementById("btnNavNotifications")) return;
     const headerRight = getHeaderRight();
-    if (!headerRight) return;
+    const adminActions = document.querySelector(".admin-nav-actions");
+
+    if (!headerRight && !adminActions) return;
+
+    // Hỗ trợ gắn nút chuông trên trang admin.html
+    if (!headerRight && adminActions) {
+      let user = null;
+      if (window.AICheckCloud?.getUser) {
+        try { user = await window.AICheckCloud.getUser(); } catch {}
+      }
+      currentNotifUser = user;
+      const unreadCount = window.AICheckNotificationStore ? window.AICheckNotificationStore.getUnreadCount(user) : 0;
+      const adminNotifBtn = document.createElement("button");
+      adminNotifBtn.type = "button";
+      adminNotifBtn.className = "nav-notif-btn";
+      adminNotifBtn.id = "btnNavNotifications";
+      adminNotifBtn.title = `Thông báo & Tin nhắn hệ thống (${unreadCount} chưa đọc)`;
+      adminNotifBtn.innerHTML = `<span>🔔</span><span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>`;
+      adminActions.prepend(adminNotifBtn);
+
+      adminNotifBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleNotifDropdown(user);
+      });
+
+      window.addEventListener("aicheck:notification-change", () => {
+        updateNotifBadgeOnly(user);
+        const dd = document.getElementById("navNotifDropdown");
+        if (dd && dd.style.display !== "none") renderNotifDropdownList(user);
+      });
+      return;
+    }
+
     const isPagesDir = location.pathname.includes("/pages/");
     const loginHref = isPagesDir ? "../login.html" : "login.html";
     const adminHref = isPagesDir ? "../admin.html" : "admin.html";
@@ -2440,6 +2872,7 @@
       if (window.AICheckCloud?.getUser) {
         try { user = await window.AICheckCloud.getUser(); } catch {}
       }
+      currentNotifUser = user;
 
       // Nếu có user: kiểm tra và khôi phục chuỗi ngày đăng nhập
       if (user) {
@@ -2469,6 +2902,14 @@
         </span>
       `;
 
+      const unreadCount = window.AICheckNotificationStore ? window.AICheckNotificationStore.getUnreadCount(user) : 0;
+      const notifBtnHtml = `
+        <button type="button" class="nav-notif-btn" id="btnNavNotifications" aria-label="Thông báo hệ thống" title="Thông báo & Tin nhắn hệ thống (${unreadCount} chưa đọc)">
+          <span>🔔</span>
+          <span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>
+        </button>
+      `;
+
       let localProf = {};
       try { localProf = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
       const savedAvatar = localProf.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "🎓";
@@ -2482,6 +2923,7 @@
         const isAdmin = window.AICheckCloud?.isAdmin ? window.AICheckCloud.isAdmin(user) : false;
         container.innerHTML = `
           ${gamifyPill}
+          ${notifBtnHtml}
           <span class="nav-user-pill" id="btnNavUserPill" title="${AICheckI18n.t('profileSettings')}">
             ${avatarHtml}
             <span id="navUserNameText">${escapeHtml(name.slice(0, 14))}</span>
@@ -2509,6 +2951,7 @@
         if (localName) {
           container.innerHTML = `
             ${gamifyPill}
+            ${notifBtnHtml}
             <span class="nav-user-pill" id="btnNavUserPill" title="${AICheckI18n.t('profileSettingsGuest')}">
               ${avatarHtml}
               <span id="navUserNameText">${escapeHtml(localName.slice(0, 12))}</span>
@@ -2523,10 +2966,17 @@
         } else {
           container.innerHTML = `
             ${gamifyPill}
+            ${notifBtnHtml}
             <a href="${loginHref}" class="nav-auth-link" title="${AICheckI18n.t('login')}">${AICheckI18n.t('login')}</a>
           `;
         }
       }
+
+      // Kích hoạt click chuông thông báo
+      document.getElementById("btnNavNotifications")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleNotifDropdown(user);
+      });
 
       // Đồng bộ tab Đăng nhập / Tài khoản ở HÀNG ĐẦU TIÊN của menu điều hướng
       const loginTab = document.querySelector('a[data-nav-key="login"]');
@@ -2573,10 +3023,15 @@
       headerRight.appendChild(container);
     }
 
-    // Lắng nghe cập nhật XP & Streak, Cập nhật hồ sơ và Ngôn ngữ để đồng bộ tức thì trên Header
+    // Lắng nghe cập nhật XP & Streak, Cập nhật hồ sơ, Thông báo và Ngôn ngữ để đồng bộ tức thì trên Header
     window.addEventListener("aicheck:gamify-change", renderBadgeContent);
     window.addEventListener("aicheck:profile-updated", renderBadgeContent);
     window.addEventListener("aicheck:lang-change", renderBadgeContent);
+    window.addEventListener("aicheck:notification-change", () => {
+      renderBadgeContent();
+      const dd = document.getElementById("navNotifDropdown");
+      if (dd && dd.style.display !== "none") renderNotifDropdownList();
+    });
   }
 
   function escapeHtml(str) {

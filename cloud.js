@@ -92,9 +92,39 @@
   }
 
   async function signIn(email, password) {
+    const cleanAccount = String(email || "").trim().toLowerCase();
+    
+    // Hỗ trợ đăng nhập trực tiếp tài khoản Quản trị viên cấp cao: tk: adminthd ; mk: THD2026
+    if ((cleanAccount === "adminthd" || cleanAccount === "adminthd@thd.edu.vn" || cleanAccount === "adminthd@gmail.com") && password === "THD2026") {
+      const adminUser = {
+        id: "admin-thd-master-id",
+        email: "adminthd@thd.edu.vn",
+        user_metadata: {
+          display_name: "Ban Quản trị THĐ",
+          role: "admin",
+          avatar: "👑"
+        }
+      };
+      try {
+        sessionStorage.setItem("aicheck:admin_unlocked", "true");
+        sessionStorage.setItem("aicheck:master_admin_session", JSON.stringify(adminUser));
+        localStorage.setItem("aicheck:master_admin_session", JSON.stringify(adminUser));
+        localStorage.setItem("aicheck:user_profile", JSON.stringify({
+          display_name: "Ban Quản trị THĐ",
+          role: "admin",
+          avatar: "👑",
+          email: "adminthd@thd.edu.vn"
+        }));
+        localStorage.setItem("aicheck:player", JSON.stringify("Ban Quản trị THĐ"));
+      } catch {}
+      window.dispatchEvent(new CustomEvent("aicheck:profile-updated", { detail: { user: adminUser } }));
+      return { data: { user: adminUser, session: { access_token: "master-adminthd-session" } }, error: null };
+    }
+
     if (!client) return { error: { message: "Chưa cấu hình Supabase" } };
     try {
-      const { data, error } = await client.auth.signInWithPassword({ email, password });
+      const effectiveEmail = cleanAccount.includes("@") ? cleanAccount : `${cleanAccount}@thd.edu.vn`;
+      const { data, error } = await client.auth.signInWithPassword({ email: effectiveEmail, password });
       if (!error && data?.user) {
         const name = data.user.user_metadata?.display_name || data.user.email?.split("@")[0] || "";
         if (name) {
@@ -218,6 +248,10 @@
 
   async function signOut() {
     try {
+      sessionStorage.removeItem("aicheck:master_admin_session");
+      sessionStorage.removeItem("aicheck:admin_unlocked");
+      localStorage.removeItem("aicheck:master_admin_session");
+      localStorage.removeItem("aicheck:admin_unlocked");
       if (client) await client.auth.signOut();
     } catch {}
     try {
@@ -233,6 +267,14 @@
   }
 
   async function getUser() {
+    // 1. Kiểm tra session của Master Admin (adminthd)
+    try {
+      const masterAdminRaw = sessionStorage.getItem("aicheck:master_admin_session") || localStorage.getItem("aicheck:master_admin_session");
+      if (masterAdminRaw) {
+        return JSON.parse(masterAdminRaw);
+      }
+    } catch {}
+
     if (!client) return null;
     try {
       const { data, error } = await client.auth.getUser();
@@ -308,16 +350,19 @@
   }
 
   function isAdmin(user) {
-    if (!user || !user.email) return false;
+    if (!user) return false;
+    if (user.id === "admin-thd-master-id") return true;
+    if (!user.email) return false;
     const email = user.email.toLowerCase();
     const adminEmails = [
+      "adminthd@thd.edu.vn",
       "admin@aicheck.thd",
       "admin@thd.edu.vn",
       "giaovien@thd.edu.vn",
       "kaigegm@gmail.com",
       "thd.aicheck@gmail.com"
     ];
-    return adminEmails.includes(email) || user.user_metadata?.role === "admin";
+    return adminEmails.includes(email) || email.startsWith("adminthd") || user.user_metadata?.role === "admin";
   }
 
   function getDisplayName(fallback = "") {
@@ -388,7 +433,7 @@
   async function saveScore({ name, activity, score, phase = null }) {
     if (!client) return { synced: false, reason: "not-configured" };
     const displayName = String(name || "Bạn").trim().slice(0, 24);
-    if (!displayName || !["rubric", "assessment", "practice"].includes(activity) || !Number.isInteger(score) || score < 0 || score > 100 || (activity === "assessment" && !["pre", "post"].includes(phase))) {
+    if (!displayName || !["rubric", "assessment", "practice", "exam"].includes(activity) || !Number.isInteger(score) || score < 0 || score > 100 || (activity === "assessment" && !["pre", "post"].includes(phase))) {
       return { synced: false, reason: "invalid-data" };
     }
         try {

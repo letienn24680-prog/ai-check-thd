@@ -19,6 +19,13 @@
 
   // Kiểm tra nhanh token Supabase trong localStorage hoặc URL OAuth callback để chuyển hướng tức thì (Zero-Flicker)
   function hasLocalAuthToken() {
+    // 0. Kiểm tra tài khoản Quản trị viên cấp cao (adminthd)
+    try {
+      if (sessionStorage.getItem("aicheck:master_admin_session") || localStorage.getItem("aicheck:master_admin_session")) {
+        return true;
+      }
+    } catch {}
+
     // 1. Kiểm tra nếu URL đang mang token hoặc authorization code từ Google / Facebook OAuth callback
     try {
       if (location.hash && (location.hash.includes("access_token") || location.hash.includes("refresh_token"))) {
