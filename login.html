@@ -988,6 +988,9 @@
       </div>
     </div>
 
+    <!-- Banner thông báo phiên / tranh chấp thiết bị / hỗ trợ -->
+    <div id="sessionNoticeBanner" style="display:none;margin-bottom:14px;padding:12px 14px;border-radius:10px;font-size:12.5px;line-height:1.5;"></div>
+
     <!-- Tiêu đề form -->
     <div class="form-heading-wrap">
       <h1 class="form-heading" id="formHeading">Đăng nhập</h1>
@@ -1141,6 +1144,7 @@
   <script src="supabase-config.js"></script>
   <script src="cloud.js"></script>
   <script src="site-nav.js"></script>
+  <script src="auth-guard.js"></script>
 
   <script>
     // =========================================================
@@ -1349,6 +1353,142 @@
     // Kiểm tra cooldown ngay khi tải trang
     checkLoginRateLimit();
 
+    function escapeHtml(text) {
+      const d = document.createElement("div");
+      d.textContent = text || "";
+      return d.innerHTML;
+    }
+
+    // 5.2. Xử lý thông báo URL (bị đăng xuất do thiết bị khác, hoặc đã gửi biểu mẫu mở khóa)
+    const urlParams = new URLSearchParams(window.location.search);
+    const reasonParam = urlParams.get('reason');
+    const emailParam = urlParams.get('email') || urlParams.get('unlock_email');
+    const sessionNoticeBanner = document.getElementById('sessionNoticeBanner');
+
+    if (emailParam && document.getElementById('email')) {
+      document.getElementById('email').value = emailParam;
+    }
+
+    if (reasonParam === 'displaced' && sessionNoticeBanner) {
+      sessionNoticeBanner.style.display = 'block';
+      sessionNoticeBanner.style.background = '#fef2f2';
+      sessionNoticeBanner.style.border = '1px solid #fecaca';
+      sessionNoticeBanner.style.color = '#991b1b';
+      sessionNoticeBanner.innerHTML = '⚠️ <strong>Phiên làm việc trước đó đã tự động đăng xuất</strong> do tài khoản vừa được đăng nhập trên một thiết bị khác (Quy tắc bảo mật: 1 tài khoản chỉ hoạt động trên 1 thiết bị). Vui lòng đăng nhập lại nếu bạn muốn sử dụng trên thiết bị này.';
+    } else if (reasonParam === 'unlock_submitted' && sessionNoticeBanner) {
+      sessionNoticeBanner.style.display = 'block';
+      sessionNoticeBanner.style.background = '#ecfdf5';
+      sessionNoticeBanner.style.border = '1px solid #a7f3d0';
+      sessionNoticeBanner.style.color = '#047857';
+      sessionNoticeBanner.innerHTML = '📋 <strong>Đã gửi Biểu mẫu Hỗ trợ Mở khóa tới Ban Quản trị!</strong> Ban Quản trị sẽ đối chiếu thông tin và gửi mã mở khóa về tài khoản của bạn. Sau khi nhận được mã, vui lòng đăng nhập lại và nhập mã để mở khóa.';
+    }
+
+    // Nếu người dùng truy cập từ link mở khóa kèm email
+    if (emailParam && window.AICheckSessionManager) {
+      const lockData = window.AICheckSessionManager.getAccountLock(emailParam);
+      if (lockData && lockData.status === 'unlock_pending') {
+        setTimeout(() => openUnlockCodeModal(emailParam), 300);
+      }
+    }
+
+    let pendingUnlockPassword = "";
+
+    function openUnlockCodeModal(email, password = "") {
+      const modal = document.getElementById("unlockCodeModal");
+      if (!modal) return;
+      const emailEl = document.getElementById("unlockModalAccountEmail");
+      if (emailEl) emailEl.textContent = email;
+      const input = document.getElementById("inputUnlockCode");
+      if (input) input.value = "";
+      const errBox = document.getElementById("unlockCodeModalError");
+      if (errBox) errBox.style.display = "none";
+      pendingUnlockPassword = password;
+      modal.style.display = "flex";
+      setTimeout(() => input?.focus(), 150);
+    }
+
+    function closeUnlockCodeModal() {
+      const modal = document.getElementById("unlockCodeModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    async function handleConfirmUnlockCode() {
+      const email = document.getElementById("unlockModalAccountEmail")?.textContent?.trim() || document.getElementById("email")?.value?.trim();
+      const code = document.getElementById("inputUnlockCode")?.value?.trim();
+      const errBox = document.getElementById("unlockCodeModalError");
+      const btn = document.getElementById("btnConfirmUnlockCode");
+
+      if (!code) {
+        if (errBox) {
+          errBox.style.display = "block";
+          errBox.textContent = "Vui lòng nhập mã mở khóa 6 số!";
+        }
+        return;
+      }
+
+      if (!window.AICheckSessionManager) {
+        alert("Lỗi hệ thống quản lý phiên!");
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Đang kiểm tra mã…";
+      }
+
+      const res = window.AICheckSessionManager.verifyAndUnlock(email, code);
+      if (!res.success) {
+        if (errBox) {
+          errBox.style.display = "block";
+          errBox.textContent = res.message;
+        }
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "🔓 Xác minh & Mở khóa ngay";
+        }
+        return;
+      }
+
+      // Mở khóa thành công!
+      closeUnlockCodeModal();
+      window.AICheckLoader?.show("Mở khóa thành công! Đang tiến hành đăng nhập…");
+
+      const pwd = pendingUnlockPassword || document.getElementById("password")?.value;
+      if (pwd) {
+        const loginRes = await window.AICheckCloud.signIn(email, pwd);
+        window.AICheckLoader?.hide();
+        if (loginRes.error) {
+          errorMsg.style.color = '#28744f';
+          errorMsg.textContent = "🎉 Mở khóa tài khoản thành công! Vui lòng bấm Đăng nhập lại.";
+          submitBtn.disabled = false;
+        } else {
+          window.AICheckLoader?.show("Đăng nhập thành công! Đang chuyển hướng…");
+          setTimeout(() => {
+            const redirect = localStorage.getItem('aicheck:redirectAfterLogin');
+            localStorage.removeItem('aicheck:redirectAfterLogin');
+            const cleanAcc = email.trim().toLowerCase();
+            if (cleanAcc === 'adminthd' || cleanAcc.startsWith('adminthd@') || loginRes?.data?.user?.user_metadata?.role === 'admin') {
+              location.href = 'admin.html';
+            } else {
+              location.href = redirect || 'index.html';
+            }
+          }, 500);
+          return;
+        }
+      } else {
+        window.AICheckLoader?.hide();
+        errorMsg.style.color = '#28744f';
+        errorMsg.textContent = "🎉 Mở khóa tài khoản thành công! Vui lòng nhập mật khẩu và bấm Đăng nhập.";
+        submitBtn.disabled = false;
+        document.getElementById("password")?.focus();
+      }
+
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "🔓 Xác minh & Mở khóa ngay";
+      }
+    }
+
     // 6. Xử lý gửi Form (Sign In / Sign Up)
     authForm.onsubmit = async (e) => {
       e.preventDefault();
@@ -1375,6 +1515,33 @@
         const { data, error } = await window.AICheckCloud.signIn(email, password);
         if (error) {
           window.AICheckLoader?.hide();
+
+          // XỬ LÝ KHÓA TÀI KHOẢN TRANH CHẤP THIẾT BỊ
+          if (error.isAccountLocked) {
+            submitBtn.disabled = false;
+            if (error.lockStatus === "unlock_pending") {
+              openUnlockCodeModal(error.accountEmail || email, password);
+              return;
+            } else {
+              const isSubmitted = error.lockData?.requestSubmitted;
+              errorMsg.style.color = '#b91c1c';
+              errorMsg.innerHTML = `
+                <div style="background:#fef2f2;border:1px solid #fecaca;padding:12px;border-radius:10px;text-align:left;margin-top:10px">
+                  <div style="font-weight:800;color:#991b1b;margin-bottom:4px">🚨 TÀI KHOẢN ĐANG BỊ TẠM KHÓA</div>
+                  <div style="font-size:12px;color:#334155;line-height:1.5;margin-bottom:8px">
+                    ${isSubmitted 
+                      ? "Biểu mẫu hỗ trợ mở khóa của bạn đang chờ Ban Quản trị THĐ đối chiếu và phê duyệt. Vui lòng đợi Admin cấp mã mở khóa." 
+                      : "Tài khoản bị tạm khóa do phát hiện sự cố tranh chấp đăng nhập liên tục giữa nhiều thiết bị. Vui lòng gửi Biểu mẫu Hỗ trợ để Admin xác minh danh tính và cấp mã mở khóa."}
+                  </div>
+                  <button type="button" class="btn-small" style="background:#b91c1c;color:#fff;border:none;font-weight:700;width:100%;padding:8px;cursor:pointer" onclick="window.openUnlockSupportModal ? window.openUnlockSupportModal('${escapeHtml(error.accountEmail || email)}') : alert('Vui lòng tải lại trang!')">
+                    📝 ${isSubmitted ? "Xem lại / Gửi lại Biểu mẫu Hỗ trợ" : "Điền Biểu mẫu Hỗ trợ Mở khóa ngay"}
+                  </button>
+                </div>
+              `;
+              return;
+            }
+          }
+
           const fails = parseInt(sessionStorage.getItem('aicheck:login_fail_count') || '0', 10) + 1;
           sessionStorage.setItem('aicheck:login_fail_count', fails);
 
@@ -1721,5 +1888,41 @@
       });
     }
   </script>
+
+  <!-- MODAL XÁC MINH MÃ MỞ KHÓA TỪ ADMIN -->
+  <div id="unlockCodeModal" style="position:fixed;inset:0;background:rgba(15,23,42,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:99999;display:none;align-items:center;justify-content:center;padding:16px;font-family:'Be Vietnam Pro',sans-serif;">
+    <div style="background:#ffffff;border-radius:18px;max-width:460px;width:100%;padding:26px 24px;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.4);border:1px solid #e2e8f0;animation:fadeIn 0.25s ease-out">
+      <div style="width:60px;height:60px;background:#ecfdf5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:28px;border:2px solid #a7f3d0">
+        🔑
+      </div>
+      <span style="display:inline-block;padding:3px 10px;border-radius:20px;background:#ecfdf5;color:#047857;font-size:11px;font-weight:800;letter-spacing:0.5px;margin-bottom:8px">
+        XÁC MINH MỞ KHÓA TỪ ADMIN
+      </span>
+      <h3 style="margin:0 0 10px;color:#0f172a;font-size:18px;font-weight:800;font-family:'Space Grotesk',sans-serif">
+        Nhập mã mở khóa tài khoản
+      </h3>
+      <p style="margin:0 0 16px;font-size:12.5px;color:#475569;line-height:1.6;text-align:left;background:#f8fafc;padding:12px;border-radius:10px;border:1px solid #e2e8f0">
+        Ban Quản trị THĐ đã duyệt thông tin và cấp mã mở khóa cho tài khoản: <strong id="unlockModalAccountEmail"></strong>.
+        <br><br>
+        👉 Bắt buộc phải nhập mã 6 số do Admin gửi để kích hoạt lại tài khoản trên thiết bị này.
+        <br>
+        <small style="color:#047857;font-weight:700">💡 Gợi ý: Kiểm tra mã trong icon Chuông 🔔 hoặc email được Ban Quản trị gửi.</small>
+      </p>
+
+      <div style="margin-bottom:16px">
+        <input type="text" id="inputUnlockCode" placeholder="Nhập mã mở khóa (VD: 839201)" maxlength="12" style="width:100%;height:46px;padding:8px 14px;border:2px solid #059669;border-radius:10px;font-size:18px;font-weight:800;letter-spacing:3px;text-align:center;font-family:'Space Grotesk',monospace;box-sizing:border-box;color:#065f46;background:#f0fdf4">
+        <div id="unlockCodeModalError" style="display:none;color:#b91c1c;font-size:11.5px;margin-top:6px;font-weight:600"></div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button type="button" onclick="closeUnlockCodeModal()" style="padding:10px 18px;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer">
+          Hủy bỏ
+        </button>
+        <button type="button" id="btnConfirmUnlockCode" onclick="handleConfirmUnlockCode()" style="padding:10px 22px;background:#059669;color:#ffffff;border:none;border-radius:8px;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(5,150,105,0.3)">
+          🔓 Xác minh & Mở khóa ngay
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

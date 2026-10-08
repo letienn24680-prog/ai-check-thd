@@ -121,11 +121,54 @@
       return { data: { user: adminUser, session: { access_token: "master-adminthd-session" } }, error: null };
     }
 
+    const effectiveEmail = cleanAccount.includes("@") ? cleanAccount : `${cleanAccount}@thd.edu.vn`;
+
+    // 0. Kiểm tra trạng thái khóa tài khoản do tranh chấp thiết bị
+    const lockCheck = AICheckSessionManager.getAccountLock(effectiveEmail);
+    if (lockCheck) {
+      if (lockCheck.status === "locked") {
+        return {
+          error: {
+            message: "Tài khoản đang bị tạm khóa do sự cố tranh chấp đăng nhập liên tục giữa nhiều thiết bị.",
+            isAccountLocked: true,
+            lockStatus: "locked",
+            accountEmail: effectiveEmail,
+            lockData: lockCheck
+          }
+        };
+      } else if (lockCheck.status === "unlock_pending") {
+        return {
+          error: {
+            message: "Tài khoản đã được Quản trị viên cấp mã mở khóa. Vui lòng nhập mã mở khóa để tiếp tục.",
+            isAccountLocked: true,
+            lockStatus: "unlock_pending",
+            accountEmail: effectiveEmail,
+            lockData: lockCheck
+          }
+        };
+      }
+    }
+
     if (!client) return { error: { message: "Chưa cấu hình Supabase" } };
     try {
-      const effectiveEmail = cleanAccount.includes("@") ? cleanAccount : `${cleanAccount}@thd.edu.vn`;
       const { data, error } = await client.auth.signInWithPassword({ email: effectiveEmail, password });
       if (!error && data?.user) {
+        // ĐĂNG KÝ PHIÊN THIẾT BỊ & PHÁT HIỆN TRANH CHẤP LIÊN TỤC
+        const sessionReg = AICheckSessionManager.registerLogin(effectiveEmail, data.user);
+        if (sessionReg.locked) {
+          try { await client.auth.signOut(); } catch {}
+          return {
+            error: {
+              message: sessionReg.message,
+              isAccountLocked: true,
+              justLocked: true,
+              lockStatus: "locked",
+              accountEmail: effectiveEmail,
+              lockData: sessionReg.lock
+            }
+          };
+        }
+
         const name = data.user.user_metadata?.display_name || data.user.email?.split("@")[0] || "";
         if (name) {
           try { localStorage.setItem("aicheck:player", JSON.stringify(name.trim().slice(0, 24))); } catch {}
@@ -252,6 +295,8 @@
       sessionStorage.removeItem("aicheck:admin_unlocked");
       localStorage.removeItem("aicheck:master_admin_session");
       localStorage.removeItem("aicheck:admin_unlocked");
+      localStorage.removeItem("aicheck:active_session_id");
+      localStorage.removeItem("aicheck:active_account");
       if (client) await client.auth.signOut();
     } catch {}
     try {
@@ -669,6 +714,393 @@
     }
   }
 
+  // =========================================================================
+  // SINGLE ACTIVE SESSION & CONFLICT LOCK MANAGER (QUẢN LÝ 1 TK - 1 THIẾT BỊ)
+  // =========================================================================
+  const SESSION_STORE_KEY = "aicheck:account_sessions";
+  const LOCKS_STORE_KEY = "aicheck:account_locks";
+  const MY_SESSION_KEY = "aicheck:active_session_id";
+  const MY_ACCOUNT_KEY = "aicheck:active_account";
+  const BROADCAST_CHANNEL_NAME = "aicheck_session_channel";
+
+  let sessionBroadcastChannel = null;
+  try {
+    if (typeof window !== "undefined" && window.BroadcastChannel) {
+      sessionBroadcastChannel = new BroadcastChannel(BROADCAST_CHANNEL_NAME);
+    }
+  } catch {}
+
+  const AICheckSessionManager = {
+    // 1. Nhận diện thiết bị và trình duyệt
+    getDeviceInfo() {
+      const ua = navigator.userAgent || "";
+      let os = "Không xác định";
+      if (/windows nt 10/i.test(ua)) os = "Windows 10/11";
+      else if (/windows/i.test(ua)) os = "Windows";
+      else if (/macintosh|mac os x/i.test(ua)) os = "macOS";
+      else if (/android/i.test(ua)) os = "Android";
+      else if (/iphone|ipad|ipod/i.test(ua)) os = "iOS";
+      else if (/linux/i.test(ua)) os = "Linux";
+
+      let browser = "Trình duyệt";
+      if (/edg\//i.test(ua)) browser = "Microsoft Edge";
+      else if (/chrome|crios/i.test(ua) && !/opr|opera/i.test(ua)) browser = "Google Chrome";
+      else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = "Apple Safari";
+      else if (/firefox|fxios/i.test(ua)) browser = "Mozilla Firefox";
+      else if (/opera|opr/i.test(ua)) browser = "Opera";
+
+      const isMobile = /android|iphone|ipad|ipod|mobile/i.test(ua);
+      const devType = isMobile ? "📱 Di động" : "💻 Máy tính";
+      return `${devType} (${os} · ${browser})`;
+    },
+
+    getAllSessions() {
+      try {
+        const raw = localStorage.getItem(SESSION_STORE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch {}
+      return {};
+    },
+
+    saveAllSessions(data) {
+      try {
+        localStorage.setItem(SESSION_STORE_KEY, JSON.stringify(data));
+      } catch (e) {
+        console.warn("Lỗi lưu account sessions:", e);
+      }
+    },
+
+    getAllLocks() {
+      try {
+        const raw = localStorage.getItem(LOCKS_STORE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch {}
+      return {};
+    },
+
+    saveAllLocks(data) {
+      try {
+        localStorage.setItem(LOCKS_STORE_KEY, JSON.stringify(data));
+      } catch (e) {
+        console.warn("Lỗi lưu account locks:", e);
+      }
+    },
+
+    normalizeAccount(acc) {
+      return String(acc || "").toLowerCase().trim();
+    },
+
+    getAccountLock(account) {
+      const acc = this.normalizeAccount(account);
+      if (!acc) return null;
+      const locks = this.getAllLocks();
+      return locks[acc] || null;
+    },
+
+    setAccountLock(account, lockData) {
+      const acc = this.normalizeAccount(account);
+      if (!acc) return;
+      const locks = this.getAllLocks();
+      if (!lockData) {
+        delete locks[acc];
+      } else {
+        locks[acc] = {
+          ...locks[acc],
+          ...lockData,
+          account: acc,
+          updatedAt: Date.now()
+        };
+      }
+      this.saveAllLocks(locks);
+      this.broadcastMessage({
+        type: "ACCOUNT_LOCK_UPDATE",
+        account: acc,
+        lock: locks[acc] || null
+      });
+    },
+
+    clearAccountLock(account) {
+      const acc = this.normalizeAccount(account);
+      if (!acc) return;
+      const locks = this.getAllLocks();
+      delete locks[acc];
+      this.saveAllLocks(locks);
+
+      const sessions = this.getAllSessions();
+      if (sessions[acc]) {
+        sessions[acc].conflictCount = 0;
+        sessions[acc].switchHistory = [];
+        this.saveAllSessions(sessions);
+      }
+
+      this.broadcastMessage({
+        type: "ACCOUNT_UNLOCKED",
+        account: acc
+      });
+    },
+
+    // 2. Đăng ký phiên đăng nhập mới & phát hiện tranh chấp liên tục
+    registerLogin(account, userObj) {
+      const acc = this.normalizeAccount(account);
+      if (!acc) return { success: false, message: "Tài khoản không hợp lệ" };
+
+      // A. Kiểm tra tài khoản có đang bị khóa hay không
+      const currentLock = this.getAccountLock(acc);
+      if (currentLock) {
+        if (currentLock.status === "locked") {
+          return {
+            success: false,
+            locked: true,
+            status: "locked",
+            lock: currentLock,
+            message: "Tài khoản đang bị tạm khóa do sự cố tranh chấp đăng nhập liên tục giữa nhiều thiết bị."
+          };
+        } else if (currentLock.status === "unlock_pending") {
+          return {
+            success: false,
+            locked: true,
+            status: "unlock_pending",
+            lock: currentLock,
+            message: "Tài khoản đã được Quản trị viên cấp mã mở khóa. Vui lòng nhập mã mở khóa để tiếp tục."
+          };
+        }
+      }
+
+      // B. Kiểm tra phiên cũ từ thiết bị khác và tính toán tranh chấp liên tục
+      const sessions = this.getAllSessions();
+      const prevSession = sessions[acc];
+      const now = Date.now();
+      const myDeviceInfo = this.getDeviceInfo();
+      const mySessionId = "sess_" + now + "_" + Math.random().toString(36).substring(2, 9);
+
+      let conflictCount = (prevSession && prevSession.conflictCount) ? prevSession.conflictCount : 0;
+      let switchHistory = (prevSession && prevSession.switchHistory) ? prevSession.switchHistory : [];
+
+      if (prevSession && prevSession.sessionId) {
+        const lastMySession = localStorage.getItem(MY_SESSION_KEY);
+        const isSameSession = (lastMySession && lastMySession === prevSession.sessionId);
+
+        if (!isSameSession) {
+          // Phiên trước đó là từ một thiết bị/trình duyệt khác!
+          const timeSincePrev = now - (prevSession.createdAt || 0);
+
+          // Nếu lượt đổi phiên diễn ra dồn dập trong vòng 5 phút (300,000 ms)
+          if (timeSincePrev < 300000) {
+            conflictCount++;
+            switchHistory.push({
+              time: now,
+              fromDevice: prevSession.deviceInfo,
+              toDevice: myDeviceInfo
+            });
+          } else {
+            conflictCount = 1;
+            switchHistory = [{
+              time: now,
+              fromDevice: prevSession.deviceInfo,
+              toDevice: myDeviceInfo
+            }];
+          }
+
+          // 🛑 TRANH CHẤP LIÊN TỤC >= 3 LẦN -> TỰ ĐỘNG KHÓA TÀI KHOẢN!
+          if (conflictCount >= 3) {
+            const lockPayload = {
+              status: "locked",
+              reason: "device_conflict",
+              lockedAt: now,
+              conflictCount: conflictCount,
+              switchHistory: switchHistory,
+              account: acc,
+              displayName: userObj?.user_metadata?.display_name || userObj?.display_name || acc,
+              deviceInfo: myDeviceInfo,
+              unlockCode: null
+            };
+            this.setAccountLock(acc, lockPayload);
+
+            this.broadcastMessage({
+              type: "ACCOUNT_LOCKED_CONFLICT",
+              account: acc,
+              lock: lockPayload
+            });
+
+            return {
+              success: false,
+              locked: true,
+              justLocked: true,
+              status: "locked",
+              lock: lockPayload,
+              message: "Phát hiện sự cố tranh chấp đăng nhập liên tục giữa 2 thiết bị! Tài khoản đã được tự động tạm khóa để bảo vệ an toàn."
+            };
+          }
+        }
+      }
+
+      // C. Lưu phiên hoạt động duy nhất mới của tài khoản
+      sessions[acc] = {
+        account: acc,
+        sessionId: mySessionId,
+        deviceInfo: myDeviceInfo,
+        createdAt: now,
+        lastActive: now,
+        conflictCount: conflictCount,
+        switchHistory: switchHistory,
+        displayName: userObj?.user_metadata?.display_name || userObj?.display_name || acc
+      };
+      this.saveAllSessions(sessions);
+
+      try {
+        localStorage.setItem(MY_SESSION_KEY, mySessionId);
+        localStorage.setItem(MY_ACCOUNT_KEY, acc);
+      } catch {}
+
+      // Báo hiệu đá thiết bị trước đó của tài khoản này
+      this.broadcastMessage({
+        type: "SESSION_DISPLACED",
+        account: acc,
+        newSessionId: mySessionId,
+        newDeviceInfo: myDeviceInfo,
+        time: now
+      });
+
+      return {
+        success: true,
+        sessionId: mySessionId,
+        deviceInfo: myDeviceInfo
+      };
+    },
+
+    // 3. Kiểm tra tính hợp lệ của phiên trên thiết bị hiện tại
+    checkCurrentDeviceSession(account) {
+      const acc = this.normalizeAccount(account || localStorage.getItem(MY_ACCOUNT_KEY));
+      if (!acc) return { valid: true };
+
+      // A. Kiểm tra tài khoản có bị khóa không
+      const lock = this.getAccountLock(acc);
+      if (lock && (lock.status === "locked" || lock.status === "unlock_pending")) {
+        return {
+          valid: false,
+          locked: true,
+          status: lock.status,
+          lock: lock,
+          reason: "locked"
+        };
+      }
+
+      // B. Kiểm tra phiên hiện tại có khớp với phiên đang active của tài khoản không
+      const mySessionId = localStorage.getItem(MY_SESSION_KEY);
+      if (!mySessionId) return { valid: true };
+
+      const sessions = this.getAllSessions();
+      const currentActive = sessions[acc];
+
+      if (!currentActive) return { valid: true };
+
+      if (currentActive.sessionId && currentActive.sessionId !== mySessionId) {
+        return {
+          valid: false,
+          displaced: true,
+          newDevice: currentActive.deviceInfo || "Thiết bị khác",
+          newTime: currentActive.createdAt,
+          reason: "displaced"
+        };
+      }
+
+      return { valid: true };
+    },
+
+    broadcastMessage(msg) {
+      try {
+        if (sessionBroadcastChannel) {
+          sessionBroadcastChannel.postMessage(msg);
+        }
+      } catch {}
+      try {
+        localStorage.setItem("aicheck:session_event", JSON.stringify({
+          ...msg,
+          _timestamp: Date.now()
+        }));
+      } catch {}
+    },
+
+    // 4. Xác thực mã mở khóa do Admin gửi
+    verifyAndUnlock(account, enteredCode) {
+      const acc = this.normalizeAccount(account);
+      if (!acc) return { success: false, message: "Không tìm thấy thông tin tài khoản!" };
+
+      const lock = this.getAccountLock(acc);
+      if (!lock) {
+        return { success: true, message: "Tài khoản hiện không bị khóa." };
+      }
+
+      if (lock.status !== "unlock_pending" || !lock.unlockCode) {
+        return {
+          success: false,
+          message: "Tài khoản chưa được Quản trị viên cấp mã mở khóa. Vui lòng gửi biểu mẫu hỗ trợ và đợi Quản trị viên kiểm tra."
+        };
+      }
+
+      const cleanInput = String(enteredCode || "").trim().toUpperCase();
+      const cleanTarget = String(lock.unlockCode).trim().toUpperCase();
+
+      if (cleanInput !== cleanTarget) {
+        return {
+          success: false,
+          message: "Mã mở khóa không chính xác! Vui lòng kiểm tra lại mã đã được Quản trị viên gửi về email hoặc icon chuông 🔔."
+        };
+      }
+
+      this.clearAccountLock(acc);
+
+      if (window.AICheckNotificationStore) {
+        window.AICheckNotificationStore.sendNotification({
+          recipient: acc,
+          sender: "Hệ thống Bảo mật THĐ",
+          type: "system",
+          title: "🎉 Tài khoản đã được mở khóa thành công",
+          message: `Chào bạn, tài khoản <strong>${acc}</strong> đã hoàn tất xác thực mã mở khóa và kích hoạt lại phiên làm việc an toàn.`
+        });
+      }
+
+      return {
+        success: true,
+        message: "Mở khóa tài khoản thành công!"
+      };
+    },
+
+    // 5. Admin duyệt thông tin và cấp mã mở khóa
+    grantUnlockCode(account, unlockCode) {
+      const acc = this.normalizeAccount(account);
+      if (!acc) return false;
+
+      const code = String(unlockCode || "").trim();
+      const lockData = this.getAccountLock(acc) || {
+        account: acc,
+        lockedAt: Date.now()
+      };
+
+      lockData.status = "unlock_pending";
+      lockData.unlockCode = code;
+      lockData.unlockGrantedAt = Date.now();
+
+      this.setAccountLock(acc, lockData);
+
+      if (window.AICheckNotificationStore) {
+        window.AICheckNotificationStore.sendNotification({
+          recipient: acc,
+          sender: "Ban Quản trị THĐ (adminthd)",
+          type: "account_unlock",
+          title: "🔑 Mã mở khóa tài khoản sau sự cố tranh chấp thiết bị",
+          message: `Chào bạn, Ban Quản trị THĐ đã xác minh biểu mẫu thông tin của bạn là <strong>CHÍNH XÁC</strong>.<br>Mã mở khóa tài khoản của bạn là: <div style="font-family:'Space Grotesk',monospace;font-size:18px;font-weight:800;letter-spacing:3px;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;padding:6px 14px;border-radius:6px;margin:8px 0;display:inline-block">${code}</div><br>👉 Bạn hãy quay lại trang Đăng nhập và nhập mã này để kích hoạt lại tài khoản.`,
+          adminPin: code,
+          link: `login.html?unlock_email=${encodeURIComponent(acc)}`
+        });
+      }
+
+      return true;
+    }
+  };
+
+  window.AICheckSessionManager = AICheckSessionManager;
+
   window.AICheckCloud = {
     configured,
     client,
@@ -694,6 +1126,8 @@
     resolveSupportRequest,
     getLocalSupportRequests,
     processSyncQueue,
-    syncGamification
+    syncGamification,
+    // Session & Device Conflict Manager
+    sessionManager: AICheckSessionManager
   };
 })();

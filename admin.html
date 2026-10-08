@@ -1037,6 +1037,31 @@
     </div>
   </div>
 
+  <!-- MODAL ĐỐI CHIẾU THÔNG TIN MỞ KHÓA TRANH CHẤP THIẾT BỊ -->
+  <div id="unlockComparisonModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content" style="max-width:780px">
+      <div class="admin-modal-header" style="background:#fef2f2;border-bottom:1px solid #fecaca">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:22px">🚨</span>
+          <div>
+            <h3 class="admin-modal-title" style="color:#991b1b;font-size:16px">Đối chiếu Thông tin Mở khóa Tranh chấp Thiết bị</h3>
+            <p style="margin:2px 0 0;font-size:11.5px;color:#7f1d1d">Kiểm tra thông tin do học sinh khai báo với dữ liệu lưu trong hệ thống trước khi cấp mã</p>
+          </div>
+        </div>
+        <button type="button" class="btn-small" onclick="closeUnlockComparisonModal()">✕ Đóng</button>
+      </div>
+      <div class="admin-modal-body" id="unlockComparisonModalBody" style="padding:18px">
+        <!-- Render nội dung đối chiếu so sánh 2 cột -->
+      </div>
+      <div class="admin-modal-footer" id="unlockComparisonModalFooter" style="background:#f8fafc">
+        <button type="button" class="btn-small" onclick="closeUnlockComparisonModal()">Hủy bỏ</button>
+        <button type="button" id="btnModalConfirmGrantCode" class="button button-lime" style="font-size:11.5px;font-weight:800">
+          ✉️ Thông tin hợp lệ: Duyệt & Gửi mã về mail của tài khoản
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="cloud.js"></script>
@@ -1045,6 +1070,8 @@
   <script>
     let allScores = [];
     let currentAdminUnlocked = sessionStorage.getItem("aicheck:admin_unlocked") === "true";
+    let cachedUserProfiles = [];
+    let currentSupportRequestsList = [];
 
     // Danh sách mã PIN đã băm SHA-256 (Không lưu plaintext trong mã nguồn Frontend)
     const VALID_PIN_HASHES = [
@@ -1219,6 +1246,7 @@
               <td><span class="tag">${escapeHtml(user.role || "student")}</span></td>
             </tr>
           `).join("");
+          cachedUserProfiles = users;
           updateRecipientDatalist(users);
           return;
         } catch (e) {
@@ -1636,6 +1664,8 @@
         return;
       }
 
+      currentSupportRequestsList = list;
+
       const pendingCount = list.filter(r => r.status === "pending").length;
       document.getElementById("statPendingSupport").textContent = pendingCount;
 
@@ -1651,18 +1681,59 @@
           </tr>
         </thead>
         <tbody>
-          ${list.map(r => `
-            <tr>
-              <td><strong>${escapeHtml(r.display_name || "—")}</strong></td>
-              <td>${escapeHtml(r.user_email || "—")}</td>
-              <td>${escapeHtml(r.reason || "—")}</td>
-              <td style="color:var(--muted)">${r.created_at ? new Date(r.created_at).toLocaleString("vi-VN") : "—"}</td>
-              <td class="status-${r.status}">${r.status === "pending" ? "Chờ xử lý" : "Đã xong ✓"}</td>
-              <td>
-                ${r.status === "pending" ? `<button class="btn-small" onclick="handleResolveSupport('${r.id}')">Đánh dấu Đã xử lý</button>` : `<span style="color:var(--muted)">Đã giải quyết</span>`}
-              </td>
-            </tr>
-          `).join("")}
+          ${list.map(r => {
+            const isConflictUnlock = r.reason && r.reason.includes("[TRANH CHẤP THIẾT BỊ / MỞ KHÓA]");
+            const statusClass = `status-${r.status}`;
+            const timeStr = r.created_at ? new Date(r.created_at).toLocaleString("vi-VN") : "—";
+
+            if (isConflictUnlock) {
+              return `
+                <tr style="background:#fffaf9;border-left:4px solid #ef4444">
+                  <td>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <span>👤</span>
+                      <strong>${escapeHtml(r.display_name || "—")}</strong>
+                    </div>
+                    <div style="margin-top:4px">
+                      <span class="tag" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;font-weight:800;font-size:10px">🚨 MỞ KHÓA THIẾT BỊ</span>
+                    </div>
+                  </td>
+                  <td>
+                    <strong style="color:#0f172a">${escapeHtml(r.user_email || "—")}</strong>
+                  </td>
+                  <td>
+                    <div style="font-size:11.5px;color:#334155;white-space:pre-line;line-height:1.45;background:#ffffff;padding:8px 12px;border-radius:8px;border:1px solid #fed7aa;max-width:400px">${escapeHtml(r.reason || "—")}</div>
+                  </td>
+                  <td style="color:var(--muted)">${timeStr}</td>
+                  <td class="${statusClass}">
+                    ${r.status === "pending" ? `<span style="color:#b91c1c;font-weight:800">Chờ duyệt mở khóa</span>` : `<span style="color:#047857;font-weight:800">Đã duyệt mở khóa ✓</span>`}
+                  </td>
+                  <td>
+                    ${r.status === "pending" 
+                      ? `<div style="display:flex;gap:6px;flex-direction:column;align-items:flex-start">
+                          <button class="btn-small" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-weight:700;white-space:nowrap" onclick="viewUnlockComparisonModal('${r.id}')" title="Xem chi tiết và đối chiếu thông tin với hồ sơ người dùng">🔍 Đối chiếu thông tin</button>
+                          <button class="btn-small" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800;white-space:nowrap" onclick="handleGrantUnlockCode('${r.id}', '${escapeHtml(r.user_email)}', '${escapeHtml(r.display_name)}')">✉️ Duyệt & Gửi mã mở khóa</button>
+                         </div>` 
+                      : `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">✓ Đã cấp mã mở khóa</span>`
+                    }
+                  </td>
+                </tr>
+              `;
+            }
+
+            return `
+              <tr>
+                <td><strong>${escapeHtml(r.display_name || "—")}</strong></td>
+                <td>${escapeHtml(r.user_email || "—")}</td>
+                <td>${escapeHtml(r.reason || "—")}</td>
+                <td style="color:var(--muted)">${timeStr}</td>
+                <td class="${statusClass}">${r.status === "pending" ? "Chờ xử lý" : "Đã xong ✓"}</td>
+                <td>
+                  ${r.status === "pending" ? `<button class="btn-small" onclick="handleResolveSupport('${r.id}')">Đánh dấu Đã xử lý</button>` : `<span style="color:var(--muted)">Đã giải quyết</span>`}
+                </td>
+              </tr>
+            `;
+          }).join("")}
         </tbody>
       </table>`;
     }
@@ -1672,6 +1743,178 @@
         await window.AICheckCloud.resolveSupportRequest(id);
       }
       loadSupportRequests();
+    }
+
+    // =========================================================================
+    // XỬ LÝ MỞ KHÓA TRANH CHẤP THIẾT BỊ: ĐỐI CHIẾU & DUYỆT CẤP MÃ
+    // =========================================================================
+    function viewUnlockComparisonModal(reqId) {
+      const req = currentSupportRequestsList.find(r => r.id === reqId);
+      if (!req) return alert("Không tìm thấy yêu cầu hỗ trợ này!");
+
+      const modal = document.getElementById("unlockComparisonModal");
+      const modalBody = document.getElementById("unlockComparisonModalBody");
+      const confirmBtn = document.getElementById("btnModalConfirmGrantCode");
+      if (!modal || !modalBody) return;
+
+      const userEmail = (req.user_email || "").trim().toLowerCase();
+      const dbUser = cachedUserProfiles.find(u => (u.email || "").trim().toLowerCase() === userEmail);
+      const lockData = window.AICheckSessionManager ? window.AICheckSessionManager.getAccountLock(userEmail) : null;
+
+      // Trích xuất các trường từ nội dung text của reason
+      const reasonText = req.reason || "";
+      const classMatch = reasonText.match(/•\s*Lớp\/Khối:\s*([^\n\r]+)/i);
+      const deviceMatch = reasonText.match(/•\s*Thiết bị chính chủ:\s*([^\n\r]+)/i);
+      const passMatch = reasonText.match(/•\s*Mật khẩu\/Xác minh:\s*([^\n\r]+)/i);
+      const reasonDetailMatch = reasonText.match(/•\s*Trình bày sự cố:\s*([\s\S]+)/i);
+
+      const sClass = classMatch ? classMatch[1].trim() : (req.formDetails?.sClass || "—");
+      const sDevice = deviceMatch ? deviceMatch[1].trim() : (req.formDetails?.sDevice || "—");
+      const sPass = passMatch ? passMatch[1].trim() : (req.formDetails?.sPass || "—");
+      const sDesc = reasonDetailMatch ? reasonDetailMatch[1].trim() : (req.formDetails?.sReason || "—");
+      const sName = req.display_name || "—";
+
+      // Đánh giá mức độ khớp họ tên
+      let matchBadge = "";
+      if (dbUser && dbUser.display_name) {
+        const isNameMatch = dbUser.display_name.trim().toLowerCase() === sName.trim().toLowerCase();
+        matchBadge = isNameMatch
+          ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Khớp họ tên (${escapeHtml(dbUser.display_name)})</span>`
+          : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">⚠️ Khác biệt danh hệ thống (${escapeHtml(dbUser.display_name)})</span>`;
+      } else {
+        matchBadge = `<span class="tag" style="background:#f1f5f9;color:#64748b">Chưa có thông tin profile DB</span>`;
+      }
+
+      modalBody.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <!-- Cột 1: Thông tin học sinh gửi trong biểu mẫu -->
+          <div style="background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #e2e8f0">
+              <span style="font-size:16px">📝</span>
+              <strong style="color:#0f172a;font-size:13px">THÔNG TIN BIỂU MẪU HỌC SINH KHAI BÁO</strong>
+            </div>
+
+            <div style="display:grid;gap:8px;font-size:12px">
+              <div>
+                <span style="color:#64748b;display:block;font-size:11px">1️⃣ Gmail / Tài khoản:</span>
+                <strong style="color:#0f172a">${escapeHtml(req.user_email || "—")}</strong>
+              </div>
+              <div>
+                <span style="color:#64748b;display:block;font-size:11px">2️⃣ Họ và tên / Biệt danh:</span>
+                <strong style="color:#0f172a">${escapeHtml(sName)}</strong>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div>
+                  <span style="color:#64748b;display:block;font-size:11px">3️⃣ Lớp / Khối:</span>
+                  <strong style="color:#0f172a">${escapeHtml(sClass)}</strong>
+                </div>
+                <div>
+                  <span style="color:#64748b;display:block;font-size:11px">4️⃣ Thiết bị chính chủ:</span>
+                  <strong style="color:#0f172a">${escapeHtml(sDevice)}</strong>
+                </div>
+              </div>
+              <div>
+                <span style="color:#64748b;display:block;font-size:11px">5️⃣ Mật khẩu / Mã xác minh:</span>
+                <code style="background:#f1f5f9;color:#b91c1c;padding:3px 8px;border-radius:4px;font-weight:700">${escapeHtml(sPass)}</code>
+              </div>
+              <div>
+                <span style="color:#64748b;display:block;font-size:11px">6️⃣ Trình bày sự cố:</span>
+                <div style="background:#f8fafc;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;color:#334155;line-height:1.45;white-space:pre-line">${escapeHtml(sDesc)}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột 2: Thông tin đối chiếu trong cơ sở dữ liệu & phiên thiết bị -->
+          <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #e2e8f0">
+              <span style="font-size:16px">🗄️</span>
+              <strong style="color:#0f172a;font-size:13px">ĐỐI CHIẾU DỮ LIỆU HỆ THỐNG GỐC</strong>
+            </div>
+
+            <div style="display:grid;gap:8px;font-size:12px">
+              <div>
+                <span style="color:#64748b;display:block;font-size:11px">Đối chiếu Họ tên / Biệt danh:</span>
+                <div style="margin-top:2px">${matchBadge}</div>
+              </div>
+              <div>
+                <span style="color:#64748b;display:block;font-size:11px">Email đăng ký trong DB:</span>
+                <strong>${escapeHtml(dbUser ? dbUser.email : (req.user_email || "Chưa có bản ghi DB"))}</strong>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div>
+                  <span style="color:#64748b;display:block;font-size:11px">Địa chỉ IP đăng ký:</span>
+                  <code style="background:#e2e8f0;padding:2px 6px;border-radius:4px;font-size:11px">${escapeHtml(dbUser?.register_ip || "Không rõ")}</code>
+                </div>
+                <div>
+                  <span style="color:#64748b;display:block;font-size:11px">Phân quyền:</span>
+                  <span class="tag">${escapeHtml(dbUser?.role || "student")}</span>
+                </div>
+              </div>
+              <div>
+                <span style="color:#64748b;display:block;font-size:11px">Ngày tạo tài khoản:</span>
+                <span style="color:#475569">${dbUser?.created_at ? new Date(dbUser.created_at).toLocaleString("vi-VN") : "—"}</span>
+              </div>
+
+              <div style="margin-top:6px;padding-top:8px;border-top:1px dashed #cbd5e1">
+                <span style="color:#64748b;display:block;font-size:11px;font-weight:700">Lịch sử sự cố tranh chấp thiết bị:</span>
+                <div style="background:#fff;border:1px solid #fecaca;padding:8px 10px;border-radius:6px;margin-top:4px">
+                  <div style="color:#991b1b;font-weight:700">
+                    Trạng thái: ${lockData ? (lockData.status === "unlock_pending" ? "Đang chờ nhập mã mở khóa" : "Đang bị tạm khóa an toàn") : "Đang khóa"}
+                  </div>
+                  <div style="font-size:11px;color:#475569;margin-top:2px">
+                    • Số lần tranh chấp đổi phiên: <strong>${lockData?.conflictCount || 3} lần</strong>
+                    <br>• Thiết bị phát hiện xung đột: <strong>${escapeHtml(lockData?.lastDevice || "Nhiều thiết bị")}</strong>
+                    ${lockData?.unlockCode ? `<br>• Mã mở khóa đã cấp: <strong style="color:#047857">${lockData.unlockCode}</strong>` : ""}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#f0fdf4;border:1px solid #a7f3d0;padding:10px 14px;border-radius:8px;font-size:12px;color:#065f46;line-height:1.5">
+          💡 <strong>Quy trình Admin:</strong> Nếu thông tin học sinh khai báo khớp với hồ sơ và lý do sự cố hợp lý, Quản trị viên bấm nút <strong>"Duyệt & Gửi mã về mail của tài khoản"</strong> bên dưới. Hệ thống sẽ tự động tạo mã mở khóa 6 số, gửi thông báo kèm mã về hộp thư (chuông 🔔) và email của tài khoản, cho phép học sinh đăng nhập lại.
+        </div>
+      `;
+
+      if (confirmBtn) {
+        confirmBtn.onclick = () => {
+          handleGrantUnlockCode(req.id, req.user_email, req.display_name);
+        };
+      }
+
+      modal.style.display = "flex";
+    }
+
+    function closeUnlockComparisonModal() {
+      const modal = document.getElementById("unlockComparisonModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    async function handleGrantUnlockCode(reqId, userEmail, displayName) {
+      const email = String(userEmail || "").trim();
+      if (!email) return alert("Không tìm thấy địa chỉ email tài khoản!");
+
+      const confirmMsg = `Xác nhận DUYỆT THÔNG TIN và GỬI MÃ MỞ KHÓA về tài khoản:\n\n• Gmail / Tài khoản: ${email}\n• Học sinh: ${displayName || email}\n\nSau khi bấm OK:\n1. Hệ thống sẽ tự động tạo mã mở khóa 6 số ngẫu nhiên an toàn.\n2. Gửi thông báo kèm mã mở khóa vào icon Chuông 🔔 và lưu trạng thái mở khóa cho tài khoản.\n3. Đổi trạng thái tài khoản sang sẵn sàng mở khóa khi học sinh đăng nhập lại.`;
+
+      if (!confirm(confirmMsg)) return;
+
+      // Sinh mã mở khóa 6 số ngẫu nhiên
+      const unlockCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      if (window.AICheckSessionManager) {
+        window.AICheckSessionManager.grantUnlockCode(email, unlockCode);
+      }
+
+      // Đánh dấu yêu cầu hỗ trợ là đã xử lý
+      if (window.AICheckCloud.resolveSupportRequest) {
+        await window.AICheckCloud.resolveSupportRequest(reqId);
+      }
+
+      closeUnlockComparisonModal();
+      await loadSupportRequests();
+
+      alert(`🎉 ĐÃ DUYỆT VÀ GỬI MÃ MỞ KHÓA THÀNH CÔNG!\n\n• Tài khoản: ${email}\n• Mã mở khóa 6 số đã cấp: ${unlockCode}\n\n✓ Đã gửi thông báo chứa mã mở khóa đến icon Chuông 🔔 và email của tài khoản.\n✓ Học sinh vào lại trang Đăng nhập và nhập đúng mã "${unlockCode}" là có thể mở khóa tài khoản ngay lập tức.`);
     }
 
     function calculateStats() {
