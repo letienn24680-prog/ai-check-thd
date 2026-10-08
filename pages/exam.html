@@ -35,406 +35,387 @@
       color: #65736b;
     }
 
-    /* MÀN HÌNH DANH SÁCH CHỌN BÀI THI */
+    /* MÀN HÌNH DANH SÁCH CHỌN BÀI THI (TINH GỌN - ẢNH 1) */
     .exam-catalog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 18px;
-      margin-top: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
     }
 
     .exam-select-card {
       background: #ffffff;
       border: 1px solid #dce7dc;
       border-radius: 12px;
-      padding: 22px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
       transition: transform .2s, border-color .2s, box-shadow .2s;
-      box-shadow: 0 4px 14px rgba(16, 45, 40, .04);
+      box-shadow: 0 3px 10px rgba(16, 45, 40, .04);
       position: relative;
     }
 
     .exam-select-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       border-color: var(--forest);
-      box-shadow: 0 10px 28px rgba(16, 45, 40, .1);
+      box-shadow: 0 8px 20px rgba(16, 45, 40, .08);
     }
 
     .exam-select-card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .exam-select-card h3 {
-      margin: 0 0 8px;
-      font: 700 18px/1.3 "Space Grotesk", sans-serif;
+      margin: 0 0 6px;
+      font: 700 15px/1.3 "Space Grotesk", sans-serif;
       color: var(--forest);
     }
 
     .exam-select-card p {
-      margin: 0 0 16px;
+      margin: 0 0 10px;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-      flex: 1;
+      font-size: 11.5px;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .exam-card-badges {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
 
     .exam-card-badge-item {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 10px;
+      padding: 3px 8px;
       background: #eef5ee;
-      border-radius: 6px;
-      font-size: 11px;
+      border-radius: 5px;
+      font-size: 10.5px;
       font-weight: 700;
       color: #1e593a;
     }
 
-    /* MÀN HÌNH CHUẨN BỊ (LOBBY CỦA ĐỀ ĐÃ CHỌN) */
+    /* MÀN HÌNH CHUẨN BỊ (LOBBY - TINH GỌN - ẢNH 2) */
     .exam-lobby-box {
       background: #ffffff;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 30px;
-      box-shadow: 0 6px 20px rgba(16, 45, 40, .06);
-      margin-top: 10px;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 16px rgba(16, 45, 40, .05);
+      margin-top: 8px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .lobby-header-bar {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-      padding-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
       border-bottom: 1px solid #edf2ed;
     }
 
     .lobby-exam-title {
-      margin: 6px 0;
-      font: 700 24px/1.25 "Space Grotesk", sans-serif;
+      margin: 4px 0 2px;
+      font: 700 18px/1.3 "Space Grotesk", sans-serif;
       color: var(--forest);
     }
 
-    /* 3 Ô THỐNG KÊ RÕ RÀNG (KHÔNG DÍNH CHỮ) */
+    /* 4 Ô THỐNG KÊ (4 CỘT TRÊN PC, 2X2 TRÊN MOBILE) */
     .exam-info-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin: 20px 0;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 12px 0;
     }
 
     .exam-info-box {
       background: #f7faf7;
       border: 1px solid #dce8db;
       border-radius: 8px;
-      padding: 14px 16px;
+      padding: 8px 12px;
       box-sizing: border-box;
     }
 
     .exam-info-box span {
       display: block;
-      font-size: 10.5px;
+      font-size: 9.5px;
       color: var(--muted);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
     }
 
     .exam-info-box strong {
       display: block;
       font-family: "Space Grotesk", sans-serif;
-      font-size: 20px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--forest);
     }
 
-    /* HỘP QUY CHẾ THI */
+    /* HỘP QUY CHẾ THI TINH GỌN */
     .exam-rules-box {
       background: #fffbeb;
       border: 1px solid #fde68a;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 22px 0 28px;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 12px 0 16px;
     }
 
     .exam-rules-box h4 {
-      margin: 0 0 10px;
+      margin: 0 0 6px;
       color: #b45309;
       font-family: "Space Grotesk", sans-serif;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .exam-rules-list {
       margin: 0;
-      padding-left: 20px;
-      font-size: 12.5px;
+      padding-left: 16px;
+      font-size: 11px;
       color: #78350f;
-      line-height: 1.7;
+      line-height: 1.5;
     }
 
     .exam-rules-list li {
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
-    /* THANH TOPBAR KHI LÀM BÀI TOÀN MÀN HÌNH */
-    .exam-fullscreen-topbar {
-      background: #102d28;
-      color: #ffffff;
-      padding: 12px 24px;
+    /* =========================================================================
+       GIAO DIỆN LÀM BÀI TRẮC NGHIỆM CHUẨN ẢNH 5 (MOBILE APP STYLE)
+       ========================================================================= */
+    .exam-app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #3054f4;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      position: sticky;
-      top: 0;
+      padding: 0 12px;
       z-index: 1000;
-      box-shadow: 0 4px 16px rgba(16, 45, 40, 0.25);
+      box-shadow: 0 2px 10px rgba(48, 84, 244, 0.2);
     }
 
-    .fs-brand-info {
+    .exam-app-header-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+
+    .exam-app-header-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .exam-app-header-title {
+      flex: 1;
+      text-align: center;
+      color: #ffffff;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 8px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Sub-bar (đồng hồ & nút nộp bài) */
+    .exam-app-subbar-wrap {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: #3054f4;
+    }
+
+    .exam-app-subbar {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 22px 22px 0 0;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .exam-app-timer {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .fs-brand-badge {
-      background: var(--lime);
-      color: var(--forest);
-      font-size: 10px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 4px;
-      letter-spacing: 0.5px;
-    }
-
-    .fs-exam-title {
+    .exam-app-timer-text {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 19px;
+      color: #334155;
+      letter-spacing: 1px;
+    }
+
+    .exam-app-timer-text.urgent {
+      color: #ef4444;
+      animation: pulseAlert 1s infinite;
+    }
+
+    .exam-app-submit-btn {
+      background: #3054f4;
       color: #ffffff;
-      max-width: 450px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .fs-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .fs-status-pill.active {
-      background: rgba(16, 185, 129, 0.2);
-      border-color: #10b981;
-      color: #86efac;
-    }
-
-    .fs-status-pill.warning {
-      background: rgba(239, 68, 68, 0.25);
-      border-color: #ef4444;
-      color: #fca5a5;
-      animation: pulseAlert 1.2s infinite;
-    }
-
-    @keyframes pulseAlert {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.85; }
-    }
-
-    /* =========================================================================
-       BỐ CỤC CHÍNH 2/3 VÀ 1/3 KHI LÀM BÀI THI
-       ========================================================================= */
-    .exam-split-layout {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 22px;
-      align-items: start;
-      margin-top: 14px;
-    }
-
-    /* 2/3: KHU VỰC CÂU HỎI */
-    .question-pane {
-      background: #ffffff;
-      border: 1px solid #dce7dc;
-      border-radius: 12px;
-      padding: 26px;
-      box-shadow: 0 4px 16px rgba(16, 45, 40, 0.05);
-      min-height: 520px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .q-header-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #edf2ed;
-    }
-
-    .q-number-tag {
+      border: none;
+      border-radius: 10px;
       font-family: "Space Grotesk", sans-serif;
       font-size: 13px;
-      font-weight: 800;
-      color: var(--forest);
-      background: #e8f3ea;
-      padding: 5px 12px;
-      border-radius: 20px;
-      border: 1px solid #c8e0cc;
-    }
-
-    .q-status-tag {
-      font-size: 11px;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 12px;
-      background: #f1f5f9;
-      color: #64748b;
+      letter-spacing: 0.5px;
+      padding: 9px 22px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(48, 84, 244, 0.25);
     }
 
-    .q-status-tag.answered {
-      background: #dcfce7;
-      color: #166534;
+    .exam-app-submit-btn:hover {
+      background: #2344dc;
+      transform: translateY(-1px);
     }
 
-    .q-content-text {
-      font-size: 17.5px;
+    /* Vùng hiển thị câu hỏi */
+    .exam-app-session-container {
+      min-height: 100vh;
+      background: #ffffff;
+      padding-top: 120px;
+      padding-bottom: 76px;
+      box-sizing: border-box;
+    }
+
+    .exam-app-content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px 20px 30px;
+    }
+
+    .exam-app-q-title {
+      font-size: 15.5px;
       font-weight: 700;
-      color: #102d28;
-      line-height: 1.6;
+      color: #1e293b;
+      line-height: 1.55;
       margin-bottom: 22px;
-      white-space: pre-line;
     }
 
-    /* 4 PHƯƠNG ÁN TRẮC NGHIỆM */
-    .options-grid {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 26px;
+    /* Danh sách 4 lựa chọn trắc nghiệm dạng radio tròn chuẩn Ảnh 5 */
+    .exam-app-radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    .option-card {
+    .exam-radio-item {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      padding: 15px 18px;
-      background: #ffffff;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
+      gap: 14px;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 6px 4px;
+      user-select: none;
+      transition: background 0.15s;
+      border-radius: 8px;
     }
 
-    .option-card:hover {
-      border-color: #94d3a2;
-      background: #f8faf8;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(16, 45, 40, 0.05);
-    }
-
-    .option-card.selected {
-      border-color: var(--forest);
-      background: #eef7f0;
-      box-shadow: inset 0 0 0 1px var(--forest), 0 4px 16px rgba(36, 114, 79, 0.1);
-    }
-
-    .option-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      background: #f1f5f9;
-      color: #475569;
+    .exam-radio-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #cbd5e1;
+      flex-shrink: 0;
+      margin-top: 1px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 800;
-      font-size: 14px;
-      flex-shrink: 0;
-      transition: all 0.2s;
+      transition: all 0.18s;
+      background: #ffffff;
+      box-sizing: border-box;
     }
 
-    .option-card.selected .option-badge {
-      background: var(--forest);
-      color: #ffffff;
+    .exam-radio-item:hover .exam-radio-circle {
+      border-color: #94a3b8;
     }
 
-    .option-label-text {
-      flex: 1;
+    .exam-radio-item.selected .exam-radio-circle {
+      border-color: #3054f4;
+      background: #3054f4;
+      box-shadow: inset 0 0 0 4px #ffffff;
+    }
+
+    .exam-radio-text {
       font-size: 14px;
-      color: #1e293b;
+      color: #334155;
       line-height: 1.55;
+      flex: 1;
+    }
+
+    .exam-radio-item.selected .exam-radio-text {
+      color: #1e293b;
       font-weight: 500;
     }
 
-    .option-card.selected .option-label-text {
-      font-weight: 600;
-      color: #0f3d28;
-    }
-
-    /* MÀU ĐÁP ÁN TRONG REVIEW MODE: XANH ĐÚNG, ĐỎ SAI */
-    .option-card.review-correct {
-      background: #ecfdf5 !important;
+    /* Hiển thị kết quả trong Chế độ xem lại (Review mode) */
+    .exam-radio-item.review-correct .exam-radio-circle {
       border-color: #10b981 !important;
-      border-width: 2.5px !important;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.16) !important;
-    }
-    .option-card.review-correct .option-badge {
       background: #10b981 !important;
-      color: #ffffff !important;
+      box-shadow: inset 0 0 0 4px #ffffff !important;
     }
-    .option-card.review-correct .option-label-text {
+    .exam-radio-item.review-correct .exam-radio-text {
       color: #065f46 !important;
-      font-weight: 700 !important;
-    }
-
-    .option-card.review-wrong {
-      background: #fef2f2 !important;
-      border-color: #ef4444 !important;
-      border-width: 2.5px !important;
-      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.16) !important;
-    }
-    .option-card.review-wrong .option-badge {
-      background: #ef4444 !important;
-      color: #ffffff !important;
-    }
-    .option-card.review-wrong .option-label-text {
-      color: #991b1b !important;
       font-weight: 600 !important;
     }
 
+    .exam-radio-item.review-wrong .exam-radio-circle {
+      border-color: #ef4444 !important;
+      background: #ef4444 !important;
+      box-shadow: inset 0 0 0 4px #ffffff !important;
+    }
+    .exam-radio-item.review-wrong .exam-radio-text {
+      color: #991b1b !important;
+    }
+
     .review-verdict-pill {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 800;
-      padding: 4px 8px;
+      padding: 3px 7px;
       border-radius: 5px;
       margin-left: auto;
       text-transform: uppercase;
@@ -444,153 +425,179 @@
     .review-verdict-pill.wrong { background: #ef4444; color: #ffffff; }
 
     .review-explanation-box {
-      margin-top: 16px;
-      padding: 14px 18px;
+      margin-top: 18px;
+      padding: 12px 16px;
       background: #f0fdf4;
       border-left: 4px solid #10b981;
       border-radius: 6px;
-      font-size: 13px;
+      font-size: 12.5px;
       color: #166534;
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
-    /* ĐIỀU HƯỚNG CÂU HỎI TRONG 2/3 */
-    .q-nav-actions {
-      margin-top: auto;
-      padding-top: 18px;
-      border-top: 1px solid #edf2ed;
+    /* Thanh điều hướng dưới đáy cố định chuẩn Ảnh 5 */
+    .exam-app-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 10px 16px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .exam-app-bottom-inner {
+      max-width: 680px;
+      margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    /* 1/3: CỘT THÔNG TIN, ĐỒNG HỒ & BẢNG LƯỚI CÂU HỎI */
-    .sidebar-pane {
+    .exam-app-nav-btn {
+      width: 58px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      color: #3054f4;
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      padding: 0;
+    }
+
+    .exam-app-nav-btn:hover:not(:disabled) {
+      border-color: #3054f4;
+      background: #eef2ff;
+    }
+
+    .exam-app-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .exam-app-palette-trigger {
+      flex: 1;
+      height: 42px;
+      border-radius: 10px;
+      border: 1.5px solid #a5b4fc;
+      background: #eef2ff;
+      color: #3054f4;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .exam-app-palette-trigger:hover {
+      background: #e0e7ff;
+      border-color: #6366f1;
+    }
+
+    /* Modal / Bottom Sheet Danh sách câu hỏi */
+    .palette-sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 2000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      animation: fadeInModal 0.2s ease-out;
+    }
+
+    .palette-sheet-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 20px 24px;
+      max-height: 80vh;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      position: sticky;
-      top: 76px;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+      animation: slideUpSheet 0.25s ease-out;
     }
 
-    .sidebar-card {
-      background: #ffffff;
-      border: 1px solid #dce7dc;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(16, 45, 40, 0.05);
+    @keyframes slideUpSheet {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
     }
 
-    .timer-display-box {
-      text-align: center;
-      background: linear-gradient(135deg, #102d28, #194b40);
-      color: #ffffff;
-      padding: 18px;
-      border-radius: 10px;
-      box-shadow: 0 4px 14px rgba(16, 45, 40, 0.15);
-    }
-
-    .timer-label {
-      font-size: 10.5px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 700;
-      color: #a7cfba;
-      margin-bottom: 4px;
-    }
-
-    .timer-numbers {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 38px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--lime);
-      line-height: 1;
-    }
-
-    .timer-numbers.urgent {
-      color: #f87171;
-      animation: pulseAlert 1s infinite;
-    }
-
-    .timer-progress {
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 3px;
-      margin-top: 12px;
-      overflow: hidden;
-    }
-
-    .timer-progress-bar {
-      height: 100%;
-      background: var(--lime);
-      width: 100%;
-      transition: width 1s linear;
-    }
-
-    .student-badge-info {
+    .palette-sheet-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 12px;
       padding-bottom: 10px;
       border-bottom: 1px solid #edf2ed;
-      font-size: 12px;
     }
 
-    .violation-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      background: #f0fdf4;
-      color: #166534;
-      border: 1px solid #bbf7d0;
+    .palette-sheet-title {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
     }
 
-    .violation-pill.has-violations {
-      background: #fef2f2;
-      color: #b91c1c;
-      border-color: #fecaca;
-      animation: pulseAlert 1.5s infinite;
-    }
-
-    /* LƯỚI Ô CÂU HỎI (1/3) */
-    .palette-title {
+    .palette-sheet-title span {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
-      font-size: 13.5px;
-      margin: 0 0 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--forest);
+      font-size: 15px;
+      color: #1e293b;
+    }
+
+    .palette-sheet-title small {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .palette-sheet-close {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #64748b;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .palette-grid-scroll {
+      overflow-y: auto;
+      max-height: 50vh;
+      padding: 4px 2px;
     }
 
     .question-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 7px;
-      max-height: 360px;
-      overflow-y: auto;
-      padding-right: 4px;
+      gap: 8px;
     }
 
     .q-grid-item {
       aspect-ratio: 1;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
       background: #f8fafc;
       color: #334155;
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
-      font-size: 12.5px;
+      font-size: 13.5px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -599,55 +606,105 @@
     }
 
     .q-grid-item:hover {
-      border-color: var(--forest);
-      transform: scale(1.06);
+      border-color: #3054f4;
+      transform: scale(1.04);
     }
 
     .q-grid-item.active {
-      border-color: var(--forest);
-      box-shadow: 0 0 0 2.5px var(--forest);
+      border-color: #3054f4;
+      box-shadow: 0 0 0 2.5px #3054f4;
       font-weight: 800;
     }
 
     .q-grid-item.answered {
-      background: #10b981;
+      background: #3054f4;
       color: #ffffff;
-      border-color: #059669;
+      border-color: #3054f4;
     }
 
     .q-grid-item.review-correct {
       background: #10b981 !important;
       color: #ffffff !important;
-      border-color: #047857 !important;
+      border-color: #059669 !important;
     }
 
     .q-grid-item.review-wrong {
       background: #ef4444 !important;
       color: #ffffff !important;
-      border-color: #b91c1c !important;
+      border-color: #dc2626 !important;
     }
 
     .palette-legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid #edf2ed;
-      font-size: 10.5px;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #edf2ed;
+      font-size: 11px;
       color: #64748b;
     }
 
     .palette-legend-item {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
     .legend-box {
       width: 10px;
       height: 10px;
-      border-radius: 2px;
+      border-radius: 3px;
+    }
+
+    /* MÀN HÌNH TỔNG KẾT KẾT QUẢ (TINH GỌN - ẢNH 4) */
+    .result-summary-box {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px 18px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(16, 45, 40, .05);
+      max-width: 640px;
+      margin: 12px auto;
+    }
+
+    .score-circle {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #102d28, #1f574b);
+      margin: 10px auto 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 45, 40, 0.15);
+    }
+
+    .score-circle-num {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--lime);
+      line-height: 1;
+    }
+
+    .score-circle-max {
+      font-size: 9.5px;
+      color: #a7cfba;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    /* 3 Ô THỐNG KÊ KẾT QUẢ NẰM NGANG CẢ PC LẪN MOBILE */
+    .result-stat-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      max-width: 580px;
+      margin: 0 auto 16px;
     }
 
     /* POPUP CẢNH BÁO VI PHẠM (ANTI-CHEAT MODAL) */
@@ -668,9 +725,9 @@
       background: #ffffff;
       border-top: 5px solid #ef4444;
       border-radius: 14px;
-      max-width: 500px;
+      max-width: 480px;
       width: 100%;
-      padding: 26px;
+      padding: 22px 20px;
       text-align: center;
       box-shadow: 0 20px 50px rgba(239, 68, 68, 0.3);
       animation: shakeModal 0.5s ease-in-out;
@@ -685,6 +742,11 @@
     @keyframes fadeInModal {
       from { opacity: 0; transform: scale(0.96); }
       to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes pulseAlert {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
     }
 
     /* MODAL CĂN GIỮA MÀN HÌNH (THAY THẾ POPUP TRÌNH DUYỆT) */
@@ -705,25 +767,25 @@
       background: #ffffff;
       border: 1px solid #dce8db;
       border-radius: 16px;
-      max-width: 460px;
+      max-width: 440px;
       width: 100%;
-      padding: 28px 24px;
+      padding: 24px 20px;
       text-align: center;
       box-shadow: 0 20px 50px rgba(16, 45, 40, 0.25);
       position: relative;
     }
 
     .exam-modal-icon {
-      width: 58px;
-      height: 58px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: #eaf3ea;
       color: var(--forest);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      margin: 0 auto 14px;
+      font-size: 26px;
+      margin: 0 auto 12px;
     }
 
     .exam-modal-icon.warning {
@@ -731,35 +793,30 @@
       color: #b45309;
     }
 
-    .exam-modal-icon.danger {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
     .exam-modal-title {
       font-family: "Space Grotesk", sans-serif;
-      font-size: 21px;
+      font-size: 19px;
       font-weight: 700;
       color: var(--forest);
-      margin: 0 0 8px;
+      margin: 0 0 6px;
     }
 
     .exam-modal-desc {
-      font-size: 13.5px;
+      font-size: 12.5px;
       color: #475569;
-      line-height: 1.6;
-      margin: 0 0 16px;
+      line-height: 1.55;
+      margin: 0 0 14px;
     }
 
     .submit-stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 16px 0;
+      gap: 8px;
+      margin: 14px 0;
     }
 
     .submit-stat-item {
-      padding: 12px;
+      padding: 10px;
       border-radius: 8px;
       background: #f8faf8;
       border: 1px solid #dce8db;
@@ -767,17 +824,17 @@
 
     .submit-stat-item span {
       display: block;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .submit-stat-item strong {
       display: block;
       font-family: "Space Grotesk", sans-serif;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--forest);
     }
@@ -786,93 +843,46 @@
       background: #fffbeb;
       border: 1px solid #fde68a;
       border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 12.5px;
+      padding: 10px 12px;
+      font-size: 11.5px;
       color: #92400e;
       text-align: left;
       line-height: 1.5;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
 
     .exam-modal-actions {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
     }
 
     .exam-modal-actions button {
       flex: 1;
-      min-width: 140px;
-      min-height: 44px;
-      font-size: 13px;
+      min-width: 130px;
+      min-height: 40px;
+      font-size: 12.5px;
       font-weight: 700;
     }
 
-    /* MÀN HÌNH TỔNG KẾT KẾT QUẢ */
-    .result-summary-box {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 36px 24px;
-      text-align: center;
-      box-shadow: 0 6px 20px rgba(16, 45, 40, .06);
-      max-width: 760px;
-      margin: 20px auto;
-    }
-
-    .score-circle {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #102d28, #1f574b);
-      margin: 0 auto 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      box-shadow: 0 6px 18px rgba(16, 45, 40, 0.2);
-    }
-
-    .score-circle-num {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 42px;
-      font-weight: 800;
-      color: var(--lime);
-      line-height: 1;
-    }
-
-    .score-circle-max {
-      font-size: 11px;
-      color: #a7cfba;
-      font-weight: 700;
-      margin-top: 4px;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .exam-split-layout {
-        grid-template-columns: 1fr;
-      }
-      .sidebar-pane {
-        position: static;
-        order: 2;
-      }
-      .question-pane {
-        order: 1;
-        min-height: auto;
-        padding: 20px 16px;
-      }
+    /* RESPONSIVE TRÊN THIẾT BỊ DI ĐỘNG */
+    @media (max-width: 600px) {
       .exam-info-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 8px;
       }
-      .question-grid {
-        grid-template-columns: repeat(8, 1fr);
+      .exam-app-content {
+        padding: 12px 14px 24px;
       }
-      .fs-exam-title {
-        max-width: 200px;
+      .exam-app-q-title {
+        font-size: 14.5px;
+      }
+      .exam-radio-text {
+        font-size: 13.5px;
+      }
+      .question-grid {
+        grid-template-columns: repeat(5, 1fr);
       }
     }
   </style>
@@ -906,19 +916,28 @@
   </header>
 
   <!-- =======================================================================
-       2. TOPBAR PHÒNG THI CHỈ HIỂN THỊ KHI ĐANG LÀM BÀI TOÀN MÀN HÌNH
+       2. HEADER VÀ THANH ĐỒNG HỒ APP PHÒNG THI (CHUẨN ẢNH 5)
        ======================================================================= -->
-  <div class="exam-fullscreen-topbar" id="examFullscreenTopbar" style="display:none">
-    <div class="fs-brand-info">
-      <span class="fs-brand-badge">PHÒNG THI THĐ</span>
-      <span class="fs-exam-title" id="fsExamTitleDisplay">Đề kiểm tra trắc nghiệm</span>
+  <div class="exam-app-header" id="examAppHeader" style="display:none">
+    <button type="button" class="exam-app-header-btn" onclick="requestExitExam()" aria-label="Quay lại">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="exam-app-header-title" id="examAppHeaderTitle">
+      ĐỀ KIỂM TRA TRẮC NGHIỆM
     </div>
-    <div style="display:flex;align-items:center;gap:10px">
-      <div class="fs-status-pill active" id="fsStatusPill">
-        <span>●</span> <span id="fsStatusText">Toàn màn hình ✓</span>
+    <button type="button" class="exam-app-header-btn" onclick="requestExitExam()" aria-label="Thoát phòng thi">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
+
+  <div class="exam-app-subbar-wrap" id="examAppSubbarWrap" style="display:none">
+    <div class="exam-app-subbar">
+      <div class="exam-app-timer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span class="exam-app-timer-text" id="timerNumbers">00 : 00 : 00</span>
       </div>
-      <button type="button" class="button button-outline" style="min-height:30px;padding:4px 10px;font-size:11px;background:#ffffff;color:var(--forest)" onclick="requestExitExam()">
-        Thoát phòng ✕
+      <button type="button" class="exam-app-submit-btn" id="btnSubmitExam" onclick="confirmSubmitExam()">
+        NỘP BÀI
       </button>
     </div>
   </div>
@@ -939,12 +958,12 @@
     </header>
 
     <!-- =====================================================================
-         VIEW 1: DANH SÁCH TẤT CẢ CÁC BÀI THI ĐỂ CHỌN
+         VIEW 1: DANH SÁCH TẤT CẢ CÁC BÀI THI ĐỂ CHỌN (TINH GỌN - ẢNH 1)
          ===================================================================== -->
     <section id="examSelectionView">
-      <div style="margin-bottom:14px">
+      <div style="margin-bottom:12px">
         <span class="tag">NGÂN HÀNG ĐỀ THI THPT TRẦN HƯNG ĐẠO</span>
-        <h2 style="margin:6px 0 4px;font:700 22px 'Space Grotesk',sans-serif;color:var(--forest)">
+        <h2 style="margin:6px 0 4px;font:700 20px 'Space Grotesk',sans-serif;color:var(--forest)">
           Chọn một bài thi để vào phòng làm bài
         </h2>
         <p style="margin:0;color:var(--muted);font-size:12px">
@@ -959,23 +978,23 @@
     </section>
 
     <!-- =====================================================================
-         VIEW 2: MÀN HÌNH CHUẨN BỊ (LOBBY) CỦA ĐỀ THI ĐÃ CHỌN
+         VIEW 2: MÀN HÌNH CHUẨN BỊ (LOBBY - TINH GỌN - ẢNH 2)
          ===================================================================== -->
     <section id="examLobbyView" style="display:none">
       <div class="exam-lobby-box">
         <div class="lobby-header-bar">
           <div>
-            <span class="tag" id="lobbyExamTag">ĐỀ THI ĐƯỢC CHỌN</span>
+            <span class="tag" id="lobbyExamTag" style="font-size:10px;padding:3px 8px">ĐỀ THI ĐƯỢC CHỌN</span>
             <h2 class="lobby-exam-title" id="lobbyExamTitle">Tên đề thi</h2>
-            <p style="margin:0;color:var(--muted);font-size:12.5px" id="lobbyExamDesc">Mô tả bài thi</p>
+            <p style="margin:0;color:var(--muted);font-size:12px" id="lobbyExamDesc">Mô tả bài thi</p>
           </div>
-          <button type="button" class="button button-outline" onclick="backToExamCatalog()" style="font-size:11px">
-            ← Chọn đề thi khác
+          <button type="button" class="button button-outline" onclick="backToExamCatalog()" style="font-size:11px;min-height:32px;padding:4px 10px">
+            ← Chọn đề khác
           </button>
         </div>
 
-        <!-- 4 Ô THỐNG KÊ RÕ RÀNG (KHÔNG BỊ DÍNH CHỮ) -->
-        <div class="exam-info-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr))">
+        <!-- 4 Ô THỐNG KÊ (LƯỚI 2X2 TRÊN MOBILE, 4 CỘT TRÊN DESKTOP) -->
+        <div class="exam-info-grid">
           <div class="exam-info-box">
             <span>Số lượng câu hỏi</span>
             <strong id="lobbyQuestionCount">20 câu</strong>
@@ -985,7 +1004,7 @@
             <strong id="lobbyDurationMinutes">30 phút</strong>
           </div>
           <div class="exam-info-box">
-            <span>Điểm số & Ngưỡng đạt</span>
+            <span>Điểm & Ngưỡng đạt</span>
             <strong id="lobbyScoreRequirement">2đ/câu · Đạt ≥ 24/40đ</strong>
           </div>
           <div class="exam-info-box">
@@ -994,19 +1013,19 @@
           </div>
         </div>
 
-        <!-- QUY CHẾ PHÒNG THI CHỐNG GIAN LẬN -->
+        <!-- QUY CHẾ PHÒNG THI CHỐNG GIAN LẬN TINH GỌN -->
         <div class="exam-rules-box">
           <h4>🛡️ QUY CHẾ PHÒNG THI & CHỐNG GIAN LẬN TOÀN MÀN HÌNH:</h4>
           <ul class="exam-rules-list">
-            <li><strong>Bắt buộc Toàn màn hình:</strong> Khi nhấn nút bắt đầu, hệ thống sẽ tự động kích hoạt chế độ Toàn màn hình (Fullscreen) trên cả máy tính và điện thoại.</li>
-            <li><strong>Cảnh báo Thoát màn hình / F11 / Escape:</strong> Nếu thí sinh nhấn <strong>F11, Escape</strong>, hoặc vuốt thoát toàn màn hình, hệ thống sẽ phát tín hiệu cảnh báo và <strong>tự động ghi lại số lần vi phạm</strong>.</li>
-            <li><strong>Chống chuyển tab & Rời cửa sổ:</strong> Nghiêm cấm chuyển tab hoặc click ra ngoài cửa sổ phòng thi. Mọi lần chuyển tab đều được lưu vào lịch sử bài thi gửi về Admin/Giáo viên.</li>
-            <li><strong>Xem lại bài làm:</strong> Sau khi nộp bài, bạn có thể xem lại toàn bộ bài thi: <strong>Ô đúng sẽ hiện màu xanh lá</strong>, <strong>ô sai sẽ hiện màu đỏ</strong>.</li>
+            <li><strong>Bắt buộc Toàn màn hình:</strong> Kích hoạt chế độ Fullscreen trên cả máy tính và điện thoại khi bấm bắt đầu.</li>
+            <li><strong>Cảnh báo Thoát màn hình / F11 / Escape:</strong> Tự động ghi lại số lần vi phạm khi thoát màn hình.</li>
+            <li><strong>Chống chuyển tab & Rời cửa sổ:</strong> Nghiêm cấm rời cửa sổ làm bài thi.</li>
+            <li><strong>Xem lại bài làm:</strong> Sau khi nộp bài, xem lại chi tiết câu đúng (xanh lá) và câu sai (đỏ).</li>
           </ul>
         </div>
 
         <div style="text-align:center">
-          <button type="button" class="button button-lime" id="btnStartExam" onclick="startExamSession()" style="min-height:48px;padding:12px 32px;font-size:14px;border-radius:24px">
+          <button type="button" class="button button-lime" id="btnStartExam" onclick="startExamSession()" style="min-height:44px;padding:10px 28px;font-size:13.5px;border-radius:24px;font-weight:700">
             🚀 BẬT TOÀN MÀN HÌNH & BẮT ĐẦU LÀM BÀI
           </button>
         </div>
@@ -1014,26 +1033,17 @@
     </section>
 
     <!-- =====================================================================
-         VIEW 3: GIAO DIỆN LÀM BÀI CHÍNH (BỐ CỤC 2/3 VÀ 1/3)
+         VIEW 3: GIAO DIỆN LÀM BÀI TRẮC NGHIỆM CHUẨN ẢNH 5
          ===================================================================== -->
-    <section id="examSessionView" class="exam-split-layout" style="display:none">
-      
-      <!-- PHẦN 2/3: KHU VỰC CÂU HỎI & 4 PHƯƠNG ÁN TRẮC NGHIỆM -->
-      <div class="question-pane">
-        <div class="q-header-meta">
-          <div class="q-number-tag" id="currentQNumberTag">
-            <span>Câu hỏi 01 / 20</span>
-          </div>
-          <div class="q-status-tag" id="currentQStatusTag">Chưa trả lời</div>
+    <section id="examSessionView" class="exam-app-session-container" style="display:none">
+      <div class="exam-app-content">
+        <!-- Tiêu đề câu hỏi dạng: Câu 1: [Nội dung] -->
+        <div class="exam-app-q-title" id="questionContentText">
+          Câu 1: Đang tải nội dung câu hỏi...
         </div>
 
-        <!-- Nội dung câu hỏi -->
-        <div class="q-content-text" id="questionContentText">
-          Đang tải nội dung câu hỏi...
-        </div>
-
-        <!-- 4 phương án trắc nghiệm A, B, C, D -->
-        <div class="options-grid" id="optionsContainer">
+        <!-- Danh sách phương án dạng radio vòng tròn chuẩn Ảnh 5 -->
+        <div class="exam-app-radio-list" id="optionsContainer">
           <!-- Render động qua JavaScript -->
         </div>
 
@@ -1042,81 +1052,15 @@
           <strong>💡 Giải thích đáp án:</strong>
           <p id="reviewExplanationText" style="margin:4px 0 0"></p>
         </div>
-
-        <!-- Thanh điều hướng chân câu hỏi -->
-        <div class="q-nav-actions">
-          <button type="button" class="button button-outline" id="btnPrevQ" onclick="navigateQuestion(-1)">
-            ← Câu trước
-          </button>
-          
-          <button type="button" class="button button-outline" id="btnNextQ" onclick="navigateQuestion(1)">
-            Câu tiếp theo →
-          </button>
-
-          <button type="button" class="button button-dark" id="btnExitReviewMode" onclick="backToExamCatalog()" style="display:none;margin-left:auto;font-size:12px">
-            ← Quay lại danh sách đề thi
-          </button>
-
-          <button type="button" class="button button-lime" id="btnSubmitExam" onclick="confirmSubmitExam()" style="margin-left:auto">
-            Nộp bài 🏁
-          </button>
-        </div>
       </div>
-
-      <!-- PHẦN 1/3: CỘT THÔNG TIN, ĐỒNG HỒ & BẢNG LƯỚI CÂU HỎI -->
-      <aside class="sidebar-pane">
-        <!-- Đồng hồ đếm ngược -->
-        <div class="sidebar-card" style="padding:14px">
-          <div class="timer-display-box">
-            <div class="timer-label" id="timerLabel">THỜI GIAN CÒN LẠI</div>
-            <div class="timer-numbers" id="timerNumbers">30:00</div>
-            <div class="timer-progress">
-              <div class="timer-progress-bar" id="timerProgressBar"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Thông tin thí sinh & Vi phạm -->
-        <div class="sidebar-card">
-          <div class="student-badge-info">
-            <span>Thí sinh: <strong id="sidebarStudentName">Bạn</strong></span>
-            <span class="violation-pill" id="sidebarViolationPill">
-              🛡️ Vi phạm: <b id="sidebarViolationCount">0</b> lần
-            </span>
-          </div>
-
-          <!-- Lưới các ô câu hỏi -->
-          <div class="palette-title">
-            <span>DANH SÁCH CÂU HỎI</span>
-            <span style="font-size:11px;color:#64748b;font-weight:600" id="answeredProgressCount">0/20 đã chọn</span>
-          </div>
-          
-          <div class="question-grid" id="questionGridPalette">
-            <!-- Sinh các nút câu 1, 2, 3... -->
-          </div>
-
-          <div class="palette-legend" id="paletteLegend">
-            <div class="palette-legend-item">
-              <span class="legend-box" style="background:#10b981"></span> Đã chọn
-            </div>
-            <div class="palette-legend-item">
-              <span class="legend-box" style="background:#f8fafc;border:1px solid #cbd5e1"></span> Chưa làm
-            </div>
-            <div class="palette-legend-item">
-              <span class="legend-box" style="border:2px solid var(--forest)"></span> Đang xem
-            </div>
-          </div>
-        </div>
-      </aside>
-
     </section>
 
     <!-- =====================================================================
-         VIEW 4: MÀN HÌNH TỔNG KẾT KẾT QUẢ BÀI THI
+         VIEW 4: MÀN HÌNH TỔNG KẾT KẾT QUẢ BÀI THI (TINH GỌN - ẢNH 4)
          ===================================================================== -->
     <section id="examResultView" class="result-summary-box" style="display:none">
-      <div style="margin-bottom:14px">
-        <span class="tag" id="resultRankBadge" style="font-weight:800;border:1px solid #a7f3d0;font-size:12px;padding:6px 14px">ĐÃ ĐẠT YÊU CẦU</span>
+      <div style="margin-bottom:10px">
+        <span class="tag" id="resultRankBadge" style="font-weight:800;border:1px solid #a7f3d0;font-size:11px;padding:4px 12px">ĐÃ ĐẠT YÊU CẦU</span>
       </div>
 
       <div class="score-circle">
@@ -1124,42 +1068,89 @@
         <div class="score-circle-max" id="resultMaxScoreText">ĐIỂM / 100</div>
       </div>
 
-      <h2 style="font-family:'Space Grotesk',sans-serif;margin:0 0 8px;color:var(--forest);font-size:24px" id="resultRankTitle">
+      <h2 style="font-family:'Space Grotesk',sans-serif;margin:0 0 6px;color:var(--forest);font-size:18px" id="resultRankTitle">
         Xuất sắc! Đạt chuẩn Năng lực Kiểm chứng AI
       </h2>
-      <p style="color:#64748b;font-size:13.5px;margin:0 0 22px;line-height:1.6" id="resultRankDesc">
+      <p style="color:#64748b;font-size:12px;margin:0 0 16px;line-height:1.5" id="resultRankDesc">
         Bạn đã hoàn thành xuất sắc bài kiểm tra trắc nghiệm.
       </p>
 
-      <div class="exam-info-grid" style="max-width:580px;margin:0 auto 24px">
+      <!-- 3 Ô THỐNG KÊ TRÊN 1 HÀNG NGANG (KHÔNG BỊ XẾP DỌC CỒNG KỀNH TRÊN MOBILE) -->
+      <div class="result-stat-grid-3">
         <div class="exam-info-box">
           <span>Số câu đúng</span>
           <strong id="resultCorrectCount">17 / 20</strong>
         </div>
         <div class="exam-info-box">
-          <span>Thời gian làm bài</span>
+          <span>Thời gian</span>
           <strong id="resultTimeSpent">14:25</strong>
         </div>
         <div class="exam-info-box">
-          <span>Vi phạm toàn màn hình</span>
+          <span>Vi phạm</span>
           <strong id="resultViolationsCount" style="color:#10b981">0 lần</strong>
         </div>
       </div>
 
-      <div id="resultActionButtons" style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
-        <button type="button" class="button button-lime" onclick="enterReviewMode()">
+      <div id="resultActionButtons" style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+        <button type="button" class="button button-lime" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="enterReviewMode()">
           Xem đáp án
         </button>
-        <button type="button" class="button button-dark" onclick="restartCurrentExam()">
+        <button type="button" class="button button-dark" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="restartCurrentExam()">
           ↻ Làm lại đề này
         </button>
-        <button type="button" class="button button-outline" onclick="backToExamCatalog()">
+        <button type="button" class="button button-outline" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="backToExamCatalog()">
           ← Chọn đề thi khác
         </button>
       </div>
     </section>
 
   </main>
+
+  <!-- THANH ĐIỀU HƯỚNG DƯỚI ĐÁY CỐ ĐỊNH CHUẨN ẢNH 5 -->
+  <div class="exam-app-bottom-bar" id="examAppBottomBar" style="display:none">
+    <div class="exam-app-bottom-inner">
+      <button type="button" class="exam-app-nav-btn" id="btnPrevQ" onclick="navigateQuestion(-1)" aria-label="Câu trước">
+        ‹
+      </button>
+      <button type="button" class="exam-app-palette-trigger" onclick="toggleQuestionPalette(true)">
+        DANH SÁCH CÂU HỎI
+      </button>
+      <button type="button" class="exam-app-nav-btn" id="btnNextQ" onclick="navigateQuestion(1)" aria-label="Câu tiếp">
+        ›
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM SHEET / MODAL DANH SÁCH CÂU HỎI CHUẨN ẢNH 5 -->
+  <div id="paletteSheetOverlay" class="palette-sheet-overlay" style="display:none" onclick="handlePaletteOverlayClick(event)">
+    <div class="palette-sheet-box" id="paletteSheetBox">
+      <div class="palette-sheet-header">
+        <div class="palette-sheet-title">
+          <span>DANH SÁCH CÂU HỎI</span>
+          <small id="answeredProgressCount">0/20 đã chọn</small>
+        </div>
+        <button type="button" class="palette-sheet-close" onclick="toggleQuestionPalette(false)" aria-label="Đóng">✕</button>
+      </div>
+
+      <div class="palette-legend" id="paletteLegend">
+        <div class="palette-legend-item">
+          <span class="legend-box" style="background:#3054f4"></span> Đã chọn
+        </div>
+        <div class="palette-legend-item">
+          <span class="legend-box" style="background:#f8fafc;border:1.5px solid #cbd5e1"></span> Chưa làm
+        </div>
+        <div class="palette-legend-item">
+          <span class="legend-box" style="border:2px solid #3054f4"></span> Đang xem
+        </div>
+      </div>
+
+      <div class="palette-grid-scroll">
+        <div class="question-grid" id="questionGridPalette">
+          <!-- Render các nút câu 1, 2, 3... -->
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER CHUẨN CỦA WEBSITE -->
   <footer class="site-footer" id="siteNormalFooter">
@@ -1450,7 +1441,8 @@
       document.getElementById("lobbyDurationMinutes").textContent = `${currentExam.durationMinutes || 30} phút`;
       const scoreReqEl = document.getElementById("lobbyScoreRequirement");
       if (scoreReqEl) scoreReqEl.textContent = `${pointsPerQ}đ/câu · Đạt ≥ ${passingScore}/${maxScore}đ`;
-      document.getElementById("fsExamTitleDisplay").textContent = currentExam.title;
+      const appTitle = document.getElementById("examAppHeaderTitle");
+      if (appTitle) appTitle.textContent = currentExam.title;
       updateStudentNameDOM();
 
       // Đổi view
@@ -1475,11 +1467,15 @@
       document.getElementById("siteNormalHeader").style.display = "block";
       document.getElementById("pageNormalHeader").style.display = "block";
       document.getElementById("siteNormalFooter").style.display = "block";
-      document.getElementById("examFullscreenTopbar").style.display = "none";
 
-      // Ẩn nút thoát review mode
-      const exitReviewBtn = document.getElementById("btnExitReviewMode");
-      if (exitReviewBtn) exitReviewBtn.style.display = "none";
+      // Ẩn các thanh phòng thi
+      const appH = document.getElementById("examAppHeader");
+      if (appH) appH.style.display = "none";
+      const appSub = document.getElementById("examAppSubbarWrap");
+      if (appSub) appSub.style.display = "none";
+      const appBot = document.getElementById("examAppBottomBar");
+      if (appBot) appBot.style.display = "none";
+      toggleQuestionPalette(false);
 
       // Đóng mọi modal xác nhận nếu đang mở
       const submitModal = document.getElementById("submitConfirmModal");
@@ -1627,7 +1623,7 @@
     }
 
     // =========================================================================
-    // BẮT ĐẦU VÀ QUẢN LÝ BÀI THI (2/3 VÀ 1/3)
+    // BẮT ĐẦU VÀ QUẢN LÝ BÀI THI (CHUẨN ẢNH 5)
     // =========================================================================
     async function startExamSession() {
       await requestFullScreen();
@@ -1641,33 +1637,67 @@
       violationsCount = 0;
       violationsList = [];
 
-      // Ẩn Header & Footer chuẩn web để tập trung toàn màn hình
+      // Ẩn Header & Footer chuẩn web để tập trung làm bài
       document.getElementById("siteNormalHeader").style.display = "none";
       document.getElementById("pageNormalHeader").style.display = "none";
       document.getElementById("siteNormalFooter").style.display = "none";
 
-      // Hiện Topbar phòng thi
-      document.getElementById("examFullscreenTopbar").style.display = "flex";
+      // Hiện các thanh App làm bài thi (Ảnh 5)
+      const appH = document.getElementById("examAppHeader");
+      if (appH) appH.style.display = "flex";
+      const appSub = document.getElementById("examAppSubbarWrap");
+      if (appSub) appSub.style.display = "block";
+      const appBot = document.getElementById("examAppBottomBar");
+      if (appBot) appBot.style.display = "block";
+
+      const headerTitle = document.getElementById("examAppHeaderTitle");
+      if (headerTitle && currentExam) {
+        headerTitle.textContent = currentExam.title;
+      }
 
       // Đổi view
       document.getElementById("examSelectionView").style.display = "none";
       document.getElementById("examLobbyView").style.display = "none";
-      document.getElementById("examSessionView").style.display = "grid";
+      document.getElementById("examSessionView").style.display = "block";
       document.getElementById("examResultView").style.display = "none";
 
-      // Khởi tạo bảng câu hỏi 1/3 và nội dung câu hỏi 2/3
+      // Đặt lại nút nộp bài
+      const submitBtn = document.getElementById("btnSubmitExam");
+      if (submitBtn) {
+        submitBtn.style.display = "inline-block";
+        submitBtn.textContent = "NỘP BÀI";
+        submitBtn.onclick = confirmSubmitExam;
+      }
+
+      // Khởi tạo bảng danh sách câu hỏi và câu hỏi đầu tiên
       renderQuestionPalette();
       renderCurrentQuestion();
 
       // Bắt đầu đếm ngược thời gian
       startTimer();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function startTimer() {
       if (timerInterval) clearInterval(timerInterval);
 
       const timerNumbers = document.getElementById("timerNumbers");
-      const timerBar = document.getElementById("timerProgressBar");
+
+      const updateDisplay = () => {
+        const hrs = Math.floor(remainingSeconds / 3600);
+        const mins = Math.floor((remainingSeconds % 3600) / 60);
+        const secs = remainingSeconds % 60;
+        if (timerNumbers) {
+          timerNumbers.textContent = `${String(hrs).padStart(2, "0")} : ${String(mins).padStart(2, "0")} : ${String(secs).padStart(2, "0")}`;
+          if (remainingSeconds <= 180) {
+            timerNumbers.classList.add("urgent");
+          } else {
+            timerNumbers.classList.remove("urgent");
+          }
+        }
+      };
+
+      updateDisplay();
 
       timerInterval = setInterval(() => {
         if (!isExamActive || isExamFinished) {
@@ -1679,30 +1709,21 @@
         if (remainingSeconds <= 0) {
           clearInterval(timerInterval);
           remainingSeconds = 0;
-          timerNumbers.textContent = "00:00";
-          timerBar.style.width = "0%";
+          if (timerNumbers) timerNumbers.textContent = "00 : 00 : 00";
           autoSubmitDueToTimeOut();
           return;
         }
 
-        const mins = Math.floor(remainingSeconds / 60);
-        const secs = remainingSeconds % 60;
-        timerNumbers.textContent = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-
-        const pct = (remainingSeconds / totalSeconds) * 100;
-        timerBar.style.width = `${pct}%`;
-
-        if (remainingSeconds <= 180) {
-          timerNumbers.classList.add("urgent");
-        }
+        updateDisplay();
       }, 1000);
     }
 
     // =========================================================================
-    // RENDER GIAO DIỆN CÂU HỎI (2/3) VÀ BẢNG LƯỚI (1/3)
+    // RENDER GIAO DIỆN CÂU HỎI & BOTTOM SHEET DANH SÁCH (ẢNH 5)
     // =========================================================================
     function renderQuestionPalette() {
       const palette = document.getElementById("questionGridPalette");
+      if (!palette) return;
       palette.innerHTML = "";
 
       questions.forEach((q, idx) => {
@@ -1749,30 +1770,48 @@
       if (countEl) countEl.textContent = `${answeredCount}/${questions.length} đã chọn`;
     }
 
+    function toggleQuestionPalette(open) {
+      const sheet = document.getElementById("paletteSheetOverlay");
+      if (!sheet) return;
+      if (open) {
+        sheet.style.display = "flex";
+        updatePaletteStatus();
+      } else {
+        sheet.style.display = "none";
+      }
+    }
+
+    function handlePaletteOverlayClick(event) {
+      if (event.target.id === "paletteSheetOverlay") {
+        toggleQuestionPalette(false);
+      }
+    }
+
     function renderCurrentQuestion() {
       if (!questions[currentIndex]) return;
       const q = questions[currentIndex];
 
-      document.getElementById("currentQNumberTag").innerHTML = `<span>Câu hỏi ${String(currentIndex + 1).padStart(2, "0")} / ${questions.length}</span>`;
-
-      const statusTag = document.getElementById("currentQStatusTag");
-      const isAnswered = userAnswers[currentIndex] !== undefined;
-      statusTag.textContent = isAnswered ? "Đã trả lời ✓" : "Chưa trả lời";
-      statusTag.className = isAnswered ? "q-status-tag answered" : "q-status-tag";
-
-      document.getElementById("questionContentText").textContent = q.question;
+      // Tiêu đề câu hỏi theo mẫu Ảnh 5: Câu X: [Nội dung]
+      const titleEl = document.getElementById("questionContentText");
+      if (titleEl) {
+        let qText = q.question || "";
+        if (!/^câu\s*\d+/i.test(qText)) {
+          qText = `Câu ${currentIndex + 1}: ${qText}`;
+        }
+        titleEl.textContent = qText;
+      }
 
       const container = document.getElementById("optionsContainer");
+      if (!container) return;
       container.innerHTML = "";
 
-      const optionLetters = ["A", "B", "C", "D"];
       const userSelectedOption = userAnswers[currentIndex];
 
       (q.options || []).forEach((optText, optIdx) => {
-        const card = document.createElement("div");
-        card.className = "option-card";
+        const item = document.createElement("div");
+        item.className = "exam-radio-item";
         if (userSelectedOption === optIdx) {
-          card.classList.add("selected");
+          item.classList.add("selected");
         }
 
         // CHẾ ĐỘ XEM LẠI ĐÁP ÁN: XANH ĐÚNG, ĐỎ SAI
@@ -1781,9 +1820,9 @@
           const isThisUserSelected = userSelectedOption === optIdx;
 
           if (isThisCorrect) {
-            card.classList.add("review-correct");
+            item.classList.add("review-correct");
           } else if (isThisUserSelected && !isThisCorrect) {
-            card.classList.add("review-wrong");
+            item.classList.add("review-wrong");
           }
         }
 
@@ -1795,36 +1834,40 @@
         let verdictBadge = "";
         if (isReviewMode) {
           if (optIdx === q.correctAnswer) {
-            verdictBadge = `<span class="review-verdict-pill correct">✓ ĐÁP ÁN ĐÚNG</span>`;
+            verdictBadge = `<span class="review-verdict-pill correct">✓ ĐÚNG</span>`;
           } else if (userSelectedOption === optIdx) {
-            verdictBadge = `<span class="review-verdict-pill wrong">✕ BẠN ĐÃ CHỌN</span>`;
+            verdictBadge = `<span class="review-verdict-pill wrong">✕ ĐÃ CHỌN</span>`;
           }
         }
 
-        card.innerHTML = `
-          <div class="option-badge">${optionLetters[optIdx]}</div>
-          <div class="option-label-text">${cleanText}</div>
+        item.innerHTML = `
+          <div class="exam-radio-circle"></div>
+          <div class="exam-radio-text">${escapeHtml(cleanText)}</div>
           ${verdictBadge}
         `;
 
         if (!isReviewMode) {
-          card.onclick = () => selectOption(optIdx);
+          item.onclick = () => selectOption(optIdx);
         }
 
-        container.appendChild(card);
+        container.appendChild(item);
       });
 
       const explBox = document.getElementById("reviewExplanationBox");
       const explText = document.getElementById("reviewExplanationText");
-      if (isReviewMode && q.explanation) {
-        explBox.style.display = "block";
-        explText.textContent = q.explanation;
-      } else {
-        explBox.style.display = "none";
+      if (explBox && explText) {
+        if (isReviewMode && q.explanation) {
+          explBox.style.display = "block";
+          explText.textContent = q.explanation;
+        } else {
+          explBox.style.display = "none";
+        }
       }
 
-      document.getElementById("btnPrevQ").disabled = (currentIndex === 0);
-      document.getElementById("btnNextQ").disabled = (currentIndex === questions.length - 1);
+      const prevBtn = document.getElementById("btnPrevQ");
+      const nextBtn = document.getElementById("btnNextQ");
+      if (prevBtn) prevBtn.disabled = (currentIndex === 0);
+      if (nextBtn) nextBtn.disabled = (currentIndex === questions.length - 1);
 
       updatePaletteStatus();
     }
@@ -1840,6 +1883,7 @@
       if (next >= 0 && next < questions.length) {
         currentIndex = next;
         renderCurrentQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
 
@@ -1847,6 +1891,8 @@
       if (idx >= 0 && idx < questions.length) {
         currentIndex = idx;
         renderCurrentQuestion();
+        toggleQuestionPalette(false); // Đóng sheet khi chọn câu
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
 
@@ -1962,10 +2008,17 @@
 
       window.AICheckExamStore.addResult(resultObj);
 
-      // 3. Hiện lại Header chuẩn web & Ẩn Topbar phòng thi
+      // 3. Ẩn các thanh App phòng thi & Hiện lại Header chuẩn web
+      const appH = document.getElementById("examAppHeader");
+      if (appH) appH.style.display = "none";
+      const appSub = document.getElementById("examAppSubbarWrap");
+      if (appSub) appSub.style.display = "none";
+      const appBot = document.getElementById("examAppBottomBar");
+      if (appBot) appBot.style.display = "none";
+      toggleQuestionPalette(false);
+
       document.getElementById("siteNormalHeader").style.display = "block";
       document.getElementById("siteNormalFooter").style.display = "block";
-      document.getElementById("examFullscreenTopbar").style.display = "none";
 
       // 4. Chuyển view kết quả
       document.getElementById("examSessionView").style.display = "none";
@@ -1997,13 +2050,13 @@
         rankDesc.innerHTML = `Bạn đạt <strong>${earnedScore} / ${maxScore} điểm</strong> (vượt qua ngưỡng yêu cầu tối thiểu là <strong>${passingScore} điểm</strong>). Chúc mừng bạn đã hoàn thành xuất sắc bài kiểm tra!`;
 
         actionButtons.innerHTML = `
-          <button type="button" class="button button-lime" onclick="enterReviewMode()">
+          <button type="button" class="button button-lime" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="enterReviewMode()">
             Xem đáp án
           </button>
-          <button type="button" class="button button-dark" onclick="restartCurrentExam()">
+          <button type="button" class="button button-dark" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="restartCurrentExam()">
             ↻ Làm lại đề này
           </button>
-          <button type="button" class="button button-outline" onclick="backToExamCatalog()">
+          <button type="button" class="button button-outline" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="backToExamCatalog()">
             ← Chọn đề thi khác
           </button>
         `;
@@ -2018,13 +2071,13 @@
         rankDesc.innerHTML = `Bạn đạt <strong>${earnedScore} / ${maxScore} điểm</strong>, chưa đạt mức điểm yêu cầu tối thiểu là <strong>${passingScore} điểm</strong>. Bạn có thể làm lại bài này hoặc bỏ qua để chọn đề khác.`;
 
         actionButtons.innerHTML = `
-          <button type="button" class="button button-lime" onclick="enterReviewMode()">
+          <button type="button" class="button button-lime" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="enterReviewMode()">
             Xem đáp án
           </button>
-          <button type="button" class="button button-dark" style="background:#b45309;border-color:#b45309" onclick="restartCurrentExam()">
+          <button type="button" class="button button-dark" style="min-height:38px;padding:6px 14px;font-size:12px;background:#b45309;border-color:#b45309" onclick="restartCurrentExam()">
             ↻ Làm lại bài thi
           </button>
-          <button type="button" class="button button-outline" onclick="backToExamCatalog()">
+          <button type="button" class="button button-outline" style="min-height:38px;padding:6px 14px;font-size:12px" onclick="backToExamCatalog()">
             Bỏ qua & Chọn đề khác →
           </button>
         `;
@@ -2040,16 +2093,40 @@
       isReviewMode = true;
       currentIndex = 0;
 
+      // Ẩn Header & Footer chuẩn web, hiện App Header & Bottom Bar
+      document.getElementById("siteNormalHeader").style.display = "none";
+      document.getElementById("pageNormalHeader").style.display = "none";
+      document.getElementById("siteNormalFooter").style.display = "none";
+
+      const appH = document.getElementById("examAppHeader");
+      if (appH) appH.style.display = "flex";
+      const appSub = document.getElementById("examAppSubbarWrap");
+      if (appSub) appSub.style.display = "block";
+      const appBot = document.getElementById("examAppBottomBar");
+      if (appBot) appBot.style.display = "block";
+
+      const headerTitle = document.getElementById("examAppHeaderTitle");
+      if (headerTitle && currentExam) {
+        headerTitle.textContent = `${currentExam.title} (XEM LẠI ĐÁP ÁN)`;
+      }
+
+      const timerNumbers = document.getElementById("timerNumbers");
+      if (timerNumbers) {
+        timerNumbers.textContent = "KẾT QUẢ BÀI THI";
+        timerNumbers.classList.remove("urgent");
+      }
+
+      const submitBtn = document.getElementById("btnSubmitExam");
+      if (submitBtn) {
+        submitBtn.style.display = "inline-block";
+        submitBtn.textContent = "XEM TỔNG KẾT";
+        submitBtn.onclick = () => {
+          showResultScreen();
+        };
+      }
+
       document.getElementById("examResultView").style.display = "none";
-      document.getElementById("examSessionView").style.display = "grid";
-
-      document.getElementById("btnSubmitExam").style.display = "none";
-      const exitReviewBtn = document.getElementById("btnExitReviewMode");
-      if (exitReviewBtn) exitReviewBtn.style.display = "inline-flex";
-
-      document.getElementById("timerLabel").textContent = "CHẾ ĐỘ XEM LẠI";
-      document.getElementById("timerNumbers").textContent = "KẾT QUẢ";
-      document.getElementById("timerNumbers").classList.remove("urgent");
+      document.getElementById("examSessionView").style.display = "block";
 
       document.getElementById("paletteLegend").innerHTML = `
         <div class="palette-legend-item">
@@ -2059,12 +2136,30 @@
           <span class="legend-box" style="background:#ef4444"></span> Câu làm sai
         </div>
         <div class="palette-legend-item">
-          <span class="legend-box" style="border:2px solid var(--forest)"></span> Đang xem
+          <span class="legend-box" style="border:2px solid #3054f4"></span> Đang xem
         </div>
       `;
 
       renderCurrentQuestion();
       renderQuestionPalette();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showResultScreen() {
+      const appH = document.getElementById("examAppHeader");
+      if (appH) appH.style.display = "none";
+      const appSub = document.getElementById("examAppSubbarWrap");
+      if (appSub) appSub.style.display = "none";
+      const appBot = document.getElementById("examAppBottomBar");
+      if (appBot) appBot.style.display = "none";
+      toggleQuestionPalette(false);
+
+      document.getElementById("siteNormalHeader").style.display = "block";
+      document.getElementById("pageNormalHeader").style.display = "block";
+      document.getElementById("siteNormalFooter").style.display = "block";
+
+      document.getElementById("examSessionView").style.display = "none";
+      document.getElementById("examResultView").style.display = "block";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -2078,7 +2173,7 @@
 
     function requestExitExam() {
       if (isReviewMode) {
-        backToExamCatalog();
+        showResultScreen();
         return;
       }
       if (isExamActive && !isExamFinished) {
