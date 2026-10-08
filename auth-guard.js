@@ -143,7 +143,7 @@
   }
 
   // =========================================================================
-  // WATCHDOG BẢO MẬT: 1 TÀI KHOẢN CHỈ ĐĂNG NHẬP 1 THIẾT BỊ
+  // WATCHDOG BẢO MẬT: 1 TÀI KHOẢN CHỈ ĐĂNG NHẬP 1 THIẾT BỊ (ĐA THIẾT BỊ REALTIME)
   // =========================================================================
   let watchdogTimer = null;
   let isWatchdogChecking = false;
@@ -156,7 +156,7 @@
     // A. Kiểm tra ngay lập tức
     checkDeviceSession(email);
 
-    // B. Lắng nghe qua BroadcastChannel (thời gian thực giữa các tab/cửa sổ/thiết bị cùng origin)
+    // B. Lắng nghe qua BroadcastChannel nội bộ trình duyệt
     try {
       if (window.BroadcastChannel) {
         const ch = new BroadcastChannel("aicheck_session_channel");
@@ -182,6 +182,39 @@
       }
     } catch {}
 
+    // B2. LẮNG NGHE TOÀN CẦU QUA SUPABASE REALTIME (PC <-> MOBILE ĐỘ TRỄ <100MS)
+    try {
+      const getRealtime = window.AICheckCloud?.getRealtimeChannel;
+      if (getRealtime) {
+        const rtChannel = getRealtime();
+        if (rtChannel) {
+          rtChannel.on("broadcast", { event: "SESSION_DISPLACED" }, ({ payload }) => {
+            if (!payload || !payload.account) return;
+            if (payload.account.toLowerCase().trim() === email.toLowerCase().trim()) {
+              const mySessId = localStorage.getItem("aicheck:active_session_id");
+              if (payload.newSessionId && payload.newSessionId !== mySessId) {
+                showDisplacedModal(email, payload.newDeviceInfo);
+              }
+            }
+          });
+          rtChannel.on("broadcast", { event: "ACCOUNT_LOCKED_CONFLICT" }, ({ payload }) => {
+            if (!payload || !payload.account) return;
+            if (payload.account.toLowerCase().trim() === email.toLowerCase().trim()) {
+              showLockedModal(email, payload.lock);
+            }
+          });
+          rtChannel.on("broadcast", { event: "ACCOUNT_LOCK_UPDATE" }, ({ payload }) => {
+            if (!payload || !payload.account) return;
+            if (payload.account.toLowerCase().trim() === email.toLowerCase().trim() && payload.lock?.status === "locked") {
+              showLockedModal(email, payload.lock);
+            }
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("Lỗi đăng ký Realtime listener trên Watchdog:", e);
+    }
+
     // C. Lắng nghe qua storage event (đồng bộ trên các tab/cửa sổ)
     window.addEventListener("storage", (e) => {
       if (e.key === "aicheck:session_event" || e.key === "aicheck:account_locks" || e.key === "aicheck:account_sessions") {
@@ -195,22 +228,45 @@
     });
     window.addEventListener("focus", () => checkDeviceSession(email));
 
-    // E. Định kỳ kiểm tra mỗi 3.5 giây
-    watchdogTimer = setInterval(() => checkDeviceSession(email), 3500);
+    // E. Định kỳ kiểm tra mỗi 3 giây với máy chủ Supabase
+    watchdogTimer = setInterval(() => checkDeviceSession(email), 3000);
   }
 
-  function checkDeviceSession(email) {
+  async function checkDeviceSession(email) {
     if (isWatchdogChecking || isAuthPage) return;
     const mgr = window.AICheckSessionManager;
     if (!mgr) return;
 
     isWatchdogChecking = true;
     try {
+      // 1. Kiểm tra bộ nhớ cục bộ
       const res = mgr.checkCurrentDeviceSession(email);
       if (res.locked) {
         showLockedModal(email, res.lock);
+        return;
       } else if (res.displaced) {
         showDisplacedModal(email, res.newDevice);
+        return;
+      }
+
+      // 2. Kiểm tra trực tiếp trên máy chủ Supabase Auth (Cross-Device Sync)
+      if (window.AICheckCloud?.getUser) {
+        const liveUser = await window.AICheckCloud.getUser();
+        if (liveUser?.user_metadata) {
+          // A. Tài khoản đã bị khóa trên hệ thống
+          if (liveUser.user_metadata.lock_status === "locked") {
+            showLockedModal(email, liveUser.user_metadata.lock_data || { status: "locked" });
+            return;
+          }
+
+          // B. Thiết bị khác vừa đăng nhập tạo phiên mới
+          const activeSess = liveUser.user_metadata.active_session_id;
+          const mySessId = localStorage.getItem("aicheck:active_session_id");
+          if (activeSess && mySessId && activeSess !== mySessId) {
+            showDisplacedModal(email, liveUser.user_metadata.active_device || "Thiết bị khác");
+            return;
+          }
+        }
       }
     } catch (err) {
       console.warn("Lỗi kiểm tra session watchdog:", err);
@@ -450,10 +506,10 @@
         await window.AICheckCloud.sendSupportRequest(email, name, structuredReason);
       }
 
-      // Đánh dấu tài khoản đã gửi yêu cầu
+      // Đánh dấu tài khoản đã gửi yêu cầu (Đồng bộ đa thiết bị lên Cloud Store)
       if (window.AICheckSessionManager) {
         const lock = window.AICheckSessionManager.getAccountLock(email) || {};
-        window.AICheckSessionManager.setAccountLock(email, {
+        await window.AICheckSessionManager.setAccountLock(email, {
           ...lock,
           status: "locked",
           requestSubmitted: true,

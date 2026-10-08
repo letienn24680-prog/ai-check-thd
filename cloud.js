@@ -123,8 +123,13 @@
 
     const effectiveEmail = cleanAccount.includes("@") ? cleanAccount : `${cleanAccount}@thd.edu.vn`;
 
-    // 0. Kiểm tra trạng thái khóa tài khoản do tranh chấp thiết bị
-    const lockCheck = AICheckSessionManager.getAccountLock(effectiveEmail);
+    // 0. Kiểm tra trạng thái khóa tài khoản do tranh chấp thiết bị (kiểm tra cả local và cloud)
+    let lockCheck = AICheckSessionManager.getAccountLock(effectiveEmail);
+    if (!lockCheck && AICheckSessionManager.getAccountLockRemote) {
+      try {
+        lockCheck = await AICheckSessionManager.getAccountLockRemote(effectiveEmail);
+      } catch {}
+    }
     if (lockCheck) {
       if (lockCheck.status === "locked") {
         return {
@@ -153,8 +158,8 @@
     try {
       const { data, error } = await client.auth.signInWithPassword({ email: effectiveEmail, password });
       if (!error && data?.user) {
-        // ĐĂNG KÝ PHIÊN THIẾT BỊ & PHÁT HIỆN TRANH CHẤP LIÊN TỤC
-        const sessionReg = AICheckSessionManager.registerLogin(effectiveEmail, data.user);
+        // ĐĂNG KÝ PHIÊN THIẾT BỊ & PHÁT HIỆN TRANH CHẤP LIÊN TỤC (ĐỒNG BỘ ĐA THIẾT BỊ)
+        const sessionReg = await AICheckSessionManager.registerLogin(effectiveEmail, data.user);
         if (sessionReg.locked) {
           try { await client.auth.signOut(); } catch {}
           return {
@@ -330,19 +335,113 @@
     }
   }
 
+  // =========================================================================
+  // HỆ THỐNG ĐỒNG BỘ ĐA THIẾT BỊ (SUPABASE REALTIME & CLOUD SHARED STORE)
+  // =========================================================================
+  const REALTIME_GLOBAL_CHANNEL = "aicheck_global_channel";
+  const CLOUD_SYNC_OBJECT_ID = "ff808181a09d98f701a11b980f4520ea";
+  const CLOUD_SYNC_API_URL = "https://api.restful-api.dev/objects/" + CLOUD_SYNC_OBJECT_ID;
+
+  let globalRealtimeChannel = null;
+  function getRealtimeChannel() {
+    if (globalRealtimeChannel) return globalRealtimeChannel;
+    if (client && client.channel) {
+      try {
+        globalRealtimeChannel = client.channel(REALTIME_GLOBAL_CHANNEL, {
+          config: { broadcast: { self: false } }
+        });
+        globalRealtimeChannel.subscribe((status) => {
+          if (status === "SUBSCRIBED") {
+            console.log("⚡ [Realtime] Kết nối kênh toàn cầu:", REALTIME_GLOBAL_CHANNEL);
+          }
+        });
+      } catch (e) {
+        console.warn("Lỗi khởi tạo Supabase Realtime channel:", e);
+      }
+    }
+    return globalRealtimeChannel;
+  }
+
+  // Tự động khởi chạy kênh realtime
+  try {
+    if (client) getRealtimeChannel();
+  } catch {}
+
+  // Giao tiếp qua Supabase Realtime Broadcast đa thiết bị
+  function broadcastGlobalRealtime(eventName, payload) {
+    try {
+      const ch = getRealtimeChannel();
+      if (ch) {
+        ch.send({
+          type: "broadcast",
+          event: eventName,
+          payload: payload
+        });
+      }
+    } catch (e) {
+      console.warn("Lỗi gửi Supabase Realtime broadcast:", e);
+    }
+  }
+
+  // Đọc dữ liệu chia sẻ đa thiết bị từ Cloud Shared Object Store
+  async function fetchCloudSharedData() {
+    try {
+      const res = await fetch(CLOUD_SYNC_API_URL);
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json?.data || null;
+    } catch (e) {
+      console.warn("Lỗi đọc Cloud Shared Store:", e);
+      return null;
+    }
+  }
+
+  // Ghi / Cập nhật dữ liệu chia sẻ đa thiết bị lên Cloud Shared Object Store
+  async function updateCloudSharedData(updaterFn) {
+    try {
+      let currentData = await fetchCloudSharedData();
+      if (!currentData || typeof currentData !== "object") {
+        currentData = { support_requests: [], account_locks: {}, sessions: {} };
+      }
+      const updatedData = updaterFn(currentData) || currentData;
+      const res = await fetch(CLOUD_SYNC_API_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "aicheck_shared_database",
+          data: updatedData
+        })
+      });
+      return res.ok;
+    } catch (e) {
+      console.warn("Lỗi cập nhật Cloud Shared Store:", e);
+      return false;
+    }
+  }
+
   function getLocalSupportRequests() {
     try { return JSON.parse(localStorage.getItem("aicheck:local_support_requests") || "[]"); } catch { return []; }
   }
 
   function saveLocalSupportRequest(item) {
     const list = getLocalSupportRequests();
-    list.unshift(item);
+    const idx = list.findIndex(r => r.id === item.id);
+    if (idx >= 0) {
+      list[idx] = { ...list[idx], ...item };
+    } else {
+      list.unshift(item);
+    }
     localStorage.setItem("aicheck:local_support_requests", JSON.stringify(list));
+  }
+
+  async function getAllCloudSupportRequests() {
+    const cloudData = await fetchCloudSharedData();
+    return Array.isArray(cloudData?.support_requests) ? cloudData.support_requests : [];
   }
 
   async function sendSupportRequest(email, name, reason) {
     const localItem = {
-      id: "local_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+      id: "req_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
       user_email: String(email || "").trim(),
       display_name: String(name || "").trim(),
       reason: String(reason || "").trim(),
@@ -350,48 +449,66 @@
       created_at: new Date().toISOString()
     };
 
-    if (!client) {
-      saveLocalSupportRequest(localItem);
-      return { data: localItem, error: null, local: true };
+    // 1. Lưu cục bộ bộ nhớ đệm
+    saveLocalSupportRequest(localItem);
+
+    // 2. Lưu lên Cloud Shared Store để Admin xem được trên mọi thiết bị
+    try {
+      await updateCloudSharedData(data => {
+        data.support_requests = data.support_requests || [];
+        data.support_requests = data.support_requests.filter(r => r.id !== localItem.id);
+        data.support_requests.unshift(localItem);
+        return data;
+      });
+    } catch (e) {
+      console.warn("Lỗi lưu support request lên Cloud Store:", e);
     }
 
-    try {
-      const { data, error } = await client.from("support_requests").insert({
-        user_email: localItem.user_email,
-        display_name: localItem.display_name,
-        reason: localItem.reason
-      });
-      if (error) {
-        // Fallback lưu cục bộ nếu bảng chưa tạo trên Supabase
-        saveLocalSupportRequest(localItem);
-        return { data: localItem, error: null, local: true };
-      }
-      return { data, error: null };
-    } catch (err) {
-      saveLocalSupportRequest(localItem);
-      return { data: localItem, error: null, local: true };
+    // 3. Phát sóng Supabase Realtime broadcast đến bảng điều khiển Admin đang mở
+    broadcastGlobalRealtime("SUPPORT_UNLOCK_REQUEST", localItem);
+
+    // 4. Thử chèn vào bảng Supabase support_requests nếu bảng đã tồn tại
+    if (client) {
+      try {
+        await client.from("support_requests").insert({
+          user_email: localItem.user_email,
+          display_name: localItem.display_name,
+          reason: localItem.reason
+        });
+      } catch (err) {}
     }
+
+    return { data: localItem, error: null };
   }
 
   async function resolveSupportRequest(id) {
-    // Xử lý local
+    // 1. Cập nhật local
     const localList = getLocalSupportRequests();
     const found = localList.find(r => r.id === id);
     if (found) {
       found.status = "resolved";
       localStorage.setItem("aicheck:local_support_requests", JSON.stringify(localList));
-      return { success: true };
     }
-    // Xử lý Supabase
+
+    // 2. Cập nhật Cloud Shared Store
+    await updateCloudSharedData(data => {
+      data.support_requests = data.support_requests || [];
+      const item = data.support_requests.find(r => r.id === id);
+      if (item) item.status = "resolved";
+      return data;
+    });
+
+    // 3. Phát sóng Realtime
+    broadcastGlobalRealtime("SUPPORT_REQUEST_RESOLVED", { id, status: "resolved" });
+
+    // 4. Cập nhật Supabase nếu có
     if (client) {
       try {
-        const { error } = await client.from("support_requests").update({ status: "resolved" }).eq("id", id);
-        return { success: !error, error };
-      } catch (err) {
-        return { success: false, error: err };
-      }
+        await client.from("support_requests").update({ status: "resolved" }).eq("id", id);
+      } catch {}
     }
-    return { success: false };
+
+    return { success: true };
   }
 
   function isAdmin(user) {
@@ -797,7 +914,26 @@
       return locks[acc] || null;
     },
 
-    setAccountLock(account, lockData) {
+    async getAccountLockRemote(account) {
+      const acc = this.normalizeAccount(account);
+      if (!acc) return null;
+      try {
+        const cloudData = await fetchCloudSharedData();
+        if (cloudData?.account_locks && cloudData.account_locks[acc]) {
+          const remoteLock = cloudData.account_locks[acc];
+          // Đồng bộ vào local
+          const localLocks = this.getAllLocks();
+          localLocks[acc] = remoteLock;
+          this.saveAllLocks(localLocks);
+          return remoteLock;
+        }
+      } catch (e) {
+        console.warn("Lỗi đọc lock remote:", e);
+      }
+      return null;
+    },
+
+    async setAccountLock(account, lockData) {
       const acc = this.normalizeAccount(account);
       if (!acc) return;
       const locks = this.getAllLocks();
@@ -812,6 +948,26 @@
         };
       }
       this.saveAllLocks(locks);
+
+      // Cập nhật Cloud Shared Store
+      try {
+        await updateCloudSharedData(d => {
+          d.account_locks = d.account_locks || {};
+          if (lockData) {
+            d.account_locks[acc] = locks[acc];
+          } else {
+            delete d.account_locks[acc];
+          }
+          return d;
+        });
+      } catch {}
+
+      // Phát sóng toàn cầu
+      broadcastGlobalRealtime("ACCOUNT_LOCK_UPDATE", {
+        account: acc,
+        lock: locks[acc] || null
+      });
+
       this.broadcastMessage({
         type: "ACCOUNT_LOCK_UPDATE",
         account: acc,
@@ -819,12 +975,20 @@
       });
     },
 
-    clearAccountLock(account) {
+    async clearAccountLock(account) {
       const acc = this.normalizeAccount(account);
       if (!acc) return;
       const locks = this.getAllLocks();
       delete locks[acc];
       this.saveAllLocks(locks);
+
+      // Xóa trong Cloud Shared Store
+      try {
+        await updateCloudSharedData(d => {
+          if (d.account_locks) delete d.account_locks[acc];
+          return d;
+        });
+      } catch {}
 
       const sessions = this.getAllSessions();
       if (sessions[acc]) {
@@ -833,19 +997,30 @@
         this.saveAllSessions(sessions);
       }
 
+      broadcastGlobalRealtime("ACCOUNT_UNLOCKED", { account: acc });
+
       this.broadcastMessage({
         type: "ACCOUNT_UNLOCKED",
         account: acc
       });
     },
 
-    // 2. Đăng ký phiên đăng nhập mới & phát hiện tranh chấp liên tục
-    registerLogin(account, userObj) {
+    // 2. Đăng ký phiên đăng nhập mới & phát hiện tranh chấp liên tục (Cross-Device)
+    async registerLogin(account, userObj) {
       const acc = this.normalizeAccount(account);
       if (!acc) return { success: false, message: "Tài khoản không hợp lệ" };
 
-      // A. Kiểm tra tài khoản có đang bị khóa hay không
-      const currentLock = this.getAccountLock(acc);
+      // Tài khoản Quản trị viên cấp cao được miễn trừ kiểm tra khóa tranh chấp
+      if (acc === "adminthd" || acc === "adminthd@thd.edu.vn" || acc === "adminthd@gmail.com" || userObj?.id === "admin-thd-master-id") {
+        return { success: true };
+      }
+
+      // A. Kiểm tra tài khoản có đang bị khóa hay không (cả local và remote)
+      let currentLock = this.getAccountLock(acc);
+      if (!currentLock) {
+        try { currentLock = await this.getAccountLockRemote(acc); } catch {}
+      }
+
       if (currentLock) {
         if (currentLock.status === "locked") {
           return {
@@ -867,74 +1042,82 @@
       }
 
       // B. Kiểm tra phiên cũ từ thiết bị khác và tính toán tranh chấp liên tục
-      const sessions = this.getAllSessions();
-      const prevSession = sessions[acc];
       const now = Date.now();
       const myDeviceInfo = this.getDeviceInfo();
       const mySessionId = "sess_" + now + "_" + Math.random().toString(36).substring(2, 9);
+      const lastMySession = localStorage.getItem(MY_SESSION_KEY);
 
-      let conflictCount = (prevSession && prevSession.conflictCount) ? prevSession.conflictCount : 0;
-      let switchHistory = (prevSession && prevSession.switchHistory) ? prevSession.switchHistory : [];
+      const meta = userObj?.user_metadata || {};
+      const prevSessionId = meta.active_session_id;
+      const prevDevice = meta.active_device;
+      const prevTime = meta.session_time || 0;
+      const prevConflict = meta.conflict_count || 0;
 
-      if (prevSession && prevSession.sessionId) {
-        const lastMySession = localStorage.getItem(MY_SESSION_KEY);
-        const isSameSession = (lastMySession && lastMySession === prevSession.sessionId);
+      let conflictCount = prevConflict;
 
-        if (!isSameSession) {
-          // Phiên trước đó là từ một thiết bị/trình duyệt khác!
-          const timeSincePrev = now - (prevSession.createdAt || 0);
+      if (prevSessionId && prevSessionId !== lastMySession) {
+        // Phiên trước đó là từ một thiết bị/trình duyệt khác!
+        const timeSincePrev = now - prevTime;
 
-          // Nếu lượt đổi phiên diễn ra dồn dập trong vòng 5 phút (300,000 ms)
-          if (timeSincePrev < 300000) {
-            conflictCount++;
-            switchHistory.push({
-              time: now,
-              fromDevice: prevSession.deviceInfo,
-              toDevice: myDeviceInfo
-            });
-          } else {
-            conflictCount = 1;
-            switchHistory = [{
-              time: now,
-              fromDevice: prevSession.deviceInfo,
-              toDevice: myDeviceInfo
-            }];
+        // Nếu lượt đổi phiên diễn ra dồn dập trong vòng 5 phút (300,000 ms)
+        if (timeSincePrev < 300000) {
+          conflictCount = prevConflict + 1;
+        } else {
+          conflictCount = 1;
+        }
+
+        // 🛑 TRANH CHẤP LIÊN TỤC >= 3 LẦN TRONG 5 PHÚT -> TỰ ĐỘNG KHÓA TÀI KHOẢN TOÀN CẦU!
+        if (conflictCount >= 3) {
+          const lockPayload = {
+            status: "locked",
+            reason: "device_conflict",
+            lockedAt: now,
+            conflictCount: conflictCount,
+            account: acc,
+            displayName: meta.display_name || userObj?.display_name || acc,
+            deviceInfo: myDeviceInfo,
+            lastDevice: prevDevice || myDeviceInfo,
+            unlockCode: null
+          };
+
+          await this.setAccountLock(acc, lockPayload);
+
+          if (client) {
+            try {
+              await client.auth.updateUser({
+                data: {
+                  lock_status: "locked",
+                  lock_data: lockPayload,
+                  conflict_count: conflictCount
+                }
+              });
+            } catch {}
           }
 
-          // 🛑 TRANH CHẤP LIÊN TỤC >= 3 LẦN -> TỰ ĐỘNG KHÓA TÀI KHOẢN!
-          if (conflictCount >= 3) {
-            const lockPayload = {
-              status: "locked",
-              reason: "device_conflict",
-              lockedAt: now,
-              conflictCount: conflictCount,
-              switchHistory: switchHistory,
-              account: acc,
-              displayName: userObj?.user_metadata?.display_name || userObj?.display_name || acc,
-              deviceInfo: myDeviceInfo,
-              unlockCode: null
-            };
-            this.setAccountLock(acc, lockPayload);
+          broadcastGlobalRealtime("ACCOUNT_LOCKED_CONFLICT", {
+            account: acc,
+            lock: lockPayload
+          });
 
-            this.broadcastMessage({
-              type: "ACCOUNT_LOCKED_CONFLICT",
-              account: acc,
-              lock: lockPayload
-            });
+          this.broadcastMessage({
+            type: "ACCOUNT_LOCKED_CONFLICT",
+            account: acc,
+            lock: lockPayload
+          });
 
-            return {
-              success: false,
-              locked: true,
-              justLocked: true,
-              status: "locked",
-              lock: lockPayload,
-              message: "Phát hiện sự cố tranh chấp đăng nhập liên tục giữa 2 thiết bị! Tài khoản đã được tự động tạm khóa để bảo vệ an toàn."
-            };
-          }
+          return {
+            success: false,
+            locked: true,
+            justLocked: true,
+            status: "locked",
+            lock: lockPayload,
+            message: "Phát hiện sự cố tranh chấp đăng nhập liên tục giữa 2 thiết bị! Tài khoản đã được tự động tạm khóa để bảo vệ an toàn."
+          };
         }
       }
 
       // C. Lưu phiên hoạt động duy nhất mới của tài khoản
+      const sessions = this.getAllSessions();
       sessions[acc] = {
         account: acc,
         sessionId: mySessionId,
@@ -942,8 +1125,7 @@
         createdAt: now,
         lastActive: now,
         conflictCount: conflictCount,
-        switchHistory: switchHistory,
-        displayName: userObj?.user_metadata?.display_name || userObj?.display_name || acc
+        displayName: meta.display_name || userObj?.display_name || acc
       };
       this.saveAllSessions(sessions);
 
@@ -952,7 +1134,31 @@
         localStorage.setItem(MY_ACCOUNT_KEY, acc);
       } catch {}
 
-      // Báo hiệu đá thiết bị trước đó của tài khoản này
+      // Đồng bộ thông tin phiên lên máy chủ Supabase Auth để mọi thiết bị khác phát hiện ngay
+      if (client) {
+        try {
+          await client.auth.updateUser({
+            data: {
+              active_session_id: mySessionId,
+              active_device: myDeviceInfo,
+              session_time: now,
+              conflict_count: conflictCount,
+              lock_status: "active"
+            }
+          });
+        } catch (e) {
+          console.warn("Lỗi sync phiên đăng nhập lên Supabase:", e);
+        }
+      }
+
+      // Báo hiệu lập tức đá thiết bị trước đó qua Supabase Realtime WebSocket (<100ms)
+      broadcastGlobalRealtime("SESSION_DISPLACED", {
+        account: acc,
+        newSessionId: mySessionId,
+        newDeviceInfo: myDeviceInfo,
+        time: now
+      });
+
       this.broadcastMessage({
         type: "SESSION_DISPLACED",
         account: acc,
@@ -1022,11 +1228,15 @@
     },
 
     // 4. Xác thực mã mở khóa do Admin gửi
-    verifyAndUnlock(account, enteredCode) {
+    async verifyAndUnlock(account, enteredCode) {
       const acc = this.normalizeAccount(account);
       if (!acc) return { success: false, message: "Không tìm thấy thông tin tài khoản!" };
 
-      const lock = this.getAccountLock(acc);
+      let lock = this.getAccountLock(acc);
+      if (!lock) {
+        try { lock = await this.getAccountLockRemote(acc); } catch {}
+      }
+
       if (!lock) {
         return { success: true, message: "Tài khoản hiện không bị khóa." };
       }
@@ -1048,7 +1258,21 @@
         };
       }
 
-      this.clearAccountLock(acc);
+      await this.clearAccountLock(acc);
+
+      if (client) {
+        try {
+          await client.auth.updateUser({
+            data: {
+              lock_status: "cleared",
+              conflict_count: 0,
+              unlock_code: null
+            }
+          });
+        } catch {}
+      }
+
+      broadcastGlobalRealtime("ACCOUNT_UNLOCKED", { account: acc });
 
       if (window.AICheckNotificationStore) {
         window.AICheckNotificationStore.sendNotification({
@@ -1067,12 +1291,17 @@
     },
 
     // 5. Admin duyệt thông tin và cấp mã mở khóa
-    grantUnlockCode(account, unlockCode) {
+    async grantUnlockCode(account, unlockCode) {
       const acc = this.normalizeAccount(account);
       if (!acc) return false;
 
-      const code = String(unlockCode || "").trim();
-      const lockData = this.getAccountLock(acc) || {
+      const code = String(unlockCode || Math.floor(100000 + Math.random() * 900000)).trim();
+      let currentLock = this.getAccountLock(acc);
+      if (!currentLock) {
+        try { currentLock = await this.getAccountLockRemote(acc); } catch {}
+      }
+
+      const lockData = currentLock || {
         account: acc,
         lockedAt: Date.now()
       };
@@ -1081,8 +1310,24 @@
       lockData.unlockCode = code;
       lockData.unlockGrantedAt = Date.now();
 
-      this.setAccountLock(acc, lockData);
+      await this.setAccountLock(acc, lockData);
 
+      // Cập nhật yêu cầu trong Cloud Shared Store sang resolved và đính kèm code
+      try {
+        await updateCloudSharedData(d => {
+          if (d.support_requests) {
+            d.support_requests.forEach(r => {
+              if ((r.user_email || "").toLowerCase().trim() === acc) {
+                r.status = "resolved";
+                r.unlockCode = code;
+              }
+            });
+          }
+          return d;
+        });
+      } catch {}
+
+      // Gửi thông báo đến icon chuông 🔔 của tài khoản
       if (window.AICheckNotificationStore) {
         window.AICheckNotificationStore.sendNotification({
           recipient: acc,
@@ -1095,6 +1340,13 @@
         });
       }
 
+      // Phát sóng toàn cầu qua WebSocket
+      broadcastGlobalRealtime("GRANT_UNLOCK_CODE", {
+        account: acc,
+        code: code,
+        time: Date.now()
+      });
+
       return true;
     }
   };
@@ -1104,6 +1356,8 @@
   window.AICheckCloud = {
     configured,
     client,
+    getRealtimeChannel,
+    CLOUD_SYNC_API_URL,
     getDisplayName,
     getPlayerNameState,
     savePlayerName,
@@ -1125,6 +1379,7 @@
     sendSupportRequest,
     resolveSupportRequest,
     getLocalSupportRequests,
+    getAllCloudSupportRequests,
     processSyncQueue,
     syncGamification,
     // Session & Device Conflict Manager

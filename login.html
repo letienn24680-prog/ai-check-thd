@@ -1385,10 +1385,15 @@
 
     // Nếu người dùng truy cập từ link mở khóa kèm email
     if (emailParam && window.AICheckSessionManager) {
-      const lockData = window.AICheckSessionManager.getAccountLock(emailParam);
-      if (lockData && lockData.status === 'unlock_pending') {
-        setTimeout(() => openUnlockCodeModal(emailParam), 300);
-      }
+      (async () => {
+        let lockData = window.AICheckSessionManager.getAccountLock(emailParam);
+        if (!lockData && window.AICheckSessionManager.getAccountLockRemote) {
+          try { lockData = await window.AICheckSessionManager.getAccountLockRemote(emailParam); } catch {}
+        }
+        if (lockData && lockData.status === 'unlock_pending') {
+          setTimeout(() => openUnlockCodeModal(emailParam), 300);
+        }
+      })();
     }
 
     let pendingUnlockPassword = "";
@@ -1436,7 +1441,7 @@
         btn.textContent = "Đang kiểm tra mã…";
       }
 
-      const res = window.AICheckSessionManager.verifyAndUnlock(email, code);
+      const res = await window.AICheckSessionManager.verifyAndUnlock(email, code);
       if (!res.success) {
         if (errBox) {
           errBox.style.display = "block";

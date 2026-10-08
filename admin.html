@@ -597,6 +597,9 @@
         <h1>Bảng điều khiển Quản trị (Admin Portal)</h1>
       </div>
       <div class="admin-nav-actions">
+        <button type="button" class="button" onclick="scrollToUnlockSection()" style="background:#fee2e2;border:1px solid #fecaca;color:#991b1b;font-weight:800;font-size:11px;display:inline-flex;align-items:center;gap:6px;cursor:pointer" title="Xem danh sách tài khoản bị khóa chờ duyệt">
+          <span>🛡️ Duyệt mở khóa (<strong id="navUnlockBadge">0</strong>)</span>
+        </button>
         <a href="index.html" class="button button-outline" style="font-size:11px">← Về Trang chủ</a>
         <button class="button button-dark" id="btnAdminLogout" style="font-size:11px">Đăng xuất</button>
       </div>
@@ -629,7 +632,58 @@
         <div class="stat-box"><span>Số học sinh tham gia</span><strong id="statUniqueStudents">—</strong></div>
         <div class="stat-box"><span>Điểm trung bình</span><strong id="statAvgScore">—</strong></div>
         <div class="stat-box"><span>Tỷ lệ Khá/Giỏi (≥51đ)</span><strong id="statGoodRate">—</strong></div>
-        <div class="stat-box"><span>Yêu cầu hỗ trợ chờ</span><strong id="statPendingSupport">—</strong></div>
+        <div class="stat-box"><span>Yêu cầu hỗ trợ chung</span><strong id="statPendingSupport">—</strong></div>
+        <div class="stat-box" style="border:1.5px solid #fecaca;background:#fff5f5;cursor:pointer" onclick="scrollToUnlockSection()" title="Bấm để cuộn đến phần Duyệt mở khóa tài khoản">
+          <span style="color:#991b1b;font-weight:700">🚨 Chờ duyệt mở khóa</span>
+          <strong id="statPendingUnlockCount" style="color:#b91c1c">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🛡️ KHU VỰC QUẢN LÝ & DUYỆT MỞ KHÓA TRANH CHẤP THIẾT BỊ (ĐẶT NỔI BẬT ĐẦU TRANG) -->
+    <section class="card" id="unlockApprovalSection" style="border:2px solid #fdba74;background:linear-gradient(180deg,#fffdfa 0%,#ffffff 100%);box-shadow:0 4px 20px rgba(234,88,12,0.08);margin-bottom:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:42px;height:42px;border-radius:10px;background:#ffedd5;border:1px solid #fdba74;display:flex;align-items:center;justify-content:center;font-size:22px">
+            🛡️
+          </div>
+          <div>
+            <h2 class="panel-title" style="margin:0;color:#9a3412;font-size:17px;display:flex;align-items:center;gap:8px">
+              QUẢN LÝ & DUYỆT MỞ KHÓA TÀI KHOẢN TRANH CHẤP THIẾT BỊ
+              <span id="unlockTotalBadge" class="tag" style="background:#ea580c;color:#fff;font-weight:800">0 yêu cầu</span>
+            </h2>
+            <p class="panel-copy" style="margin:2px 0 0;font-size:12px;color:#7c2d12">
+              Duyệt danh tính tài khoản bị tạm khóa do đăng nhập đồng thời / đổi thiết bị liên tục. Kiểm tra thông tin biểu mẫu và bấm duyệt gửi mã mở khóa về email của tài khoản.
+            </p>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span id="unlockSourceBadge" class="tag" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a">Đang đồng bộ...</span>
+          <button class="btn-small" onclick="loadSupportRequests()" style="font-weight:700">↻ Làm mới danh sách</button>
+        </div>
+      </div>
+
+      <!-- Tab lọc & Tìm kiếm -->
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:12px 0 14px;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button type="button" class="score-act-tab active" id="unlockTabPending" onclick="filterUnlockRequests('pending')">
+            ⏳ Chờ duyệt mở khóa <span class="tab-count-badge" id="unlockTabPendingCount">0</span>
+          </button>
+          <button type="button" class="score-act-tab" id="unlockTabResolved" onclick="filterUnlockRequests('resolved')">
+            ✅ Đã duyệt & Cấp mã <span class="tab-count-badge" id="unlockTabResolvedCount">0</span>
+          </button>
+          <button type="button" class="score-act-tab" id="unlockTabAll" onclick="filterUnlockRequests('all')">
+            📋 Tất cả <span class="tab-count-badge" id="unlockTabAllCount">0</span>
+          </button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" id="unlockSearchInput" oninput="handleUnlockSearch()" placeholder="🔍 Tìm kiếm email, họ tên, lớp..." class="filter-input" style="width:230px;height:34px;font-size:12px">
+        </div>
+      </div>
+
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ các cột và nút bấm duyệt gửi mã</p>
+      <div class="table-responsive" id="unlockApprovalContainer">
+        <p class="panel-copy" style="text-align:center;padding:16px">Đang tải danh sách tài khoản chờ duyệt mở khóa...</p>
       </div>
     </section>
 
@@ -1193,6 +1247,28 @@
         localStorage.removeItem("aicheck:admin_unlocked");
         await window.AICheckCloud.signOut();
       };
+
+      // LẮNG NGHE YÊU CẦU MỞ KHÓA THỜI GIAN THỰC TỪ ĐIỆN THOẠI/PC KHÁC (<100ms)
+      try {
+        const getRealtime = window.AICheckCloud?.getRealtimeChannel;
+        if (getRealtime) {
+          const rtChannel = getRealtime();
+          if (rtChannel) {
+            rtChannel.on("broadcast", { event: "SUPPORT_UNLOCK_REQUEST" }, ({ payload }) => {
+              if (payload) {
+                console.log("⚡ [Admin Realtime] Nhận yêu cầu mở khóa mới từ thiết bị:", payload);
+                loadSupportRequests();
+              }
+            });
+            rtChannel.on("broadcast", { event: "ACCOUNT_LOCKED_CONFLICT" }, () => {
+              console.log("⚡ [Admin Realtime] Phát hiện tài khoản bị khóa tranh chấp!");
+              loadSupportRequests();
+            });
+          }
+        }
+      } catch (e) {
+        console.warn("Lỗi đăng ký Realtime listener cho Admin:", e);
+      }
     }
 
     async function loadAllData() {
@@ -1628,108 +1704,159 @@
       }
     }
 
-    async function loadSupportRequests() {
-      const container = document.getElementById("supportContainer");
-      const badge = document.getElementById("supportSourceBadge");
-      let list = [];
-      let isCloud = false;
+    // =========================================================================
+    // QUẢN LÝ & DUYỆT MỞ KHÓA TÀI KHOẢN TRANH CHẤP THIẾT BỊ (ĐA THIẾT BỊ)
+    // =========================================================================
+    let currentUnlockFilterTab = "pending"; // 'pending' | 'resolved' | 'all'
+    let currentUnlockSearchQuery = "";
 
-      const sdk = window.supabase;
-      const config = window.AICHECK_CONFIG || {};
-
-      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
-      if (client) {
-        try {
-          const { data, error } = await client.from("support_requests").select("*").order("created_at", { ascending: false });
-          if (!error && data) {
-            list = data;
-            isCloud = true;
-          }
-        } catch {}
+    function scrollToUnlockSection() {
+      const el = document.getElementById("unlockApprovalSection");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.style.border = "2px solid #ef4444";
+        el.style.boxShadow = "0 0 0 4px rgba(239, 68, 68, 0.25)";
+        setTimeout(() => {
+          el.style.border = "2px solid #fdba74";
+          el.style.boxShadow = "0 4px 20px rgba(234,88,12,0.08)";
+        }, 2500);
       }
+    }
 
-      // Gộp thêm các yêu cầu local nếu có
-      const localList = window.AICheckCloud.getLocalSupportRequests ? window.AICheckCloud.getLocalSupportRequests() : [];
-      localList.forEach(item => {
-        if (!list.some(r => r.id === item.id)) {
-          list.push({ ...item, isLocal: true });
-        }
+    function filterUnlockRequests(tab) {
+      currentUnlockFilterTab = tab;
+      document.querySelectorAll("#unlockApprovalSection .score-act-tab").forEach(b => b.classList.remove("active"));
+      const btn = document.getElementById("unlockTab" + tab.charAt(0).toUpperCase() + tab.slice(1));
+      if (btn) btn.classList.add("active");
+      renderUnlockApprovalTable();
+    }
+
+    function handleUnlockSearch() {
+      currentUnlockSearchQuery = (document.getElementById("unlockSearchInput")?.value || "").trim().toLowerCase();
+      renderUnlockApprovalTable();
+    }
+
+    function renderUnlockApprovalTable() {
+      const container = document.getElementById("unlockApprovalContainer");
+      if (!container) return;
+
+      const unlockList = (currentSupportRequestsList || []).filter(r => {
+        return (r.reason && r.reason.includes("[TRANH CHẤP THIẾT BỊ / MỞ KHÓA]")) || r.isConflictUnlock;
       });
 
-      badge.textContent = isCloud ? "Đồng bộ Supabase" : "Bộ nhớ Cục bộ";
+      // Lọc theo tab
+      let filtered = unlockList;
+      if (currentUnlockFilterTab === "pending") {
+        filtered = filtered.filter(r => r.status === "pending");
+      } else if (currentUnlockFilterTab === "resolved") {
+        filtered = filtered.filter(r => r.status === "resolved");
+      }
 
-      if (!list.length) {
-        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Hiện không có yêu cầu hỗ trợ nào.</p>';
-        document.getElementById("statPendingSupport").textContent = "0";
+      // Lọc theo tìm kiếm
+      if (currentUnlockSearchQuery) {
+        const q = currentUnlockSearchQuery;
+        filtered = filtered.filter(r => {
+          return (r.user_email || "").toLowerCase().includes(q) ||
+                 (r.display_name || "").toLowerCase().includes(q) ||
+                 (r.reason || "").toLowerCase().includes(q);
+        });
+      }
+
+      if (!filtered.length) {
+        const tabText = currentUnlockFilterTab === "pending" ? "chờ duyệt mở khóa" : (currentUnlockFilterTab === "resolved" ? "đã duyệt & cấp mã" : "");
+        container.innerHTML = `
+          <div style="text-align:center;padding:32px 16px;background:#ffffff;border-radius:12px;border:1px dashed #cbd5e1">
+            <div style="font-size:36px;margin-bottom:8px">🛡️</div>
+            <p style="margin:0;font-weight:700;color:#475569;font-size:14px">Hiện không có yêu cầu nào ${tabText}</p>
+            <p style="margin:4px 0 0;font-size:12px;color:#94a3b8">Khi học sinh bị tạm khóa do tranh chấp 2 thiết bị và gửi biểu mẫu hỗ trợ, yêu cầu sẽ lập tức hiển thị tại đây theo thời gian thực.</p>
+          </div>
+        `;
         return;
       }
 
-      currentSupportRequestsList = list;
-
-      const pendingCount = list.filter(r => r.status === "pending").length;
-      document.getElementById("statPendingSupport").textContent = pendingCount;
-
       container.innerHTML = `<table>
         <thead>
-          <tr>
-            <th>Người gửi</th>
-            <th>Email</th>
-            <th>Nội dung yêu cầu</th>
-            <th>Thời gian</th>
-            <th>Trạng thái</th>
-            <th>Thao tác</th>
+          <tr style="background:#fff7ed">
+            <th style="min-width:170px">Học sinh / Tài khoản</th>
+            <th style="min-width:320px">Thông tin Biểu mẫu Xác minh (6 trường)</th>
+            <th style="min-width:130px">Thời gian gửi</th>
+            <th style="min-width:140px">Trạng thái</th>
+            <th style="min-width:210px">Thao tác phê duyệt</th>
           </tr>
         </thead>
         <tbody>
-          ${list.map(r => {
-            const isConflictUnlock = r.reason && r.reason.includes("[TRANH CHẤP THIẾT BỊ / MỞ KHÓA]");
-            const statusClass = `status-${r.status}`;
+          ${filtered.map(r => {
             const timeStr = r.created_at ? new Date(r.created_at).toLocaleString("vi-VN") : "—";
+            const reasonText = r.reason || "";
+            const classMatch = reasonText.match(/•\s*Lớp\/Khối:\s*([^\n\r]+)/i);
+            const deviceMatch = reasonText.match(/•\s*Thiết bị chính chủ:\s*([^\n\r]+)/i);
+            const passMatch = reasonText.match(/•\s*Mật khẩu\/Xác minh:\s*([^\n\r]+)/i);
+            const reasonDetailMatch = reasonText.match(/•\s*Trình bày sự cố:\s*([\s\S]+)/i);
 
-            if (isConflictUnlock) {
-              return `
-                <tr style="background:#fffaf9;border-left:4px solid #ef4444">
-                  <td>
-                    <div style="display:flex;align-items:center;gap:6px">
-                      <span>👤</span>
-                      <strong>${escapeHtml(r.display_name || "—")}</strong>
-                    </div>
-                    <div style="margin-top:4px">
-                      <span class="tag" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;font-weight:800;font-size:10px">🚨 MỞ KHÓA THIẾT BỊ</span>
-                    </div>
-                  </td>
-                  <td>
-                    <strong style="color:#0f172a">${escapeHtml(r.user_email || "—")}</strong>
-                  </td>
-                  <td>
-                    <div style="font-size:11.5px;color:#334155;white-space:pre-line;line-height:1.45;background:#ffffff;padding:8px 12px;border-radius:8px;border:1px solid #fed7aa;max-width:400px">${escapeHtml(r.reason || "—")}</div>
-                  </td>
-                  <td style="color:var(--muted)">${timeStr}</td>
-                  <td class="${statusClass}">
-                    ${r.status === "pending" ? `<span style="color:#b91c1c;font-weight:800">Chờ duyệt mở khóa</span>` : `<span style="color:#047857;font-weight:800">Đã duyệt mở khóa ✓</span>`}
-                  </td>
-                  <td>
-                    ${r.status === "pending" 
-                      ? `<div style="display:flex;gap:6px;flex-direction:column;align-items:flex-start">
-                          <button class="btn-small" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-weight:700;white-space:nowrap" onclick="viewUnlockComparisonModal('${r.id}')" title="Xem chi tiết và đối chiếu thông tin với hồ sơ người dùng">🔍 Đối chiếu thông tin</button>
-                          <button class="btn-small" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800;white-space:nowrap" onclick="handleGrantUnlockCode('${r.id}', '${escapeHtml(r.user_email)}', '${escapeHtml(r.display_name)}')">✉️ Duyệt & Gửi mã mở khóa</button>
-                         </div>` 
-                      : `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">✓ Đã cấp mã mở khóa</span>`
-                    }
-                  </td>
-                </tr>
-              `;
-            }
+            const sClass = classMatch ? classMatch[1].trim() : (r.formDetails?.sClass || "—");
+            const sDevice = deviceMatch ? deviceMatch[1].trim() : (r.formDetails?.sDevice || "—");
+            const sPass = passMatch ? passMatch[1].trim() : (r.formDetails?.sPass || "—");
+            const sDesc = reasonDetailMatch ? reasonDetailMatch[1].trim() : (r.formDetails?.sReason || reasonText);
+            const sName = r.display_name || "—";
+            const sEmail = r.user_email || "—";
 
             return `
-              <tr>
-                <td><strong>${escapeHtml(r.display_name || "—")}</strong></td>
-                <td>${escapeHtml(r.user_email || "—")}</td>
-                <td>${escapeHtml(r.reason || "—")}</td>
-                <td style="color:var(--muted)">${timeStr}</td>
-                <td class="${statusClass}">${r.status === "pending" ? "Chờ xử lý" : "Đã xong ✓"}</td>
+              <tr style="${r.status === 'pending' ? 'background:#fffbfb;border-left:4px solid #ef4444' : 'background:#ffffff'}">
                 <td>
-                  ${r.status === "pending" ? `<button class="btn-small" onclick="handleResolveSupport('${r.id}')">Đánh dấu Đã xử lý</button>` : `<span style="color:var(--muted)">Đã giải quyết</span>`}
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <span style="font-size:18px">👤</span>
+                    <div>
+                      <strong style="color:#0f172a;font-size:13.5px">${escapeHtml(sName)}</strong>
+                      <div style="font-size:11px;color:#64748b;word-break:break-all">${escapeHtml(sEmail)}</div>
+                    </div>
+                  </div>
+                  <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">
+                    <span class="tag" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;font-weight:800;font-size:10px">🚨 TRANH CHẤP THIẾT BỊ</span>
+                    ${sClass !== '—' ? `<span class="tag" style="background:#e0e7ff;color:#3730a3;font-weight:700;font-size:10px">Lớp: ${escapeHtml(sClass)}</span>` : ''}
+                  </div>
+                </td>
+                <td>
+                  <div style="background:#f8fafc;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:11.5px;line-height:1.55;color:#334155">
+                    <div style="margin-bottom:3px">📱 <strong>Thiết bị:</strong> <span style="color:#0f172a">${escapeHtml(sDevice)}</span></div>
+                    <div style="margin-bottom:3px">🔑 <strong>Mật khẩu/Mã bí mật:</strong> <code style="background:#ffffff;border:1px solid #cbd5e1;padding:2px 6px;border-radius:4px;color:#b91c1c;font-weight:700">${escapeHtml(sPass)}</code></div>
+                    <div>📝 <strong>Lý do sự cố:</strong> <span style="color:#475569">${escapeHtml(sDesc)}</span></div>
+                  </div>
+                </td>
+                <td style="color:var(--muted);font-size:11.5px">
+                  ${timeStr}
+                </td>
+                <td>
+                  ${r.status === "pending"
+                    ? `<span class="tag" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;font-weight:800;padding:4px 9px;display:inline-flex;align-items:center;gap:4px">
+                        ⏳ Chờ duyệt mở khóa
+                       </span>`
+                    : `<div style="display:flex;flex-direction:column;gap:4px">
+                        <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800;padding:4px 9px;display:inline-flex;align-items:center;gap:4px">
+                          ✓ Đã duyệt mở khóa
+                        </span>
+                        ${r.unlockCode ? `<div style="font-size:11px;color:#047857">Mã đã cấp: <strong style="font-family:'Space Grotesk',monospace;font-size:12px;letter-spacing:1px">${escapeHtml(r.unlockCode)}</strong></div>` : ''}
+                       </div>`
+                  }
+                </td>
+                <td>
+                  ${r.status === "pending"
+                    ? `<div style="display:flex;gap:6px;flex-direction:column;align-items:stretch">
+                        <button class="btn-small" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-weight:700;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 10px" onclick="viewUnlockComparisonModal('${r.id}')" title="So sánh thông tin học sinh điền với dữ liệu trong hệ thống">
+                          🔍 Đối chiếu thông tin
+                        </button>
+                        <button class="btn-small" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 10px;box-shadow:0 2px 5px rgba(4,120,87,0.12)" onclick="handleGrantUnlockCode('${r.id}', '${escapeHtml(r.user_email)}', '${escapeHtml(r.display_name)}')">
+                          ✉️ Duyệt & Gửi mã về mail của tài khoản
+                        </button>
+                       </div>`
+                    : `<div style="display:flex;gap:6px;align-items:center">
+                        <button class="btn-small" style="background:#f8fafc;color:#475569;border:1px solid #cbd5e1" onclick="viewUnlockComparisonModal('${r.id}')">
+                          👁️ Xem chi tiết
+                        </button>
+                        <button class="btn-small" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-weight:700" onclick="handleGrantUnlockCode('${r.id}', '${escapeHtml(r.user_email)}', '${escapeHtml(r.display_name)}')" title="Cấp lại mã mở khóa mới">
+                          ↻ Cấp mã mới
+                        </button>
+                       </div>`
+                  }
                 </td>
               </tr>
             `;
@@ -1738,8 +1865,158 @@
       </table>`;
     }
 
+    async function loadSupportRequests() {
+      const container = document.getElementById("supportContainer");
+      const badge = document.getElementById("supportSourceBadge");
+      const unlockBadge = document.getElementById("unlockSourceBadge");
+      let list = [];
+      let isCloud = false;
+
+      // 1. Tải danh sách từ Cloud Shared Store (hoạt động 100% giữa PC và Điện thoại)
+      if (window.AICheckCloud?.getAllCloudSupportRequests) {
+        try {
+          const cloudReqs = await window.AICheckCloud.getAllCloudSupportRequests();
+          if (Array.isArray(cloudReqs) && cloudReqs.length > 0) {
+            list = [...cloudReqs];
+            isCloud = true;
+          }
+        } catch (e) {
+          console.warn("Lỗi đọc Cloud Shared requests:", e);
+        }
+      }
+
+      // 2. Tải thêm từ Supabase DB nếu bảng support_requests đã được khởi tạo
+      const client = window.AICheckCloud?.client;
+      if (client) {
+        try {
+          const { data, error } = await client.from("support_requests").select("*").order("created_at", { ascending: false });
+          if (!error && Array.isArray(data)) {
+            data.forEach(item => {
+              if (!list.some(r => r.id === item.id || (r.user_email === item.user_email && r.created_at === item.created_at))) {
+                list.push(item);
+              }
+            });
+            isCloud = true;
+          }
+        } catch {}
+      }
+
+      // 3. Gộp thêm các yêu cầu local nếu có
+      const localList = window.AICheckCloud.getLocalSupportRequests ? window.AICheckCloud.getLocalSupportRequests() : [];
+      localList.forEach(item => {
+        if (!list.some(r => r.id === item.id || (r.user_email === item.user_email && r.created_at === item.created_at))) {
+          list.push({ ...item, isLocal: true });
+        }
+      });
+
+      // 4. Kiểm tra các tài khoản đang bị lock trên hệ thống để đảm bảo không bị sót
+      if (window.AICheckSessionManager) {
+        try {
+          const cloudData = await (window.AICheckCloud?.fetchCloudSharedData ? window.AICheckCloud.fetchCloudSharedData() : null);
+          const locks = cloudData?.account_locks || window.AICheckSessionManager.getAllLocks();
+          Object.keys(locks || {}).forEach(acc => {
+            const lockObj = locks[acc];
+            if (lockObj && (lockObj.status === "locked" || lockObj.status === "unlock_pending")) {
+              const alreadyInList = list.some(r => (r.user_email || "").toLowerCase().trim() === acc);
+              if (!alreadyInList) {
+                list.unshift({
+                  id: "lock_req_" + acc.replace(/[^a-zA-Z0-9]/g, "_"),
+                  user_email: acc,
+                  display_name: lockObj.displayName || acc,
+                  reason: `[TRANH CHẤP THIẾT BỊ / MỞ KHÓA]\n• Lớp/Khối: ${lockObj.formDetails?.sClass || "—"}\n• Thiết bị chính chủ: ${lockObj.lastDevice || lockObj.deviceInfo || "—"}\n• Mật khẩu/Xác minh: ${lockObj.formDetails?.sPass || "—"}\n• Trình bày sự cố: Phát hiện ${lockObj.conflictCount || 3} lần đổi phiên dồn dập giữa nhiều thiết bị`,
+                  status: lockObj.status === "unlock_pending" ? "resolved" : "pending",
+                  unlockCode: lockObj.unlockCode || null,
+                  created_at: new Date(lockObj.lockedAt || Date.now()).toISOString(),
+                  isConflictUnlock: true,
+                  formDetails: lockObj.formDetails
+                });
+              }
+            }
+          });
+        } catch {}
+      }
+
+      // Sắp xếp giảm dần theo thời gian tạo
+      list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+      currentSupportRequestsList = list;
+
+      if (badge) badge.textContent = isCloud ? "Đồng bộ Supabase & Cloud" : "Bộ nhớ Cục bộ";
+      if (unlockBadge) unlockBadge.textContent = isCloud ? "⚡ Trực tuyến (PC & Mobile)" : "Bộ nhớ Cục bộ";
+
+      // Phân tách yêu cầu tranh chấp thiết bị và yêu cầu chung
+      const unlockRequests = list.filter(r => (r.reason && r.reason.includes("[TRANH CHẤP THIẾT BỊ / MỞ KHÓA]")) || r.isConflictUnlock);
+      const generalRequests = list.filter(r => !((r.reason && r.reason.includes("[TRANH CHẤP THIẾT BỊ / MỞ KHÓA]")) || r.isConflictUnlock));
+
+      const pendingUnlockCount = unlockRequests.filter(r => r.status === "pending").length;
+      const resolvedUnlockCount = unlockRequests.filter(r => r.status === "resolved").length;
+
+      // Cập nhật số liệu trên các Badge & Thống kê
+      const navBadge = document.getElementById("navUnlockBadge");
+      if (navBadge) navBadge.textContent = pendingUnlockCount;
+
+      const statUnlock = document.getElementById("statPendingUnlockCount");
+      if (statUnlock) statUnlock.textContent = pendingUnlockCount;
+
+      const totalBadge = document.getElementById("unlockTotalBadge");
+      if (totalBadge) totalBadge.textContent = unlockRequests.length + " yêu cầu";
+
+      const tabPending = document.getElementById("unlockTabPendingCount");
+      if (tabPending) tabPending.textContent = pendingUnlockCount;
+
+      const tabResolved = document.getElementById("unlockTabResolvedCount");
+      if (tabResolved) tabResolved.textContent = resolvedUnlockCount;
+
+      const tabAll = document.getElementById("unlockTabAllCount");
+      if (tabAll) tabAll.textContent = unlockRequests.length;
+
+      const statSupport = document.getElementById("statPendingSupport");
+      if (statSupport) statSupport.textContent = generalRequests.filter(r => r.status === "pending").length;
+
+      // Render bảng duyệt mở khóa tranh chấp thiết bị (Card nổi bật trên cùng)
+      renderUnlockApprovalTable();
+
+      // Render bảng yêu cầu hỗ trợ chung
+      if (container) {
+        if (!generalRequests.length) {
+          container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Hiện không có yêu cầu hỗ trợ nào.</p>';
+        } else {
+          container.innerHTML = `<table>
+            <thead>
+              <tr>
+                <th>Người gửi</th>
+                <th>Email</th>
+                <th>Nội dung yêu cầu</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${generalRequests.map(r => {
+                const statusClass = `status-${r.status}`;
+                const timeStr = r.created_at ? new Date(r.created_at).toLocaleString("vi-VN") : "—";
+                return `
+                  <tr>
+                    <td><strong>${escapeHtml(r.display_name || "—")}</strong></td>
+                    <td>${escapeHtml(r.user_email || "—")}</td>
+                    <td>${escapeHtml(r.reason || "—")}</td>
+                    <td style="color:var(--muted)">${timeStr}</td>
+                    <td class="${statusClass}">${r.status === "pending" ? "Chờ xử lý" : "Đã xong ✓"}</td>
+                    <td>
+                      ${r.status === "pending" ? `<button class="btn-small" onclick="handleResolveSupport('${r.id}')">Đánh dấu Đã xử lý</button>` : `<span style="color:var(--muted)">Đã giải quyết</span>`}
+                    </td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>`;
+        }
+      }
+    }
+
     async function handleResolveSupport(id) {
-      if (window.AICheckCloud.resolveSupportRequest) {
+      if (window.AICheckCloud?.resolveSupportRequest) {
         await window.AICheckCloud.resolveSupportRequest(id);
       }
       loadSupportRequests();
