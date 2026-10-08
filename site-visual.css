@@ -2173,6 +2173,14 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
   color: #f0f7f3 !important;
 }
+[data-theme="dark"] .leader-row:not(.leader-heading):hover {
+  background: #164034 !important;
+  color: #ffffff !important;
+  transform: translateX(4px);
+}
+[data-theme="dark"] .leader-row:hover .rank {
+  color: #3ec888 !important;
+}
 [data-theme="dark"] .leader-heading {
   background: #13352a !important;
   color: #d9f26c !important;

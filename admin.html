@@ -519,6 +519,74 @@
       box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
       transform: scale(1.06);
     }
+
+    /* Hệ thống Tabs phân chia Hoạt động cho Bảng điểm chi tiết */
+    .score-activity-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .score-act-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+    }
+    .score-act-tab:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    .score-act-tab.active {
+      background: var(--forest);
+      color: #ffffff;
+      border-color: var(--forest);
+      box-shadow: 0 2px 6px rgba(18, 59, 50, 0.2);
+    }
+    .tab-count-badge {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 800;
+      background: rgba(0, 0, 0, 0.08);
+      color: inherit;
+    }
+    .score-act-tab.active .tab-count-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+    .score-tab-header-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .score-tab-header-box p {
+      margin: 0;
+      font-size: 11.5px;
+      color: #475569;
+    }
+    .score-tab-header-box strong {
+      color: var(--forest);
+    }
   </style>
 </head>
 <body>
@@ -791,25 +859,47 @@
       </div>
     </section>
 
-    <!-- DANH SÁCH ĐIỂM CHI TIẾT -->
-    <section class="card">
-      <div class="filter-bar">
+    <!-- BẢNG KẾT QUẢ & ĐIỂM CHI TIẾT (CHIA THÀNH CÁC Ô / TAB HOẠT ĐỘNG RIÊNG BIỆT) -->
+    <section class="card" id="sectionScoreDetails">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px">
         <div>
-          <h2 class="panel-title" style="margin:0">Bảng kết quả & Điểm chi tiết</h2>
-          <p class="panel-copy" style="margin:4px 0 0">Dữ liệu phục vụ phân tích đề tài nghiên cứu khoa học.</p>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px">
+            <span>📊</span> Bảng kết quả & Điểm chi tiết
+          </h2>
+          <p class="panel-copy" style="margin:4px 0 0">Dữ liệu phân loại theo từng ô hoạt động riêng biệt, sẵn sàng xuất Excel chuẩn phục vụ đề tài nghiên cứu khoa học.</p>
         </div>
-        <div class="filter-group">
-          <select id="filterActivity" class="filter-input">
-            <option value="all">Tất cả hoạt động</option>
-            <option value="exam">Phòng thi trực tuyến</option>
-            <option value="assessment">Đánh giá 20 câu</option>
-            <option value="rubric">Thử thách Rubric</option>
-            <option value="practice">Luyện tình huống</option>
-          </select>
-          <input type="text" id="searchStudent" placeholder="Tìm theo biệt danh..." class="filter-input">
-          <button class="button button-lime" id="btnExportCsv" style="font-size:11px">Xuất CSV (Excel) ↓</button>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <input type="text" id="searchStudent" placeholder="Tìm theo biệt danh..." class="filter-input" style="width:190px">
+          <button type="button" class="button button-lime" id="btnExportActiveTab" style="font-size:11px;padding:7px 14px;border-radius:6px;font-weight:700">
+            📥 Xuất Excel Hoạt động này ↓
+          </button>
         </div>
       </div>
+
+      <!-- THANH TAB PHÂN CHIA HOẠT ĐỘNG RIÊNG BIỆT -->
+      <div class="score-activity-tabs" id="scoreActivityTabs">
+        <button type="button" class="score-act-tab active" data-tab="exam" onclick="switchScoreActivityTab('exam')">
+          📝 Phòng thi trực tuyến <span class="tab-count-badge" id="badgeTabExam">0</span>
+        </button>
+        <button type="button" class="score-act-tab" data-tab="assessment" onclick="switchScoreActivityTab('assessment')">
+          🎯 Đánh giá 20 câu <span class="tab-count-badge" id="badgeTabAssessment">0</span>
+        </button>
+        <button type="button" class="score-act-tab" data-tab="rubric" onclick="switchScoreActivityTab('rubric')">
+          📐 Thử thách Rubric <span class="tab-count-badge" id="badgeTabRubric">0</span>
+        </button>
+        <button type="button" class="score-act-tab" data-tab="practice" onclick="switchScoreActivityTab('practice')">
+          ⚡ Luyện tình huống <span class="tab-count-badge" id="badgeTabPractice">0</span>
+        </button>
+        <button type="button" class="score-act-tab" data-tab="all" onclick="switchScoreActivityTab('all')">
+          📋 Tất cả hoạt động <span class="tab-count-badge" id="badgeTabAll">0</span>
+        </button>
+      </div>
+
+      <!-- HỘP THÔNG TIN MÔ TẢ & THỐNG KÊ HOẠT ĐỘNG HIỆN TẠI -->
+      <div class="score-tab-header-box" id="scoreTabHeaderBox">
+        <!-- Render động qua JS -->
+      </div>
+
       <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="scoreTableContainer">
         <p class="panel-copy">Đang tải dữ liệu điểm...</p>
@@ -1139,11 +1229,26 @@
       userTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa kết nối dữ liệu đám mây.</td></tr>`;
     }
 
+    let currentScoreTab = "exam"; // Mặc định mở tab Phòng thi trực tuyến
+
+    function switchScoreActivityTab(tabName) {
+      currentScoreTab = tabName;
+      const tabBtns = document.querySelectorAll(".score-act-tab");
+      tabBtns.forEach(btn => {
+        if (btn.getAttribute("data-tab") === tabName) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+      renderScoreTable();
+    }
+
     async function loadScores() {
       const sdk = window.supabase;
       const config = window.AICHECK_CONFIG || {};
-      const container = document.getElementById("scoreTableContainer");
 
+      let cloudScores = [];
       const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
       if (client) {
         try {
@@ -1154,79 +1259,345 @@
             .limit(500);
 
           if (!error && data) {
-            allScores = data;
+            cloudScores = data;
           }
         } catch (e) {
           console.warn("Lỗi tải scores từ Supabase:", e);
         }
       }
 
-      // Nếu không có dữ liệu cloud, nạp fallback từ localStorage
-      if (!allScores.length) {
-        try {
-          const localRecords = JSON.parse(localStorage.getItem("aicheck:records") || "[]");
-          allScores = localRecords.flatMap(r => {
-            const list = [];
-            if (r.exam != null) list.push({ display_name: r.name, activity: "exam", score: r.exam, phase: null, created_at: r.date || new Date().toISOString() });
-            if (r.assessment != null) list.push({ display_name: r.name, activity: "assessment", score: r.assessment, phase: r.postAssessment ? "post" : "pre", created_at: r.date || new Date().toISOString() });
-            if (r.rubric != null) list.push({ display_name: r.name, activity: "rubric", score: r.rubric, phase: null, created_at: r.date || new Date().toISOString() });
-            if (r.practice != null) list.push({ display_name: r.name, activity: "practice", score: r.practice, phase: null, created_at: r.date || new Date().toISOString() });
-            return list;
-          });
-        } catch {}
+      // 1. NẠP KẾT QUẢ TỪ PHÒNG THI TRỰC TUYẾN (AICheckExamStore)
+      // Mỗi lần thí sinh thi xong là 1 bản ghi độc lập (Lần 1, Lần 2...) với đầy đủ điểm, đề, câu đúng, vi phạm
+      let examScoreItems = [];
+      try {
+        const examResults = window.AICheckExamStore ? window.AICheckExamStore.getResults() : [];
+        examScoreItems = (examResults || []).map(r => {
+          const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
+          const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
+          const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
+          const earnedScore = r.score != null ? Number(r.score) : 0;
+          const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
+          const isPassed = r.passed !== undefined ? Boolean(r.passed) : (earnedScore >= passingScore);
+          const scale100 = maxScore > 0 ? Math.min(100, Math.max(0, Math.round((earnedScore / maxScore) * 100))) : earnedScore;
+
+          return {
+            id: r.id,
+            display_name: r.studentName || "Thí sinh THĐ",
+            activity: "exam",
+            exam_id: r.examId,
+            exam_title: r.examTitle || "Đề thi trực tuyến",
+            attempt_number: r.attemptNumber || 1,
+            score: scale100, // Thang 100 quy chuẩn
+            raw_score: earnedScore,
+            max_score: maxScore,
+            passing_score: passingScore,
+            passed: isPassed,
+            correct_count: r.correctCount != null ? Number(r.correctCount) : 0,
+            total_questions: totalQ,
+            points_per_q: pointsPerQ,
+            violations_count: r.violationsCount || 0,
+            time_spent: r.timeSpentFormatted || "—",
+            created_at: r.submittedAt || new Date().toISOString()
+          };
+        });
+      } catch (err) {
+        console.warn("Lỗi nạp kết quả phòng thi từ ExamStore:", err);
       }
+
+      // 2. NẠP CÁC HOẠT ĐỘNG KHÁC (assessment, rubric, practice) TỪ CLOUD HOẶC LOCAL FALLBACK
+      let otherScores = [];
+      if (cloudScores && cloudScores.length) {
+        cloudScores.forEach(cs => {
+          if (cs.activity !== "exam") {
+            otherScores.push(cs);
+          }
+        });
+      }
+
+      // Gộp thêm từ aicheck:records nếu cloud chưa có hoặc thiết bị hoạt động offline
+      try {
+        const localRecords = JSON.parse(localStorage.getItem("aicheck:records") || "[]");
+        localRecords.forEach(r => {
+          if (r.assessment != null && !otherScores.some(s => s.activity === "assessment" && s.display_name === r.name)) {
+            otherScores.push({ display_name: r.name, activity: "assessment", score: r.assessment, phase: r.postAssessment ? "post" : "pre", created_at: r.date || new Date().toISOString() });
+          }
+          if (r.rubric != null && !otherScores.some(s => s.activity === "rubric" && s.display_name === r.name)) {
+            otherScores.push({ display_name: r.name, activity: "rubric", score: r.rubric, phase: null, created_at: r.date || new Date().toISOString() });
+          }
+          if (r.practice != null && !otherScores.some(s => s.activity === "practice" && s.display_name === r.name)) {
+            otherScores.push({ display_name: r.name, activity: "practice", score: r.practice, phase: null, created_at: r.date || new Date().toISOString() });
+          }
+        });
+      } catch {}
+
+      // TỔNG HỢP TOÀN BỘ ĐIỂM
+      allScores = [...examScoreItems, ...otherScores];
+      allScores.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+
+      // CẬP NHẬT BADGE SỐ LƯỢNG CHO CẢ 5 TAB
+      const examCount = allScores.filter(s => s.activity === "exam").length;
+      const assessCount = allScores.filter(s => s.activity === "assessment").length;
+      const rubricCount = allScores.filter(s => s.activity === "rubric").length;
+      const practiceCount = allScores.filter(s => s.activity === "practice").length;
+
+      const elBExam = document.getElementById("badgeTabExam");
+      const elBAssess = document.getElementById("badgeTabAssessment");
+      const elBRubric = document.getElementById("badgeTabRubric");
+      const elBPractice = document.getElementById("badgeTabPractice");
+      const elBAll = document.getElementById("badgeTabAll");
+
+      if (elBExam) elBExam.textContent = examCount;
+      if (elBAssess) elBAssess.textContent = assessCount;
+      if (elBRubric) elBRubric.textContent = rubricCount;
+      if (elBPractice) elBPractice.textContent = practiceCount;
+      if (elBAll) elBAll.textContent = allScores.length;
 
       renderScoreTable();
     }
 
     function renderScoreTable() {
       const container = document.getElementById("scoreTableContainer");
-      const activityFilter = document.getElementById("filterActivity").value;
-      const search = document.getElementById("searchStudent").value.trim().toLowerCase();
+      const headerBox = document.getElementById("scoreTabHeaderBox");
+      const search = (document.getElementById("searchStudent")?.value || "").trim().toLowerCase();
 
-      let filtered = allScores.filter(s => {
-        const matchAct = activityFilter === "all" || s.activity === activityFilter;
-        const matchSearch = !search || (s.display_name && s.display_name.toLowerCase().includes(search));
-        return matchAct && matchSearch;
-      });
+      // Lọc theo Tab hoạt động đang chọn
+      let tabScores = allScores;
+      if (currentScoreTab !== "all") {
+        tabScores = allScores.filter(s => s.activity === currentScoreTab);
+      }
 
-      if (!filtered.length) {
-        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có bản ghi điểm nào phù hợp.</p>';
+      // Lọc theo từ khóa tìm kiếm (Biệt danh thí sinh hoặc Tên đề thi)
+      if (search) {
+        tabScores = tabScores.filter(s => {
+          const matchName = s.display_name && s.display_name.toLowerCase().includes(search);
+          const matchExam = s.exam_title && s.exam_title.toLowerCase().includes(search);
+          return matchName || matchExam;
+        });
+      }
+
+      // 1. RENDER HỘP MÔ TẢ & THỐNG KÊ TAB HIỆN TẠI (Header Box)
+      if (headerBox) {
+        if (currentScoreTab === "exam") {
+          const totalExams = allScores.filter(s => s.activity === "exam");
+          const passedCount = totalExams.filter(s => s.passed).length;
+          const failedCount = totalExams.length - passedCount;
+          const rate = totalExams.length > 0 ? Math.round((passedCount / totalExams.length) * 100) : 0;
+          headerBox.innerHTML = `
+            <div>
+              <p>📌 Đang xem: <strong>Phòng thi trực tuyến chuẩn hóa</strong> · Tổng số: <strong>${totalExams.length} lượt thi</strong> (lưu độc lập từng lần thi) · Đạt: <strong style="color:#047857">${passedCount}</strong> · Chưa đạt: <strong style="color:#b91c1c">${failedCount}</strong> (Tỷ lệ đạt: <strong>${rate}%</strong>)</p>
+            </div>
+            <div style="font-size:11px;color:#64748b">
+              💡 Thí sinh có thể thi 1 đề nhiều lần; mỗi lần thi được ghi nhận thành một kết quả độc lập (Lần 1, Lần 2...).
+            </div>
+          `;
+        } else if (currentScoreTab === "assessment") {
+          const totalAssess = allScores.filter(s => s.activity === "assessment");
+          const preCount = totalAssess.filter(s => s.phase === "pre").length;
+          const postCount = totalAssess.filter(s => s.phase === "post").length;
+          const avg = totalAssess.length > 0 ? (totalAssess.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / totalAssess.length).toFixed(1) : "—";
+          headerBox.innerHTML = `
+            <div>
+              <p>📌 Đang xem: <strong>Đánh giá 20 câu (Khảo sát năng lực)</strong> · Tổng: <strong>${totalAssess.length} bản ghi</strong> · Trước can thiệp (Pre-test): <strong>${preCount}</strong> · Sau can thiệp (Post-test): <strong>${postCount}</strong> · Điểm TB: <strong>${avg}/100</strong></p>
+            </div>
+          `;
+        } else if (currentScoreTab === "rubric") {
+          const totalRubric = allScores.filter(s => s.activity === "rubric");
+          const avg = totalRubric.length > 0 ? (totalRubric.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / totalRubric.length).toFixed(1) : "—";
+          headerBox.innerHTML = `
+            <div>
+              <p>📌 Đang xem: <strong>Thử thách Rubric tự đánh giá</strong> · Tổng: <strong>${totalRubric.length} bản ghi</strong> · Điểm TB: <strong>${avg}/100</strong></p>
+            </div>
+          `;
+        } else if (currentScoreTab === "practice") {
+          const totalPractice = allScores.filter(s => s.activity === "practice");
+          const avg = totalPractice.length > 0 ? (totalPractice.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / totalPractice.length).toFixed(1) : "—";
+          headerBox.innerHTML = `
+            <div>
+              <p>📌 Đang xem: <strong>Luyện tình huống tương tác</strong> · Tổng: <strong>${totalPractice.length} bản ghi</strong> · Điểm TB: <strong>${avg}/100</strong></p>
+            </div>
+          `;
+        } else {
+          headerBox.innerHTML = `
+            <div>
+              <p>📌 Đang xem: <strong>Tất cả hoạt động hệ thống</strong> · Tổng cộng: <strong>${allScores.length} bản ghi</strong> từ tất cả các trạm kiểm chứng</p>
+            </div>
+          `;
+        }
+      }
+
+      // 2. RENDER BẢNG DỮ LIỆU TƯƠNG ỨNG TỪNG HOẠT ĐỘNG
+      if (!tabScores.length) {
+        container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi điểm nào trong hoạt động này.</p>';
         return;
       }
 
-      container.innerHTML = `<table>
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Học sinh (Biệt danh)</th>
-            <th>Hoạt động</th>
-            <th>Đợt đo</th>
-            <th>Điểm số</th>
-            <th>Xếp loại</th>
-            <th>Thời gian nộp</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${filtered.map((s, idx) => {
-            const score = Number(s.score || 0);
-            const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
-            const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
-            const actLabel = s.activity === "exam" ? "Phòng thi trực tuyến" : s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
-            const phaseLabel = s.phase === "pre" ? "Trước can thiệp" : s.phase === "post" ? "Sau can thiệp" : "—";
-            const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
-            return `<tr>
-              <td>${idx + 1}</td>
-              <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
-              <td>${actLabel}</td>
-              <td>${phaseLabel}</td>
-              <td><span style="font-family:'Space Grotesk';font-weight:700;font-size:14px">${score}</span>/100</td>
-              <td><span style="color:${levelColor};font-weight:700">${level}</span></td>
-              <td style="color:var(--muted)">${timeStr}</td>
-            </tr>`;
-          }).join("")}
-        </tbody>
-      </table>`;
+      if (currentScoreTab === "exam") {
+        container.innerHTML = `<table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Thí sinh (Biệt danh)</th>
+              <th>Đề thi</th>
+              <th>Lần thi</th>
+              <th>Điểm đạt được</th>
+              <th>Ngưỡng đạt</th>
+              <th>Kết quả</th>
+              <th>Số câu đúng</th>
+              <th>Vi phạm màn hình</th>
+              <th>Thời gian làm</th>
+              <th>Thời gian nộp</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tabScores.map((s, idx) => {
+              const attemptNum = s.attempt_number || 1;
+              const statusBadge = s.passed
+                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐẠT</span>`
+                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">✕ CHƯA ĐẠT</span>`;
+              const violBadge = (s.violations_count === 0)
+                ? `<span style="color:#10b981;font-weight:700">0 lần</span>`
+                : `<span style="color:#b91c1c;font-weight:700">⚠️ ${s.violations_count} lần</span>`;
+              const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+
+              return `<tr>
+                <td>${idx + 1}</td>
+                <td>
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <span style="font-size:14px">👤</span>
+                    <strong>${escapeHtml(s.display_name || "—")}</strong>
+                  </div>
+                </td>
+                <td>${escapeHtml(s.exam_title || "Đề thi")}</td>
+                <td>
+                  <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-weight:800;font-size:11px">Lần ${attemptNum}</span>
+                </td>
+                <td>
+                  <strong style="font-family:'Space Grotesk';font-size:14px;color:var(--forest)">${s.raw_score}</strong> / ${s.max_score} đ
+                  <small style="color:#64748b;margin-left:2px">(${s.score}đ/100)</small>
+                </td>
+                <td><span style="font-size:11px;color:#475569">≥ <strong>${s.passing_score}</strong> đ</span></td>
+                <td>${statusBadge}</td>
+                <td><strong style="color:var(--forest)">${s.correct_count}</strong> / ${s.total_questions} câu</td>
+                <td>${violBadge}</td>
+                <td style="color:#64748b">${escapeHtml(s.time_spent || "—")}</td>
+                <td style="color:#64748b">${timeStr}</td>
+                <td>
+                  ${s.id ? `<button class="btn-small" style="color:#b91c1c" onclick="deleteExamResultItem('${s.id}')">Xóa</button>` : `—`}
+                </td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>`;
+      } else if (currentScoreTab === "assessment") {
+        container.innerHTML = `<table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Học sinh (Biệt danh)</th>
+              <th>Đợt đo (Khảo sát)</th>
+              <th>Điểm số (Thang 100)</th>
+              <th>Xếp loại năng lực</th>
+              <th>Thời gian nộp</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tabScores.map((s, idx) => {
+              const score = Number(s.score || 0);
+              const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+              const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
+              const phaseLabel = s.phase === "pre" ? "Trước can thiệp (Pre-test)" : s.phase === "post" ? "Sau can thiệp (Post-test)" : "Khảo sát chung";
+              const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+
+              return `<tr>
+                <td>${idx + 1}</td>
+                <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
+                <td><span class="tag" style="background:#f1f5f9;border:1px solid #cbd5e1;font-weight:700">${phaseLabel}</span></td>
+                <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / 100</td>
+                <td><span style="color:${levelColor};font-weight:800">${level}</span></td>
+                <td style="color:#64748b">${timeStr}</td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>`;
+      } else if (currentScoreTab === "rubric" || currentScoreTab === "practice") {
+        const actLabel = currentScoreTab === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
+        container.innerHTML = `<table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Học sinh (Biệt danh)</th>
+              <th>Hoạt động</th>
+              <th>Điểm số (Thang 100)</th>
+              <th>Xếp loại năng lực</th>
+              <th>Thời gian nộp</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tabScores.map((s, idx) => {
+              const score = Number(s.score || 0);
+              const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+              const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
+              const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+
+              return `<tr>
+                <td>${idx + 1}</td>
+                <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
+                <td>${actLabel}</td>
+                <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / 100</td>
+                <td><span style="color:${levelColor};font-weight:800">${level}</span></td>
+                <td style="color:#64748b">${timeStr}</td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>`;
+      } else {
+        // Tab "all" (Tất cả hoạt động)
+        container.innerHTML = `<table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Học sinh (Biệt danh)</th>
+              <th>Hoạt động</th>
+              <th>Chi tiết / Lần thi / Giai đoạn</th>
+              <th>Điểm số (Quy chuẩn /100)</th>
+              <th>Xếp loại / Kết quả</th>
+              <th>Thời gian nộp</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tabScores.map((s, idx) => {
+              const score = Number(s.score || 0);
+              const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+              const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
+              const actLabel = s.activity === "exam" ? "Phòng thi trực tuyến" : s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
+              
+              let detailText = "—";
+              if (s.activity === "exam") {
+                detailText = `${escapeHtml(s.exam_title || "Đề thi")} (Lần ${s.attempt_number || 1})`;
+              } else if (s.activity === "assessment") {
+                detailText = s.phase === "pre" ? "Trước can thiệp" : s.phase === "post" ? "Sau can thiệp" : "Khảo sát";
+              }
+
+              const resultText = s.activity === "exam" 
+                ? (s.passed ? `<span style="color:#047857;font-weight:700">✓ Đạt</span>` : `<span style="color:#b91c1c;font-weight:700">✕ Chưa đạt</span>`)
+                : `<span style="color:${levelColor};font-weight:700">${level}</span>`;
+
+              const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+
+              return `<tr>
+                <td>${idx + 1}</td>
+                <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
+                <td><span class="tag">${actLabel}</span></td>
+                <td>${detailText}</td>
+                <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px">${score}</span>/100</td>
+                <td>${resultText}</td>
+                <td style="color:#64748b">${timeStr}</td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>`;
+      }
     }
 
     async function loadSupportRequests() {
@@ -1332,32 +1703,117 @@
       return d.innerHTML;
     }
 
-    // Xuất file CSV phục vụ đề tài nghiên cứu
-    document.getElementById("btnExportCsv").onclick = () => {
-      if (!allScores.length) return alert("Chưa có dữ liệu điểm để xuất file.");
-      
-      let csvContent = "\uFEFFSTT,Học sinh,Hoạt động,Giai đoạn,Điểm số,Xếp loại,Thời gian\n";
-      allScores.forEach((s, i) => {
-        const score = Number(s.score || 0);
-        const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
-        const actLabel = s.activity === "exam" ? "Phòng thi trực tuyến" : s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
-        const phaseLabel = s.phase === "pre" ? "Trước can thiệp" : s.phase === "post" ? "Sau can thiệp" : "";
-        const time = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
-        csvContent += `"${i+1}","${(s.display_name||'').replace(/"/g,'""')}","${actLabel}","${phaseLabel}","${score}","${level}","${time}"\n`;
-      });
+    // =========================================================================
+    // XUẤT FILE EXCEL / CSV CHUYÊN BIỆT TỪNG HOẠT ĐỘNG
+    // =========================================================================
+    function exportActiveTabCsv() {
+      let tabScores = allScores;
+      if (currentScoreTab !== "all") {
+        tabScores = allScores.filter(s => s.activity === currentScoreTab);
+      }
+      const search = (document.getElementById("searchStudent")?.value || "").trim().toLowerCase();
+      if (search) {
+        tabScores = tabScores.filter(s => {
+          const matchName = s.display_name && s.display_name.toLowerCase().includes(search);
+          const matchExam = s.exam_title && s.exam_title.toLowerCase().includes(search);
+          return matchName || matchExam;
+        });
+      }
+
+      if (!tabScores.length) {
+        return alert("Chưa có dữ liệu trong hoạt động này để xuất file.");
+      }
+
+      const today = new Date().toISOString().slice(0, 10);
+      let csvContent = "";
+      let fileName = "";
+
+      if (currentScoreTab === "exam") {
+        fileName = `AI_CHECK_THD_PhongThiTrucTuyen_${today}.csv`;
+        csvContent = "\uFEFFSTT,Biệt danh thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Ngưỡng đạt chuẩn,Kết quả xếp loại,Số câu làm đúng,Tổng số câu,Vi phạm toàn màn hình,Thời gian làm bài,Ngày giờ nộp bài\n";
+        tabScores.forEach((s, idx) => {
+          const attemptNum = s.attempt_number || 1;
+          const statusText = s.passed ? "ĐẠT YÊU CẦU" : "CHƯA ĐẠT";
+          const violText = `${s.violations_count || 0} lần`;
+          const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
+          csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","${(s.exam_title || '').replace(/"/g, '""')}","Lần ${attemptNum}","${s.raw_score}","${s.max_score}","${s.passing_score}","${statusText}","${s.correct_count}","${s.total_questions}","${violText}","${s.time_spent || ''}","${timeStr}"\n`;
+        });
+      } else if (currentScoreTab === "assessment") {
+        fileName = `AI_CHECK_THD_DanhGia20Cau_${today}.csv`;
+        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Đợt khảo sát đo lường,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
+        tabScores.forEach((s, idx) => {
+          const score = Number(s.score || 0);
+          const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+          const phaseLabel = s.phase === "pre" ? "Trước can thiệp (Pre-test)" : s.phase === "post" ? "Sau can thiệp (Post-test)" : "Khảo sát chung";
+          const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
+          csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","${phaseLabel}","${score}","${level}","${timeStr}"\n`;
+        });
+      } else if (currentScoreTab === "rubric") {
+        fileName = `AI_CHECK_THD_ThuThachRubric_${today}.csv`;
+        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Hoạt động,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
+        tabScores.forEach((s, idx) => {
+          const score = Number(s.score || 0);
+          const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+          const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
+          csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","Thử thách Rubric","${score}","${level}","${timeStr}"\n`;
+        });
+      } else if (currentScoreTab === "practice") {
+        fileName = `AI_CHECK_THD_LuyenTinhHuong_${today}.csv`;
+        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Hoạt động,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
+        tabScores.forEach((s, idx) => {
+          const score = Number(s.score || 0);
+          const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+          const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
+          csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","Luyện tình huống","${score}","${level}","${timeStr}"\n`;
+        });
+      } else {
+        fileName = `AI_CHECK_THD_TatCaHoatDong_${today}.csv`;
+        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Hoạt động,Chi tiết / Lần thi / Giai đoạn,Điểm số (Thang 100),Xếp loại / Kết quả,Ngày giờ nộp bài\n";
+        tabScores.forEach((s, idx) => {
+          const score = Number(s.score || 0);
+          const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+          const actLabel = s.activity === "exam" ? "Phòng thi trực tuyến" : s.activity === "assessment" ? "Đánh giá 20 câu" : s.activity === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
+          let detail = "—";
+          if (s.activity === "exam") detail = `${s.exam_title || 'Đề thi'} (Lần ${s.attempt_number || 1})`;
+          else if (s.activity === "assessment") detail = s.phase === "pre" ? "Trước can thiệp" : s.phase === "post" ? "Sau can thiệp" : "Khảo sát";
+          const resultText = s.activity === "exam" ? (s.passed ? "ĐẠT" : "CHƯA ĐẠT") : level;
+          const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
+          csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","${actLabel}","${detail}","${score}","${resultText}","${timeStr}"\n`;
+        });
+      }
 
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.setAttribute("href", url);
-      link.setAttribute("download", `AI_CHECK_THD_Scores_${new Date().toISOString().slice(0,10)}.csv`);
+      link.setAttribute("download", fileName);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    };
+    }
 
-    document.getElementById("filterActivity").onchange = renderScoreTable;
-    document.getElementById("searchStudent").oninput = renderScoreTable;
+    const btnExportTab = document.getElementById("btnExportActiveTab");
+    if (btnExportTab) btnExportTab.onclick = exportActiveTabCsv;
+
+    const searchStudentInput = document.getElementById("searchStudent");
+    if (searchStudentInput) searchStudentInput.oninput = renderScoreTable;
+
+    // TỰ ĐỘNG LẮNG NGHE ĐỒNG BỘ THỜI GIAN THỰC KHI CÓ HỌC SINH NỘP BÀI THI
+    window.addEventListener("storage", (e) => {
+      if (e.key === "aicheck_exam_results" || e.key === "aicheck:last_exam_submission" || e.key === "aicheck:records") {
+        loadScores();
+        loadExamResultsTable();
+        loadExamStudentsSummaryTable();
+        calculateStats();
+      }
+    });
+
+    window.addEventListener("aicheck:exam-results-updated", () => {
+      loadScores();
+      loadExamResultsTable();
+      loadExamStudentsSummaryTable();
+      calculateStats();
+    });
 
     // =========================================================================
     // QUẢN LÝ ĐỀ THI & PHÒNG LÀM BÀI TRỰC TUYẾN (EXAM MANAGEMENT)
@@ -1791,10 +2247,16 @@
                 ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Hoàn thành (Đạt)</span>`
                 : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">✕ Chưa đáp ứng (<${passingScore}đ)</span>`;
 
+              const attemptNum = r.attemptNumber || 1;
               return `
                 <tr>
                   <td>${idx + 1}</td>
-                  <td><strong>${escapeHtml(r.studentName || "—")}</strong></td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <strong>${escapeHtml(r.studentName || "—")}</strong>
+                      <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:10.5px;padding:1px 6px;font-weight:700">Lần ${attemptNum}</span>
+                    </div>
+                  </td>
                   <td>${escapeHtml(r.examTitle || "Đề thi")}</td>
                   <td><strong style="color:var(--forest);font-size:13px">${correctCount}</strong> / ${totalQ} câu</td>
                   <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / ${maxScore} đ</td>
@@ -1826,7 +2288,7 @@
       } else {
         modalBody.innerHTML = `
           <div style="margin-bottom:14px;font-size:13px">
-            Thí sinh: <strong>${escapeHtml(r.studentName)}</strong> · Đề: <strong>${escapeHtml(r.examTitle)}</strong>
+            Thí sinh: <strong>${escapeHtml(r.studentName)}</strong> · Đề: <strong>${escapeHtml(r.examTitle)}</strong> (Lần ${r.attemptNumber || 1})
             <br>Tổng số lần vi phạm: <strong style="color:#b91c1c">${list.length} lần</strong>
           </div>
           <table style="width:100%;font-size:12px">
@@ -1860,15 +2322,19 @@
     function deleteExamResultItem(resultId) {
       if (!confirm("Bạn có chắc chắn muốn xóa kết quả thi này?")) return;
       window.AICheckExamStore.deleteResult(resultId);
+      loadScores();
       loadExamResultsTable();
       loadExamStudentsSummaryTable();
+      calculateStats();
     }
 
     function clearAllExamResults() {
       if (!confirm("⚠️ CẢNH BÁO: Thao tác này sẽ xóa toàn bộ lịch sử bài thi và dữ liệu giám sát vi phạm trên thiết bị này. Bạn có chắc chắn muốn tiếp tục?")) return;
       window.AICheckExamStore.clearAllResults();
+      loadScores();
       loadExamResultsTable();
       loadExamStudentsSummaryTable();
+      calculateStats();
     }
 
     // =========================================================================
@@ -1919,15 +2385,16 @@
       });
 
       const rate = total > 0 ? Math.round((passedCount / total) * 100) : 0;
+      const uniqueStudents = new Set(results.map(r => (r.studentName || "").toLowerCase().trim()).filter(Boolean)).size;
 
       const elTotal = document.getElementById("examStatTotal");
       const elPassed = document.getElementById("examStatPassed");
       const elFailed = document.getElementById("examStatFailed");
       const elRate = document.getElementById("examStatRate");
 
-      if (elTotal) elTotal.textContent = `${total} lượt`;
-      if (elPassed) elPassed.textContent = `${passedCount} người`;
-      if (elFailed) elFailed.textContent = `${failedCount} người`;
+      if (elTotal) elTotal.textContent = `${total} lượt (${uniqueStudents} thí sinh)`;
+      if (elPassed) elPassed.textContent = `${passedCount} lượt`;
+      if (elFailed) elFailed.textContent = `${failedCount} lượt`;
       if (elRate) elRate.textContent = `${rate}%`;
     }
 
@@ -1984,6 +2451,7 @@
           </thead>
           <tbody>
             ${filtered.map((r, idx) => {
+              const attemptNum = r.attemptNumber || 1;
               const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
               const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
               const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
@@ -2006,6 +2474,7 @@
                     <div style="display:flex;align-items:center;gap:6px">
                       <span style="font-size:14px">👤</span>
                       <strong>${escapeHtml(r.studentName || "Thí sinh THĐ")}</strong>
+                      <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:10.5px;padding:1px 6px;font-weight:700">Lần ${attemptNum}</span>
                     </div>
                   </td>
                   <td>${escapeHtml(r.examTitle || "Đề thi trực tuyến")}</td>
@@ -2036,15 +2505,18 @@
     function deleteExamSummaryStudent(resultId) {
       if (!confirm("Bạn có chắc chắn muốn xóa bản ghi của thí sinh này?")) return;
       window.AICheckExamStore.deleteResult(resultId);
+      loadScores();
       loadExamResultsTable();
       loadExamStudentsSummaryTable();
+      calculateStats();
     }
 
     function exportExamStudentsCsv() {
       if (!allExamResultsCache.length) return alert("Chưa có danh sách thí sinh để xuất file Excel/CSV.");
 
-      let csvContent = "\uFEFFSTT,Biệt danh thí sinh,Đề thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Thời gian làm bài,Ngày giờ nộp bài\n";
+      let csvContent = "\uFEFFSTT,Biệt danh thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Thời gian làm bài,Ngày giờ nộp bài\n";
       allExamResultsCache.forEach((r, idx) => {
+        const attemptNum = r.attemptNumber || 1;
         const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
         const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
         const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
@@ -2055,14 +2527,14 @@
         const statusText = isPassed ? "ĐÃ ĐẠT YÊU CẦU" : "CHƯA ĐẠT YÊU CẦU";
         const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "";
 
-        csvContent += `"${idx + 1}","${(r.studentName || '').replace(/"/g, '""')}","${(r.examTitle || '').replace(/"/g, '""')}","${score}","${maxScore}","${passingScore}","${statusText}","${correctCount}","${totalQ}","${r.timeSpentFormatted || ''}","${timeStr}"\n`;
+        csvContent += `"${idx + 1}","${(r.studentName || '').replace(/"/g, '""')}","${(r.examTitle || '').replace(/"/g, '""')}","Lần ${attemptNum}","${score}","${maxScore}","${passingScore}","${statusText}","${correctCount}","${totalQ}","${r.timeSpentFormatted || ''}","${timeStr}"\n`;
       });
 
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.setAttribute("href", url);
-      link.setAttribute("download", `Danh_Sach_Thi_Sinh_Phong_Thi_${new Date().toISOString().slice(0, 10)}.csv`);
+      link.setAttribute("download", `AI_CHECK_THD_DanhSachThiSinh_${new Date().toISOString().slice(0, 10)}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

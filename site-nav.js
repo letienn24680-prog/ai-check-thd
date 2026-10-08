@@ -1566,60 +1566,110 @@
       existingCloseBtn.remove();
     }
 
-    // ĐẢM BẢO MỤC ĐĂNG NHẬP LUÔN NẰM Ở HÀNG ĐẦU TIÊN CỦA MENU
     const isPagesDir = location.pathname.includes("/pages/");
     const loginHref = isPagesDir ? "../login.html" : "login.html";
+    const examHref = isPagesDir ? "exam.html" : "pages/exam.html";
+    const lang = AICheckI18n.getLang();
 
+    // 1. ĐẢM BẢO MỤC ĐĂNG NHẬP / TÀI KHOẢN (ĐỘC LẬP Ở HÀNG ĐẦU TIÊN)
     let loginLink = nav.querySelector('a[data-nav-key="login"]') || 
-                    Array.from(nav.querySelectorAll("a")).find(a => (a.getAttribute("href") || "").includes("login.html"));
+                    Array.from(nav.querySelectorAll("a")).find(a => getNavKey(a) === "login");
     
     if (!loginLink) {
       loginLink = document.createElement("a");
       loginLink.href = loginHref;
-      loginLink.setAttribute("data-nav-key", "login");
       loginLink.textContent = "Đăng nhập";
-      
-      const firstA = nav.querySelector("a");
-      if (firstA) {
-        nav.insertBefore(loginLink, firstA);
+    }
+    loginLink.setAttribute("data-nav-key", "login");
+    loginLink.className = "site-nav-link site-nav-login-tab";
+    const loginItem = NAV_DEFINITIONS.login;
+    loginLink.innerHTML = `
+      <span class="nav-icon-badge ${loginItem.colorClass || ''}">${loginItem.icon}</span>
+      <span class="nav-item-content">
+        <strong class="nav-item-title">${loginItem[lang].title}</strong>
+        <small class="nav-item-desc">${loginItem[lang].desc}</small>
+      </span>
+      <span class="nav-item-arrow" aria-hidden="true">⚙️</span>
+    `;
+
+    // 2. CHUẨN HÓA DANH SÁCH 8 MỤC ĐIỀU HƯỚNG CHÍNH VÀ LOẠI BỎ TRIỆT ĐỂ MỤC TRÙNG LẶP (DEDUPLICATION)
+    // Thứ tự 8 mục chuẩn: Trang chủ, Kiến thức, Thực hành, Đánh giá, Phòng thi, BXH, Nghiên cứu, Tài nguyên
+    const ORDERED_KEYS = [
+      "home",
+      "knowledge",
+      "practice",
+      "assessment",
+      "exam",
+      "leaderboard",
+      "research",
+      "resources"
+    ];
+
+    const keyLinks = {};
+    const seenLinks = new Set([loginLink]);
+
+    ORDERED_KEYS.forEach(key => {
+      // Tìm tất cả liên kết trong nav khớp với key này
+      const matches = Array.from(nav.querySelectorAll("a")).filter(a => {
+        if (a === loginLink || seenLinks.has(a)) return false;
+        return a.getAttribute("data-nav-key") === key || getNavKey(a) === key;
+      });
+
+      if (matches.length > 0) {
+        // Giữ lại liên kết đầu tiên làm mục duy nhất
+        keyLinks[key] = matches[0];
+        seenLinks.add(matches[0]);
+        // XÓA TẤT CẢ PHẦN TỬ TRÙNG LẶP CÒN LẠI (Ngăn chặn 100% lỗi duplicate 2 ô Phòng thi)
+        for (let i = 1; i < matches.length; i++) {
+          matches[i].remove();
+        }
       } else {
-        nav.appendChild(loginLink);
+        // Nếu trang chưa có mục này (ví dụ trang cũ thiếu Phòng thi), tự động tạo mới
+        const newLink = document.createElement("a");
+        if (key === "exam") {
+          newLink.href = examHref;
+          newLink.textContent = "Phòng thi";
+        } else if (key === "home") {
+          newLink.href = isPagesDir ? "../index.html" : "index.html";
+        }
+        keyLinks[key] = newLink;
+        seenLinks.add(newLink);
       }
+    });
+
+    // Xóa tất cả các thẻ <a> thừa thãi khác trong nav để tránh làm lệch lưới Bento Grid
+    Array.from(nav.querySelectorAll("a")).forEach(a => {
+      if (!seenLinks.has(a) && !a.classList.contains("nav-auth-link")) {
+        a.remove();
+      }
+    });
+
+    // 3. TẠO HOẶC LÀM SẠCH CONTAINER BENTO GRID 2 CỘT
+    let gridWrap = nav.querySelector(".site-nav-grid");
+    if (!gridWrap) {
+      gridWrap = document.createElement("div");
+      gridWrap.className = "site-nav-grid";
     } else {
-      const firstA = nav.querySelector("a:not([data-nav-key='login'])");
-      if (firstA && loginLink.nextSibling !== firstA) {
-        nav.insertBefore(loginLink, firstA);
-      }
+      gridWrap.innerHTML = "";
     }
 
-    // ĐẢM BẢO MỤC PHÒNG THI LUÔN CÓ MẶT VÀ NẰM LIỀN KỀ SAU MỤC ĐÁNH GIÁ
-    let examLink = nav.querySelector('a[data-nav-key="exam"]') || 
-                   Array.from(nav.querySelectorAll("a")).find(a => (a.getAttribute("href") || "").includes("exam.html"));
-    if (!examLink) {
-      examLink = document.createElement("a");
-      examLink.href = isPagesDir ? "exam.html" : "pages/exam.html";
-      examLink.setAttribute("data-nav-key", "exam");
-      examLink.textContent = "Phòng thi";
-      const assessLink = nav.querySelector('a[data-nav-key="assessment"]') || 
-                         Array.from(nav.querySelectorAll("a")).find(a => (a.getAttribute("href") || "").includes("assessment.html"));
-      if (assessLink && assessLink.nextSibling) {
-        nav.insertBefore(examLink, assessLink.nextSibling);
-      } else {
-        nav.appendChild(examLink);
-      }
+    // Đặt loginLink ngay sau Header, tiếp theo là Bento Grid
+    const headerEl = nav.querySelector(".site-nav-header");
+    if (headerEl) {
+      headerEl.after(loginLink);
+    } else {
+      nav.prepend(loginLink);
     }
+    loginLink.after(gridWrap);
 
-    // Format tất cả các mục điều hướng thành dạng Bento Grid 2 cột siêu tinh gọn (Đồng bộ PC & Mobile)
-    const lang = AICheckI18n.getLang();
-    nav.querySelectorAll("a").forEach(link => {
-      if (link.classList.contains("nav-auth-link")) return;
-      const key = getNavKey(link);
-      if (!key) return;
+    // 4. TRANG TRÍ VÀ ĐƯA ĐÚNG 8 MỤC VÀO BENTO GRID THEO THỨ TỰ CHUẨN XÁC (2 CỘT × 4 HÀNG HOÀN HẢO)
+    ORDERED_KEYS.forEach(key => {
+      const link = keyLinks[key];
+      if (!link) return;
       const item = NAV_DEFINITIONS[key];
       if (!item) return;
 
-      const isLogin = (key === "login");
-      link.className = `site-nav-link ${isLogin ? "site-nav-login-tab" : "site-nav-tile"}`;
+      link.className = "site-nav-link site-nav-tile";
       link.setAttribute("data-nav-key", key);
       link.innerHTML = `
         <span class="nav-icon-badge ${item.colorClass || ''}">${item.icon}</span>
@@ -1627,27 +1677,11 @@
           <strong class="nav-item-title">${item[lang].title}</strong>
           <small class="nav-item-desc">${item[lang].desc}</small>
         </span>
-        ${isLogin ? '<span class="nav-item-arrow" aria-hidden="true">⚙️</span>' : ''}
       `;
+      gridWrap.appendChild(link);
     });
 
-    // Gom 8 mục học tập vào Grid 2 cột tinh gọn
-    let gridWrap = nav.querySelector(".site-nav-grid");
-    if (!gridWrap) {
-      gridWrap = document.createElement("div");
-      gridWrap.className = "site-nav-grid";
-      const tiles = Array.from(nav.querySelectorAll(".site-nav-tile"));
-      if (tiles.length > 0) {
-        if (loginLink && loginLink.parentNode === nav) {
-          loginLink.after(gridWrap);
-        } else {
-          nav.appendChild(gridWrap);
-        }
-        tiles.forEach(t => gridWrap.appendChild(t));
-      }
-    }
-
-    // Tạo Footer cho Drawer
+    // 5. TẠO FOOTER CHO DRAWER
     if (!nav.querySelector(".site-nav-footer")) {
       const footer = document.createElement("div");
       footer.className = "site-nav-footer";

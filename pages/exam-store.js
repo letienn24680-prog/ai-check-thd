@@ -506,27 +506,58 @@
       const earnedScore = result.score != null ? Number(result.score) : (correctCount * pointsPerQ);
       const passingScore = result.passingScore != null ? Number(result.passingScore) : Math.ceil(maxScore * 0.5);
       const passed = result.passed !== undefined ? Boolean(result.passed) : (earnedScore >= passingScore);
+      const studentDisplayName = (result.studentName || "Thí sinh THĐ").trim().slice(0, 24);
+
+      // Đếm số lần thí sinh này đã làm đề này trong quá khứ để gắn số lần thi (Lần 1, Lần 2...)
+      const pastAttempts = results.filter(r => 
+        r.examId === result.examId && 
+        (r.studentName || "").toLowerCase().trim() === studentDisplayName.toLowerCase()
+      ).length;
+      const attemptNumber = result.attemptNumber || (pastAttempts + 1);
+
+      const uniqueId = result.id || ("res_" + Date.now() + "_" + Math.floor(Math.random() * 1000));
+      const submittedTime = result.submittedAt || new Date().toISOString();
 
       const normalizedResult = {
         ...result,
+        id: uniqueId,
+        attemptNumber: attemptNumber,
+        studentName: studentDisplayName,
         pointsPerQuestion: pointsPerQ,
         totalQuestions: totalQ,
         correctCount: correctCount,
         maxScore: maxScore,
         score: earnedScore,
         passingScore: passingScore,
-        passed: passed
+        passed: passed,
+        submittedAt: submittedTime
       };
 
+      // Luôn chèn bản ghi mới độc lập lên đầu danh sách (mỗi lần thi là 1 kết quả riêng biệt)
       results.unshift(normalizedResult);
       this.saveResults(results);
+
+      // Phát sự kiện toàn cục và storage key để trang Admin tự cập nhật thời gian thực
+      try {
+        window.dispatchEvent(new CustomEvent("aicheck:exam-results-updated", { detail: normalizedResult }));
+        localStorage.setItem("aicheck:last_exam_submission", JSON.stringify({
+          time: Date.now(),
+          id: uniqueId,
+          examId: result.examId,
+          studentName: studentDisplayName,
+          examTitle: normalizedResult.examTitle,
+          attemptNumber: attemptNumber,
+          score: earnedScore,
+          maxScore: maxScore,
+          passed: passed
+        }));
+      } catch {}
 
       // Đồng bộ sang Bảng xếp hạng (BXH) và Supabase
       try {
         const scale100 = maxScore > 0 ? Math.min(100, Math.max(0, Math.round((earnedScore / maxScore) * 100))) : 0;
-        const studentDisplayName = (normalizedResult.studentName || "Thí sinh THĐ").trim().slice(0, 24);
 
-        // 1. Gửi lên Supabase Leaderboard (activity: "exam")
+        // 1. Gửi lên Supabase Leaderboard (activity: "exam") - mỗi lần nộp là 1 dòng riêng trong CSDL đám mây
         if (window.AICheckCloud && window.AICheckCloud.saveScore) {
           window.AICheckCloud.saveScore({
             name: studentDisplayName,
