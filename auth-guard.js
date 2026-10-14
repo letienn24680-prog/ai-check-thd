@@ -4,6 +4,13 @@
  * Nếu chưa đăng nhập: Tự động chuyển hướng ngay sang login.html và lưu trang đích để quay lại.
  */
 (() => {
+  // 0. Thiết lập Theme Cyber Midnight Navy tức thì trong HEAD tránh mọi hiện tượng FOUT/giật màu
+  try {
+    const savedTheme = localStorage.getItem("aicheck:theme");
+    const initialTheme = savedTheme || "dark";
+    document.documentElement.setAttribute("data-theme", initialTheme);
+  } catch {}
+
   const currentPath = (location.pathname || "").toLowerCase().replace(/\\/g, "/");
   const isAuthPage = currentPath.includes("login.html") || currentPath.includes("reset-password.html");
   const isAdminPage = currentPath.includes("admin.html");
@@ -405,8 +412,8 @@
               </div>
 
               <div>
-                <label style="display:block;font-size:11px;font-weight:800;color:#1e293b;margin-bottom:4px">2️⃣ HỌ VÀ TÊN / BIỆT DANH ĐÃ ĐĂNG KÝ (*):</label>
-                <input type="text" id="reqUnlockName" required placeholder="Biệt danh hoặc họ tên hiển thị..." style="width:100%;height:38px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;box-sizing:border-box">
+                <label style="display:block;font-size:11px;font-weight:800;color:#1e293b;margin-bottom:4px">2️⃣ HỌ VÀ TÊN ĐÃ ĐĂNG KÝ (*):</label>
+                <input type="text" id="reqUnlockName" required placeholder="Họ và tên thí sinh..." style="width:100%;height:38px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:13px;box-sizing:border-box">
               </div>
 
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">

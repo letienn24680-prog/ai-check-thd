@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#163d35">
+  <meta name="theme-color" content="#060d16">
   <title>Admin Portal | AI CHECK THĐ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +37,19 @@
     }
     .admin-nav-actions {
       display: flex;
+      align-items: center;
       gap: 8px;
+    }
+    .admin-nav-actions .nav-notif-btn {
+      flex: none !important;
+      width: 36px !important;
+      height: 36px !important;
+      min-width: 36px !important;
+      max-width: 36px !important;
+      border-radius: 50% !important;
+      padding: 0 !important;
+      aspect-ratio: 1 / 1 !important;
+      box-sizing: border-box !important;
     }
     .card {
       background: white;
@@ -175,16 +187,32 @@
       .admin-nav-actions {
         width: 100%;
         display: flex;
+        align-items: center;
         gap: 8px;
+        flex-wrap: wrap;
       }
       .admin-nav-actions a,
-      .admin-nav-actions button {
+      .admin-nav-actions button:not(.nav-notif-btn) {
         flex: 1;
         text-align: center;
         justify-content: center;
         padding: 8px 6px;
         box-sizing: border-box;
         font-size: 11px;
+      }
+      .admin-nav-actions .nav-notif-btn {
+        flex: none !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        aspect-ratio: 1 / 1 !important;
+        box-sizing: border-box !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
       .card {
         padding: 16px 12px;
@@ -701,7 +729,7 @@
         <table>
           <thead>
             <tr>
-              <th>Biệt danh</th>
+              <th>Họ và tên</th>
               <th>Email</th>
               <th>Địa chỉ IP</th>
               <th>Ngày tạo</th>
@@ -903,7 +931,7 @@
           <select id="filterExamTitle" class="filter-input" onchange="renderExamStudentsTable()">
             <option value="all">Tất cả đề thi</option>
           </select>
-          <input type="text" id="searchExamStudent" class="filter-input" placeholder="Tìm theo biệt danh thí sinh..." oninput="renderExamStudentsTable()">
+          <input type="text" id="searchExamStudent" class="filter-input" placeholder="Tìm theo họ và tên thí sinh..." oninput="renderExamStudentsTable()">
         </div>
       </div>
 
@@ -923,7 +951,7 @@
           <p class="panel-copy" style="margin:4px 0 0">Dữ liệu phân loại theo từng ô hoạt động riêng biệt, sẵn sàng xuất Excel chuẩn phục vụ đề tài nghiên cứu khoa học.</p>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <input type="text" id="searchStudent" placeholder="Tìm theo biệt danh..." class="filter-input" style="width:190px">
+          <input type="text" id="searchStudent" placeholder="Tìm theo họ và tên..." class="filter-input" style="width:190px">
           <button type="button" class="button button-lime" id="btnExportActiveTab" style="font-size:11px;padding:7px 14px;border-radius:6px;font-weight:700">
             📥 Xuất Excel Hoạt động này ↓
           </button>
@@ -1470,7 +1498,7 @@
         tabScores = allScores.filter(s => s.activity === currentScoreTab);
       }
 
-      // Lọc theo từ khóa tìm kiếm (Biệt danh thí sinh hoặc Tên đề thi)
+      // Lọc theo từ khóa tìm kiếm (Họ và tên thí sinh hoặc Tên đề thi)
       if (search) {
         tabScores = tabScores.filter(s => {
           const matchName = s.display_name && s.display_name.toLowerCase().includes(search);
@@ -1540,7 +1568,7 @@
           <thead>
             <tr>
               <th>STT</th>
-              <th>Thí sinh (Biệt danh)</th>
+              <th>Họ và tên thí sinh</th>
               <th>Đề thi</th>
               <th>Lần thi</th>
               <th>Điểm đạt được</th>
@@ -1598,7 +1626,7 @@
           <thead>
             <tr>
               <th>STT</th>
-              <th>Học sinh (Biệt danh)</th>
+              <th>Họ và tên thí sinh</th>
               <th>Đợt đo (Khảo sát)</th>
               <th>Điểm số (Thang 100)</th>
               <th>Xếp loại năng lực</th>
@@ -1630,7 +1658,7 @@
           <thead>
             <tr>
               <th>STT</th>
-              <th>Học sinh (Biệt danh)</th>
+              <th>Họ và tên thí sinh</th>
               <th>Hoạt động</th>
               <th>Điểm số (Thang 100)</th>
               <th>Xếp loại năng lực</th>
@@ -1661,7 +1689,7 @@
           <thead>
             <tr>
               <th>STT</th>
-              <th>Học sinh (Biệt danh)</th>
+              <th>Họ và tên thí sinh</th>
               <th>Hoạt động</th>
               <th>Chi tiết / Lần thi / Giai đoạn</th>
               <th>Điểm số (Quy chuẩn /100)</th>
@@ -2057,7 +2085,7 @@
         const isNameMatch = dbUser.display_name.trim().toLowerCase() === sName.trim().toLowerCase();
         matchBadge = isNameMatch
           ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Khớp họ tên (${escapeHtml(dbUser.display_name)})</span>`
-          : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">⚠️ Khác biệt danh hệ thống (${escapeHtml(dbUser.display_name)})</span>`;
+          : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">⚠️ Khác họ tên hệ thống (${escapeHtml(dbUser.display_name)})</span>`;
       } else {
         matchBadge = `<span class="tag" style="background:#f1f5f9;color:#64748b">Chưa có thông tin profile DB</span>`;
       }
@@ -2077,7 +2105,7 @@
                 <strong style="color:#0f172a">${escapeHtml(req.user_email || "—")}</strong>
               </div>
               <div>
-                <span style="color:#64748b;display:block;font-size:11px">2️⃣ Họ và tên / Biệt danh:</span>
+                <span style="color:#64748b;display:block;font-size:11px">2️⃣ Họ và tên:</span>
                 <strong style="color:#0f172a">${escapeHtml(sName)}</strong>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -2110,7 +2138,7 @@
 
             <div style="display:grid;gap:8px;font-size:12px">
               <div>
-                <span style="color:#64748b;display:block;font-size:11px">Đối chiếu Họ tên / Biệt danh:</span>
+                <span style="color:#64748b;display:block;font-size:11px">Đối chiếu Họ và tên:</span>
                 <div style="margin-top:2px">${matchBadge}</div>
               </div>
               <div>
@@ -2250,7 +2278,7 @@
 
       if (currentScoreTab === "exam") {
         fileName = `AI_CHECK_THD_PhongThiTrucTuyen_${today}.csv`;
-        csvContent = "\uFEFFSTT,Biệt danh thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Ngưỡng đạt chuẩn,Kết quả xếp loại,Số câu làm đúng,Tổng số câu,Vi phạm toàn màn hình,Thời gian làm bài,Ngày giờ nộp bài\n";
+        csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Ngưỡng đạt chuẩn,Kết quả xếp loại,Số câu làm đúng,Tổng số câu,Vi phạm toàn màn hình,Thời gian làm bài,Ngày giờ nộp bài\n";
         tabScores.forEach((s, idx) => {
           const attemptNum = s.attempt_number || 1;
           const statusText = s.passed ? "ĐẠT YÊU CẦU" : "CHƯA ĐẠT";
@@ -2260,7 +2288,7 @@
         });
       } else if (currentScoreTab === "assessment") {
         fileName = `AI_CHECK_THD_DanhGia20Cau_${today}.csv`;
-        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Đợt khảo sát đo lường,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
+        csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát đo lường,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
         tabScores.forEach((s, idx) => {
           const score = Number(s.score || 0);
           const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
@@ -2270,7 +2298,7 @@
         });
       } else if (currentScoreTab === "rubric") {
         fileName = `AI_CHECK_THD_ThuThachRubric_${today}.csv`;
-        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Hoạt động,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
+        csvContent = "\uFEFFSTT,Họ và tên thí sinh,Hoạt động,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
         tabScores.forEach((s, idx) => {
           const score = Number(s.score || 0);
           const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
@@ -2279,7 +2307,7 @@
         });
       } else if (currentScoreTab === "practice") {
         fileName = `AI_CHECK_THD_LuyenTinhHuong_${today}.csv`;
-        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Hoạt động,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
+        csvContent = "\uFEFFSTT,Họ và tên thí sinh,Hoạt động,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
         tabScores.forEach((s, idx) => {
           const score = Number(s.score || 0);
           const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
@@ -2288,7 +2316,7 @@
         });
       } else {
         fileName = `AI_CHECK_THD_TatCaHoatDong_${today}.csv`;
-        csvContent = "\uFEFFSTT,Học sinh (Biệt danh),Hoạt động,Chi tiết / Lần thi / Giai đoạn,Điểm số (Thang 100),Xếp loại / Kết quả,Ngày giờ nộp bài\n";
+        csvContent = "\uFEFFSTT,Họ và tên thí sinh,Hoạt động,Chi tiết / Lần thi / Giai đoạn,Điểm số (Thang 100),Xếp loại / Kết quả,Ngày giờ nộp bài\n";
         tabScores.forEach((s, idx) => {
           const score = Number(s.score || 0);
           const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
@@ -2942,7 +2970,7 @@
         // Lọc đề thi
         if (titleFilter !== "all" && r.examTitle !== titleFilter) return false;
 
-        // Tìm kiếm biệt danh
+        // Tìm kiếm họ và tên
         if (search && !(r.studentName && r.studentName.toLowerCase().includes(search))) return false;
 
         return true;
@@ -2958,7 +2986,7 @@
           <thead>
             <tr>
               <th>STT</th>
-              <th>Thí sinh (Biệt danh)</th>
+              <th>Họ và tên thí sinh</th>
               <th>Đề thi</th>
               <th>Điểm đạt được</th>
               <th>Ngưỡng đạt yêu cầu</th>
@@ -3034,7 +3062,7 @@
     function exportExamStudentsCsv() {
       if (!allExamResultsCache.length) return alert("Chưa có danh sách thí sinh để xuất file Excel/CSV.");
 
-      let csvContent = "\uFEFFSTT,Biệt danh thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Thời gian làm bài,Ngày giờ nộp bài\n";
+      let csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Thời gian làm bài,Ngày giờ nộp bài\n";
       allExamResultsCache.forEach((r, idx) => {
         const attemptNum = r.attemptNumber || 1;
         const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;

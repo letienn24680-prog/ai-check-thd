@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#163d35">
+  <meta name="theme-color" content="#060d16">
   <title>Đăng nhập | AI CHECK THĐ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,13 +13,12 @@
   <script>
     try {
       const savedTheme = localStorage.getItem('aicheck:theme');
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme', savedTheme || (prefersDark ? 'dark' : 'light'));
+      document.documentElement.setAttribute('data-theme', savedTheme || 'dark');
     } catch(e){}
   </script>
   <style>
     /* =========================================================
-       GIAO DIỆN ĐĂNG NHẬP HIỆN ĐẠI (From Uiverse.io by micaelgomestavares)
+       GIAO DIỆN ĐĂNG NHẬP HIỆN ĐẠI (CYBER THEME)
        Tích hợp hệ sinh thái AI CHECK THĐ & Hỗ trợ chuẩn Dark / Light Mode
        ========================================================= */
     * {
@@ -32,10 +31,12 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: radial-gradient(circle at 18% 18%, rgba(217, 242, 108, 0.16) 0%, transparent 42%),
-                  radial-gradient(circle at 82% 82%, rgba(36, 114, 79, 0.3) 0%, transparent 52%),
-                  linear-gradient(135deg, #0c2621 0%, #163d35 50%, #09201b 100%);
-      color: #151717;
+      background-color: #f6faf7;
+      background-image: 
+        radial-gradient(circle at 12% 14%, rgba(217, 242, 108, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 88% 22%, rgba(36, 114, 79, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 88%, rgba(217, 242, 108, 0.08) 0%, transparent 60%);
+      color: #132a24;
       padding: 70px 14px 40px;
       position: relative;
       overflow-x: hidden;
@@ -62,21 +63,31 @@
       align-items: center;
       gap: 7px;
       padding: 7px 14px;
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(18, 59, 50, 0.08);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      color: #ffffff;
+      color: #132a24;
       text-decoration: none;
       font-size: 13px;
       font-weight: 600;
       border-radius: 99px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(18, 59, 50, 0.14);
       transition: all 0.2s ease;
     }
 
     .back-home-link:hover {
-      background: rgba(255, 255, 255, 0.28);
+      background: rgba(18, 59, 50, 0.15);
       transform: translateX(-2px);
+      color: #132a24;
+    }
+
+    [data-theme="dark"] .back-home-link {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    [data-theme="dark"] .back-home-link:hover {
+      background: rgba(255, 255, 255, 0.28);
       color: #ffffff;
     }
 
@@ -753,23 +764,23 @@
     }
 
     /* =========================================================
-       HỖ TRỢ DARK MODE (Chuẩn tone màu Forest & Lime của AI CHECK THĐ)
+       HỖ TRỢ DARK MODE (Chuẩn tone màu Cyber Midnight Navy của AI CHECK THĐ)
        ========================================================= */
     [data-theme="dark"] body {
-      background: radial-gradient(circle at 18% 18%, rgba(217, 242, 108, 0.12) 0%, transparent 42%),
-                  radial-gradient(circle at 82% 82%, rgba(36, 114, 79, 0.22) 0%, transparent 52%),
-                  linear-gradient(135deg, #071714 0%, #0c2621 50%, #051310 100%);
-      color: #eaf3ee;
+      background: radial-gradient(circle at 18% 18%, rgba(0, 229, 255, 0.12) 0%, transparent 42%),
+                  radial-gradient(circle at 82% 82%, rgba(0, 136, 255, 0.1) 0%, transparent 52%),
+                  linear-gradient(135deg, #060d16 0%, #0b1726 50%, #040910 100%);
+      color: #f1f5f9;
     }
 
     [data-theme="dark"] .form {
-      background-color: #0d2821;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      background-color: #0b1726;
+      border: 1px solid rgba(0, 229, 255, 0.18);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 229, 255, 0.12);
     }
 
     [data-theme="dark"] .form-brand-row {
-      border-bottom-color: rgba(255, 255, 255, 0.1);
+      border-bottom-color: rgba(0, 229, 255, 0.14);
     }
 
     [data-theme="dark"] .brand-title {
@@ -777,13 +788,13 @@
     }
 
     [data-theme="dark"] .brand-sub {
-      color: #a2b7ac;
+      color: #94a3b8;
     }
 
     [data-theme="dark"] .auth-required-pill {
-      background: #14382e;
-      border-color: #2a614e;
-      color: #d9f26c;
+      background: #0f2236;
+      border-color: rgba(0, 229, 255, 0.3);
+      color: #00e5ff;
     }
 
     [data-theme="dark"] .form-heading {
@@ -791,21 +802,21 @@
     }
 
     [data-theme="dark"] .form-desc {
-      color: #a2b7ac;
+      color: #94a3b8;
     }
 
     [data-theme="dark"] .flex-column > label {
-      color: #eaf3ee;
+      color: #f1f5f9;
     }
 
     [data-theme="dark"] .inputForm {
-      background-color: #12332a;
-      border-color: rgba(255, 255, 255, 0.14);
+      background-color: #0f2236;
+      border-color: rgba(0, 229, 255, 0.18);
       color: #ffffff;
     }
 
     [data-theme="dark"] .inputForm svg {
-      color: #a2b7ac;
+      color: #94a3b8;
     }
 
     [data-theme="dark"] .input {
@@ -813,71 +824,72 @@
     }
 
     [data-theme="dark"] .input::placeholder {
-      color: #6f8c7d;
+      color: #64748b;
     }
 
     [data-theme="dark"] .inputForm:focus-within {
-      border-color: #d9f26c;
-      box-shadow: 0 0 0 3px rgba(217, 242, 108, 0.18);
+      border-color: #00e5ff;
+      box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.22);
     }
 
     [data-theme="dark"] .eye-toggle-btn {
-      color: #a2b7ac !important;
+      color: #94a3b8 !important;
     }
 
     [data-theme="dark"] .eye-toggle-btn:hover {
-      color: #d9f26c !important;
+      color: #00e5ff !important;
     }
 
     [data-theme="dark"] .flex-row > div > label,
     [data-theme="dark"] .p {
-      color: #c4d7cc;
+      color: #cbd5e1;
     }
 
     [data-theme="dark"] .span {
-      color: #d9f26c;
+      color: #00e5ff;
     }
 
     [data-theme="dark"] .button-submit {
-      background-color: #d9f26c;
-      color: #0c2621;
-      font-weight: 700;
+      background: linear-gradient(135deg, #00e5ff, #0088ff);
+      color: #060d16;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35);
     }
 
     [data-theme="dark"] .button-submit:hover {
-      background-color: #e6f78a;
-      box-shadow: 0 6px 18px rgba(217, 242, 108, 0.28);
+      box-shadow: 0 6px 20px rgba(0, 229, 255, 0.55);
+      transform: translateY(-1px);
     }
 
     [data-theme="dark"] .guest-btn {
-      background: #14382e;
-      color: #d9f26c;
-      border-color: #2a614e;
+      background: #0f2236;
+      color: #00e5ff;
+      border-color: rgba(0, 229, 255, 0.3);
     }
 
     [data-theme="dark"] .guest-btn:hover {
-      background: #19463a;
-      border-color: #d9f26c;
+      background: #142e47;
+      border-color: #00e5ff;
     }
 
     [data-theme="dark"] .p.line {
-      color: #7d9688;
+      color: #64748b;
     }
 
     [data-theme="dark"] .p.line::before,
     [data-theme="dark"] .p.line::after {
-      background-color: rgba(255, 255, 255, 0.12);
+      background-color: rgba(0, 229, 255, 0.15);
     }
 
     [data-theme="dark"] .btn {
-      background-color: #12332a;
+      background-color: #0f2236;
       border-color: rgba(255, 255, 255, 0.12);
-      color: #eaf3ee;
+      color: #cbd5e1;
     }
 
     [data-theme="dark"] .btn:hover {
-      border-color: #d9f26c;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border-color: #00e5ff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
     [data-theme="dark"] .btn.google:hover {
       border-color: #4285f4;
@@ -889,47 +901,49 @@
     }
 
     [data-theme="dark"] .mandatory-note {
-      background: #102e25;
-      border-left-color: #d9f26c;
-      color: #d2e4d9;
+      background: #0f2236;
+      border-left-color: #00e5ff;
+      color: #cbd5e1;
     }
 
     [data-theme="dark"] .already-logged {
-      background: #14382e;
-      border-color: #2a614e;
-      color: #d9f26c;
+      background: #0f2236;
+      border-color: rgba(0, 229, 255, 0.3);
+      color: #00e5ff;
     }
 
     [data-theme="dark"] .back-home-link {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(0, 229, 255, 0.1);
+      border-color: rgba(0, 229, 255, 0.25);
+      color: #00e5ff;
     }
 
     [data-theme="dark"] .support-form-card {
-      background: #12332a;
-      border-color: rgba(255, 255, 255, 0.14);
+      background: #0f2236;
+      border-color: rgba(0, 229, 255, 0.16);
     }
 
     [data-theme="dark"] .support-form-card h3 {
-      color: #d9f26c;
+      color: #00e5ff;
     }
 
     [data-theme="dark"] .support-form-card p {
-      color: #a2b7ac;
+      color: #94a3b8;
     }
 
     [data-theme="dark"] .btn-otp {
-      background: #d9f26c;
-      color: #0c2621;
+      background: #00e5ff;
+      color: #060d16;
+      font-weight: 700;
     }
 
     [data-theme="dark"] .btn-otp:hover {
-      background: #e6f78a;
+      background: #38bdf8;
     }
 
     [data-theme="dark"] .btn-support-admin {
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #c4d7cc;
+      border-color: rgba(0, 229, 255, 0.25);
+      color: #cbd5e1;
     }
 
     [data-theme="dark"] .btn-support-admin:hover {
@@ -997,16 +1011,17 @@
       <p class="form-desc" id="formDesc">Đăng nhập tài khoản để đồng bộ thành tích học tập và BXH.</p>
     </div>
 
-    <!-- Trường Biệt danh / Họ tên (khi ở chế độ Đăng ký) -->
+    <!-- Trường Họ và tên (khi ở chế độ Đăng ký) -->
     <div class="flex-column" id="nameGroup" style="display:none">
-      <label for="displayName">Họ và tên / Biệt danh (BXH)</label>
+      <label for="displayName">Họ và tên thí sinh <span style="color:#ef4444">*</span></label>
       <div class="inputForm">
         <svg height="20" viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
-        <input type="text" id="displayName" class="input" placeholder="Ví dụ: Minh 12A5" maxlength="24">
+        <input type="text" id="displayName" class="input" placeholder="Ví dụ: Nguyễn Văn An" maxlength="24">
       </div>
+      <p style="font-size:11px;color:#d97706;margin:4px 0 0 2px;line-height:1.4">🔒 <strong>Lưu ý:</strong> Họ và tên sau khi đăng ký sẽ được giữ cố định vĩnh viễn và không thể thay đổi.</p>
     </div>
 
     <!-- Trường Email -->
@@ -1477,7 +1492,7 @@
             } else {
               location.href = redirect || 'index.html';
             }
-          }, 500);
+          }, 120);
           return;
         }
       } else {
@@ -1585,14 +1600,14 @@
             } else {
               location.href = redirect || 'index.html';
             }
-          }, 450);
+          }, 120);
         }
       } else {
         const displayName = document.getElementById('displayName').value.trim();
         if (!displayName) {
           window.AICheckLoader?.hide();
           errorMsg.style.color = '#c84f36';
-          errorMsg.textContent = 'Vui lòng nhập tên hoặc biệt danh để hiển thị trên BXH!';
+          errorMsg.textContent = 'Vui lòng nhập Họ và tên của bạn!';
           submitBtn.disabled = false;
           return;
         }
@@ -1618,7 +1633,7 @@
               const redirect = localStorage.getItem('aicheck:redirectAfterLogin');
               localStorage.removeItem('aicheck:redirectAfterLogin');
               location.href = redirect || 'index.html';
-            }, 600);
+            }, 150);
           } else {
             window.AICheckLoader?.hide();
             errorMsg.style.color = '#28744f';

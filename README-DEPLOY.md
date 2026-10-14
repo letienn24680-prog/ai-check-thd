@@ -43,10 +43,8 @@ Trước mỗi bài đánh giá 15 câu, học sinh phải chọn **Trước can
 
 Không nhập tên, lớp, email hoặc thông tin định danh học sinh. Bảng điểm công khai vẫn có thể bị giả mạo vì kết quả được gửi từ trình duyệt.
 
-## Lưu ý về BXH
+## Lưu ý về BXH & Họ và tên thí sinh
 
-Điểm mới được gửi lên Supabase để mọi người cùng xem; BXH nhận thay đổi qua Supabase Realtime và tự tải lại mỗi 20 giây làm phương án dự phòng. Nếu đã chạy schema trước khi bật Realtime cho BXH, hãy chạy lại `supabase/schema.sql` trong SQL Editor. Nếu Realtime không kết nối được, trang sẽ báo trạng thái và tiếp tục tự làm mới định kỳ. Khi Supabase chưa cấu hình hoặc mất kết nối, website vẫn lưu cục bộ. Kết quả cũ đang nằm trong trình duyệt **không tự chuyển** lên cơ sở dữ liệu. Bảng công khai dùng biệt danh và điểm cao nhất theo từng hoạt động. Vì trình duyệt gửi điểm, người dùng có thể giả mạo điểm; không dùng BXH này làm điểm chính thức. Muốn chống gian lận cần xác thực người dùng và xác minh/chấm điểm phía máy chủ.
+Điểm mới được gửi lên Supabase để mọi người cùng xem; BXH nhận thay đổi qua Supabase Realtime và tự tải lại mỗi 20 giây làm phương án dự phòng. Nếu đã chạy schema trước khi bật Realtime cho BXH, hãy chạy lại `supabase/schema.sql` trong SQL Editor. Nếu Realtime không kết nối được, trang sẽ báo trạng thái và tiếp tục tự làm mới định kỳ. Khi Supabase chưa cấu hình hoặc mất kết nối, website vẫn lưu cục bộ. Bảng xếp hạng hiển thị Họ và tên thí sinh và điểm số cao nhất theo từng hoạt động.
 
-Không nhập tên thật, lớp, email hay mã học sinh vào biệt danh. Bảng điểm có thể được mọi khách truy cập đọc.
-
-Biệt danh chỉ được đổi một lần mỗi 7 ngày; thời điểm đổi được giữ trong bộ nhớ của trình duyệt. Vì hiện chưa có đăng nhập tài khoản, giới hạn này chỉ áp dụng trên cùng trình duyệt/thiết bị và có thể bị đặt lại khi xóa dữ liệu trang hoặc đổi thiết bị. Muốn bảo đảm giới hạn theo từng người trên nhiều thiết bị, cần bổ sung tài khoản và kiểm tra thời hạn phía máy chủ.
+Họ và tên thí sinh được thiết lập khi đăng ký tài khoản hoặc cập nhật hồ sơ lần đầu. Sau khi đã nhập Họ và tên, hệ thống sẽ cố định vĩnh viễn và không thể thay đổi lại để đảm bảo tính minh bạch và chuẩn hóa dữ liệu báo cáo nghiên cứu.

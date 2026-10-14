@@ -541,45 +541,52 @@
     return guestName;
   }
 
-  const NAME_CHANGE_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
-
   function getPlayerNameState() {
     let name = "";
     try { name = JSON.parse(localStorage.getItem("aicheck:player") || "\"\""); } catch {}
-    if (!name) return { name: "", canChange: true, nextChangeAt: null, remainingMs: 0 };
-
-    let changedAt = Number(localStorage.getItem("aicheck:playerChangedAt"));
-    if (!Number.isFinite(changedAt) || changedAt <= 0) {
-      changedAt = Date.now();
-      localStorage.setItem("aicheck:playerChangedAt", String(changedAt));
+    if (!name) {
+      try {
+        const prof = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}");
+        if (prof?.display_name) name = prof.display_name;
+      } catch {}
     }
-    const nextChangeAt = changedAt + NAME_CHANGE_COOLDOWN_MS;
-    const remainingMs = Math.max(0, nextChangeAt - Date.now());
-    return { name, canChange: remainingMs === 0, nextChangeAt, remainingMs };
+    const cleanName = String(name || "").trim().slice(0, 24);
+    if (!cleanName) return { name: "", canChange: true, locked: false, nextChangeAt: null, remainingMs: 0 };
+
+    // Họ và tên đã được thiết lập -> CỐ ĐỊNH VĨNH VIỄN, KHÔNG THỂ THAY ĐỔI
+    return { name: cleanName, canChange: false, locked: true, nextChangeAt: null, remainingMs: 0 };
   }
 
   function savePlayerName(value) {
     const name = String(value || "").trim().slice(0, 24);
-    if (!name) return { saved: false, reason: "empty" };
+    if (!name) return { saved: false, reason: "empty", message: "Vui lòng nhập Họ và tên!" };
 
     const current = getPlayerNameState();
-    if (current.name && current.name.toLocaleLowerCase() === name.toLocaleLowerCase()) {
-      return { saved: true, changed: false, ...current };
-    }
-    if (current.name && !current.canChange) {
-      return { saved: false, reason: "cooldown", ...current };
+    if (current.name) {
+      if (current.name.toLocaleLowerCase() === name.toLocaleLowerCase()) {
+        return { saved: true, changed: false, ...current };
+      }
+      return {
+        saved: false,
+        reason: "locked",
+        message: "Họ và tên đã được thiết lập cố định và không thể thay đổi.",
+        ...current
+      };
     }
 
-    const changedAt = Date.now();
     localStorage.setItem("aicheck:player", JSON.stringify(name));
-    localStorage.setItem("aicheck:playerChangedAt", String(changedAt));
+    try {
+      const prof = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}");
+      prof.display_name = name;
+      localStorage.setItem("aicheck:user_profile", JSON.stringify(prof));
+    } catch {}
+
     return {
       saved: true,
       changed: true,
       name,
       canChange: false,
-      nextChangeAt: changedAt + NAME_CHANGE_COOLDOWN_MS,
-      remainingMs: NAME_CHANGE_COOLDOWN_MS
+      locked: true
     };
   }
 
@@ -734,21 +741,32 @@
   async function updateProfile(fields) {
     let current = {};
     try { current = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
+    let existingName = current.display_name || "";
+    if (!existingName) {
+      try { existingName = JSON.parse(localStorage.getItem("aicheck:player") || "\"\""); } catch {}
+    }
+
+    const safeFields = { ...fields };
+    // Nếu họ và tên đã được thiết lập từ trước, CỐ ĐỊNH và KHÔNG THAY ĐỔI
+    if (existingName && String(existingName).trim()) {
+      safeFields.display_name = String(existingName).trim();
+    }
+
     const updated = {
       ...current,
-      ...fields,
+      ...safeFields,
       updated_at: new Date().toISOString()
     };
 
     localStorage.setItem("aicheck:user_profile", JSON.stringify(updated));
-    if (fields.display_name) {
+    if (updated.display_name) {
       try {
-        localStorage.setItem("aicheck:player", JSON.stringify(fields.display_name.trim().slice(0, 24)));
+        localStorage.setItem("aicheck:player", JSON.stringify(updated.display_name.trim().slice(0, 24)));
       } catch {}
     }
-    if (fields.avatar) {
+    if (safeFields.avatar) {
       try {
-        localStorage.setItem("aicheck:avatar", fields.avatar);
+        localStorage.setItem("aicheck:avatar", safeFields.avatar);
       } catch {}
     }
 
@@ -760,11 +778,16 @@
       const user = await getUser();
       if (!user) return { data: updated, error: null, local: true };
 
+      const userExistingName = user.user_metadata?.display_name || existingName;
+      if (userExistingName && String(userExistingName).trim()) {
+        safeFields.display_name = String(userExistingName).trim();
+      }
+
       // 1. Cập nhật Auth user_metadata
       const { error: authErr } = await client.auth.updateUser({
         data: {
           ...(user.user_metadata || {}),
-          ...fields
+          ...safeFields
         }
       });
       if (authErr) console.warn("Lỗi updateUser Auth:", authErr);
@@ -774,12 +797,12 @@
         await client.from("user_profiles").upsert({
           id: user.id,
           email: user.email,
-          display_name: fields.display_name,
-          avatar: fields.avatar,
-          class_name: fields.class_name,
-          school: fields.school,
-          birthdate: fields.birthdate || null,
-          bio: fields.bio,
+          display_name: safeFields.display_name || userExistingName,
+          avatar: safeFields.avatar,
+          class_name: safeFields.class_name,
+          school: safeFields.school,
+          birthdate: safeFields.birthdate || null,
+          bio: safeFields.bio,
           updated_at: new Date().toISOString()
         });
       } catch (dbErr) {

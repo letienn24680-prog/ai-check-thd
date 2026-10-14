@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#163d35">
+  <meta name="theme-color" content="#060d16">
   <meta name="description" content="AI CHECK THĐ: Trạm học tập, thực hành 1.000+ tình huống và đánh giá năng lực kiểm chứng thông tin AI dành riêng cho học sinh THPT Trần Hưng Đạo.">
   <title>AI CHECK THĐ | Trạm Kiểm Chứng Thông Tin 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,18 +15,26 @@
   <style>
     .home-qr{display:flex;align-items:center;gap:12px;margin-top:24px;color:var(--forest);font-size:10px;font-weight:800}
     .home-qr img{width:76px;height:76px;padding:4px;background:white;border-radius:8px;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
-    [data-theme="dark"] .home-qr{color:#d9f26c}
+    [data-theme="dark"] .home-qr{color:#00e5ff}
     
     /* Metrics Counter Strip */
-    .metrics-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:28px 0 36px}
+    .metrics-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:28px 0 36px}
     .metric-card{padding:18px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);backdrop-filter:blur(10px);text-align:center;transition:transform .2s ease,border-color .2s ease}
     .metric-card:hover{transform:translateY(-3px);border-color:var(--leaf)}
-    [data-theme="dark"] .metric-card{background:rgba(13,34,28,.88);border-color:rgba(255,255,255,.1)}
+    [data-theme="dark"] .metric-card{background:rgba(11,23,38,.88);border-color:rgba(0,229,255,.16)}
     .metric-num{font:800 clamp(24px,3.5vw,36px)/1 "Space Grotesk",sans-serif;color:var(--forest);margin-bottom:4px}
-    [data-theme="dark"] .metric-num{color:#d9f26c}
+    [data-theme="dark"] .metric-num{color:#00e5ff}
     .metric-lbl{font-size:10.5px;color:var(--muted);font-weight:700}
     
-    @media(max-width:768px){.metrics-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:768px){
+      .metrics-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:20px 0 28px}
+      .metric-card{padding:14px 6px}
+      .metric-num{font-size:clamp(18px,5vw,26px)}
+      .metric-lbl{font-size:9px;line-height:1.3}
+    }
+    @media(max-width:340px){
+      .metrics-strip{grid-template-columns:1fr;gap:8px}
+    }
   </style>
 </head>
 <body>
@@ -100,10 +108,6 @@
         <div class="metric-card">
           <div class="metric-num">04</div>
           <div class="metric-lbl">TIÊU CHÍ RUBRIC NĂNG LỰC</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-num">100%</div>
-          <div class="metric-lbl">HỌC SINH THPT TRẦN HƯNG ĐẠO</div>
         </div>
       </div>
 
@@ -315,14 +319,55 @@
           if (u) {
             const displayName = localProf.display_name || u.user_metadata?.display_name || u.email?.split("@")[0] || defaultWarrior;
             if (nameEl) nameEl.textContent = isEn ? `Welcome back, ${displayName}!` : `Chào mừng em trở lại, ${displayName}!`;
-            if (statsEl) statsEl.textContent = localProf.bio ? `"${localProf.bio}"` : (isEn ? `You are at Level ${stats.level} (${stats.levelTitle}). Need ${stats.nextLevelXp - stats.xp} more XP to level up!` : `Em đang ở Cấp ${stats.level} (${stats.levelTitle}). Cần thêm ${stats.nextLevelXp - stats.xp} XP để thăng hạng!`);
           }
         });
       }
       if (playerName && nameEl) {
         nameEl.textContent = isEn ? `Welcome back, ${playerName}!` : `Chào mừng em trở lại, ${playerName}!`;
-        if (statsEl) statsEl.textContent = localProf.bio ? `"${localProf.bio}"` : (isEn ? `You are at Level ${stats.level} (${stats.levelTitle}). Keep up your streak!` : `Em đang ở Cấp ${stats.level} (${stats.levelTitle}). Tiếp tục chuỗi đúng nào!`);
       }
+
+      // Xoay đổi thông điệp sau dấu chấm chậm lại mỗi 5s (5000ms)
+      startStatsRotation(stats, isEn, localProf);
+    }
+
+    let statsRotationTimer = null;
+    let statsRotationIndex = 0;
+
+    function renderStatsRotatingText(stats, isEn, localProf) {
+      const statsEl = document.getElementById("homeUserStats");
+      if (!statsEl) return;
+      if (localProf && localProf.bio) {
+        statsEl.textContent = `"${localProf.bio}"`;
+        return;
+      }
+      const prefix = isEn
+        ? `You are at Level ${stats.level} (${stats.levelTitle}). `
+        : `Em đang ở Cấp ${stats.level} (${stats.levelTitle}). `;
+
+      const xpNeeded = Math.max(0, (stats.nextLevelXp || 0) - (stats.xp || 0));
+      const suffixes = isEn ? [
+        "Keep up your streak!",
+        `Need ${xpNeeded} more XP to level up!`,
+        "Practice daily to sharpen your AI verification skills!",
+        "Double-check sources before sharing news!"
+      ] : [
+        "Tiếp tục chuỗi đúng nào!",
+        `Cần thêm ${xpNeeded} XP để thăng hạng!`,
+        "Rèn luyện mỗi ngày để nâng cao kỹ năng kiểm chứng tin giả!",
+        "Kiểm chứng nguồn tin đa chiều trước khi chia sẻ!"
+      ];
+
+      const suffix = suffixes[statsRotationIndex % suffixes.length];
+      statsEl.textContent = prefix + suffix;
+    }
+
+    function startStatsRotation(stats, isEn, localProf) {
+      if (statsRotationTimer) clearInterval(statsRotationTimer);
+      renderStatsRotatingText(stats, isEn, localProf);
+      statsRotationTimer = setInterval(() => {
+        statsRotationIndex++;
+        renderStatsRotatingText(stats, isEn, localProf);
+      }, 5000);
     }
 
     // Mở modal hồ sơ khi click vào dải thông tin người dùng ở trang chủ

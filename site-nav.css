@@ -1,4 +1,16 @@
 /* ==========================================================================
+   TRIỆT TIÊU ĐỘ TRỄ 300MS TRÊN THIẾT BỊ DI ĐỘNG & MÀN HÌNH CẢM ỨNG
+   ========================================================================== */
+html, body, button, a, input, select, textarea, label, [role="button"], [role="tab"],
+.button, .choice, .tab, .leader-tab, .score-act-tab, .mode-button, .start-card,
+.portal-link, .nav-item, .filter, .filter-chip, .exam-radio-item, .exam-palette-btn,
+.exam-app-submit-btn, .exam-bottom-action-btn, .pill-btn, .bento-card, .rubric-card,
+.exam-select-card, .brand .brand-mark {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
    HEADER BRAND & LOGO (ẨN CHỮ, CHỈ GIỮ LẠI ICON "AI" TRÊN CẢ PC VÀ MOBILE)
    ========================================================================== */
 .brand-name,
@@ -228,18 +240,18 @@
   background: rgba(217, 242, 108, 0.35);
 }
 [data-theme="dark"] .nav-gamify-pill {
-  background: rgba(217, 242, 108, 0.12);
-  border-color: rgba(217, 242, 108, 0.3);
-  color: #d9f26c;
+  background: rgba(0, 229, 255, 0.12);
+  border-color: rgba(0, 229, 255, 0.3);
+  color: #00e5ff;
 }
 [data-theme="dark"] .nav-user-pill {
-  background: #11342b;
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #e6f3eb;
+  background: #0b1726;
+  border-color: rgba(0, 229, 255, 0.25);
+  color: #f1f5f9;
 }
 [data-theme="dark"] .nav-user-pill:hover {
-  background: #19463a;
-  border-color: rgba(217, 242, 108, 0.3);
+  background: #0f2236;
+  border-color: #00e5ff;
 }
 
 /* ==========================================================================
@@ -279,9 +291,9 @@
 }
 
 [data-theme="dark"] .header-inner .site-nav.is-open {
-  background: #0d2821 !important;
-  border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(217, 242, 108, 0.15);
+  background: #09131f !important;
+  border-color: rgba(0, 229, 255, 0.25);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 229, 255, 0.12);
 }
 
 @keyframes nav-flyout-in {
@@ -372,8 +384,8 @@
   box-shadow: 0 3px 10px rgba(22, 61, 53, 0.08);
 }
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-login-tab {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.14), rgba(22, 61, 53, 0.55)) !important;
-  border-color: rgba(217, 242, 108, 0.28) !important;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(15, 34, 54, 0.7)) !important;
+  border-color: rgba(0, 229, 255, 0.35) !important;
   color: #ffffff !important;
 }
 
@@ -407,19 +419,19 @@
   box-shadow: 0 2px 8px rgba(217, 242, 108, 0.25);
 }
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-tile {
-  background: #11342a !important;
+  background: #0f2236 !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  color: #e4eee8 !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  color: #cbd5e1 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-tile:hover {
-  background: #174236 !important;
-  border-color: rgba(217, 242, 108, 0.35) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  background: #142e47 !important;
+  border-color: rgba(0, 229, 255, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 [data-theme="dark"] .header-inner .site-nav a.site-nav-link.site-nav-tile[aria-current="page"] {
-  background: linear-gradient(135deg, rgba(217, 242, 108, 0.2), rgba(18, 59, 50, 0.75)) !important;
-  border-color: #d9f26c !important;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.22), rgba(15, 34, 54, 0.85)) !important;
+  border-color: #00e5ff !important;
   color: #ffffff !important;
 }
 
@@ -555,9 +567,11 @@
 @media (max-width: 680px) {
   html, body {
     max-width: 100vw !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
   }
   .site-header {
+    position: sticky !important;
+    top: 0 !important;
     width: 100% !important;
     max-width: 100vw !important;
     overflow: visible !important;
@@ -791,10 +805,10 @@
   transform: translateY(0) scale(1);
 }
 [data-theme="dark"] .profile-modal-card {
-  background: #0d2620;
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #f0f7f3;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: #0b1726;
+  border-color: rgba(0, 229, 255, 0.2);
+  color: #cbd5e1;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 229, 255, 0.12);
 }
 
 /* 3. Modal Header */
@@ -1002,13 +1016,13 @@
   box-shadow: 0 0 0 2px var(--color-leaf);
 }
 [data-theme="dark"] .profile-emoji-btn {
-  background: #112d25;
-  border-color: rgba(255, 255, 255, 0.12);
+  background: #0f2236;
+  border-color: rgba(0, 229, 255, 0.14);
 }
 [data-theme="dark"] .profile-emoji-btn.is-selected {
-  background: #184436;
-  border-color: #d9f26c;
-  box-shadow: 0 0 0 2px #d9f26c;
+  background: rgba(0, 229, 255, 0.15);
+  border-color: #00e5ff;
+  box-shadow: 0 0 0 2px #00e5ff;
 }
 .profile-avatar-custom-link {
   font-size: 10px;
@@ -1178,13 +1192,13 @@
   border-style: dashed;
 }
 [data-theme="dark"] .profile-input, [data-theme="dark"] .profile-textarea {
-  background: #112d25 !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
+  background: #0f2236 !important;
+  border-color: rgba(0, 229, 255, 0.18) !important;
   color: #ffffff !important;
 }
 [data-theme="dark"] .profile-input[readonly] {
-  background: rgba(0, 0, 0, 0.25) !important;
-  color: #8da499 !important;
+  background: rgba(6, 13, 22, 0.6) !important;
+  color: #94a3b8 !important;
 }
 .profile-textarea {
   resize: vertical;
@@ -1262,7 +1276,7 @@ select.profile-input option {
   color: #123e35;
 }
 [data-theme="dark"] select.profile-input option {
-  background: #0d2620;
+  background: #0b1726;
   color: #ffffff;
 }
 .btn-save-profile {
@@ -1370,193 +1384,113 @@ select.profile-input option {
 }
 
 /* ==========================================================================
-   3D CUBE LOADING COMPONENT (From Uiverse.io by dexter-st)
+   CYBER NODE SERVER LOADER (From Uiverse.io by Juanes200122)
    Tích hợp làm Preloader toàn trang & Bộ điều khiển Loading linh hoạt
    ========================================================================== */
-.wrapper-grid {
-  --animation-duration: 2.1s;
-  --cube-color: #0000;
-  --highlight-color: #00cc44;
-  --cube-width: 48px;
-  --cube-height: 48px;
-  --font-size: 1.8em;
-
-  position: relative;
-  inset: 0;
-
-  display: grid;
-  grid-template-columns: repeat(7, var(--cube-width));
-  grid-template-rows: auto;
-  grid-gap: 0;
-
-  width: calc(7 * var(--cube-width));
-  height: var(--cube-height);
-  perspective: 350px;
-
-  font-family: "Space Grotesk", "Poppins", sans-serif;
-  font-size: var(--font-size);
-  font-weight: 800;
-  color: transparent;
+#svg-global, .svg-global {
+  zoom: 1.2;
+  overflow: visible;
+  display: block;
 }
 
-.cube {
-  position: relative;
-  transform-style: preserve-3d;
-}
-
-.face {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--cube-width);
-  height: var(--cube-height);
-  background-color: var(--cube-color);
-}
-.face-left,
-.face-right,
-.face-back,
-.face-front {
-  box-shadow:
-    inset 0 0 2px 1px #0001,
-    inset 0 0 12px 1px #fff1;
-}
-.face-front {
-  transform: rotateY(0deg) translateZ(calc(var(--cube-width) / 2));
-}
-.face-back {
-  transform: rotateY(180deg) translateZ(calc(var(--cube-width) / 2));
-  opacity: 0.6;
-}
-.face-left {
-  transform: rotateY(-90deg) translateZ(calc(var(--cube-width) / 2));
-  opacity: 0.6;
-}
-.face-right {
-  transform: rotateY(90deg) translateZ(calc(var(--cube-width) / 2));
-  opacity: 0.6;
-}
-.face-top {
-  height: var(--cube-width);
-  transform: rotateX(90deg) translateZ(calc(var(--cube-width) / 2));
-  opacity: 0.8;
-}
-.face-bottom {
-  height: var(--cube-width);
-  transform: rotateX(-90deg)
-    translateZ(calc(var(--cube-height) - var(--cube-width) * 0.5));
-  opacity: 0.8;
-}
-
-.cube:nth-child(1) {
-  z-index: 0;
-  animation-delay: 0s;
-}
-.cube:nth-child(2) {
-  z-index: 1;
-  animation-delay: 0.2s;
-}
-.cube:nth-child(3) {
-  z-index: 2;
-  animation-delay: 0.4s;
-}
-.cube:nth-child(4) {
-  z-index: 3;
-  animation-delay: 0.6s;
-}
-.cube:nth-child(5) {
-  z-index: 2;
-  animation-delay: 0.8s;
-}
-.cube:nth-child(6) {
-  z-index: 1;
-  animation-delay: 1s;
-}
-.cube:nth-child(7) {
-  z-index: 0;
-  animation-delay: 1.2s;
-}
-
-.cube {
-  animation: translate-z var(--animation-duration) ease-in-out infinite;
-}
-.cube .face {
-  animation:
-    face-color var(--animation-duration) ease-in-out infinite,
-    /* face-glow var(--animation-duration) ease-in-out infinite, */ edge-glow
-      var(--animation-duration) ease-in-out infinite;
-  animation-delay: inherit;
-}
-.cube .face.face-front {
-  animation:
-    face-color var(--animation-duration) ease-in-out infinite,
-    face-glow var(--animation-duration) ease-in-out infinite,
-    edge-glow var(--animation-duration) ease-in-out infinite;
-  animation-delay: inherit;
-}
-
-@keyframes translate-z {
+@keyframes fade-particles {
   0%,
-  40%,
   100% {
-    transform: translateZ(-2px);
+    opacity: 1;
   }
-  30% {
-    transform: translateZ(16px) translateY(-1px);
+  50% {
+    opacity: 0.5;
   }
 }
-@keyframes face-color {
-  0%,
-  50%,
-  100% {
-    background-color: var(--cube-color);
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
   }
   10% {
-    background-color: var(--highlight-color);
+    opacity: 1;
   }
-}
-@keyframes face-glow {
-  0%,
-  50%,
   100% {
-    color: #fff0;
-    filter: none;
-  }
-  30% {
-    color: #fff;
-    filter: drop-shadow(0 14px 10px var(--highlight-color));
-  }
-}
-@keyframes edge-glow {
-  0%,
-  40%,
-  100% {
-    box-shadow:
-      inset 0 0 2px 1px #0001,
-      inset 0 0 12px 1px #fff1;
-  }
-  30% {
-    box-shadow: 0 0 2px 0px var(--highlight-color);
+    transform: translateY(-40px);
+    opacity: 0;
   }
 }
 
-/* Mobile Responsive Scaling */
-@media (max-width: 480px) {
-  .wrapper-grid {
-    --cube-width: 38px;
-    --cube-height: 38px;
-    --font-size: 1.4em;
-  }
+#particles, .loader-particles {
+  animation: fade-particles 5s infinite alternate;
 }
-@media (max-width: 350px) {
-  .wrapper-grid {
-    --cube-width: 32px;
-    --cube-height: 32px;
-    --font-size: 1.2em;
+.particle {
+  animation: floatUp linear infinite;
+}
+
+.p1 {
+  animation-duration: 2.2s;
+  animation-delay: 0s;
+}
+.p2 {
+  animation-duration: 2.5s;
+  animation-delay: 0.3s;
+}
+.p3 {
+  animation-duration: 2s;
+  animation-delay: 0.6s;
+}
+.p4 {
+  animation-duration: 2.8s;
+  animation-delay: 0.2s;
+}
+.p5 {
+  animation-duration: 2.3s;
+  animation-delay: 0.4s;
+}
+.p6 {
+  animation-duration: 3s;
+  animation-delay: 0.1s;
+}
+.p7 {
+  animation-duration: 2.1s;
+  animation-delay: 0.5s;
+}
+.p8 {
+  animation-duration: 2.6s;
+  animation-delay: 0.2s;
+}
+.p9 {
+  animation-duration: 2.4s;
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce-lines {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
   }
 }
 
-/* Fullscreen Loader / Preloader Overlay */
+#line-v1,
+#line-v2,
+#node-server,
+#panel-rigth,
+#reflectores,
+#particles {
+  animation: bounce-lines 3s ease-in-out infinite alternate;
+}
+#line-v2 {
+  animation-delay: 0.2s;
+}
+
+#node-server,
+#panel-rigth,
+#reflectores,
+#particles {
+  animation-delay: 0.4s;
+}
+
+/* Fullscreen Loader / Preloader Overlay - Tối ưu siêu tốc, triệt tiêu độ trễ */
 .site-loader-overlay {
   position: fixed;
   inset: 0;
@@ -1565,12 +1499,12 @@ select.profile-input option {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(6, 20, 16, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(6, 13, 22, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
   visibility: hidden;
 }
 .site-loader-overlay.is-active {
@@ -1579,12 +1513,13 @@ select.profile-input option {
   visibility: visible;
 }
 .site-loader-message {
-  margin-top: 26px;
+  margin-top: 28px;
   font: 700 13px "Space Grotesk", sans-serif;
-  color: #e4fb7f;
+  color: #00e5ff;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
   animation: loader-pulse 1.6s ease-in-out infinite;
 }
 @keyframes loader-pulse {
@@ -1844,13 +1779,16 @@ select.profile-input option {
    HỆ THỐNG CHUÔNG THÔNG BÁO VÀ TIN NHẮN QUẢN TRỊ (NOTIFICATION SYSTEM)
    ========================================================================== */
 .nav-notif-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   border: 1px solid var(--line);
   background: #ffffff;
   color: var(--forest);
@@ -1858,9 +1796,10 @@ select.profile-input option {
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(16, 45, 40, 0.05);
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  padding: 0;
-  flex: none;
+  padding: 0 !important;
+  flex: none !important;
   margin: 0 2px;
+  box-sizing: border-box !important;
 }
 .nav-notif-btn:hover {
   background: #eaf2e8;
@@ -1890,16 +1829,16 @@ select.profile-input option {
   50% { transform: scale(1.18); }
 }
 [data-theme="dark"] .nav-notif-btn {
-  background: #11342b;
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #d9f26c;
+  background: #0f2236;
+  border-color: rgba(0, 229, 255, 0.25);
+  color: #00e5ff;
 }
 [data-theme="dark"] .nav-notif-btn:hover {
-  background: #19463a;
-  border-color: rgba(217, 242, 108, 0.4);
+  background: #142e47;
+  border-color: #00e5ff;
 }
 [data-theme="dark"] .nav-notif-btn .notif-badge {
-  border-color: #071713;
+  border-color: #060d16;
 }
 
 /* Dropdown / Modal Thông báo */
@@ -2023,24 +1962,24 @@ select.profile-input option {
   background: var(--leaf);
 }
 [data-theme="dark"] .notif-dropdown {
-  background: #0d2620;
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  background: #0b1726;
+  border-color: rgba(0, 229, 255, 0.2);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
 }
 [data-theme="dark"] .notif-header {
-  background: #11342b;
-  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: #08121e;
+  border-bottom-color: rgba(0, 229, 255, 0.12);
 }
 [data-theme="dark"] .notif-header h4 {
-  color: #e6f3eb;
+  color: #ffffff;
 }
 [data-theme="dark"] .notif-card {
-  background: #112e26;
-  border-color: rgba(255, 255, 255, 0.08);
+  background: #0f2236;
+  border-color: rgba(0, 229, 255, 0.12);
 }
 [data-theme="dark"] .notif-card.unread {
-  background: #14382f;
-  border-color: #3ec888;
+  background: #142e47;
+  border-color: #00e5ff;
 }
 [data-theme="dark"] .notif-title {
   color: #ffffff;

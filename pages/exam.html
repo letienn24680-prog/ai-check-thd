@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="theme-color" content="#163d35">
+  <meta name="theme-color" content="#060d16">
   <title>Phòng Làm Bài Tập & Thi Trực Tuyến | AI CHECK THĐ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -15,6 +15,7 @@
   <style>
     /* =========================================================================
        GIAO DIỆN ĐỒNG BỘ VỚI WEBSITE AI CHECK THĐ
+       Chuẩn hóa Dark / Light Mode nhất quán 100%
        ========================================================================= */
     .identity-row {
       display: grid;
@@ -24,18 +25,18 @@
       margin-bottom: 24px;
       padding: 16px 20px;
       background: #ffffff;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(18, 59, 50, 0.12);
       border-radius: 8px;
-      box-shadow: 0 4px 14px rgba(16, 45, 40, .04);
+      box-shadow: 0 4px 14px rgba(18, 59, 50, 0.05);
     }
     .name-cooldown {
       grid-column: 1 / -1;
       margin: 4px 0 0;
       font-size: 11px;
-      color: #65736b;
+      color: #64748b;
     }
 
-    /* MÀN HÌNH DANH SÁCH CHỌN BÀI THI (TINH GỌN - ẢNH 1) */
+    /* MÀN HÌNH DANH SÁCH CHỌN BÀI THI (TINH GỌN) */
     .exam-catalog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -45,7 +46,7 @@
 
     .exam-select-card {
       background: #ffffff;
-      border: 1px solid #dce7dc;
+      border: 1px solid rgba(18, 59, 50, 0.12);
       border-radius: 12px;
       padding: 14px 16px;
       display: flex;
@@ -53,14 +54,14 @@
       justify-content: space-between;
       cursor: pointer;
       transition: transform .2s, border-color .2s, box-shadow .2s;
-      box-shadow: 0 3px 10px rgba(16, 45, 40, .04);
+      box-shadow: 0 4px 16px rgba(18, 59, 50, 0.06);
       position: relative;
     }
 
     .exam-select-card:hover {
       transform: translateY(-2px);
-      border-color: var(--forest);
-      box-shadow: 0 8px 20px rgba(16, 45, 40, .08);
+      border-color: #24724f;
+      box-shadow: 0 8px 24px rgba(36, 114, 79, 0.15);
     }
 
     .exam-select-card-header {
@@ -73,12 +74,12 @@
     .exam-select-card h3 {
       margin: 0 0 6px;
       font: 700 15px/1.3 "Space Grotesk", sans-serif;
-      color: var(--forest);
+      color: #132a24;
     }
 
     .exam-select-card p {
       margin: 0 0 10px;
-      color: var(--muted);
+      color: #5a6e64;
       font-size: 11.5px;
       line-height: 1.45;
       display: -webkit-box;
@@ -99,20 +100,33 @@
       align-items: center;
       gap: 4px;
       padding: 3px 8px;
-      background: #eef5ee;
+      background: rgba(36, 114, 79, 0.1);
+      border: 1px solid rgba(36, 114, 79, 0.22);
       border-radius: 5px;
       font-size: 10.5px;
       font-weight: 700;
-      color: #1e593a;
+      color: #24724f;
     }
 
-    /* MÀN HÌNH CHUẨN BỊ (LOBBY - TINH GỌN - ẢNH 2) */
+    .badge-pass-score {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: rgba(3, 105, 161, 0.2);
+    }
+
+    .tag-exam-category {
+      background: #eaf2e8;
+      color: #286947;
+      font-weight: 800;
+    }
+
+    /* MÀN HÌNH CHUẨN BỊ (LOBBY - TINH GỌN) */
     .exam-lobby-box {
       background: #ffffff;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(18, 59, 50, 0.12);
       border-radius: 12px;
       padding: 18px 20px;
-      box-shadow: 0 4px 16px rgba(16, 45, 40, .05);
+      box-shadow: 0 10px 30px rgba(18, 59, 50, 0.08);
       margin-top: 8px;
       max-width: 760px;
       margin-left: auto;
@@ -126,13 +140,13 @@
       gap: 12px;
       margin-bottom: 12px;
       padding-bottom: 10px;
-      border-bottom: 1px solid #edf2ed;
+      border-bottom: 1px solid rgba(18, 59, 50, 0.12);
     }
 
     .lobby-exam-title {
       margin: 4px 0 2px;
       font: 700 18px/1.3 "Space Grotesk", sans-serif;
-      color: var(--forest);
+      color: #132a24;
     }
 
     /* 4 Ô THỐNG KÊ (4 CỘT TRÊN PC, 2X2 TRÊN MOBILE) */
@@ -144,8 +158,8 @@
     }
 
     .exam-info-box {
-      background: #f7faf7;
-      border: 1px solid #dce8db;
+      background: #f8fafc;
+      border: 1px solid rgba(18, 59, 50, 0.1);
       border-radius: 8px;
       padding: 8px 12px;
       box-sizing: border-box;
@@ -154,7 +168,7 @@
     .exam-info-box span {
       display: block;
       font-size: 9.5px;
-      color: var(--muted);
+      color: #5a6e64;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.3px;
@@ -166,7 +180,7 @@
       font-family: "Space Grotesk", sans-serif;
       font-size: 14.5px;
       font-weight: 700;
-      color: var(--forest);
+      color: #24724f;
     }
 
     /* HỘP QUY CHẾ THI TINH GỌN */
@@ -193,7 +207,7 @@
       margin: 0;
       padding-left: 16px;
       font-size: 11px;
-      color: #78350f;
+      color: #92400e;
       line-height: 1.5;
     }
 
@@ -202,7 +216,7 @@
     }
 
     /* =========================================================================
-       GIAO DIỆN LÀM BÀI TRẮC NGHIỆM CHUẨN ẢNH 5 (MOBILE APP STYLE)
+       GIAO DIỆN LÀM BÀI TRẮC NGHIỆM (MOBILE APP STYLE)
        ========================================================================= */
     .exam-app-header {
       position: fixed;
@@ -210,19 +224,20 @@
       left: 0;
       right: 0;
       height: 52px;
-      background: #3054f4;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 12px;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(48, 84, 244, 0.2);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
 
     .exam-app-header-btn {
       background: transparent;
       border: none;
-      color: #ffffff;
+      color: #24724f;
       width: 38px;
       height: 38px;
       display: flex;
@@ -231,17 +246,18 @@
       cursor: pointer;
       padding: 0;
       border-radius: 8px;
-      transition: background 0.15s;
+      transition: background 0.15s, color 0.15s;
     }
 
     .exam-app-header-btn:hover {
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(36, 114, 79, 0.1);
+      color: #123b32;
     }
 
     .exam-app-header-title {
       flex: 1;
       text-align: center;
-      color: #ffffff;
+      color: #0f172a;
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
       font-size: 13.5px;
@@ -260,64 +276,69 @@
       left: 0;
       right: 0;
       z-index: 999;
-      background: #3054f4;
+      background: #f8fafc;
     }
 
     .exam-app-subbar {
       max-width: 680px;
       margin: 0 auto;
       background: #ffffff;
-      border-radius: 22px 22px 0 0;
+      border: 1px solid #e2e8f0;
+      border-bottom: none;
+      border-radius: 20px 20px 0 0;
       padding: 12px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     }
 
     .exam-app-timer {
       display: flex;
       align-items: center;
       gap: 10px;
+      color: #0284c7;
     }
 
     .exam-app-timer-text {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
       font-size: 19px;
-      color: #334155;
+      color: #0284c7;
       letter-spacing: 1px;
     }
 
     .exam-app-timer-text.urgent {
-      color: #ef4444;
+      color: #ff4d6d;
+      text-shadow: 0 0 12px rgba(255, 77, 109, 0.5);
       animation: pulseAlert 1s infinite;
     }
 
     .exam-app-submit-btn {
-      background: #3054f4;
+      background: linear-gradient(135deg, #24724f, #123b32);
       color: #ffffff;
       border: none;
       border-radius: 10px;
       font-family: "Space Grotesk", sans-serif;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.5px;
       padding: 9px 22px;
       cursor: pointer;
       transition: all 0.2s;
-      box-shadow: 0 4px 12px rgba(48, 84, 244, 0.25);
+      box-shadow: 0 4px 14px rgba(36, 114, 79, 0.25);
     }
 
     .exam-app-submit-btn:hover {
-      background: #2344dc;
+      box-shadow: 0 6px 20px rgba(36, 114, 79, 0.4);
       transform: translateY(-1px);
     }
 
     /* Vùng hiển thị câu hỏi */
     .exam-app-session-container {
       min-height: 100vh;
-      background: #ffffff;
+      background: #f8fafc;
+      background-image: radial-gradient(circle at 50% 15%, rgba(36, 114, 79, 0.05) 0%, transparent 65%);
       padding-top: 120px;
       padding-bottom: 76px;
       box-sizing: border-box;
@@ -326,22 +347,26 @@
     .exam-app-content {
       max-width: 680px;
       margin: 0 auto;
-      padding: 16px 20px 30px;
+      padding: 22px 20px 28px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     }
 
     .exam-app-q-title {
-      font-size: 15.5px;
+      font-size: 16px;
       font-weight: 700;
-      color: #1e293b;
-      line-height: 1.55;
+      color: #0f172a;
+      line-height: 1.6;
       margin-bottom: 22px;
     }
 
-    /* Danh sách 4 lựa chọn trắc nghiệm dạng radio tròn chuẩn Ảnh 5 */
+    /* Danh sách 4 lựa chọn trắc nghiệm */
     .exam-app-radio-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .exam-radio-item {
@@ -349,10 +374,18 @@
       align-items: flex-start;
       gap: 14px;
       cursor: pointer;
-      padding: 6px 4px;
+      padding: 12px 14px;
       user-select: none;
-      transition: background 0.15s;
-      border-radius: 8px;
+      transition: all 0.2s ease;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+    }
+
+    .exam-radio-item:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
     .exam-radio-circle {
@@ -371,13 +404,19 @@
     }
 
     .exam-radio-item:hover .exam-radio-circle {
-      border-color: #94a3b8;
+      border-color: #24724f;
+    }
+
+    .exam-radio-item.selected {
+      background: rgba(36, 114, 79, 0.08) !important;
+      border-color: #24724f !important;
+      box-shadow: 0 0 12px rgba(36, 114, 79, 0.15) !important;
     }
 
     .exam-radio-item.selected .exam-radio-circle {
-      border-color: #3054f4;
-      background: #3054f4;
-      box-shadow: inset 0 0 0 4px #ffffff;
+      border-color: #24724f;
+      background: #24724f;
+      box-shadow: inset 0 0 0 3.5px #ffffff;
     }
 
     .exam-radio-text {
@@ -388,28 +427,36 @@
     }
 
     .exam-radio-item.selected .exam-radio-text {
-      color: #1e293b;
-      font-weight: 500;
+      color: #0f172a;
+      font-weight: 600;
     }
 
     /* Hiển thị kết quả trong Chế độ xem lại (Review mode) */
+    .exam-radio-item.review-correct {
+      background: #ecfdf5 !important;
+      border-color: #10b981 !important;
+    }
     .exam-radio-item.review-correct .exam-radio-circle {
       border-color: #10b981 !important;
       background: #10b981 !important;
-      box-shadow: inset 0 0 0 4px #ffffff !important;
+      box-shadow: inset 0 0 0 3.5px #ffffff !important;
     }
     .exam-radio-item.review-correct .exam-radio-text {
-      color: #065f46 !important;
+      color: #047857 !important;
       font-weight: 600 !important;
     }
 
+    .exam-radio-item.review-wrong {
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+    }
     .exam-radio-item.review-wrong .exam-radio-circle {
       border-color: #ef4444 !important;
       background: #ef4444 !important;
-      box-shadow: inset 0 0 0 4px #ffffff !important;
+      box-shadow: inset 0 0 0 3.5px #ffffff !important;
     }
     .exam-radio-item.review-wrong .exam-radio-text {
-      color: #991b1b !important;
+      color: #b91c1c !important;
     }
 
     .review-verdict-pill {
@@ -427,15 +474,15 @@
     .review-explanation-box {
       margin-top: 18px;
       padding: 12px 16px;
-      background: #f0fdf4;
+      background: #ecfdf5;
       border-left: 4px solid #10b981;
-      border-radius: 6px;
-      font-size: 12.5px;
-      color: #166534;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #065f46;
       line-height: 1.55;
     }
 
-    /* Thanh điều hướng dưới đáy cố định chuẩn Ảnh 5 */
+    /* Thanh điều hướng dưới đáy cố định */
     .exam-app-bottom-bar {
       position: fixed;
       bottom: 0;
@@ -445,7 +492,7 @@
       background: #ffffff;
       border-top: 1px solid #e2e8f0;
       padding: 10px 16px;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
     }
 
     .exam-app-bottom-inner {
@@ -461,9 +508,9 @@
       width: 58px;
       height: 42px;
       border-radius: 10px;
-      border: 1.5px solid #cbd5e1;
+      border: 1px solid #cbd5e1;
       background: #f8fafc;
-      color: #3054f4;
+      color: #24724f;
       font-size: 26px;
       font-weight: 400;
       line-height: 1;
@@ -476,8 +523,9 @@
     }
 
     .exam-app-nav-btn:hover:not(:disabled) {
-      border-color: #3054f4;
-      background: #eef2ff;
+      border-color: #24724f;
+      background: #f1f5f9;
+      color: #123b32;
     }
 
     .exam-app-nav-btn:disabled {
@@ -489,9 +537,9 @@
       flex: 1;
       height: 42px;
       border-radius: 10px;
-      border: 1.5px solid #a5b4fc;
-      background: #eef2ff;
-      color: #3054f4;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #24724f;
       font-family: "Space Grotesk", sans-serif;
       font-size: 13.5px;
       font-weight: 700;
@@ -504,15 +552,16 @@
     }
 
     .exam-app-palette-trigger:hover {
-      background: #e0e7ff;
-      border-color: #6366f1;
+      background: #f1f5f9;
+      border-color: #24724f;
+      color: #123b32;
     }
 
     /* Modal / Bottom Sheet Danh sách câu hỏi */
     .palette-sheet-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.45);
       z-index: 2000;
       display: flex;
       align-items: flex-end;
@@ -523,6 +572,7 @@
 
     .palette-sheet-box {
       background: #ffffff;
+      border: 1px solid #e2e8f0;
       width: 100%;
       max-width: 600px;
       border-radius: 20px 20px 0 0;
@@ -530,7 +580,7 @@
       max-height: 80vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.12);
       animation: slideUpSheet 0.25s ease-out;
     }
 
@@ -545,7 +595,7 @@
       align-items: center;
       margin-bottom: 12px;
       padding-bottom: 10px;
-      border-bottom: 1px solid #edf2ed;
+      border-bottom: 1px solid #e2e8f0;
     }
 
     .palette-sheet-title {
@@ -558,7 +608,7 @@
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
       font-size: 15px;
-      color: #1e293b;
+      color: #0f172a;
     }
 
     .palette-sheet-title small {
@@ -575,6 +625,10 @@
       cursor: pointer;
       padding: 4px 8px;
       border-radius: 6px;
+      transition: color 0.15s;
+    }
+    .palette-sheet-close:hover {
+      color: #0f172a;
     }
 
     .palette-grid-scroll {
@@ -591,7 +645,7 @@
 
     .q-grid-item {
       aspect-ratio: 1;
-      border: 1.5px solid #cbd5e1;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
       background: #f8fafc;
       color: #334155;
@@ -606,20 +660,24 @@
     }
 
     .q-grid-item:hover {
-      border-color: #3054f4;
+      border-color: #24724f;
+      color: #123b32;
+      background: #f1f5f9;
       transform: scale(1.04);
     }
 
     .q-grid-item.active {
-      border-color: #3054f4;
-      box-shadow: 0 0 0 2.5px #3054f4;
+      border-color: #24724f;
+      box-shadow: 0 0 0 2.5px rgba(36, 114, 79, 0.4);
+      color: #123b32;
       font-weight: 800;
     }
 
     .q-grid-item.answered {
-      background: #3054f4;
+      background: linear-gradient(135deg, #24724f, #123b32);
       color: #ffffff;
-      border-color: #3054f4;
+      font-weight: 800;
+      border-color: #123b32;
     }
 
     .q-grid-item.review-correct {
@@ -640,7 +698,7 @@
       gap: 12px;
       margin-bottom: 12px;
       padding-bottom: 10px;
-      border-bottom: 1px solid #edf2ed;
+      border-bottom: 1px solid #e2e8f0;
       font-size: 11px;
       color: #64748b;
     }
@@ -656,44 +714,56 @@
       height: 10px;
       border-radius: 3px;
     }
+    .legend-answered {
+      background: linear-gradient(135deg, #24724f, #123b32);
+    }
+    .legend-unanswered {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+    }
+    .legend-active {
+      border: 2px solid #24724f;
+    }
 
-    /* MÀN HÌNH TỔNG KẾT KẾT QUẢ (TINH GỌN - ẢNH 4) */
+    /* MÀN HÌNH TỔNG KẾT KẾT QUẢ (TINH GỌN) */
     .result-summary-box {
       background: #ffffff;
-      border: 1px solid var(--line);
+      border: 1px solid #e2e8f0;
       border-radius: 14px;
       padding: 22px 18px;
       text-align: center;
-      box-shadow: 0 4px 16px rgba(16, 45, 40, .05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       max-width: 640px;
       margin: 12px auto;
+      color: #0f172a;
     }
 
     .score-circle {
       width: 88px;
       height: 88px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #102d28, #1f574b);
+      background: #f0fdf4;
+      border: 2px solid #24724f;
       margin: 10px auto 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(16, 45, 40, 0.15);
+      color: #123b32;
+      box-shadow: 0 4px 18px rgba(36, 114, 79, 0.15);
     }
 
     .score-circle-num {
       font-family: "Space Grotesk", sans-serif;
       font-size: 32px;
       font-weight: 800;
-      color: var(--lime);
+      color: #24724f;
       line-height: 1;
     }
 
     .score-circle-max {
       font-size: 9.5px;
-      color: #a7cfba;
+      color: #64748b;
       font-weight: 700;
       margin-top: 2px;
     }
@@ -711,7 +781,7 @@
     .violation-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.82);
+      background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(8px);
       z-index: 10000;
       display: flex;
@@ -724,12 +794,14 @@
     .violation-modal-box {
       background: #ffffff;
       border-top: 5px solid #ef4444;
+      border: 1px solid #fecaca;
       border-radius: 14px;
       max-width: 480px;
       width: 100%;
       padding: 22px 20px;
       text-align: center;
-      box-shadow: 0 20px 50px rgba(239, 68, 68, 0.3);
+      color: #0f172a;
+      box-shadow: 0 20px 50px rgba(239, 68, 68, 0.2);
       animation: shakeModal 0.5s ease-in-out;
     }
 
@@ -753,8 +825,8 @@
     .exam-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.78);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
       z-index: 10002;
       display: flex;
       align-items: center;
@@ -765,13 +837,14 @@
 
     .exam-modal-box {
       background: #ffffff;
-      border: 1px solid #dce8db;
+      border: 1px solid #e2e8f0;
       border-radius: 16px;
       max-width: 440px;
       width: 100%;
       padding: 24px 20px;
       text-align: center;
-      box-shadow: 0 20px 50px rgba(16, 45, 40, 0.25);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+      color: #0f172a;
       position: relative;
     }
 
@@ -779,8 +852,9 @@
       width: 52px;
       height: 52px;
       border-radius: 50%;
-      background: #eaf3ea;
-      color: var(--forest);
+      background: #f0fdf4;
+      color: #24724f;
+      border: 1px solid #bbf7d0;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -790,20 +864,21 @@
 
     .exam-modal-icon.warning {
       background: #fffbeb;
-      color: #b45309;
+      border-color: #fde68a;
+      color: #d97706;
     }
 
     .exam-modal-title {
       font-family: "Space Grotesk", sans-serif;
       font-size: 19px;
       font-weight: 700;
-      color: var(--forest);
+      color: #0f172a;
       margin: 0 0 6px;
     }
 
     .exam-modal-desc {
       font-size: 12.5px;
-      color: #475569;
+      color: #64748b;
       line-height: 1.55;
       margin: 0 0 14px;
     }
@@ -818,14 +893,14 @@
     .submit-stat-item {
       padding: 10px;
       border-radius: 8px;
-      background: #f8faf8;
-      border: 1px solid #dce8db;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
     }
 
     .submit-stat-item span {
       display: block;
       font-size: 10px;
-      color: var(--muted);
+      color: #64748b;
       font-weight: 700;
       text-transform: uppercase;
       margin-bottom: 2px;
@@ -836,7 +911,7 @@
       font-family: "Space Grotesk", sans-serif;
       font-size: 18px;
       font-weight: 700;
-      color: var(--forest);
+      color: #24724f;
     }
 
     .submit-warning-box {
@@ -864,6 +939,356 @@
       min-height: 40px;
       font-size: 12.5px;
       font-weight: 700;
+    }
+
+    /* =========================================================================
+       CYBER MIDNIGHT NAVY THEME (CHẾ ĐỘ TỐI - DARK MODE)
+       ========================================================================= */
+    [data-theme="dark"] .identity-row {
+      background: #0b1726;
+      border-color: rgba(0, 229, 255, 0.16);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
+    }
+    [data-theme="dark"] .name-cooldown {
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .exam-select-card {
+      background: #0b1726;
+      border-color: rgba(0, 229, 255, 0.16);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .35);
+    }
+    [data-theme="dark"] .exam-select-card:hover {
+      border-color: #00e5ff;
+      box-shadow: 0 8px 24px rgba(0, 229, 255, .15);
+    }
+    [data-theme="dark"] .exam-select-card h3 {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .exam-select-card p {
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .exam-card-badge-item {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: rgba(0, 229, 255, 0.22);
+      color: #00e5ff;
+    }
+    [data-theme="dark"] .badge-pass-score {
+      background: rgba(0, 136, 255, 0.15) !important;
+      color: #38bdf8 !important;
+      border-color: rgba(0, 136, 255, 0.3) !important;
+    }
+    [data-theme="dark"] .tag-exam-category {
+      background: rgba(0, 229, 255, 0.15) !important;
+      color: #00e5ff !important;
+    }
+
+    [data-theme="dark"] .exam-lobby-box {
+      background: #0b1726;
+      border-color: rgba(0, 229, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .45);
+    }
+    [data-theme="dark"] .lobby-header-bar {
+      border-bottom-color: rgba(0, 229, 255, 0.14);
+    }
+    [data-theme="dark"] .lobby-exam-title {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .exam-info-box {
+      background: #0f2236;
+      border-color: rgba(0, 229, 255, 0.15);
+    }
+    [data-theme="dark"] .exam-info-box span {
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .exam-info-box strong {
+      color: #00e5ff;
+    }
+    [data-theme="dark"] .exam-rules-box {
+      background: #181408;
+      border-color: #78350f;
+    }
+    [data-theme="dark"] .exam-rules-box h4 {
+      color: #f59e0b;
+    }
+    [data-theme="dark"] .exam-rules-list {
+      color: #fef3c7;
+    }
+
+    [data-theme="dark"] .exam-app-header {
+      background: #09131f;
+      border-bottom-color: rgba(0, 229, 255, 0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+    [data-theme="dark"] .exam-app-header-btn {
+      color: #00e5ff;
+    }
+    [data-theme="dark"] .exam-app-header-btn:hover {
+      background: rgba(0, 229, 255, 0.14);
+      color: #ffffff;
+    }
+    [data-theme="dark"] .exam-app-header-title {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .exam-app-subbar-wrap {
+      background: #09131f;
+    }
+    [data-theme="dark"] .exam-app-subbar {
+      background: #0b1726;
+      border-color: rgba(0, 229, 255, 0.2);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    [data-theme="dark"] .exam-app-timer {
+      color: #00e5ff;
+    }
+    [data-theme="dark"] .exam-app-timer-text {
+      color: #00e5ff;
+      text-shadow: 0 0 10px rgba(0, 229, 255, 0.35);
+    }
+    [data-theme="dark"] .exam-app-submit-btn {
+      background: linear-gradient(135deg, #00e5ff, #0088ff);
+      color: #060d16;
+      box-shadow: 0 4px 14px rgba(0, 229, 255, 0.35);
+    }
+    [data-theme="dark"] .exam-app-submit-btn:hover {
+      box-shadow: 0 6px 22px rgba(0, 229, 255, 0.55);
+    }
+    [data-theme="dark"] .exam-app-session-container {
+      background: #060d16;
+      background-image: radial-gradient(circle at 50% 15%, rgba(0, 229, 255, 0.07) 0%, transparent 65%);
+    }
+    [data-theme="dark"] .exam-app-content {
+      background: rgba(11, 23, 38, 0.85);
+      border-color: rgba(0, 229, 255, 0.16);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+    }
+    [data-theme="dark"] .exam-app-q-title {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .exam-radio-item {
+      background: #0f2236;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .exam-radio-item:hover {
+      background: #142e47;
+      border-color: rgba(0, 229, 255, 0.45);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    [data-theme="dark"] .exam-radio-circle {
+      border-color: rgba(0, 229, 255, 0.35);
+      background: #0b1726;
+    }
+    [data-theme="dark"] .exam-radio-item:hover .exam-radio-circle {
+      border-color: #00e5ff;
+      box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+    }
+    [data-theme="dark"] .exam-radio-item.selected {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(15, 34, 54, 0.95)) !important;
+      border-color: #00e5ff !important;
+      box-shadow: 0 0 18px rgba(0, 229, 255, 0.25) !important;
+    }
+    [data-theme="dark"] .exam-radio-item.selected .exam-radio-circle {
+      border-color: #00e5ff;
+      background: #00e5ff;
+      box-shadow: inset 0 0 0 3.5px #0b1726, 0 0 8px #00e5ff;
+    }
+    [data-theme="dark"] .exam-radio-text {
+      color: #cbd5e1;
+    }
+    [data-theme="dark"] .exam-radio-item.selected .exam-radio-text {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .exam-radio-item.review-correct {
+      background: rgba(16, 185, 129, 0.16) !important;
+      border-color: #10b981 !important;
+    }
+    [data-theme="dark"] .exam-radio-item.review-correct .exam-radio-circle {
+      border-color: #10b981 !important;
+      background: #10b981 !important;
+      box-shadow: inset 0 0 0 3.5px #0b1726 !important;
+    }
+    [data-theme="dark"] .exam-radio-item.review-correct .exam-radio-text {
+      color: #34d399 !important;
+    }
+    [data-theme="dark"] .exam-radio-item.review-wrong {
+      background: rgba(239, 68, 68, 0.16) !important;
+      border-color: #ef4444 !important;
+    }
+    [data-theme="dark"] .exam-radio-item.review-wrong .exam-radio-circle {
+      border-color: #ef4444 !important;
+      background: #ef4444 !important;
+      box-shadow: inset 0 0 0 3.5px #0b1726 !important;
+    }
+    [data-theme="dark"] .exam-radio-item.review-wrong .exam-radio-text {
+      color: #f87171 !important;
+    }
+    [data-theme="dark"] .review-explanation-box {
+      background: rgba(16, 185, 129, 0.12);
+      color: #a7f3d0;
+    }
+
+    [data-theme="dark"] .exam-app-bottom-bar {
+      background: #09131f;
+      border-top-color: rgba(0, 229, 255, 0.18);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+    [data-theme="dark"] .exam-app-nav-btn {
+      border-color: rgba(0, 229, 255, 0.25);
+      background: #0f2236;
+      color: #00e5ff;
+    }
+    [data-theme="dark"] .exam-app-nav-btn:hover:not(:disabled) {
+      border-color: #00e5ff;
+      background: #15324d;
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+    }
+    [data-theme="dark"] .exam-app-palette-trigger {
+      border-color: rgba(0, 229, 255, 0.35);
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(15, 34, 54, 0.85));
+      color: #00e5ff;
+    }
+    [data-theme="dark"] .exam-app-palette-trigger:hover {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.22), rgba(21, 50, 77, 0.95));
+      border-color: #00e5ff;
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(0, 229, 255, 0.3);
+    }
+
+    [data-theme="dark"] .palette-sheet-overlay {
+      background: rgba(6, 13, 22, 0.75);
+    }
+    [data-theme="dark"] .palette-sheet-box {
+      background: #09131f;
+      border-color: rgba(0, 229, 255, 0.25);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.7);
+    }
+    [data-theme="dark"] .palette-sheet-header {
+      border-bottom-color: rgba(0, 229, 255, 0.15);
+    }
+    [data-theme="dark"] .palette-sheet-title span {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .palette-sheet-title small {
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .palette-sheet-close {
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .palette-sheet-close:hover {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .q-grid-item {
+      border-color: rgba(0, 229, 255, 0.2);
+      background: #0f2236;
+      color: #cbd5e1;
+    }
+    [data-theme="dark"] .q-grid-item:hover {
+      border-color: #00e5ff;
+      color: #ffffff;
+      background: #15324d;
+    }
+    [data-theme="dark"] .q-grid-item.active {
+      border-color: #00e5ff;
+      box-shadow: 0 0 0 2.5px rgba(0, 229, 255, 0.6);
+      color: #ffffff;
+    }
+    [data-theme="dark"] .q-grid-item.answered {
+      background: linear-gradient(135deg, #0088ff, #00e5ff);
+      color: #060d16;
+      border-color: #00e5ff;
+      box-shadow: 0 2px 10px rgba(0, 229, 255, 0.35);
+    }
+    [data-theme="dark"] .palette-legend {
+      border-bottom-color: rgba(0, 229, 255, 0.15);
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .legend-answered {
+      background: linear-gradient(135deg, #0088ff, #00e5ff);
+    }
+    [data-theme="dark"] .legend-unanswered {
+      background: #0f2236;
+      border: 1px solid rgba(0, 229, 255, 0.2);
+    }
+    [data-theme="dark"] .legend-active {
+      border: 2px solid #00e5ff;
+    }
+
+    [data-theme="dark"] .result-summary-box {
+      background: #0b1726;
+      border-color: rgba(0, 229, 255, 0.2);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, .5);
+      color: #f1f5f9;
+    }
+    [data-theme="dark"] .score-circle {
+      background: linear-gradient(135deg, #091a2e, #133a60);
+      border-color: #00e5ff;
+      color: #ffffff;
+      box-shadow: 0 0 24px rgba(0, 229, 255, 0.35);
+    }
+    [data-theme="dark"] .score-circle-num {
+      color: #00e5ff;
+      text-shadow: 0 0 14px rgba(0, 229, 255, 0.4);
+    }
+    [data-theme="dark"] .score-circle-max {
+      color: #94a3b8;
+    }
+
+    [data-theme="dark"] .violation-modal-overlay {
+      background: rgba(6, 13, 22, 0.85);
+    }
+    [data-theme="dark"] .violation-modal-box {
+      background: #09131f;
+      border-top-color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f1f5f9;
+      box-shadow: 0 20px 50px rgba(239, 68, 68, 0.4);
+    }
+    [data-theme="dark"] .violation-modal-box h3 {
+      color: #f87171 !important;
+    }
+    [data-theme="dark"] .violation-modal-box p {
+      color: #cbd5e1 !important;
+    }
+
+    [data-theme="dark"] .exam-modal-overlay {
+      background: rgba(6, 13, 22, 0.82);
+    }
+    [data-theme="dark"] .exam-modal-box {
+      background: #09131f;
+      border-color: rgba(0, 229, 255, 0.25);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      color: #f1f5f9;
+    }
+    [data-theme="dark"] .exam-modal-icon {
+      background: rgba(0, 229, 255, 0.12);
+      color: #00e5ff;
+      border-color: rgba(0, 229, 255, 0.25);
+    }
+    [data-theme="dark"] .exam-modal-icon.warning {
+      background: #181408;
+      border-color: #78350f;
+      color: #f59e0b;
+    }
+    [data-theme="dark"] .exam-modal-title {
+      color: #ffffff;
+    }
+    [data-theme="dark"] .exam-modal-desc {
+      color: #cbd5e1;
+    }
+    [data-theme="dark"] .submit-stat-item {
+      background: #0f2236;
+      border-color: rgba(0, 229, 255, 0.16);
+    }
+    [data-theme="dark"] .submit-stat-item span {
+      color: #94a3b8;
+    }
+    [data-theme="dark"] .submit-stat-item strong {
+      color: #00e5ff;
+    }
+    [data-theme="dark"] .submit-warning-box {
+      background: #181408;
+      border-color: #78350f;
+      color: #fde68a;
     }
 
     /* RESPONSIVE TRÊN THIẾT BỊ DI ĐỘNG */
@@ -948,14 +1373,16 @@
   <main class="page-shell" id="mainPageShell">
     
     <!-- HEADER TRANG CHUẨN WEB -->
-    <header class="page-header" id="pageNormalHeader">
-      <div>
-        <p class="eyebrow">03B / PHÒNG THI TRỰC TUYẾN</p>
-        <h1 class="page-title">Phòng làm bài tập & thi chuẩn hóa.</h1>
-        <p class="page-lead">Không gian làm bài trắc nghiệm với chế độ Toàn màn hình (Fullscreen) trên PC & Mobile, tự động giám sát chống gian lận và xem lại đáp án chi tiết.</p>
-      </div>
-      <span class="page-count" id="headerExamCountBadge">3 ĐỀ THI</span>
-    </header>
+    <section class="page-hero-banner exam-hero" id="pageNormalHeader">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">03B / PHÒNG THI TRỰC TUYẾN</p>
+          <h1 class="page-title">Phòng làm bài tập & thi chuẩn hóa.</h1>
+          <p class="page-lead">Không gian làm bài trắc nghiệm với chế độ Toàn màn hình (Fullscreen) trên PC & Mobile, tự động giám sát chống gian lận và xem lại đáp án chi tiết.</p>
+        </div>
+        <span class="page-count" id="headerExamCountBadge">3 ĐỀ THI</span>
+      </header>
+    </section>
 
     <!-- =====================================================================
          VIEW 1: DANH SÁCH TẤT CẢ CÁC BÀI THI ĐỂ CHỌN (TINH GỌN - ẢNH 1)
@@ -1134,13 +1561,13 @@
 
       <div class="palette-legend" id="paletteLegend">
         <div class="palette-legend-item">
-          <span class="legend-box" style="background:#3054f4"></span> Đã chọn
+          <span class="legend-box legend-answered"></span> Đã chọn
         </div>
         <div class="palette-legend-item">
-          <span class="legend-box" style="background:#f8fafc;border:1.5px solid #cbd5e1"></span> Chưa làm
+          <span class="legend-box legend-unanswered"></span> Chưa làm
         </div>
         <div class="palette-legend-item">
-          <span class="legend-box" style="border:2px solid #3054f4"></span> Đang xem
+          <span class="legend-box legend-active"></span> Đang xem
         </div>
       </div>
 
@@ -1287,7 +1714,7 @@
     });
 
     function initStudentIdentity() {
-      // 1. Đọc biệt danh từ Thông tin cá nhân (TTCN / user_profile)
+      // 1. Đọc Họ và tên từ Thông tin cá nhân (TTCN / user_profile)
       try {
         const profileRaw = localStorage.getItem("aicheck:user_profile");
         if (profileRaw) {
@@ -1391,7 +1818,7 @@
           <div class="exam-select-card" onclick="selectExam('${exam.id}')">
             <div>
               <div class="exam-select-card-header">
-                <span class="tag" style="background:#eaf2e8;color:#286947;font-weight:800">${tagText}</span>
+                <span class="tag tag-exam-category">${tagText}</span>
                 <span style="font-size:11px;color:#64748b;font-weight:600">ID: ${escapeHtml(exam.id)}</span>
               </div>
               <h3>${escapeHtml(exam.title)}</h3>
@@ -1400,7 +1827,7 @@
                 <span class="exam-card-badge-item">📚 ${qCount} câu hỏi</span>
                 <span class="exam-card-badge-item">⏱️ ${duration} phút</span>
                 <span class="exam-card-badge-item">🎯 ${pointsPerQ} đ/câu</span>
-                <span class="exam-card-badge-item" style="background:#e0f2fe;color:#0369a1">🏆 Đạt: ≥ ${passingScore}/${maxScore}đ</span>
+                <span class="exam-card-badge-item badge-pass-score">🏆 Đạt: ≥ ${passingScore}/${maxScore}đ</span>
               </div>
             </div>
             <button type="button" class="button button-lime" style="width:100%">
@@ -1883,7 +2310,7 @@
       if (next >= 0 && next < questions.length) {
         currentIndex = next;
         renderCurrentQuestion();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.scrollY > 100) window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
 
@@ -1892,7 +2319,7 @@
         currentIndex = idx;
         renderCurrentQuestion();
         toggleQuestionPalette(false); // Đóng sheet khi chọn câu
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.scrollY > 100) window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
 
@@ -2136,7 +2563,7 @@
           <span class="legend-box" style="background:#ef4444"></span> Câu làm sai
         </div>
         <div class="palette-legend-item">
-          <span class="legend-box" style="border:2px solid #3054f4"></span> Đang xem
+          <span class="legend-box legend-active"></span> Đang xem
         </div>
       `;
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#163d35">
+  <meta name="theme-color" content="#060d16">
   <title>Bảng xếp hạng | AI CHECK THĐ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,35 +13,52 @@
   <script src="../auth-guard.js"></script>
   <style>
     .leader-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 11px}.leader-tab{padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:white;color:#53655b;font-size:10px;font-weight:800}.leader-tab.active{background:var(--forest);border-color:var(--forest);color:white}.leader-podium{display:flex;justify-content:center;align-items:end;gap:clamp(10px,4vw,44px);padding:27px 15px 21px;margin-bottom:14px;border:1px solid var(--line);border-radius:6px;background:radial-gradient(ellipse at 50% 100%,#e7efe4,transparent 70%),#fff}.podium-item{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:0}.podium-item.first{order:2}.podium-item.second{order:1}.podium-item.third{order:3}.podium-circle{width:clamp(92px,14vw,132px);height:clamp(92px,14vw,132px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;border:4px solid #b8c6c0;border-radius:50%;background:#fff;box-shadow:0 8px 20px #163d3514;text-align:center}.podium-item.first .podium-circle{width:clamp(106px,16vw,148px);height:clamp(106px,16vw,148px);border-color:#e9c45e;background:linear-gradient(145deg,#fff9e4,#fff)}.podium-item.second .podium-circle{border-color:#bdc9c6}.podium-item.third .podium-circle{border-color:#c99169}.podium-place{color:#68786d;font:800 9px "Space Grotesk",sans-serif}.podium-name{max-width:100%;overflow:hidden;color:var(--forest);font-size:clamp(9px,1vw,11px);font-weight:800;text-overflow:ellipsis;white-space:nowrap}.podium-score{color:var(--leaf);font:700 11px "Space Grotesk",sans-serif}.leader-board{overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:4px}.leader-row{display:grid;grid-template-columns:58px minmax(120px,1fr) minmax(90px,150px) minmax(110px,160px);gap:10px;padding:11px 14px;border-bottom:1px solid #edf1eb;align-items:center;font-size:10px}.leader-row:last-child{border-bottom:0}.leader-heading{background:#eaf1e8;color:#53665a;font-size:9px;font-weight:800}.rank{color:var(--leaf);font:700 14px "Space Grotesk",sans-serif}.leader-empty{padding:32px 18px;text-align:center;color:var(--muted);font-size:11px}.name-form{display:flex;align-items:end;gap:8px;max-width:420px}.name-cooldown{margin:8px 0 0;color:var(--muted);font-size:10px}.name-form input[readonly]{background:#f0f3ef;color:#68786d}.name-form .button:disabled{opacity:.58;cursor:not-allowed}.notice{margin-top:12px;padding:12px 14px;background:#fff6e6;color:#655a46;font-size:10px}@media(max-width:520px){.leader-row{grid-template-columns:35px minmax(70px,1fr) 78px 86px;gap:5px;padding:10px 7px;font-size:9px}.leader-heading{font-size:8px}.name-form{align-items:stretch;flex-direction:column}.name-form .button{width:100%}.leader-podium{gap:8px;padding:21px 5px 16px}.podium-circle{width:88px;height:88px;padding:7px;border-width:3px}.podium-item.first .podium-circle{width:100px;height:100px}.podium-name{font-size:9px}.podium-score{font-size:10px}}
-    [data-theme="dark"] .leader-tab{background:#0f2922;border-color:rgba(255,255,255,.12);color:#a2b7ac}
-    [data-theme="dark"] .leader-tab.active{background:#3ec888;border-color:#3ec888;color:#071713}
-    [data-theme="dark"] .leader-podium{background:radial-gradient(ellipse at 50% 100%,#103328,transparent 70%),#0d2620;border-color:rgba(255,255,255,.1)}
-    [data-theme="dark"] .podium-circle{background:#102d24;border-color:rgba(255,255,255,.15);box-shadow:0 8px 20px rgba(0,0,0,.4)}
-    [data-theme="dark"] .podium-item.first .podium-circle{background:linear-gradient(145deg,#2b2512,#143329);border-color:#e9c45e}
-    [data-theme="dark"] .podium-item.second .podium-circle{background:linear-gradient(145deg,#122c25,#0a1f19);border-color:#8da499;box-shadow:0 8px 20px rgba(0,0,0,.4)}
-    [data-theme="dark"] .podium-item.third .podium-circle{background:linear-gradient(145deg,#241d15,#0d211a);border-color:#c98b60;box-shadow:0 8px 20px rgba(0,0,0,.4)}
-    [data-theme="dark"] .podium-place{color:#a2b7ac}
+    [data-theme="dark"] .leader-tab{background:#0f2236;border-color:rgba(0,229,255,.16);color:#cbd5e1}
+    [data-theme="dark"] .leader-tab.active{background:linear-gradient(135deg,#00e5ff,#0088ff);border-color:#00e5ff;color:#060d16;box-shadow:0 0 12px rgba(0,229,255,.35)}
+    [data-theme="dark"] .leader-podium{background:radial-gradient(ellipse at 50% 100%,rgba(0,229,255,.12),transparent 70%),#0b1726;border-color:rgba(0,229,255,.16)}
+    [data-theme="dark"] .podium-circle{background:#0f2236;border-color:rgba(0,229,255,.2);box-shadow:0 8px 24px rgba(0,0,0,.5)}
+    [data-theme="dark"] .podium-item.first .podium-circle{background:linear-gradient(145deg,#1e293b,#0f2236);border-color:#fbbf24;box-shadow:0 0 20px rgba(251,191,36,.3)}
+    [data-theme="dark"] .podium-item.second .podium-circle{background:linear-gradient(145deg,#1e293b,#0f2236);border-color:#94a3b8;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+    [data-theme="dark"] .podium-item.third .podium-circle{background:linear-gradient(145deg,#1e293b,#0f2236);border-color:#d97706;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+    [data-theme="dark"] .podium-place{color:#94a3b8}
     [data-theme="dark"] .podium-name{color:#ffffff}
+    [data-theme="dark"] .podium-score{color:#00e5ff}
     .leader-row:not(.leader-heading):hover{background:#edf6ee;transform:translateX(4px)}
-    [data-theme="dark"] .leader-board{background:#0d2620;border-color:rgba(255,255,255,.1)}
-    [data-theme="dark"] .leader-row{border-bottom-color:rgba(255,255,255,.08);color:#f0f7f3}
-    [data-theme="dark"] .leader-row:not(.leader-heading):hover{background:#164034!important;color:#ffffff!important;transform:translateX(4px)}
-    [data-theme="dark"] .leader-row:hover .rank{color:#3ec888!important}
-    [data-theme="dark"] .leader-heading{background:#13352a;color:#d9f26c}
-    [data-theme="dark"] .rank{color:#3ec888}
-    [data-theme="dark"] .notice{background:#271f11;color:#fae3b4}
-    [data-theme="dark"] .name-form input[readonly]{background:#112d25;color:#a2b7ac}
+    [data-theme="dark"] .leader-board{background:#0b1726;border-color:rgba(0,229,255,.16)}
+    [data-theme="dark"] .leader-row{border-bottom-color:rgba(0,229,255,.08);color:#cbd5e1}
+    [data-theme="dark"] .leader-row:not(.leader-heading):hover{background:#0f2236!important;color:#ffffff!important;transform:translateX(4px)}
+    [data-theme="dark"] .leader-row:hover .rank{color:#00e5ff!important}
+    [data-theme="dark"] .leader-heading{background:#08121e;color:#00e5ff;border-bottom:1px solid rgba(0,229,255,.16)}
+    [data-theme="dark"] .rank{color:#00e5ff}
+    [data-theme="dark"] .notice{background:rgba(245,158,11,.1);color:#fde68a;border:1px solid rgba(245,158,11,.25)}
+    [data-theme="dark"] .name-form input[readonly]{background:#0f2236;color:#94a3b8;border-color:rgba(0,229,255,.14)}
   </style>
 </head>
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng"><a href="../login.html" data-nav-key="login">Đăng nhập</a><a href="../index.html">Trang chủ</a><a href="knowledge.html">Kiến thức</a><a href="practice.html">Thực hành</a><a href="assessment.html">Đánh giá</a><a href="exam.html">Phòng thi</a><a href="leaderboard.html" aria-current="page">BXH</a><a href="research.html">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
   <main class="page-shell">
-    <header class="page-header"><div><p class="eyebrow">04 / GHI NHẬN</p><h1 class="page-title">Bảng xếp hạng kỹ năng.</h1><p class="page-lead">Theo dõi thành tích cao nhất ở từng khu vực. Dùng cùng một trình duyệt để kết quả từ các trang được tổng hợp.</p></div><span class="page-count">4 BẢNG RIÊNG</span></header>
-    <section class="panel"><div class="name-form"><div class="form-row" style="flex:1"><label for="playerName">Biệt danh · không nhập tên thật</label><input id="playerName" maxlength="24" placeholder="Ví dụ: Sao Xanh 12A5" autocomplete="nickname"></div><button class="button button-dark" id="saveName">Lưu tên</button></div><p class="name-cooldown" id="nameCooldown" aria-live="polite"></p></section>
+    <section class="page-hero-banner leaderboard-hero">
+      <header class="page-header"><div><p class="eyebrow">04 / GHI NHẬN</p><h1 class="page-title">Bảng xếp hạng kỹ năng.</h1><p class="page-lead">Theo dõi thành tích cao nhất ở từng khu vực. Dùng cùng một trình duyệt để kết quả từ các trang được tổng hợp.</p></div><span class="page-count">4 BẢNG RIÊNG</span></header>
+    </section>
+    <section class="panel" id="playerPanel">
+      <div id="playerDisplayWrap" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:12px;font-weight:700;color:var(--color-muted,#94a3b8)">Họ và tên thí sinh:</span>
+          <strong id="playerNameDisplay" style="font-size:16px;font-family:'Space Grotesk',sans-serif;color:var(--leaf,#00e5ff);letter-spacing:0.3px"></strong>
+        </div>
+      </div>
+      <div id="playerNameForm" class="name-form" style="display:none">
+        <div class="form-row" style="flex:1">
+          <label for="playerName">Họ và tên thí sinh</label>
+          <input id="playerName" maxlength="24" placeholder="Ví dụ: Nguyễn Văn An" autocomplete="name">
+        </div>
+        <button class="button button-dark" id="saveName">Lưu họ và tên</button>
+      </div>
+      <p class="name-cooldown" id="nameCooldown" aria-live="polite" style="display:none"></p>
+    </section>
     <p class="panel-copy" id="leaderStatus" aria-live="polite" style="margin-top:10px"></p>
     <div class="leader-tabs" id="leaderTabs"><button class="leader-tab active" data-board="exam">Phòng thi trực tuyến</button><button class="leader-tab" data-board="rubric">Thử thách rubric</button><button class="leader-tab" data-board="assessment">Đánh giá năng lực</button><button class="leader-tab" data-board="practice">Tình huống</button><button class="leader-tab" id="refreshBoard" type="button">Cập nhật ↻</button></div>
     <div class="leader-board" id="leaderBoard"></div>
-    <p class="notice">Dùng biệt danh thay cho tên thật. BXH online là điểm do trình duyệt gửi lên, không phải điểm thi chính thức; điểm có thể bị làm giả nếu không có xác thực phía máy chủ.</p>
   </main>
   <footer class="site-footer">AI CHECK THĐ · Bảng xếp hạng cục bộ</footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -201,14 +218,26 @@
     const dateFormatter = new Intl.DateTimeFormat("vi-VN", { dateStyle: "long", timeStyle: "short" });
     function updateNameEditor(message = "") {
       const state = window.AICheckCloud?.getPlayerNameState?.() || { name: read("player", ""), canChange: true, nextChangeAt: null };
-      nameInput.value = state.name;
-      nameInput.readOnly = Boolean(state.name && !state.canChange);
-      nameButton.disabled = Boolean(state.name && !state.canChange);
-      nameCooldown.textContent = message || (state.name && !state.canChange
-        ? `Bạn có thể đổi biệt danh sau ${dateFormatter.format(state.nextChangeAt)}.`
-        : state.name
-          ? "Bạn đã có thể đổi biệt danh."
-          : "Sau khi lưu, biệt danh sẽ được giữ cố định trong 7 ngày.");
+      const displayWrap = document.getElementById("playerDisplayWrap");
+      const nameDisplay = document.getElementById("playerNameDisplay");
+      const nameForm = document.getElementById("playerNameForm");
+
+      if (state.name) {
+        // Chỉ hiện chắc tên thí sinh
+        if (displayWrap) displayWrap.style.display = "flex";
+        if (nameDisplay) nameDisplay.textContent = state.name;
+        if (nameForm) nameForm.style.display = "none";
+        if (nameCooldown) nameCooldown.style.display = "none";
+      } else {
+        // Chưa có tên: hiện form để nhập lần đầu
+        if (displayWrap) displayWrap.style.display = "none";
+        if (nameForm) nameForm.style.display = "flex";
+        if (nameInput) nameInput.value = "";
+        if (nameCooldown) {
+          nameCooldown.style.display = "block";
+          nameCooldown.textContent = message || "Vui lòng nhập Họ và tên để ghi nhận kết quả vào Bảng xếp hạng.";
+        }
+      }
     }
     updateNameEditor();
     setInterval(updateNameEditor, 60000);
@@ -220,12 +249,10 @@
       }
       const result = window.AICheckCloud?.savePlayerName?.(name);
       if (!result?.saved) {
-        updateNameEditor(result?.reason === "cooldown" ? `Chưa thể đổi biệt danh. Bạn có thể đổi sau ${dateFormatter.format(result.nextChangeAt)}.` : "Không thể lưu biệt danh. Hãy thử lại.");
+        updateNameEditor(result?.message || "Không thể lưu họ và tên. Hãy thử lại.");
         return;
       }
-      updateNameEditor(result.changed ? `Đã lưu biệt danh. Có thể đổi tiếp sau ${dateFormatter.format(result.nextChangeAt)}.` : "Biệt danh này đang được sử dụng.");
-      nameButton.textContent = "Đã lưu ✓";
-      setTimeout(() => nameButton.textContent = "Lưu tên", 1200);
+      updateNameEditor();
     });
     document.getElementById("leaderTabs").addEventListener("click", event => {
       const button = event.target.closest("[data-board]");
@@ -237,7 +264,7 @@
     });
     document.getElementById("refreshBoard").addEventListener("click", () => {
       window.AICheckLoader?.show("Đang đồng bộ điểm số mới nhất...");
-      render().finally(() => setTimeout(() => window.AICheckLoader?.hide(), 450));
+      render().finally(() => window.AICheckLoader?.hide());
     });
     connectLeaderboard();
     render();

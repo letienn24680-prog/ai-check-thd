@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#163d35">
+  <meta name="theme-color" content="#060d16">
   <title>Đánh giá & rubric | AI CHECK THĐ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -59,41 +59,48 @@
     .band b{display:block;color:var(--lime);font-size:10px}
     @media(max-width:600px){.bands{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
     .quiz-hidden{display:none!important}
-    [data-theme="dark"] .start-card{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
-    [data-theme="dark"] .start-card:hover{background:#14382e;border-color:#3ec888}
+    [data-theme="dark"] .start-card{background:#0b1726;border-color:rgba(0,229,255,.14);color:#f1f5f9}
+    [data-theme="dark"] .start-card:hover{background:#12283f;border-color:#00e5ff;box-shadow:0 8px 24px rgba(0,0,0,.45)}
     [data-theme="dark"] .start-card h3{color:#ffffff}
-    [data-theme="dark"] .start-card p{color:#a2b7ac}
-    [data-theme="dark"] .quiz-card{background:#0e2921;border-color:rgba(255,255,255,.1);color:#f0f7f3}
+    [data-theme="dark"] .start-card p{color:#cbd5e1}
+    [data-theme="dark"] .quiz-card{background:#0b1726;border-color:rgba(0,229,255,.14);color:#f1f5f9}
     [data-theme="dark"] .quiz-card h2,[data-theme="dark"] .q-text{color:#ffffff}
-    [data-theme="dark"] .quiz-card #quizIntro{color:#a2b7ac}
-    [data-theme="dark"] .q-meta{background:#14352a;color:#3ec888}
-    [data-theme="dark"] .question-number{background:#14352a;color:#d9f26c}
-    [data-theme="dark"] .quiz-progress-label{color:#cbdad1}
-    [data-theme="dark"] .quiz-progress-label strong{color:#d9f26c}
+    [data-theme="dark"] .quiz-card #quizIntro{color:#cbd5e1}
+    [data-theme="dark"] .q-meta{background:#0f2236;color:#00e5ff;border:1px solid rgba(0,229,255,.15)}
+    [data-theme="dark"] .question-number{background:#0f2236;color:#00e5ff;border:1px solid rgba(0,229,255,.2)}
+    [data-theme="dark"] .quiz-progress-label{color:#cbd5e1}
+    [data-theme="dark"] .quiz-progress-label strong{color:#00e5ff}
     [data-theme="dark"] .quiz-card .progress{background:rgba(255,255,255,.08)}
-    [data-theme="dark"] .option-list .choice{background:#0f2922;border-color:rgba(255,255,255,.12);color:#f0f7f3}
-    [data-theme="dark"] .option-list .choice:hover{background:#163d33;border-color:#3ec888;color:#ffffff}
-    [data-theme="dark"] .option-list .choice.selected{background:#174537;border-color:#d9f26c;color:#ffffff}
-    [data-theme="dark"] .quiz-back-btn{border-color:rgba(255,255,255,.15);color:#d9f26c}
-    [data-theme="dark"] .quiz-back-btn:hover{background:#112d25}
-    [data-theme="dark"] .result-score{color:#d9f26c}
-    [data-theme="dark"] .result-level{color:#3ec888}
-    [data-theme="dark"] .result-note{background:#14352a;color:#d5e8dc}
-    [data-theme="dark"] .skill-label{color:#cbdad1}
+    [data-theme="dark"] .option-list .choice{background:#0f2236;border-color:rgba(255,255,255,.1);color:#cbd5e1}
+    [data-theme="dark"] .option-list .choice:hover{background:#142e47;border-color:#00e5ff;color:#ffffff}
+    [data-theme="dark"] .option-list .choice.selected{background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(15,34,54,.95));border-color:#00e5ff;color:#ffffff;box-shadow:inset 0 0 0 1px #00e5ff,0 0 14px rgba(0,229,255,.25)}
+    [data-theme="dark"] .quiz-back-btn{border-color:rgba(0,229,255,.3);color:#00e5ff}
+    [data-theme="dark"] .quiz-back-btn:hover{background:#0f2236}
+    [data-theme="dark"] .result-score{color:#00e5ff;text-shadow:0 0 14px rgba(0,229,255,.35)}
+    [data-theme="dark"] .result-level{color:#38bdf8}
+    [data-theme="dark"] .result-note{background:#0f2236;color:#cbd5e1;border-left-color:#00e5ff}
+    [data-theme="dark"] .skill-label{color:#cbd5e1}
     [data-theme="dark"] .skill-track{background:rgba(255,255,255,.08)}
-    [data-theme="dark"] .quiz-footer{border-top-color:rgba(255,255,255,.1)}
-    [data-theme="dark"] .status{color:#a2b7ac}
+    [data-theme="dark"] .quiz-footer{border-top-color:rgba(0,229,255,.12)}
+    [data-theme="dark"] .status{color:#94a3b8}
     [data-theme="dark"] #startScreen h2{color:#ffffff !important}
     @media(max-width:600px){.identity-row{grid-template-columns:minmax(0,1fr) auto;padding:12px}.identity-row .form-row{max-width:none}.quiz-card{padding:20px 16px}.quiz-heading{flex-direction:column;gap:9px}.mode-row{width:100%}.mode-button{flex:1;padding-inline:7px}.phase-picker{padding:13px}.phase-button{flex:1}.quiz-footer{align-items:stretch;flex-direction:column}.quiz-footer .button{width:100%}.bands{grid-template-columns:repeat(2,minmax(0,1fr))}.rubric-card>summary{padding:15px 16px}.rubric-content{padding:0 16px 16px}}
     @media(max-width:380px){.identity-row{grid-template-columns:1fr}.identity-row .button{width:100%}.phase-options{display:grid;grid-template-columns:1fr 1fr}}
-    @media(prefers-reduced-motion:reduce){.mode-button,.phase-button,.quiz-progress-label,.quiz-card .progress span,.option-list .choice{transition:none!important}}
+    .exam-promo-banner{margin-top:16px;padding:16px 20px;background:rgba(36,114,79,.08);border:1px solid rgba(36,114,79,.25);border-radius:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;transition:all .2s ease}
+    .exam-promo-banner strong{color:var(--forest);font-size:13px;display:flex;align-items:center;gap:6px}
+    .exam-promo-banner p{margin:3px 0 0;font-size:11px;color:var(--muted)}
+    .exam-promo-banner .button{font-size:11px;text-decoration:none}
+    [data-theme="dark"] .exam-promo-banner{background:linear-gradient(135deg,rgba(6,17,24,.9) 0%,rgba(14,41,33,.9) 100%);border-color:rgba(0,229,255,.28);box-shadow:0 4px 18px rgba(0,0,0,.35)}
+    [data-theme="dark"] .exam-promo-banner strong{color:#3ec888}
+    [data-theme="dark"] .exam-promo-banner p{color:#a2b7ac}
   </style>
 </head>
 <body>
   <header class="site-header">    <div class="header-inner"><a class="brand" href="../index.html"><span class="brand-mark">AI</span><span class="brand-name">AI CHECK THĐ<small>TRẠM KIỂM CHỨNG THÔNG TIN</small></span></a><button class="nav-toggle" type="button" aria-label="Mở menu điều hướng" aria-controls="siteNav" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav id="siteNav" class="site-nav" aria-label="Điều hướng"><a href="../login.html" data-nav-key="login">Đăng nhập</a><a href="../index.html">Trang chủ</a><a href="knowledge.html">Kiến thức</a><a href="practice.html">Thực hành</a><a href="assessment.html" aria-current="page">Đánh giá</a><a href="exam.html">Phòng thi</a><a href="leaderboard.html">BXH</a><a href="research.html">Nghiên cứu</a><a href="resources.html">Tài nguyên</a></nav></div></header>
   <main class="page-shell">
-    <header class="page-header"><div><p class="eyebrow">03 / ĐO</p><h1 class="page-title">Đánh giá năng lực kiểm chứng.</h1><p class="page-lead">Bài đo gồm 20 câu, chia đều cho năm kỹ năng. Câu hỏi được xáo ngẫu nhiên từ ngân hàng; mỗi đề có đủ 20 câu và hạn chế lặp lại câu của lượt trước.</p></div><span class="page-count">THANG ĐIỂM 100</span></header>
-    <div class="identity-row"><div class="form-row"><label for="studentName">Biệt danh trên BXH · không nhập tên thật</label><input id="studentName" maxlength="24" placeholder="Ví dụ: Sao Xanh 12A5" autocomplete="nickname"></div><button class="button button-outline" id="saveName">Lưu tên</button><p class="name-cooldown" id="nameCooldown" aria-live="polite"></p></div>
+    <section class="page-hero-banner assessment-hero">
+      <header class="page-header"><div><p class="eyebrow">03 / ĐO</p><h1 class="page-title">Đánh giá năng lực kiểm chứng.</h1><p class="page-lead">Bài đo gồm 20 câu, chia đều cho năm kỹ năng. Câu hỏi được xáo ngẫu nhiên từ ngân hàng; mỗi đề có đủ 20 câu và hạn chế lặp lại câu của lượt trước.</p></div><span class="page-count">THANG ĐIỂM 100</span></header>
+    </section>
     <p class="panel-copy" id="syncStatus" aria-live="polite"></p>
     <div class="assessment-layout">
       <section class="quiz-card" aria-label="Bài đánh giá">
@@ -125,15 +132,14 @@
             </div>
           </div>
 
-          <!-- BANNER PHÒNG THI ONLINE MỚI -->
-          <div style="margin-top:16px;padding:16px 20px;background:#eef7f0;border:1px solid #c2e2c8;border-radius:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <div class="exam-promo-banner">
             <div>
-              <strong style="color:var(--forest);font-size:13px;display:flex;align-items:center;gap:6px">
+              <strong>
                 <span>📝</span> PHÒNG THI ONLINE (TOÀN MÀN HÌNH & CHỐNG GIAN LẬN)
               </strong>
-              <p style="margin:3px 0 0;font-size:11px;color:#436852">Làm bài tập trắc nghiệm toàn màn hình trên PC & Mobile, tự động lưu vi phạm khi thoát tab/F11 và xem lại đáp án chi tiết.</p>
+              <p>Làm bài tập trắc nghiệm toàn màn hình trên PC & Mobile, tự động lưu vi phạm khi thoát tab/F11 và xem lại đáp án chi tiết.</p>
             </div>
-            <a href="exam.html" class="button button-lime" style="font-size:11px;text-decoration:none">Vào Phòng Thi Trực Tuyến 🚀</a>
+            <a href="exam.html" class="button button-lime">Vào Phòng Thi Trực Tuyến 🚀</a>
           </div>
 
           <div style="margin-top:22px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
@@ -206,7 +212,29 @@
     ];
     const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(`aicheck:${key}`))??fallback}catch{return fallback}};const write=(key,value)=>localStorage.setItem(`aicheck:${key}`,JSON.stringify(value));const shuffle=items=>{const result=[...items];for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]]}return result};
     function draw(items,count,key){let used=read(`used:${key}`,[]),available=items.filter(item=>!used.includes(item.id));let chosen=shuffle(available).slice(0,count);if(chosen.length<count){const chosenIds=new Set(chosen.map(item=>item.id));const remaining=shuffle(items.filter(item=>!chosenIds.has(item.id)));chosen=[...chosen,...remaining.slice(0,count-chosen.length)];write(`used:${key}`,chosen.map(item=>item.id));return chosen}write(`used:${key}`,[...used,...chosen.map(item=>item.id)]);return chosen}
-    function saveRecord(type,score,phase=null){const enteredName=read("player","")||document.getElementById("studentName").value.trim(),guestName=window.AICheckCloud?.getDisplayName()||"Bạn",name=(enteredName||guestName).slice(0,24),records=read("records",[]);let row=records.find(item=>item.name.toLowerCase()===name.toLowerCase());if(!row){row={name};records.push(row)}row[type]=Math.max(row[type]||0,score);if(type==="assessment"&&phase)row[`${phase}Assessment`]=Math.max(row[`${phase}Assessment`]||0,score);row.date=new Date().toISOString().slice(0,10);write("records",records);const cloud=window.AICheckCloud,status=document.getElementById("syncStatus");if(!cloud?.configured){status.textContent="Supabase chưa cấu hình; điểm vẫn được lưu trên thiết bị này.";return}status.textContent="Đang đồng bộ điểm lên BXH chung…";cloud.saveScore({name:cloud.getDisplayName(enteredName||name),activity:type,score,phase}).then(result=>{status.textContent=result.synced?"Đã đồng bộ điểm lên BXH chung.":"Chưa đồng bộ được; điểm vẫn lưu trên thiết bị này."}).catch(()=>{status.textContent="Mất kết nối; điểm vẫn lưu trên thiết bị này."})}
+    function saveRecord(type,score,phase=null){
+      const enteredName = read("player","") || window.AICheckCloud?.getDisplayName() || "Bạn";
+      const guestName = window.AICheckCloud?.getDisplayName() || "Bạn";
+      const name = (enteredName || guestName).slice(0,24);
+      const records = read("records",[]);
+      let row = records.find(item => item.name.toLowerCase() === name.toLowerCase());
+      if(!row){row = {name}; records.push(row)}
+      row[type] = Math.max(row[type]||0, score);
+      if(type === "assessment" && phase) row[`${phase}Assessment`] = Math.max(row[`${phase}Assessment`]||0, score);
+      row.date = new Date().toISOString().slice(0,10);
+      write("records", records);
+      const cloud = window.AICheckCloud, status = document.getElementById("syncStatus");
+      if(!cloud?.configured){
+        if (status) status.textContent = "Supabase chưa cấu hình; điểm vẫn được lưu trên thiết bị này.";
+        return;
+      }
+      if (status) status.textContent = "Đang đồng bộ điểm lên BXH chung…";
+      cloud.saveScore({name: cloud.getDisplayName(enteredName||name), activity: type, score, phase}).then(result => {
+        if (status) status.textContent = result.synced ? "Đã đồng bộ điểm lên BXH chung." : "Chưa đồng bộ được; điểm vẫn lưu trên thiết bị này.";
+      }).catch(() => {
+        if (status) status.textContent = "Mất kết nối; điểm vẫn lưu trên thiết bị này.";
+      });
+    }
     function level(score){return score<=25?"Yếu":score<=50?"Trung bình":score<=75?"Khá":"Giỏi"}
     function noteFor(label,weakest){const messages={"Yếu":"Bạn đang ở giai đoạn làm quen. Hãy dừng lại, khoanh vùng khẳng định và tìm một nguồn chính thức.","Trung bình":"Bạn đã nhận ra một số thông tin đáng nghi. Hãy luyện xác minh nguồn gốc và đối chiếu nhiều nguồn độc lập.","Khá":"Bạn đã biết kiểm tra thông tin trước khi sử dụng. Hãy cải thiện thêm khả năng đánh giá độ tin cậy của nguồn.","Giỏi":"Bạn vận dụng tốt quy trình kiểm chứng và biết kết luận theo bằng chứng. Hãy tiếp tục chú ý giới hạn của dữ liệu."};return `${messages[label]}${weakest?` Kỹ năng cần ưu tiên: ${weakest.toLowerCase()}.`:""}`}
     let mode="assessment",questions=[],answers=[],cursor=0,selected=null,assessmentPhase=null;
@@ -247,10 +275,6 @@
       questions = mode === "assessment"
         ? shuffle(skills.flatMap((_, s) => draw(bank.filter(item => item.s === s).map((item, i) => ({ ...item, id: `q${s}-${i}` })), 4, `quiz-v2-20-${s}`)))
         : shuffle(skills.map((_, s) => draw(rubricBank.filter(item => item.s === s), 1, `rubric-v2-clear-${s}`)[0]));
-      
-      window.AICheckLoader?.show(mode === "assessment" ? "Đang tạo bộ 20 câu ngẫu nhiên..." : "Đang chuẩn bị thử thách Rubric...");
-      setTimeout(() => window.AICheckLoader?.hide(), 450);
-
       document.getElementById("startScreen").classList.add("quiz-hidden");
       document.getElementById("quizView").classList.remove("quiz-hidden");
       document.getElementById("resultView").classList.add("quiz-hidden");
@@ -329,9 +353,6 @@
           phase: mode === "assessment" ? assessmentPhase : null
         });
       }
-
-      window.AICheckLoader?.show("Đang phân tích năng lực & ghi nhận điểm số...");
-      setTimeout(() => window.AICheckLoader?.hide(), 450);
 
       document.getElementById("quizView").classList.add("quiz-hidden");
       const result = document.getElementById("resultView");
