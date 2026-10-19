@@ -1122,6 +1122,13 @@
           Gửi yêu cầu tới Admin THĐ
         </button>
       </div>
+
+      <!-- Lối tắt trực tiếp đến trang Đặt lại mật khẩu 3 bước -->
+      <div style="margin-top:12px;text-align:center;padding:10px 12px;background:rgba(2,132,199,0.08);border-radius:10px;border:1px solid rgba(2,132,199,0.2)">
+        <a href="reset-password.html" style="color:#0284c7;font-weight:700;font-size:12.5px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+          <span>🔑</span> Đã có mã 6 ký tự từ Admin? <u>Đổi mật khẩu ngay →</u>
+        </a>
+      </div>
     </div>
 
     <!-- Chuyển đổi Đăng nhập / Đăng ký -->
@@ -1820,7 +1827,7 @@
         if (res && res.error && !res.local) {
           alert("Lỗi: " + (res.error.message || res.error));
         } else {
-          alert("✅ Yêu cầu hỗ trợ của bạn đã được ghi nhận thành công! Ban quản trị THĐ sẽ kiểm tra và phản hồi sớm.");
+          alert("✅ Yêu cầu hỗ trợ đã được gửi thành công đến Ban Quản trị THĐ!\n\nSau khi Admin bấm duyệt, hệ thống sẽ cấp mã xác minh 6 ký tự (chữ & số) gửi về thông báo tài khoản và hiển thị trên hệ thống.\n\nSau đó bạn có thể bấm vào liên kết 'Đổi mật khẩu ngay' để nhập email, mã 6 ký tự và tạo mật khẩu mới.");
           document.getElementById('adminSupportBox').style.display = 'none';
         }
       }

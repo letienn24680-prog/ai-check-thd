@@ -21,8 +21,14 @@
       tag: "PHẦN 1: THÔNG TIN CHUNG",
       match: /khối lớp của bạn/i,
       title: "Khối lớp của bạn",
-      isPrivateIfFreeText: true,
       defaultOptions: ["Khối 10", "Khối 11", "Khối 12"]
+    },
+    {
+      key: "chi_doan_lop",
+      tag: "PHẦN 1: THÔNG TIN CHUNG",
+      match: /chi đoàn|thuộc lớp nào|lớp của bạn|chi đoàn \(lớp\)/i,
+      title: "Chi đoàn / Lớp tham gia khảo sát",
+      defaultOptions: ["10A1", "10A2", "11A1", "11A2", "11B2", "12A1", "12A5"]
     },
     {
       key: "mon_hoc",
@@ -341,9 +347,23 @@
         responseCount: 12,
         multiSelect: false,
         options: [
-          { label: "Khối 11", count: 7, percentage: 58.3 },
-          { label: "Khối 12", count: 4, percentage: 33.3 },
-          { label: "Khối 10", count: 1, percentage: 8.4 }
+          { label: "Khối 10", count: 4, percentage: 33.3 },
+          { label: "Khối 11", count: 4, percentage: 33.3 },
+          { label: "Khối 12", count: 4, percentage: 33.4 }
+        ]
+      },
+      {
+        title: "Chi đoàn / Lớp tham gia khảo sát",
+        responseCount: 12,
+        multiSelect: false,
+        options: [
+          { label: "10A1", count: 2, percentage: 16.7 },
+          { label: "10A2", count: 2, percentage: 16.7 },
+          { label: "11A1", count: 2, percentage: 16.7 },
+          { label: "11A2", count: 2, percentage: 16.7 },
+          { label: "11B2", count: 2, percentage: 16.7 },
+          { label: "12A1", count: 1, percentage: 8.3 },
+          { label: "12A5", count: 1, percentage: 8.2 }
         ]
       },
       {
@@ -693,7 +713,7 @@
   // ==========================================================================
   function isExcludedTitle(title) {
     if (!title) return true;
-    return /^cột\s*\d+$|^phần\s*\d+$|dấu thời gian|timestamp|họ và tên|bạn tên|tên bạn|chi đoàn|lớp nào|ý kiến|giải pháp/i.test(title);
+    return /^cột\s*\d+$|^phần\s*\d+$|dấu thời gian|timestamp|họ và tên|bạn tên|tên bạn(?!.*lớp)|ý kiến|giải pháp/i.test(title);
   }
 
   function processSummaryQuestions(liveQuestions) {
@@ -709,12 +729,11 @@
       if (matchedLive) {
         usedLive.add(matchedLive);
 
-        // Bảo vệ quyền riêng tư nếu dữ liệu câu trả lời là danh sách tên riêng
+        // Bảo vệ quyền riêng tư nếu dữ liệu câu trả lời là danh sách tên riêng cá nhân học sinh
         if (canon.isPrivateIfFreeText && matchedLive.options) {
           const labels = matchedLive.options.map(o => o.label || "");
-          const isNameList = labels.some(l => /12a\d|11a\d|10a\d|lớp\s*1/i.test(l)) ||
-            (labels.length >= 3 && matchedLive.options.every(o => o.count === 1));
-          if (isNameList) {
+          const isPersonalNameList = labels.some(l => /^(nguyễn|trần|lê|phạm|hoàng|huỳnh|phan|vũ|võ|đặng|bùi|đỗ|hồ|ngô|dương|lý)\s/i.test(l.trim()));
+          if (isPersonalNameList) {
             // Dùng baseline an toàn thay vì hiển thị tên học sinh
             const baseQ = BASELINE_SURVEY_DATA.questions.find(bq => canon.match.test(bq.title));
             if (baseQ) {

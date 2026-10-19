@@ -752,7 +752,10 @@
           <h2 class="panel-title" style="margin:0">Yêu cầu hỗ trợ & Quên mật khẩu</h2>
           <p class="panel-copy" style="margin:4px 0 0">Các yêu cầu gửi từ học sinh trong quá trình tham gia trạm.</p>
         </div>
-        <span id="supportSourceBadge" class="tag">Đang tải...</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button type="button" class="btn-small" onclick="openManualResetCodeModal()" style="font-weight:700;background:#0284c7;color:#fff;border:none">🔑 Cấp mã đổi MK thủ công</button>
+          <span id="supportSourceBadge" class="tag">Đang tải...</span>
+        </div>
       </div>
       <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="supportContainer">
@@ -987,6 +990,69 @@
         <p class="panel-copy">Đang tải dữ liệu điểm...</p>
       </div>
     </section>
+
+    <!-- ========================================================================= -->
+    <!-- SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN DIỆN (24/7 FULL BACKUP & RESTORE) -->
+    <!-- ========================================================================= -->
+    <section class="card" id="backupRestoreSection" style="border: 2px solid rgba(2, 132, 199, 0.35); background: linear-gradient(180deg, rgba(2, 132, 199, 0.03) 0%, rgba(255, 255, 255, 0.95) 100%);">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+        <div>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;color:#0284c7">
+            <span>💾</span>
+            <span>Sao lưu & Phục hồi dữ liệu hệ thống (24/7)</span>
+          </h2>
+          <p class="panel-copy" style="margin:4px 0 0">Tự động sao lưu định kỳ liên tục 24/7 tránh mất mát dữ liệu khi gặp sự cố, sập nguồn hoặc chuyển máy chủ.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">🟢 24/7 Auto-Backup Hoạt động</span>
+          <button type="button" class="btn-small" onclick="loadBackupArchiveList()" style="font-weight:700">🔄 Làm mới</button>
+        </div>
+      </div>
+
+      <!-- KHỐI THAO TÁC NHANH: SAO LƯU NGAY & PHỤC HỒI -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:20px">
+        <!-- Card 1: Tải file sao lưu JSON -->
+        <div style="background:#f8fafc;padding:18px;border-radius:14px;border:1px solid #e2e8f0;display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="font-size:20px">📥</span>
+              <strong style="font-size:14px;color:#0f172a">Sao lưu toàn bộ dữ liệu (JSON)</strong>
+            </div>
+            <p style="font-size:12px;color:#64748b;line-height:1.5;margin:0 0 14px">
+              Xuất tệp nén JSON chứa toàn bộ tài khoản, kết quả thi, lịch sử vi phạm, yêu cầu hỗ trợ, mã admin và điểm số BXH.
+            </p>
+          </div>
+          <button type="button" class="btn-small" onclick="handleDownloadFullBackup()" style="background:#0284c7;color:#fff;border:none;font-weight:800;padding:10px 16px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+            <span>⬇️</span> Tải bản sao lưu toàn bộ ngay
+          </button>
+        </div>
+
+        <!-- Card 2: Phục hồi từ file backup -->
+        <div style="background:#f8fafc;padding:18px;border-radius:14px;border:1px solid #e2e8f0;display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span style="font-size:20px">📤</span>
+              <strong style="font-size:14px;color:#0f172a">Khôi phục hệ thống từ tệp sao lưu</strong>
+            </div>
+            <p style="font-size:12px;color:#64748b;line-height:1.5;margin:0 0 14px">
+              Chọn tệp JSON đã sao lưu trước đó để khôi phục lại 100% tài khoản, đề thi, bài thi và trạng thái hệ thống.
+            </p>
+          </div>
+          <label style="background:#0f172a;color:#fff;border:none;font-weight:800;padding:10px 16px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;font-size:12.5px">
+            <span>📁</span> Chọn tệp JSON để phục hồi
+            <input type="file" id="inputRestoreBackupFile" accept=".json" style="display:none" onchange="handleRestoreBackupFile(event)">
+          </label>
+        </div>
+      </div>
+
+      <!-- DANH SÁCH BẢN SAO LƯU TỰ ĐỘNG NỘI BỘ (ROLLING ARCHIVE) -->
+      <h3 style="font-size:13.5px;font-weight:800;color:var(--text);margin:0 0 8px;display:flex;align-items:center;gap:6px">
+        <span>📋</span> Lịch sử các bản sao lưu tự động cục bộ (Lưu trữ an toàn trên máy)
+      </h3>
+      <div class="table-responsive" id="backupArchiveContainer">
+        <p class="panel-copy">Đang tải lịch sử sao lưu...</p>
+      </div>
+    </section>
     </div>
   </div>
 
@@ -1139,6 +1205,79 @@
         <button type="button" class="btn-small" onclick="closeUnlockComparisonModal()">Hủy bỏ</button>
         <button type="button" id="btnModalConfirmGrantCode" class="button button-lime" style="font-size:11.5px;font-weight:800">
           ✉️ Thông tin hợp lệ: Duyệt & Gửi mã về mail của tài khoản
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DUYỆT & CẤP MÃ ĐẶT LẠI MẬT KHẨU (6 KÝ TỰ) -->
+  <div id="passwordResetApprovedModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content" style="max-width:540px">
+      <div class="admin-modal-header" style="background:#f0f9ff;border-bottom:1px solid #bae6fd">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:24px">🔑</span>
+          <div>
+            <h3 class="admin-modal-title" style="color:#0369a1;font-size:16px">Đã duyệt & Cấp mã Đặt lại Mật khẩu</h3>
+            <p style="margin:2px 0 0;font-size:11.5px;color:#0284c7">Mã xác nhận 6 ký tự gồm chữ và số đã được kích hoạt thành công</p>
+          </div>
+        </div>
+        <button type="button" class="btn-small" onclick="closePasswordResetApprovedModal()">✕ Đóng</button>
+      </div>
+      <div class="admin-modal-body" style="padding:20px;text-align:center">
+        <p style="font-size:13px;color:#475569;margin-bottom:12px">
+          Tài khoản học sinh: <strong id="praModalEmail" style="color:#0f172a;font-size:14px"></strong>
+        </p>
+
+        <div style="background:#f8fafc;border:2px dashed #0284c7;padding:16px;border-radius:12px;margin-bottom:16px">
+          <div style="font-size:11px;font-weight:700;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Mã xác minh 6 ký tự</div>
+          <div id="praModalCode" style="font-family:'Space Grotesk',monospace;font-size:32px;font-weight:800;letter-spacing:6px;color:#0284c7;user-select:all"></div>
+          <div style="font-size:11.5px;color:#64748b;margin-top:6px">Hiệu lực trong 24 giờ · Sử dụng 1 lần</div>
+        </div>
+
+        <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:12px;font-size:12px;color:#065f46;text-align:left;line-height:1.5;margin-bottom:16px">
+          ✅ <strong>Hệ thống đã tự động:</strong><br>
+          • Gửi thông báo chứa mã đến icon Chuông 🔔 của tài khoản.<br>
+          • Học sinh chỉ cần vào trang <strong>Đặt lại mật khẩu</strong>, nhập email và mã này để tạo mật khẩu mới.
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <button type="button" class="btn-small" onclick="copyPraCode()" style="background:#0284c7;color:#fff;border:none;font-weight:700;padding:8px 14px">📋 Sao chép mã</button>
+          <button type="button" class="btn-small" onclick="copyPraLink()" style="background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700;padding:8px 14px">🔗 Sao chép Link đổi MK</button>
+          <a id="praModalDirectLink" href="#" target="_blank" class="btn-small" style="background:#0f172a;color:#fff;text-decoration:none;font-weight:700;padding:8px 14px;display:inline-flex;align-items:center">Mở trang đổi MK ↗</a>
+        </div>
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="button button-dark" onclick="closePasswordResetApprovedModal()" style="font-size:11px">Đã hiểu & Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CẤP MÃ ĐẶT LẠI MẬT KHẨU THỦ CÔNG -->
+  <div id="manualResetCodeModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content" style="max-width:460px">
+      <div class="admin-modal-header" style="background:#f8fafc">
+        <h3 class="admin-modal-title" style="display:flex;align-items:center;gap:6px">
+          <span>🔑</span> Cấp mã đặt lại mật khẩu thủ công
+        </h3>
+        <button type="button" class="btn-small" onclick="closeManualResetCodeModal()">✕ Đóng</button>
+      </div>
+      <div class="admin-modal-body" style="padding:18px">
+        <p style="font-size:12px;color:#64748b;margin:0 0 14px">
+          Dùng khi học sinh liên hệ trực tiếp với Admin qua Zalo/Lớp học để nhờ đổi mật khẩu.
+        </p>
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:11.5px;font-weight:700;margin-bottom:4px">Địa chỉ Email của học sinh:</label>
+          <input type="email" id="manualResetEmailInput" placeholder="VD: hocsinh@thd.edu.vn" class="filter-input" style="width:100%">
+        </div>
+        <div>
+          <label style="display:block;font-size:11.5px;font-weight:700;margin-bottom:4px">Tùy chọn mã (Để trống để tự tạo ngẫu nhiên 6 ký tự):</label>
+          <input type="text" id="manualResetCustomCode" placeholder="Để trống hoặc nhập VD: THD892" maxlength="8" class="filter-input" style="width:100%;text-transform:uppercase">
+        </div>
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="btn-small" onclick="closeManualResetCodeModal()">Hủy</button>
+        <button type="button" class="button button-lime" onclick="submitManualResetCode()" style="font-size:11px;font-weight:800">
+          ⚡ Tạo & Kích hoạt mã ngay
         </button>
       </div>
     </div>
@@ -1314,6 +1453,7 @@
       loadExamResultsTable();
       loadExamStudentsSummaryTable();
       calculateStats();
+      loadBackupArchiveList();
     }
     
     async function loadUsersList() {
@@ -2032,7 +2172,21 @@
                     <td style="color:var(--muted)">${timeStr}</td>
                     <td class="${statusClass}">${r.status === "pending" ? "Chờ xử lý" : "Đã xong ✓"}</td>
                     <td>
-                      ${r.status === "pending" ? `<button class="btn-small" onclick="handleResolveSupport('${r.id}')">Đánh dấu Đã xử lý</button>` : `<span style="color:var(--muted)">Đã giải quyết</span>`}
+                      ${r.status === "pending" ? `
+                        <div style="display:flex;gap:6px;flex-wrap:wrap">
+                          <button class="btn-small" style="background:#0284c7;color:#fff;border:none;font-weight:700" onclick="handleApprovePasswordReset('${escapeHtml(r.user_email || '')}', '${r.id}')">
+                            🔑 Duyệt & Cấp mã (6 ký tự)
+                          </button>
+                          <button class="btn-small" onclick="handleResolveSupport('${r.id}')">
+                            Đánh dấu xong ✓
+                          </button>
+                        </div>
+                      ` : `
+                        <div>
+                          <span style="color:var(--muted);font-weight:600">Đã giải quyết ✓</span>
+                          ${r.resetCode ? `<div style="margin-top:4px"><span style="font-family:'Space Grotesk',monospace;font-weight:800;color:#0284c7;background:rgba(2,132,199,0.1);padding:2px 8px;border-radius:4px;font-size:11px">Mã: ${escapeHtml(r.resetCode)}</span></div>` : ''}
+                        </div>
+                      `}
                     </td>
                   </tr>
                 `;
@@ -2042,6 +2196,200 @@
         }
       }
     }
+
+    let currentPraCode = "";
+    let currentPraLink = "";
+
+    async function handleApprovePasswordReset(userEmail, reqId) {
+      let email = (userEmail || "").trim().toLowerCase();
+      if (!email) {
+        email = prompt("Vui lòng nhập Email tài khoản học sinh cần cấp mã đổi mật khẩu:") || "";
+        email = email.trim().toLowerCase();
+      }
+      if (!email || !email.includes("@")) {
+        return alert("Email không hợp lệ!");
+      }
+
+      if (!window.AICheckCloud?.createPasswordResetCode) {
+        return alert("Dịch vụ xác thực chưa sẵn sàng!");
+      }
+
+      try {
+        const res = await window.AICheckCloud.createPasswordResetCode(email);
+        if (!res.success) {
+          return alert("Lỗi cấp mã: " + (res.error || "Không thể tạo mã"));
+        }
+
+        currentPraCode = res.code;
+        currentPraLink = res.link || (window.location.origin + "/reset-password.html?email=" + encodeURIComponent(email) + "&code=" + res.code);
+
+        // Đánh dấu yêu cầu là resolved và lưu lại code
+        if (reqId && window.AICheckCloud?.resolveSupportRequest) {
+          await window.AICheckCloud.resolveSupportRequest(reqId);
+        }
+
+        // Cập nhật modal
+        document.getElementById("praModalEmail").textContent = email;
+        document.getElementById("praModalCode").textContent = res.code;
+        const linkElem = document.getElementById("praModalDirectLink");
+        if (linkElem) linkElem.href = `reset-password.html?email=${encodeURIComponent(email)}&code=${res.code}`;
+
+        document.getElementById("passwordResetApprovedModal").style.display = "flex";
+
+        await loadSupportRequests();
+      } catch (err) {
+        alert("Lỗi khi cấp mã đổi mật khẩu: " + err.message);
+      }
+    }
+
+    function closePasswordResetApprovedModal() {
+      document.getElementById("passwordResetApprovedModal").style.display = "none";
+    }
+
+    function copyPraCode() {
+      if (currentPraCode) {
+        navigator.clipboard.writeText(currentPraCode);
+        alert(`✓ Đã sao chép mã 6 ký tự: ${currentPraCode}`);
+      }
+    }
+
+    function copyPraLink() {
+      if (currentPraLink) {
+        navigator.clipboard.writeText(currentPraLink);
+        alert(`✓ Đã sao chép liên kết đổi mật khẩu:\n${currentPraLink}`);
+      }
+    }
+
+    function openManualResetCodeModal() {
+      document.getElementById("manualResetEmailInput").value = "";
+      document.getElementById("manualResetCustomCode").value = "";
+      document.getElementById("manualResetCodeModal").style.display = "flex";
+      setTimeout(() => document.getElementById("manualResetEmailInput")?.focus(), 150);
+    }
+
+    function closeManualResetCodeModal() {
+      document.getElementById("manualResetCodeModal").style.display = "none";
+    }
+
+    async function submitManualResetCode() {
+      const email = document.getElementById("manualResetEmailInput").value.trim().toLowerCase();
+      const customCode = document.getElementById("manualResetCustomCode").value.trim().toUpperCase();
+
+      if (!email || !email.includes("@")) {
+        return alert("Vui lòng nhập email hợp lệ của học sinh!");
+      }
+
+      closeManualResetCodeModal();
+      await handleApprovePasswordReset(email, null);
+    }
+
+    // =========================================================================
+    // HỆ THỐNG SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN DIỆN 24/7 (FULL BACKUP & RESTORE)
+    // =========================================================================
+    async function handleDownloadFullBackup() {
+      if (!window.AICheckCloud?.exportFullSystemBackup) {
+        return alert("Hệ thống sao lưu chưa sẵn sàng!");
+      }
+
+      try {
+        const backupData = await window.AICheckCloud.exportFullSystemBackup();
+        const jsonStr = JSON.stringify(backupData, null, 2);
+        const blob = new Blob([jsonStr], { type: "application/json" });
+        const now = new Date();
+        const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+        const fileName = `aicheck-thd-backup-${timeStr}.json`;
+
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+
+        loadBackupArchiveList();
+        alert(`✅ ĐÃ SAO LƯU DỮ LIỆU THÀNH CÔNG!\n\nTệp: ${fileName}\nTổng số khoá cấu hình: ${backupData.stats.total_local_keys}\nDữ liệu Cloud Shared Store: ${backupData.stats.has_cloud_shared_data ? 'Đã sao lưu 100%' : 'Cục bộ'}\n\nHãy lưu trữ tệp này an toàn trên máy tính hoặc Google Drive để bảo vệ dữ liệu đề tài KHKT!`);
+      } catch (err) {
+        alert("Lỗi tạo bản sao lưu: " + err.message);
+      }
+    }
+
+    async function handleRestoreBackupFile(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      const confirmRestore = confirm(
+        `⚠️ CẢNH BÁO QUAN TRỌNG VỀ PHỤC HỒI HỆ THỐNG:\n\nBạn có chắc chắn muốn nạp tệp sao lưu "${file.name}"?\nThao tác này sẽ cập nhật lại toàn bộ tài khoản, điểm số, lịch sử bài thi và cài đặt.\n\nBấm OK để tiếp tục.`
+      );
+      if (!confirmRestore) {
+        event.target.value = "";
+        return;
+      }
+
+      try {
+        const text = await file.text();
+        const backupJson = JSON.parse(text);
+
+        const res = await window.AICheckCloud.restoreFullSystemBackup(backupJson);
+        alert(
+          `🎉 KHÔI PHỤC HỆ THỐNG THÀNH CÔNG!\n\n• Số khoá dữ liệu đã nạp lại: ${res.restoredKeys}\n• Đồng bộ Cloud: ${res.restoredCloud ? 'Thành công' : 'Không có'}\n• Mã bản sao lưu: ${res.backup_id}\n\nTrang quản trị sẽ tự động tải lại để áp dụng dữ liệu mới.`
+        );
+        window.location.reload();
+      } catch (err) {
+        alert("❌ Lỗi khi đọc và khôi phục tệp sao lưu: " + err.message);
+        event.target.value = "";
+      }
+    }
+
+    function loadBackupArchiveList() {
+      const container = document.getElementById("backupArchiveContainer");
+      if (!container) return;
+
+      const archive = window.AICheckCloud?.getAutoBackupArchive ? window.AICheckCloud.getAutoBackupArchive() : [];
+      if (!archive.length) {
+        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có bản sao lưu tự động nào trong kho lưu trữ. Hệ thống sẽ tự động tạo định kỳ 24/7.</p>';
+        return;
+      }
+
+      container.innerHTML = `<table>
+        <thead>
+          <tr>
+            <th>Thời gian sao lưu</th>
+            <th>Mã bản lưu (Backup ID)</th>
+            <th>Số khoá dữ liệu</th>
+            <th>Dung lượng</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${archive.map(b => {
+            const timeStr = b.created_at ? new Date(b.created_at).toLocaleString("vi-VN") : "—";
+            const kbSize = b.size_bytes ? (b.size_bytes / 1024).toFixed(1) + " KB" : "—";
+            return `
+              <tr>
+                <td><strong>${timeStr}</strong></td>
+                <td><code style="font-family:'Space Grotesk',monospace;font-size:11px;color:#0284c7">${escapeHtml(b.backup_id || "—")}</code></td>
+                <td>${b.keys_count || 0} mục dữ liệu</td>
+                <td>${kbSize}</td>
+                <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-size:11px">✓ Sẵn sàng 24/7</span></td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>`;
+    }
+
+    // Tự động sao lưu nền (Heartbeat 24/7) mỗi 30 phút
+    setInterval(() => {
+      try {
+        if (window.AICheckCloud?.exportFullSystemBackup) {
+          window.AICheckCloud.exportFullSystemBackup().then(() => {
+            console.log("💾 [24/7 Backup Engine] Tự động tạo bản sao lưu snapshot thành công.");
+            loadBackupArchiveList();
+          }).catch(() => {});
+        }
+      } catch {}
+    }, 30 * 60 * 1000);
 
     async function handleResolveSupport(id) {
       if (window.AICheckCloud?.resolveSupportRequest) {

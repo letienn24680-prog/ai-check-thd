@@ -302,12 +302,13 @@
         button.className = "choice"; 
         
         let icon = "";
-        if (label === "Đúng") icon = "✅ ";
-        else if (label === "Sai") icon = "❌ ";
-        else if (label === "Chưa đủ căn cứ") icon = "⚖️ ";
-        else if (label === "Cần kiểm chứng thêm") icon = "🔍 ";
+        let hint = "";
+        if (label === "Đúng") { icon = "✅ "; hint = " (Khẳng định đúng)"; }
+        else if (label === "Sai") { icon = "❌ "; hint = " (AI ảo giác / Sai kiến thức)"; }
+        else if (label === "Chưa đủ căn cứ") { icon = "⚖️ "; hint = " (Thiếu số liệu / chưa rõ)"; }
+        else if (label === "Cần kiểm chứng thêm") { icon = "🔍 "; hint = " (Cần tra cứu thêm SGK)"; }
 
-        button.innerHTML = `<span>${icon}${label}</span>`; 
+        button.innerHTML = `<span><strong>${icon}${label}</strong><small style="opacity:0.75;font-size:11px">${hint}</small></span>`; 
         button.addEventListener("click", () => { 
           window.AICheckAudio?.playClick();
           container.querySelectorAll("button").forEach(option => option.classList.remove("selected")); 
@@ -440,7 +441,20 @@
         task.hidden = false; 
         task.textContent = `Nhiệm vụ kiểm chứng phù hợp: ${item.task}`; 
         
-        document.getElementById("practiceFeedback").textContent = `${isBothCorrect ? "🎯 Chính xác xuất sắc!" : "⚠️ Hãy đối chiếu lại."} Đáp án: ${item.verdict}. ${item.explain} Nguồn đối chứng: ${item.source}`; 
+        const feedbackEl = document.getElementById("practiceFeedback");
+        feedbackEl.innerHTML = `
+          <div style="background:${isBothCorrect ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)'};border:1.5px solid ${isBothCorrect ? '#10b981' : '#f87171'};border-radius:12px;padding:12px 16px;margin-top:12px;animation:fadeIn 0.2s ease-out">
+            <div style="font-weight:800;font-size:13.5px;color:${isBothCorrect ? '#047857' : '#b91c1c'};margin-bottom:6px">
+              ${isBothCorrect ? '🎯 Chính xác xuất sắc! Bạn đã chọn đúng kết luận và cách kiểm chứng.' : '⚠️ Hãy chú ý đối chiếu lại với kiến thức chuẩn:'}
+            </div>
+            <div style="font-size:12.5px;line-height:1.6;color:var(--text);margin-bottom:8px">
+              <strong>Kết luận đúng:</strong> <span class="tag" style="background:${item.verdict === 'Đúng' ? '#10b981' : '#ef4444'};color:#fff;font-weight:700">${item.verdict}</span> · ${item.explain}
+            </div>
+            <div style="font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin-top:6px">
+              📖 <strong>Nguồn đối chứng thực tế:</strong> <span style="color:var(--forest);font-weight:600">${item.source}</span>
+            </div>
+          </div>
+        `;
         document.getElementById("practiceScore").textContent = `Đúng cả hai lựa chọn: ${correct} / ${set.length}`; 
         document.getElementById("practiceAction").textContent = index === set.length - 1 ? "Xem kết quả →" : "Câu tiếp theo →"; 
         

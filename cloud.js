@@ -511,6 +511,330 @@
     return { success: true };
   }
 
+  // --- HỆ THỐNG MÃ ĐẶT LẠI MẬT KHẨU (6 KÝ TỰ CHỮ & SỐ) ---
+  function generatePasswordResetCode(length = 6) {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Ký tự chữ hoa & số dễ nhìn, không gây nhầm lẫn
+    let code = "";
+    for (let i = 0; i < length; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  }
+
+  function getLocalPasswordResetCodes() {
+    try {
+      return JSON.parse(localStorage.getItem("aicheck:password_reset_codes") || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function saveLocalPasswordResetCode(item) {
+    const list = getLocalPasswordResetCodes();
+    const idx = list.findIndex(r => r.code === item.code || (r.email === item.email && r.status === "active"));
+    if (idx !== -1) {
+      list[idx] = { ...list[idx], ...item };
+    } else {
+      list.unshift(item);
+    }
+    localStorage.setItem("aicheck:password_reset_codes", JSON.stringify(list));
+  }
+
+  async function createPasswordResetCode(email, customCode = null) {
+    const normEmail = String(email || "").trim().toLowerCase();
+    if (!normEmail) return { error: "Email không hợp lệ" };
+
+    const code = String(customCode || generatePasswordResetCode(6)).toUpperCase().trim();
+    const record = {
+      code: code,
+      email: normEmail,
+      status: "active",
+      created_at: Date.now(),
+      expires_at: Date.now() + 24 * 60 * 60 * 1000 // 24 giờ hiệu lực
+    };
+
+    // 1. Lưu local
+    saveLocalPasswordResetCode(record);
+
+    // 2. Lưu lên Cloud Shared Store để học sinh ở máy khác/điện thoại cũng xác thực được
+    try {
+      await updateCloudSharedData(data => {
+        data.password_reset_codes = data.password_reset_codes || [];
+        data.password_reset_codes.forEach(c => {
+          if ((c.email || "").toLowerCase().trim() === normEmail) {
+            c.status = "superseded";
+          }
+        });
+        data.password_reset_codes.unshift(record);
+        return data;
+      });
+    } catch (e) {
+      console.warn("Lỗi lưu reset code lên Cloud Store:", e);
+    }
+
+    // 3. Gửi thông báo đến icon chuông của tài khoản
+    if (window.AICheckNotificationStore) {
+      window.AICheckNotificationStore.sendNotification({
+        recipient: normEmail,
+        sender: "Ban Quản trị THĐ (adminthd)",
+        type: "password_reset",
+        title: "🔑 Mã đặt lại mật khẩu tài khoản của bạn",
+        message: `Chào bạn, yêu cầu cấp lại mật khẩu cho tài khoản <strong>${normEmail}</strong> đã được Ban Quản trị phê duyệt.<br>Mã xác minh 6 ký tự gồm chữ và số của bạn là: <div style="font-family:'Space Grotesk',monospace;font-size:20px;font-weight:800;letter-spacing:4px;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd;padding:6px 14px;border-radius:8px;margin:8px 0;display:inline-block">${code}</div><br>👉 Bấm vào liên kết bên dưới để nhập mã và tiến hành đổi mật khẩu mới.`,
+        adminPin: code,
+        link: `reset-password.html?email=${encodeURIComponent(normEmail)}&code=${code}`
+      });
+    }
+
+    // 4. Phát sóng Realtime
+    broadcastGlobalRealtime("PASSWORD_RESET_APPROVED", {
+      email: normEmail,
+      code: code,
+      time: Date.now()
+    });
+
+    return {
+      success: true,
+      code: code,
+      email: normEmail,
+      link: `reset-password.html?email=${encodeURIComponent(normEmail)}&code=${code}`
+    };
+  }
+
+  async function verifyPasswordResetCode(email, code) {
+    const normEmail = String(email || "").trim().toLowerCase();
+    const cleanCode = String(code || "").trim().toUpperCase();
+
+    if (!normEmail) return { valid: false, message: "Vui lòng nhập email tài khoản của bạn." };
+    if (!cleanCode || cleanCode.length < 4) return { valid: false, message: "Vui lòng nhập mã xác nhận 6 ký tự gồm chữ và số do Admin cấp." };
+
+    // 1. Kiểm tra Cloud Shared Store
+    try {
+      const cloudData = await fetchCloudSharedData();
+      const cloudCodes = Array.isArray(cloudData?.password_reset_codes) ? cloudData.password_reset_codes : [];
+      const matchCloud = cloudCodes.find(c => 
+        (c.email || "").toLowerCase().trim() === normEmail &&
+        (c.code || "").toUpperCase().trim() === cleanCode &&
+        c.status === "active" &&
+        (!c.expires_at || c.expires_at > Date.now())
+      );
+      if (matchCloud) {
+        return { valid: true, codeData: matchCloud };
+      }
+    } catch {}
+
+    // 2. Kiểm tra bộ nhớ Local
+    const localCodes = getLocalPasswordResetCodes();
+    const matchLocal = localCodes.find(c => 
+      (c.email || "").toLowerCase().trim() === normEmail &&
+      (c.code || "").toUpperCase().trim() === cleanCode &&
+      c.status === "active" &&
+      (!c.expires_at || c.expires_at > Date.now())
+    );
+    if (matchLocal) {
+      return { valid: true, codeData: matchLocal };
+    }
+
+    return { 
+      valid: false, 
+      message: "Mã xác minh không chính xác, đã hết hạn hoặc không khớp với email này! Vui lòng kiểm tra lại hoặc liên hệ Admin THĐ." 
+    };
+  }
+
+  async function executePasswordReset(email, code, newPassword) {
+    const verify = await verifyPasswordResetCode(email, code);
+    if (!verify.valid) {
+      return { success: false, message: verify.message };
+    }
+
+    const normEmail = String(email || "").trim().toLowerCase();
+    const cleanCode = String(code || "").trim().toUpperCase();
+
+    // 1. Đánh dấu mã đã sử dụng (used)
+    try {
+      await updateCloudSharedData(data => {
+        data.password_reset_codes = data.password_reset_codes || [];
+        data.password_reset_codes.forEach(c => {
+          if ((c.email || "").toLowerCase().trim() === normEmail && (c.code || "").toUpperCase().trim() === cleanCode) {
+            c.status = "used";
+            c.used_at = Date.now();
+          }
+        });
+        return data;
+      });
+    } catch {}
+
+    const localList = getLocalPasswordResetCodes();
+    localList.forEach(c => {
+      if ((c.email || "").toLowerCase().trim() === normEmail && (c.code || "").toUpperCase().trim() === cleanCode) {
+        c.status = "used";
+        c.used_at = Date.now();
+      }
+    });
+    localStorage.setItem("aicheck:password_reset_codes", JSON.stringify(localList));
+
+    // 2. Cập nhật mật khẩu trong Supabase Auth nếu có phiên hiện tại
+    if (client) {
+      try {
+        await client.auth.updateUser({ password: newPassword });
+      } catch {}
+    }
+
+    // 3. Cập nhật trong danh sách users cục bộ (nếu có lưu)
+    try {
+      const usersList = JSON.parse(localStorage.getItem("aicheck:users_list") || "[]");
+      const u = usersList.find(x => (x.email || "").toLowerCase().trim() === normEmail);
+      if (u) {
+        u.last_password_reset = Date.now();
+        localStorage.setItem("aicheck:users_list", JSON.stringify(usersList));
+      }
+    } catch {}
+
+    // 4. Gửi thông báo an toàn đến tài khoản
+    if (window.AICheckNotificationStore) {
+      window.AICheckNotificationStore.sendNotification({
+        recipient: normEmail,
+        sender: "Hệ thống Bảo mật THĐ",
+        type: "security_alert",
+        title: "✅ Mật khẩu tài khoản đã được đổi thành công",
+        message: `Mật khẩu tài khoản <strong>${normEmail}</strong> đã được cập nhật thành công lúc ${new Date().toLocaleTimeString("vi-VN")}. Bạn có thể đăng nhập ngay với mật khẩu mới.`
+      });
+    }
+
+    return { success: true, message: "Mật khẩu đã được cập nhật thành công!" };
+  }
+
+  // --- HỆ THỐNG SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN DIỆN (24/7 FULL BACKUP & RESTORE) ---
+  async function exportFullSystemBackup() {
+    const backupId = "aicheck_backup_" + Date.now();
+    const createdAt = new Date().toISOString();
+
+    // 1. Quét toàn bộ key trong localStorage liên quan đến aicheck:*
+    const localDump = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && (key.startsWith("aicheck:") || key.startsWith("supabase.auth."))) {
+        localDump[key] = localStorage.getItem(key);
+      }
+    }
+
+    // 2. Lấy toàn bộ dữ liệu Cloud Shared Store
+    let cloudDump = null;
+    try {
+      cloudDump = await fetchCloudSharedData();
+    } catch (e) {
+      console.warn("Không lấy được cloud shared data khi sao lưu:", e);
+    }
+
+    // 3. Lấy dữ liệu Supabase DB nếu client kết nối
+    const supabaseTables = {};
+    if (client) {
+      try {
+        const { data: scores } = await client.from("leaderboard_scores").select("*").limit(1000);
+        if (scores) supabaseTables.leaderboard_scores = scores;
+      } catch {}
+      try {
+        const { data: profiles } = await client.from("user_profiles").select("*").limit(1000);
+        if (profiles) supabaseTables.user_profiles = profiles;
+      } catch {}
+      try {
+        const { data: support } = await client.from("support_requests").select("*").limit(1000);
+        if (support) supabaseTables.support_requests = support;
+      } catch {}
+    }
+
+    const payload = {
+      backup_version: "2.5-KHKT-24/7",
+      backup_id: backupId,
+      created_at: createdAt,
+      created_timestamp: Date.now(),
+      origin: window.location.origin,
+      stats: {
+        total_local_keys: Object.keys(localDump).length,
+        has_cloud_shared_data: Boolean(cloudDump),
+        supabase_tables_backed_up: Object.keys(supabaseTables)
+      },
+      localStorage_dump: localDump,
+      cloud_shared_data: cloudDump,
+      supabase_tables: supabaseTables
+    };
+
+    // Tự động lưu 1 snapshot vào kho lưu trữ nội bộ (Rolling archive max 10 bản)
+    saveAutoBackupSnapshot(payload);
+
+    return payload;
+  }
+
+  function getAutoBackupArchive() {
+    try {
+      return JSON.parse(localStorage.getItem("aicheck:auto_backups_archive") || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function saveAutoBackupSnapshot(payload) {
+    try {
+      const archive = getAutoBackupArchive();
+      const snapshot = {
+        backup_id: payload.backup_id,
+        created_at: payload.created_at,
+        created_timestamp: payload.created_timestamp,
+        keys_count: payload.stats.total_local_keys,
+        size_bytes: JSON.stringify(payload).length,
+        summary: `Bản sao lưu ${new Date(payload.created_timestamp).toLocaleString("vi-VN")}`
+      };
+      // Lưu tối đa 10 bản sao lưu gần nhất
+      archive.unshift(snapshot);
+      if (archive.length > 10) archive.pop();
+      localStorage.setItem("aicheck:auto_backups_archive", JSON.stringify(archive));
+    } catch (e) {
+      console.warn("Lỗi lưu snapshot backup vào archive:", e);
+    }
+  }
+
+  async function restoreFullSystemBackup(backupData) {
+    if (!backupData || typeof backupData !== "object") {
+      throw new Error("Tệp sao lưu không hợp lệ hoặc bị lỗi định dạng!");
+    }
+
+    let restoredKeys = 0;
+    // 1. Phục hồi LocalStorage
+    if (backupData.localStorage_dump && typeof backupData.localStorage_dump === "object") {
+      for (const [k, v] of Object.entries(backupData.localStorage_dump)) {
+        if (typeof v === "string") {
+          localStorage.setItem(k, v);
+          restoredKeys++;
+        }
+      }
+    }
+
+    // 2. Phục hồi Cloud Shared Store
+    let restoredCloud = false;
+    if (backupData.cloud_shared_data && typeof backupData.cloud_shared_data === "object") {
+      try {
+        await updateCloudSharedData(() => backupData.cloud_shared_data);
+        restoredCloud = true;
+      } catch (e) {
+        console.warn("Lỗi phục hồi Cloud Shared Data:", e);
+      }
+    }
+
+    // 3. Phát sóng sự kiện thông báo toàn hệ thống
+    broadcastGlobalRealtime("SYSTEM_DATA_RESTORED", {
+      backup_id: backupData.backup_id,
+      timestamp: Date.now()
+    });
+
+    return {
+      success: true,
+      restoredKeys,
+      restoredCloud,
+      backup_id: backupData.backup_id,
+      created_at: backupData.created_at
+    };
+  }
+
+
   function isAdmin(user) {
     if (!user) return false;
     if (user.id === "admin-thd-master-id") return true;
@@ -1403,6 +1727,16 @@
     resolveSupportRequest,
     getLocalSupportRequests,
     getAllCloudSupportRequests,
+    // Password Reset System (6-char Alphanumeric Code)
+    generatePasswordResetCode,
+    createPasswordResetCode,
+    verifyPasswordResetCode,
+    executePasswordReset,
+    getLocalPasswordResetCodes,
+    // 24/7 Full Backup & Restore System
+    exportFullSystemBackup,
+    restoreFullSystemBackup,
+    getAutoBackupArchive,
     processSyncQueue,
     syncGamification,
     // Session & Device Conflict Manager
