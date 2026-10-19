@@ -4,12 +4,12 @@
 // 2. Nhìn lên thanh địa chỉ URL: https://docs.google.com/spreadsheets/d/[ID_NẰM_Ở_ĐÂY]/edit
 // 3. Sao chép đoạn mã ID đó và dán vào SPREADSHEET_ID dưới đây:
 // ============================================================================
-const SPREADSHEET_ID = "13TTG_L2wuobPGuMtmEj9Bz9Zp7SWdDjGXiHfVi5WKgI";
-const RESPONSE_SHEET_NAME = "";
+const SPREADSHEET_ID = "1Q-ny5KLtcqEk6hxkoryK1Bd-6f4DGtPVU_Swwrky538";
+const RESPONSE_SHEET_NAME = "Câu trả lời biểu mẫu 1";
 
 // Mẫu lọc các cột nhạy cảm / định danh cá nhân / cột hệ thống
 const EXCLUDED_HEADER_PATTERN =
-  /dấu thời gian|timestamp|họ và tên|bạn tên|tên bạn|chi đoàn|lớp nào|email|điện thoại|^\s*lý do\s*$|đoạn ngắn|ý kiến|chia sẻ|giải pháp|^cột\s*\d+$|^phần\s*\d+/i;
+  /dấu thời gian|timestamp|họ và tên|bạn tên|tên bạn(?!.*lớp)|email|điện thoại|^\s*lý do\s*$|đoạn ngắn|ý kiến|chia sẻ|giải pháp|^cột\s*\d+$|^phần\s*\d+/i;
 
 const MULTI_SELECT_HEADER_PATTERN =
   /chọn nhiều phương án|chọn các phương án|các phương án bạn áp dụng|hộp kiểm|mục đích nào nhất|môn nào/i;
@@ -86,8 +86,11 @@ function getSummary() {
       // Tách phương án chọn nhiều: không tách dấu phẩy nằm trong dấu ngoặc đơn
       const answers = multiSelect ? splitMultiSelectAnswer(answer) : [answer];
       answers.forEach((rawOption) => {
-        const option = normalizeOption(rawOption);
+        let option = normalizeOption(rawOption);
         if (!option) return;
+        if (/chi đoàn|lớp/i.test(header)) {
+          option = option.toUpperCase().replace(/\s+/g, "");
+        }
         counts[option] = (counts[option] || 0) + 1;
       });
     });
@@ -114,6 +117,37 @@ function getSummary() {
 
     questions.push({ title: cleanTitle, responseCount, multiSelect, options });
   });
+
+  // Tự động tổng hợp câu hỏi "Khối lớp của bạn" từ cột Lớp (nếu chưa có cột Khối riêng biệt)
+  const classQuestion = questions.find((q) => /chi đoàn|thuộc.*lớp|lớp nào/i.test(q.title));
+  const hasGradeQuestion = questions.some((q) => /khối lớp/i.test(q.title));
+  if (classQuestion && !hasGradeQuestion) {
+    const gradeCounts = Object.create(null);
+    let gradeTotal = 0;
+    classQuestion.options.forEach((opt) => {
+      let g = "Khối 12";
+      if (/^12/i.test(opt.label)) g = "Khối 12";
+      else if (/^11/i.test(opt.label)) g = "Khối 11";
+      else if (/^10/i.test(opt.label)) g = "Khối 10";
+      gradeCounts[g] = (gradeCounts[g] || 0) + opt.count;
+      gradeTotal += opt.count;
+    });
+
+    const gradeOptions = Object.keys(gradeCounts)
+      .map((g) => ({
+        label: g,
+        count: gradeCounts[g],
+        percentage: gradeTotal ? Math.round((gradeCounts[g] / gradeTotal) * 1000) / 10 : 0
+      }))
+      .sort((left, right) => right.count - left.count);
+
+    questions.unshift({
+      title: "Khối lớp của bạn",
+      responseCount: gradeTotal,
+      multiSelect: false,
+      options: gradeOptions
+    });
+  }
 
   return { totalResponses, updatedAt: new Date().toISOString(), questions };
 }

@@ -19,16 +19,16 @@
     {
       key: "khoi_lop",
       tag: "PHẦN 1: THÔNG TIN CHUNG",
-      match: /khối lớp của bạn/i,
+      match: /^khối lớp|khối lớp của bạn/i,
       title: "Khối lớp của bạn",
-      defaultOptions: ["Khối 10", "Khối 11", "Khối 12"]
+      defaultOptions: ["Khối 12"]
     },
     {
       key: "chi_doan_lop",
       tag: "PHẦN 1: THÔNG TIN CHUNG",
-      match: /chi đoàn|thuộc lớp nào|lớp của bạn|chi đoàn \(lớp\)/i,
+      match: /chi đoàn|thuộc.*lớp|chi đoàn \(lớp\)/i,
       title: "Chi đoàn / Lớp tham gia khảo sát",
-      defaultOptions: ["10A1", "10A2", "11A1", "11A2", "11B2", "12A1", "12A5"]
+      defaultOptions: ["12A5"]
     },
     {
       key: "mon_hoc",
@@ -336,59 +336,52 @@
   ];
 
   // ==========================================================================
-  // 2. BỘ DỮ LIỆU CƠ SỞ (ĐỒNG BỘ SẴN TỪ 12 PHẢN HỒI THỰC TẾ)
+  // 2. BỘ DỮ LIỆU CƠ SỞ (ĐỒNG BỘ 100% TỪ 15 PHẢN HỒI THỰC TẾ LỚP 12A5)
   // ==========================================================================
   const BASELINE_SURVEY_DATA = {
-    totalResponses: 12,
+    totalResponses: 15,
     updatedAt: new Date().toISOString(),
     questions: [
       {
+        key: "khoi_lop",
         title: "Khối lớp của bạn",
-        responseCount: 12,
+        responseCount: 15,
         multiSelect: false,
         options: [
-          { label: "Khối 10", count: 4, percentage: 33.3 },
-          { label: "Khối 11", count: 4, percentage: 33.3 },
-          { label: "Khối 12", count: 4, percentage: 33.4 }
+          { label: "Khối 12", count: 15, percentage: 100.0 }
         ]
       },
       {
+        key: "chi_doan_lop",
         title: "Chi đoàn / Lớp tham gia khảo sát",
-        responseCount: 12,
+        responseCount: 15,
         multiSelect: false,
         options: [
-          { label: "10A1", count: 2, percentage: 16.7 },
-          { label: "10A2", count: 2, percentage: 16.7 },
-          { label: "11A1", count: 2, percentage: 16.7 },
-          { label: "11A2", count: 2, percentage: 16.7 },
-          { label: "11B2", count: 2, percentage: 16.7 },
-          { label: "12A1", count: 1, percentage: 8.3 },
-          { label: "12A5", count: 1, percentage: 8.2 }
+          { label: "12A5", count: 15, percentage: 100.0 }
         ]
       },
       {
+        key: "mon_hoc",
         title: "Bạn sử dụng AI trong những môn nào",
-        responseCount: 12,
+        responseCount: 15,
         multiSelect: true,
         options: [
-          { label: "TIẾNG ANH", count: 9, percentage: 75.0 },
-          { label: "TOÁN", count: 8, percentage: 66.7 },
-          { label: "NGỮ VĂN", count: 7, percentage: 58.3 },
-          { label: "VẬT LÍ", count: 5, percentage: 41.7 },
-          { label: "HÓA HỌC", count: 5, percentage: 41.7 },
-          { label: "LỊCH SỬ", count: 4, percentage: 33.3 },
-          { label: "SINH HỌC", count: 3, percentage: 25.0 },
-          { label: "ĐỊA LÍ", count: 2, percentage: 16.7 }
+          { label: "TIẾNG ANH", count: 15, percentage: 100.0 },
+          { label: "TOÁN", count: 12, percentage: 80.0 },
+          { label: "NGỮ VĂN", count: 8, percentage: 53.3 },
+          { label: "ĐỊA LÍ", count: 6, percentage: 40.0 },
+          { label: "LỊCH SỬ", count: 4, percentage: 26.7 }
         ]
       },
       {
+        key: "tan_suat",
         title: "Tần suất bạn sử dụng các công cụ AI (ChatGPT, Claude, Gemini, Copilot...) phục vụ học tập là bao nhiêu?",
-        responseCount: 11,
+        responseCount: 15,
         multiSelect: false,
         options: [
-          { label: "Hằng ngày", count: 7, percentage: 63.6 },
-          { label: "2-3 lần/tuần", count: 4, percentage: 36.4 },
-          { label: "Hiếm khi", count: 0, percentage: 0 },
+          { label: "2-3 lần/tuần", count: 8, percentage: 53.3 },
+          { label: "Hằng ngày", count: 6, percentage: 40.0 },
+          { label: "Hiếm khi", count: 1, percentage: 6.7 },
           { label: "Chưa từng sử dụng", count: 0, percentage: 0 }
         ]
       },
@@ -716,13 +709,109 @@
     return /^cột\s*\d+$|^phần\s*\d+$|dấu thời gian|timestamp|họ và tên|bạn tên|tên bạn(?!.*lớp)|ý kiến|giải pháp/i.test(title);
   }
 
-  function processSummaryQuestions(liveQuestions) {
+  function processSummaryQuestions(liveQuestions, totalLiveResponses) {
     const validLive = Array.isArray(liveQuestions) ? liveQuestions.filter(q => q && q.title && !isExcludedTitle(q.title)) : [];
     const usedLive = new Set();
     const result = [];
+    const activeTotal = Number(totalLiveResponses) > 0 ? Number(totalLiveResponses) : BASELINE_SURVEY_DATA.totalResponses;
+
+    // Kiểm tra xem live data có cột lớp/chi đoàn hay không (loại trừ các cột có chữ 'khối')
+    const liveClassQ = validLive.find((lq) => !/khối/i.test(lq.title) && /chi đoàn|thuộc.*lớp|lớp nào|chi đoàn \(lớp\)/i.test(lq.title));
+    let synthesizedKhoiLop = null;
+    let synthesizedChiDoan = null;
+
+    if (liveClassQ) {
+      usedLive.add(liveClassQ);
+      // Chuẩn hóa tên lớp: viết hoa, xóa khoảng trắng thừa (12a5 -> 12A5)
+      const classMap = new Map();
+      let classCountTotal = 0;
+      (liveClassQ.options || []).forEach((opt) => {
+        let label = String(opt.label || "").trim().toUpperCase().replace(/\s+/g, "");
+        if (!label || /^(KHỐI|LỚP)$/i.test(label)) return;
+        const count = Number(opt.count) || 0;
+        classMap.set(label, (classMap.get(label) || 0) + count);
+        classCountTotal += count;
+      });
+
+      const finalClassOptions = [];
+      const gradeCounts = { "Khối 12": 0, "Khối 11": 0, "Khối 10": 0 };
+
+      classMap.forEach((count, label) => {
+        if (count > 0) {
+          finalClassOptions.push({
+            label,
+            count,
+            percentage: classCountTotal ? Math.round((count / classCountTotal) * 1000) / 10 : 100
+          });
+
+          if (/^12/i.test(label)) gradeCounts["Khối 12"] += count;
+          else if (/^11/i.test(label)) gradeCounts["Khối 11"] += count;
+          else if (/^10/i.test(label)) gradeCounts["Khối 10"] += count;
+        }
+      });
+
+      finalClassOptions.sort((a, b) => b.count - a.count);
+
+      synthesizedChiDoan = {
+        title: "Chi đoàn / Lớp tham gia khảo sát",
+        tag: "PHẦN 1: THÔNG TIN CHUNG",
+        responseCount: classCountTotal || activeTotal,
+        multiSelect: false,
+        options: finalClassOptions.length > 0 ? finalClassOptions : [{ label: "12A5", count: activeTotal, percentage: 100.0 }]
+      };
+
+      const finalGradeOptions = [];
+      ["Khối 12", "Khối 11", "Khối 10"].forEach((g) => {
+        if (gradeCounts[g] > 0) {
+          finalGradeOptions.push({
+            label: g,
+            count: gradeCounts[g],
+            percentage: classCountTotal ? Math.round((gradeCounts[g] / classCountTotal) * 1000) / 10 : 100
+          });
+        }
+      });
+
+      synthesizedKhoiLop = {
+        title: "Khối lớp của bạn",
+        tag: "PHẦN 1: THÔNG TIN CHUNG",
+        responseCount: classCountTotal || activeTotal,
+        multiSelect: false,
+        options: finalGradeOptions.length > 0 ? finalGradeOptions : [{ label: "Khối 12", count: activeTotal, percentage: 100.0 }]
+      };
+    }
 
     // Duyệt qua từng câu hỏi trong danh mục chuẩn theo đúng thứ tự Google Form
     CANONICAL_QUESTIONS.forEach((canon) => {
+      if (canon.key === "khoi_lop") {
+        if (synthesizedKhoiLop) {
+          result.push(synthesizedKhoiLop);
+        } else {
+          result.push({
+            title: canon.title,
+            tag: canon.tag,
+            responseCount: activeTotal,
+            multiSelect: false,
+            options: [{ label: "Khối 12", count: activeTotal, percentage: 100.0 }]
+          });
+        }
+        return;
+      }
+
+      if (canon.key === "chi_doan_lop") {
+        if (synthesizedChiDoan) {
+          result.push(synthesizedChiDoan);
+        } else {
+          result.push({
+            title: canon.title,
+            tag: canon.tag,
+            responseCount: activeTotal,
+            multiSelect: false,
+            options: [{ label: "12A5", count: activeTotal, percentage: 100.0 }]
+          });
+        }
+        return;
+      }
+
       // Tìm câu hỏi trong live response khớp với câu chuẩn
       const matchedLive = validLive.find((lq) => !usedLive.has(lq) && canon.match.test(lq.title));
 
@@ -734,8 +823,7 @@
           const labels = matchedLive.options.map(o => o.label || "");
           const isPersonalNameList = labels.some(l => /^(nguyễn|trần|lê|phạm|hoàng|huỳnh|phan|vũ|võ|đặng|bùi|đỗ|hồ|ngô|dương|lý)\s/i.test(l.trim()));
           if (isPersonalNameList) {
-            // Dùng baseline an toàn thay vì hiển thị tên học sinh
-            const baseQ = BASELINE_SURVEY_DATA.questions.find(bq => canon.match.test(bq.title));
+            const baseQ = BASELINE_SURVEY_DATA.questions.find(bq => bq.key === canon.key || bq.title === canon.title);
             if (baseQ) {
               result.push({
                 title: canon.title,
@@ -799,7 +887,7 @@
         });
       } else {
         // Nếu câu hỏi chưa có trong live sheet (mới thêm vào form hoặc chưa ai trả lời), hiển thị từ baseline hoặc mặc định
-        const baseQ = BASELINE_SURVEY_DATA.questions.find(bq => canon.match.test(bq.title));
+        const baseQ = BASELINE_SURVEY_DATA.questions.find(bq => bq.key === canon.key || bq.title === canon.title);
         if (baseQ) {
           result.push({
             title: canon.title,
@@ -897,7 +985,7 @@
     total.textContent = Number(summary.totalResponses).toLocaleString("vi-VN");
 
     // Xử lý chuẩn hóa và sắp xếp lại toàn bộ câu hỏi theo đúng danh mục Google Form
-    const cleanQuestions = processSummaryQuestions(summary.questions);
+    const cleanQuestions = processSummaryQuestions(summary.questions, summary.totalResponses);
     const INITIAL_VISIBLE_COUNT = 3;
     const questionCards = cleanQuestions.map((q, idx) => {
       const card = renderQuestion(q);
