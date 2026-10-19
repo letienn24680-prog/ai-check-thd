@@ -584,7 +584,7 @@
         return origin;
       }
     }
-    return "https://ai-check-thd.netlify.app";
+    return "https://ai-check-thd.vercel.app";
   }
 
   // --- GỬI EMAIL CHỨA MÃ XÁC MINH 6 KÝ TỰ VỀ HÒM THƯ NGƯỜI DÙNG ---

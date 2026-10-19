@@ -2247,7 +2247,7 @@
 
         currentPraEmail = email;
         currentPraCode = res.code;
-        const baseUrl = (window.AICheckCloud?.getSitePublicUrl ? window.AICheckCloud.getSitePublicUrl() : (window.AICHECK_CONFIG?.siteUrl || "https://ai-check-thd.netlify.app"));
+        const baseUrl = (window.AICheckCloud?.getSitePublicUrl ? window.AICheckCloud.getSitePublicUrl() : (window.AICHECK_CONFIG?.siteUrl || "https://ai-check-thd.vercel.app"));
         currentPraLink = (res.link && res.link.startsWith("http")) ? res.link : `${baseUrl}/reset-password.html?email=${encodeURIComponent(email)}&code=${res.code}`;
 
         const subject = `[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu của bạn: ${currentPraCode}`;
