@@ -624,14 +624,20 @@ html, body, button, a, input, select, textarea, label, [role="button"], [role="t
     transform: scale(0.44) !important;
     transform-origin: center center !important;
   }
-  .nav-gamify-pill {
-    padding: 3px 6px !important;
-    font-size: 9.5px !important;
-    gap: 3px !important;
+  /* Ẩn hoàn toàn gamify pill và nút login phụ trong user pill trên mobile để tránh tràn viền */
+  .nav-gamify-pill,
+  #navGamifyPill,
+  .nav-user-pill .nav-auth-link {
+    display: none !important;
   }
   .nav-user-pill {
     padding: 3px 6px !important;
     gap: 3px !important;
+  }
+  .nav-auth-link {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+    white-space: nowrap !important;
   }
   #navUserNameText,
   .nav-user-logout {
@@ -649,6 +655,7 @@ html, body, button, a, input, select, textarea, label, [role="button"], [role="t
     place-items: center !important;
     border-radius: 8px !important;
     flex-shrink: 0 !important;
+    margin-left: 2px !important;
   }
   .header-inner .site-nav.is-open {
     display: flex !important;
@@ -701,8 +708,9 @@ html, body, button, a, input, select, textarea, label, [role="button"], [role="t
   .header-inner .brand-name {
     display: none !important;
   }
-  /* Trên màn hình < 480px: chỉ hiển thị Lv trong gamify pill */
-  .nav-gamify-pill span:not(:first-child) {
+  /* Ẩn hoàn toàn gamify pill và nút phụ trên mobile */
+  .nav-gamify-pill,
+  #navGamifyPill {
     display: none !important;
   }
   .header-right {
