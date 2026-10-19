@@ -83,6 +83,7 @@
         if (displayName) {
           try { localStorage.setItem("aicheck:player", JSON.stringify(displayName.trim().slice(0, 24))); } catch {}
         }
+        recordPasswordHistory(email, password);
       }
 
       return { data, error };
@@ -178,6 +179,7 @@
         if (name) {
           try { localStorage.setItem("aicheck:player", JSON.stringify(name.trim().slice(0, 24))); } catch {}
         }
+        recordPasswordHistory(effectiveEmail, password);
         processSyncQueue(); // Thử sync ngay sau khi login
 
         // Đồng bộ và kiểm tra chuỗi ngày đăng nhập nếu có gamification engine
@@ -540,6 +542,37 @@
     localStorage.setItem("aicheck:password_reset_codes", JSON.stringify(list));
   }
 
+  // --- HỆ THỐNG LỊCH SỬ MẬT KHẨU (CHỐNG ĐẶT LẠI MẬT KHẨU CŨ TRƯỚC ĐÓ) ---
+  function getPasswordHistory() {
+    try {
+      return JSON.parse(localStorage.getItem("aicheck:password_history") || "{}");
+    } catch {
+      return {};
+    }
+  }
+
+  function checkPasswordHistory(email, password) {
+    const normEmail = String(email || "").trim().toLowerCase();
+    if (!normEmail || !password) return false;
+    const history = getPasswordHistory();
+    const list = history[normEmail] || [];
+    return list.includes(password);
+  }
+
+  function recordPasswordHistory(email, password) {
+    const normEmail = String(email || "").trim().toLowerCase();
+    if (!normEmail || !password) return;
+    try {
+      const history = getPasswordHistory();
+      history[normEmail] = history[normEmail] || [];
+      if (!history[normEmail].includes(password)) {
+        history[normEmail].push(password);
+        if (history[normEmail].length > 10) history[normEmail].shift();
+      }
+      localStorage.setItem("aicheck:password_history", JSON.stringify(history));
+    } catch {}
+  }
+
   // Lấy domain chính thức của website (đảm bảo luôn bắt đầu bằng https://)
   function getSitePublicUrl() {
     if (window.AICHECK_CONFIG?.siteUrl && typeof window.AICHECK_CONFIG.siteUrl === "string" && window.AICHECK_CONFIG.siteUrl.startsWith("http")) {
@@ -711,6 +744,50 @@
     const normEmail = String(email || "").trim().toLowerCase();
     const cleanCode = String(code || "").trim().toUpperCase();
 
+    // 0. KIỂM TRA MẬT KHẨU MỚI CÓ TRÙNG VỚI MẬT KHẨU ĐÃ ĐẶT TRƯỚC ĐÓ HAY KHÔNG
+    // 0a. Kiểm tra qua lịch sử mật khẩu đã lưu
+    if (checkPasswordHistory(normEmail, newPassword)) {
+      return {
+        success: false,
+        message: "Mật khẩu này đã được đặt trước đó! Vui lòng chọn một mật khẩu mới khác."
+      };
+    }
+
+    // 0b. Kiểm tra danh sách users lưu cục bộ
+    try {
+      const usersList = JSON.parse(localStorage.getItem("aicheck:users_list") || "[]");
+      const u = usersList.find(x => (x.email || "").toLowerCase().trim() === normEmail);
+      if (u && u.password && u.password === newPassword) {
+        return {
+          success: false,
+          message: "Mật khẩu này đã được đặt trước đó! Vui lòng chọn một mật khẩu mới khác."
+        };
+      }
+    } catch {}
+
+    // 0c. Thử xác thực với Supabase Auth bằng mật khẩu mới này:
+    // Nếu đăng nhập thành công với mật khẩu mới -> chính là mật khẩu hiện tại (được đặt trước đó)!
+    if (client && client.auth) {
+      try {
+        const { data: testAuth, error: testErr } = await client.auth.signInWithPassword({
+          email: normEmail,
+          password: newPassword
+        });
+        if (!testErr && testAuth?.user) {
+          // Lưu vào lịch sử để ghi nhớ
+          recordPasswordHistory(normEmail, newPassword);
+          // Đăng xuất phiên test ngay lập tức
+          try { await client.auth.signOut(); } catch {}
+          return {
+            success: false,
+            message: "Mật khẩu này đã được đặt trước đó! Vui lòng chọn một mật khẩu mới khác."
+          };
+        }
+      } catch (e) {
+        console.warn("Lỗi kiểm tra mật khẩu cũ:", e);
+      }
+    }
+
     // 1. Đánh dấu mã đã sử dụng (used)
     try {
       await updateCloudSharedData(data => {
@@ -737,15 +814,26 @@
     // 2. Cập nhật mật khẩu trong Supabase Auth nếu có phiên hiện tại
     if (client) {
       try {
-        await client.auth.updateUser({ password: newPassword });
+        const { data: updData, error: updErr } = await client.auth.updateUser({ password: newPassword });
+        if (updErr) {
+          const errMsg = (updErr.message || "").toLowerCase();
+          if (errMsg.includes("different") || errMsg.includes("same") || errMsg.includes("previous") || errMsg.includes("already")) {
+            return {
+              success: false,
+              message: "Mật khẩu này đã được đặt trước đó! Vui lòng chọn một mật khẩu mới khác."
+            };
+          }
+        }
       } catch {}
     }
 
-    // 3. Cập nhật trong danh sách users cục bộ (nếu có lưu)
+    // 3. Ghi nhớ mật khẩu mới vào lịch sử mật khẩu & cập nhật danh sách users cục bộ
+    recordPasswordHistory(normEmail, newPassword);
     try {
       const usersList = JSON.parse(localStorage.getItem("aicheck:users_list") || "[]");
       const u = usersList.find(x => (x.email || "").toLowerCase().trim() === normEmail);
       if (u) {
+        u.password = newPassword;
         u.last_password_reset = Date.now();
         localStorage.setItem("aicheck:users_list", JSON.stringify(usersList));
       }
@@ -1207,6 +1295,14 @@
       const user = await getUser();
       if (!user) return { error: { message: "Bạn chưa đăng nhập vào hệ thống" } };
 
+      if (currentPassword && currentPassword === newPassword) {
+        return { error: { message: "Mật khẩu này đã được đặt trước đó! Vui lòng chọn một mật khẩu mới khác." } };
+      }
+
+      if (checkPasswordHistory(user.email, newPassword)) {
+        return { error: { message: "Mật khẩu này đã được đặt trước đó! Vui lòng chọn một mật khẩu mới khác." } };
+      }
+
       if (currentPassword) {
         const { error: verifyErr } = await client.auth.signInWithPassword({
           email: user.email,
@@ -1218,6 +1314,11 @@
       }
 
       const { data, error } = await client.auth.updateUser({ password: newPassword });
+      if (!error) {
+        recordPasswordHistory(user.email, newPassword);
+      } else if (error.message && (error.message.toLowerCase().includes("different") || error.message.toLowerCase().includes("same"))) {
+        return { error: { message: "Mật khẩu này đã được đặt trước đó! Vui lòng chọn một mật khẩu mới khác." } };
+      }
       return { data, error };
     } catch (err) {
       return { error: { message: err.message || "Lỗi cập nhật mật khẩu" } };

@@ -1108,24 +1108,14 @@
         </button>
       </div>
 
-      <!-- Dự phòng: Gửi yêu cầu cho Admin nếu gặp sự cố -->
-      <button type="button" class="btn-support-admin" id="btnToggleAdminBox" onclick="toggleAdminBox()">
-        Gặp sự cố không nhận được thư? Gửi yêu cầu Admin hỗ trợ ↓
+      <!-- Dự phòng: Gửi yêu cầu cho Admin nếu gặp sự cố & Chuyển thẳng sang trang Đặt lại mật khẩu -->
+      <button type="button" class="btn-support-admin" id="btnQuickAdminSupport" onclick="handleQuickAdminSupport()" style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px">
+        <span>⚡</span> Gặp sự cố không nhận được mã? Gửi Admin & Đổi mật khẩu ngay →
       </button>
 
-      <div id="adminSupportBox" style="display:none;margin-top:10px;padding-top:10px;border-top:1px dotted #ccc">
-        <div class="flex-column" style="margin-bottom:8px">
-          <label for="adminSupportName" style="font-size:11px">Tên của bạn</label>
-          <input type="text" id="adminSupportName" class="input" placeholder="Họ và tên hoặc lớp" style="border:1px solid #ccc;border-radius:6px;padding:6px 10px;height:36px;background:#fff">
-        </div>
-        <button type="button" class="btn-otp" style="height:36px;font-size:11px;background:#475569" onclick="sendAdminSupport()">
-          Gửi yêu cầu tới Admin THĐ
-        </button>
-      </div>
-
       <!-- Lối tắt trực tiếp đến trang Đặt lại mật khẩu 3 bước -->
-      <div style="margin-top:12px;text-align:center;padding:10px 12px;background:rgba(2,132,199,0.08);border-radius:10px;border:1px solid rgba(2,132,199,0.2)">
-        <a href="reset-password.html" style="color:#0284c7;font-weight:700;font-size:12.5px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
+      <div style="margin-top:10px;text-align:center;padding:10px 12px;background:rgba(2,132,199,0.08);border-radius:10px;border:1px solid rgba(2,132,199,0.2)">
+        <a id="directResetPassLink" href="reset-password.html" style="color:#0284c7;font-weight:700;font-size:12.5px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px">
           <span>🔑</span> Đã nhận được mã 6 ký tự qua Email? <u>Đổi mật khẩu ngay →</u>
         </a>
       </div>
@@ -1807,31 +1797,42 @@
     }
 
     // Toggle hộp gửi hỗ trợ admin
-    function toggleAdminBox() {
-      const box = document.getElementById('adminSupportBox');
-      if (box) {
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    // Xử lý gửi yêu cầu hỗ trợ nhanh cho Admin THĐ & Chuyển ngay sang trang đổi mật khẩu
+    async function handleQuickAdminSupport() {
+      const emailInput = document.getElementById('supportEmail');
+      const email = (emailInput?.value || '').trim().toLowerCase();
+
+      if (!email || !email.includes('@')) {
+        alert("Vui lòng nhập Email tài khoản của bạn ở ô phía trên trước!");
+        emailInput?.focus();
+        return;
       }
-    }
 
-    // Gửi hỗ trợ cho Admin THĐ
-    async function sendAdminSupport() {
-      const email = document.getElementById('supportEmail')?.value.trim();
-      const name = document.getElementById('adminSupportName')?.value.trim();
-      if (!email) return alert("Vui lòng nhập email ở ô phía trên!");
-
+      // 1. Tự động gửi yêu cầu hỗ trợ tới Admin THĐ (sử dụng Email có sẵn, không cần nhập lại tên hay lớp)
       if (window.AICheckCloud?.sendSupportRequest) {
-        window.AICheckLoader?.show("Đang gửi yêu cầu hỗ trợ...");
-        const res = await window.AICheckCloud.sendSupportRequest(email, name, "Yêu cầu hỗ trợ cấp lại mật khẩu tài khoản");
-        window.AICheckLoader?.hide();
-        if (res && res.error && !res.local) {
-          alert("Lỗi: " + (res.error.message || res.error));
-        } else {
-          alert("✅ Yêu cầu hỗ trợ đã được gửi thành công đến Ban Quản trị THĐ!\n\nSau khi Admin phê duyệt, hệ thống sẽ cấp mã xác minh 6 ký tự (gồm chữ và số) và gửi trực tiếp về địa chỉ Email/Gmail (" + email + ") của bạn.\n\nSau đó bạn chỉ cần mở hộp thư Email lấy mã và bấm 'Đổi mật khẩu ngay' để tạo mật khẩu mới!");
-          document.getElementById('adminSupportBox').style.display = 'none';
+        window.AICheckLoader?.show("Đang gửi yêu cầu tới Admin THĐ...");
+        try {
+          await window.AICheckCloud.sendSupportRequest(email, email.split('@')[0], "Yêu cầu cấp lại mật khẩu tài khoản");
+        } catch (e) {
+          console.warn("Lỗi gửi support request:", e);
         }
+        window.AICheckLoader?.hide();
       }
+
+      alert(`✅ Đã gửi yêu cầu hỗ trợ cho tài khoản (${email}) tới Ban Quản trị THĐ thành công!\n\nSau khi Admin phê duyệt, mã xác minh 6 ký tự sẽ được gửi về hộp thư Email của bạn.\nHệ thống đang chuyển sang trang Đặt lại mật khẩu...`);
+
+      // 2. Chuyển thẳng sang trang reset-password.html với email đã nạp sẵn
+      window.location.href = `reset-password.html?email=${encodeURIComponent(email)}`;
     }
+
+    // Tự động đồng bộ đường dẫn link sang reset-password.html khi nhập email
+    document.getElementById('supportEmail')?.addEventListener('input', (e) => {
+      const val = (e.target.value || '').trim().toLowerCase();
+      const link = document.getElementById('directResetPassLink');
+      if (link) {
+        link.href = val ? `reset-password.html?email=${encodeURIComponent(val)}` : 'reset-password.html';
+      }
+    });
 
     // 8. Xử lý Đăng nhập mạng xã hội (Google & Facebook OAuth)
     async function handleOAuthLogin(provider) {
