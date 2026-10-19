@@ -1247,10 +1247,10 @@
 
         <!-- CÁC HÀNH ĐỘNG GỬI MAIL & SAO CHÉP TIỆN LỢI -->
         <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-          <button type="button" class="btn-small" onclick="openDirectGmailComposer()" style="background:#ea4335;color:#fff;border:none;font-weight:800;padding:9px 15px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 2px 8px rgba(234,67,53,0.3)">
-            <span>✉️</span> Mở Gmail gửi ngay (1 Click)
+          <button type="button" class="btn-small" onclick="openDirectGmailComposer()" style="background:#ea4335;color:#fff;border:none;font-weight:800;padding:10px 18px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 3px 10px rgba(234,67,53,0.35);font-size:13px;border-radius:8px">
+            <span>✉️</span> Mở Gmail gửi ngay (1 Click - Tức thì 100%)
           </button>
-          <button type="button" class="btn-small" onclick="triggerAutoSendEmail()" id="btnAutoSendEmail" style="background:#0284c7;color:#fff;border:none;font-weight:700;padding:9px 15px;display:inline-flex;align-items:center;gap:6px;cursor:pointer">
+          <button type="button" class="btn-small" onclick="triggerAutoSendEmail()" id="btnAutoSendEmail" style="background:#0284c7;color:#fff;border:none;font-weight:700;padding:9px 15px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border-radius:8px">
             <span>⚡</span> Gửi tự động qua Email API
           </button>
           <button type="button" class="btn-small" onclick="copyPraEmailBody()" style="background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700;padding:9px 13px;cursor:pointer">
@@ -2247,19 +2247,15 @@
 
         currentPraEmail = email;
         currentPraCode = res.code;
-        currentPraLink = res.link || (window.location.origin + "/reset-password.html?email=" + encodeURIComponent(email) + "&code=" + res.code);
+        const baseUrl = (window.AICheckCloud?.getSitePublicUrl ? window.AICheckCloud.getSitePublicUrl() : (window.AICHECK_CONFIG?.siteUrl || "https://ai-check-thd.netlify.app"));
+        currentPraLink = (res.link && res.link.startsWith("http")) ? res.link : `${baseUrl}/reset-password.html?email=${encodeURIComponent(email)}&code=${res.code}`;
 
-        if (res.emailResult) {
-          currentPraEmailBody = res.emailResult.body || "";
-          currentPraGmailUrl = res.emailResult.gmailComposeUrl || "";
-          currentPraMailtoUrl = res.emailResult.mailtoUrl || "";
-        } else {
-          const subject = encodeURIComponent(`[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu: ${currentPraCode}`);
-          const body = encodeURIComponent(`Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ đã phê duyệt yêu cầu cấp lại mật khẩu cho tài khoản: ${currentPraEmail}.\n\n🔑 Mã xác minh 6 ký tự (chữ & số) của bạn là:\n>>> ${currentPraCode} <<<\n\n👉 Đường link đổi mật khẩu:\n${currentPraLink}\n\nTrân trọng,\nBan Quản trị AI CHECK THĐ`);
-          currentPraEmailBody = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ đã phê duyệt yêu cầu cấp lại mật khẩu cho tài khoản: ${currentPraEmail}.\n\n🔑 Mã xác minh 6 ký tự (chữ & số) của bạn là:\n>>> ${currentPraCode} <<<\n\n👉 Đường link đổi mật khẩu:\n${currentPraLink}\n\nTrân trọng,\nBan Quản trị AI CHECK THĐ`;
-          currentPraGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentPraEmail)}&su=${subject}&body=${body}`;
-          currentPraMailtoUrl = `mailto:${currentPraEmail}?subject=${subject}&body=${body}`;
-        }
+        const subject = `[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu của bạn: ${currentPraCode}`;
+        const body = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ (Trường THPT Trần Hưng Đạo) đã nhận được và PHÊ DUYỆT yêu cầu cấp lại mật khẩu cho tài khoản:\n${currentPraEmail}\n\n🔑 MÃ XÁC MINH 6 KÝ TỰ (CHỮ VÀ SỐ) CỦA BẠN LÀ:\n>>> ${currentPraCode} <<<\n(Mã có hiệu lực trong vòng 24 giờ và dùng 1 lần).\n\n👉 HƯỚNG DẪN ĐỔI MẬT KHẨU MỚI:\nBước 1: Bấm trực tiếp vào đường liên kết dưới đây:\n${currentPraLink}\n\nBước 2: Hệ thống sẽ tự động điền sẵn Email và Mã xác minh. Bạn chỉ cần nhập mật khẩu mới và bấm hoàn tất.\n\nNếu bạn không yêu cầu hỗ trợ đổi mật khẩu, vui lòng bỏ qua email này.\n\nTrân trọng,\nBan Quản trị Hệ thống AI CHECK THĐ\nTrường THPT Trần Hưng Đạo`;
+
+        currentPraEmailBody = body;
+        currentPraGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentPraEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        currentPraMailtoUrl = `mailto:${encodeURIComponent(currentPraEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         // Đánh dấu yêu cầu là resolved và lưu lại code
         if (reqId && window.AICheckCloud?.resolveSupportRequest) {
@@ -2270,7 +2266,7 @@
         document.getElementById("praModalEmail").textContent = email;
         document.getElementById("praModalCode").textContent = res.code;
         const linkElem = document.getElementById("praModalDirectLink");
-        if (linkElem) linkElem.href = `reset-password.html?email=${encodeURIComponent(email)}&code=${res.code}`;
+        if (linkElem) linkElem.href = currentPraLink;
 
         // Cập nhật trạng thái gửi mail
         const statusBox = document.getElementById("praEmailStatusBox");
@@ -2295,7 +2291,7 @@
           }
           if (statusIcon) statusIcon.textContent = "✉️";
           if (statusTitle) statusTitle.textContent = `Mã 6 ký tự (${res.code}) đã sẵn sàng gửi đến: ${email}`;
-          if (statusDesc) statusDesc.innerHTML = `Hệ thống đã lưu mã thành công. Bạn có thể bấm nút đỏ <strong>"✉️ Mở Gmail gửi ngay (1 Click)"</strong> bên dưới để gửi email trực tiếp cho học sinh!`;
+          if (statusDesc) statusDesc.innerHTML = `Hệ thống đã lưu mã thành công. Bạn bấm nút đỏ <strong>"✉️ Mở Gmail gửi ngay (1 Click)"</strong> bên dưới để gửi email trực tiếp cho học sinh ngay lập tức!`;
         }
 
         document.getElementById("passwordResetApprovedModal").style.display = "flex";
@@ -2312,14 +2308,14 @@
 
     function openDirectGmailComposer() {
       if (!currentPraEmail) return alert("Chưa có thông tin email!");
-      if (!currentPraGmailUrl) {
-        const subject = encodeURIComponent(`[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu: ${currentPraCode}`);
-        const body = encodeURIComponent(`Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ đã phê duyệt yêu cầu cấp lại mật khẩu cho tài khoản: ${currentPraEmail}.\n\n🔑 Mã xác minh 6 ký tự của bạn: ${currentPraCode}\n\n👉 Đường link đổi mật khẩu: ${currentPraLink}\n\nTrân trọng,\nBan Quản trị AI CHECK THĐ`);
-        currentPraGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentPraEmail)}&su=${subject}&body=${body}`;
-      }
-      const opened = window.open(currentPraGmailUrl, "_blank");
-      if (!opened && currentPraMailtoUrl) {
-        window.location.href = currentPraMailtoUrl;
+      const subject = `[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu của bạn: ${currentPraCode}`;
+      const body = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ (Trường THPT Trần Hưng Đạo) đã nhận được và PHÊ DUYỆT yêu cầu cấp lại mật khẩu cho tài khoản:\n${currentPraEmail}\n\n🔑 MÃ XÁC MINH 6 KÝ TỰ (CHỮ VÀ SỐ) CỦA BẠN LÀ:\n>>> ${currentPraCode} <<<\n(Mã có hiệu lực trong vòng 24 giờ và dùng 1 lần).\n\n👉 HƯỚNG DẪN ĐỔI MẬT KHẨU MỚI:\nBước 1: Bấm trực tiếp vào đường liên kết dưới đây:\n${currentPraLink}\n\nBước 2: Hệ thống sẽ tự động điền sẵn Email và Mã xác minh. Bạn chỉ cần nhập mật khẩu mới và bấm hoàn tất.\n\nNếu bạn không yêu cầu hỗ trợ đổi mật khẩu, vui lòng bỏ qua email này.\n\nTrân trọng,\nBan Quản trị Hệ thống AI CHECK THĐ\nTrường THPT Trần Hưng Đạo`;
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentPraEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const mailtoUrl = `mailto:${encodeURIComponent(currentPraEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      const opened = window.open(gmailUrl, "_blank");
+      if (!opened) {
+        window.location.href = mailtoUrl;
       }
     }
 
@@ -2333,11 +2329,12 @@
       try {
         const res = await window.AICheckCloud.sendPasswordResetEmail(currentPraEmail, currentPraCode, currentPraLink);
         if (res && res.apiSent) {
-          alert(`✓ Đã gửi email chứa mã 6 ký tự đến ${currentPraEmail} thành công!`);
+          alert(`✓ Đã kích hoạt lệnh gửi email đặt lại mật khẩu từ hệ thống Supabase đến: ${currentPraEmail}!`);
           const statusTitle = document.getElementById("praEmailStatusTitle");
           if (statusTitle) statusTitle.textContent = `✓ Đã tự động gửi email thành công đến ${currentPraEmail}!`;
         } else {
-          if (confirm(`Email API nền chưa phản hồi do chính sách mạng. Bạn có muốn mở trực tiếp Gmail (1 click) để gửi ngay không?`)) {
+          const reason = res?.apiError ? ` (${res.apiError})` : "";
+          if (confirm(`Cổng gửi tự động thông báo giới hạn tần suất gửi email${reason}.\n\n👉 Bạn hãy bấm nút đỏ "✉️ Mở Gmail gửi ngay (1 Click)" để gửi thư chính thức từ Gmail Admin tới hòm thư của học sinh ngay lập tức trong 1 giây mà không lo bị chặn.\n\nBạn có muốn mở Gmail ngay bây giờ không?`)) {
             openDirectGmailComposer();
           }
         }
