@@ -365,10 +365,7 @@
     function startStatsRotation(stats, isEn, localProf) {
       if (statsRotationTimer) clearInterval(statsRotationTimer);
       renderStatsRotatingText(stats, isEn, localProf);
-      statsRotationTimer = setInterval(() => {
-        statsRotationIndex++;
-        renderStatsRotatingText(stats, isEn, localProf);
-      }, 5000);
+      // Tắt hoàn toàn việc tự động nhảy chữ liên tục (tránh gây nhấp nháy, mỏi mắt)
     }
 
     // Mở modal hồ sơ khi click vào dải thông tin người dùng ở trang chủ

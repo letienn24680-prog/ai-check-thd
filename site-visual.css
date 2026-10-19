@@ -217,8 +217,8 @@ body {
   height: 7px;
   border-radius: 50%;
   background: #10b981;
-  box-shadow: 0 0 8px #10b981;
-  animation: pulse-dot 2.2s infinite ease-in-out;
+  box-shadow: 0 0 6px #10b981;
+  animation: none !important;
 }
 .nav-user-pill:hover {
   background: #ffffff;
@@ -280,8 +280,8 @@ body {
     linear-gradient(rgba(0, 229, 255, 0.12) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 229, 255, 0.12) 1px, transparent 1px);
   background-size: 38px 38px;
-  opacity: 0.55;
-  animation: grid-drift 18s linear infinite;
+  opacity: 0.45;
+  animation: none !important;
   -webkit-mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,0.9) 50%);
   mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,0.9) 50%);
 }
@@ -311,8 +311,8 @@ body {
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent);
-  box-shadow: 0 0 10px var(--color-accent);
-  animation: radar-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  box-shadow: 0 0 6px var(--color-accent);
+  animation: none !important;
 }
 
 .home-title {
@@ -325,12 +325,12 @@ body {
 }
 .home-title span {
   display: inline-block;
-  background: linear-gradient(135deg, #d9f26c 0%, #b2e646 32%, #ffffff 68%, #d9f26c 100%);
-  background-size: 260% auto;
+  background: linear-gradient(135deg, #d9f26c 0%, #b2e646 50%, #ffffff 100%);
+  background-size: 100% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: text-flow 6s ease-in-out infinite alternate;
-  filter: drop-shadow(0 2px 16px rgba(217, 242, 108, 0.35));
+  animation: none !important;
+  filter: drop-shadow(0 2px 14px rgba(217, 242, 108, 0.25));
 }
 
 .home-copy p {
@@ -352,7 +352,7 @@ body {
   font-size: 12px;
   font-weight: 700;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  animation: warning-pulse 4s infinite ease-in-out;
+  animation: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -400,7 +400,7 @@ body {
   color: #0b1726 !important;
   font-weight: 800 !important;
   box-shadow: 0 4px 14px rgba(180, 210, 60, 0.35);
-  animation: lime-glow 4s ease-in-out infinite;
+  animation: none !important;
 }
 .button-lime:hover {
   background: linear-gradient(135deg, #e4fb7f, #d0f055) !important;
@@ -1449,14 +1449,8 @@ body {
   transition: width 0.6s var(--ease-out);
 }
 .progress span::after, .skill-track span::after, .forms-option-track span::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  animation: bar-shine 2.6s infinite linear;
+  display: none !important;
+  animation: none !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -1480,7 +1474,8 @@ body {
 .podium-item.first .podium-circle {
   border-color: #eec14d !important;
   background: linear-gradient(145deg, #fffbf0, #ffffff) !important;
-  animation: gold-glow 3.5s infinite ease-in-out;
+  box-shadow: 0 4px 16px rgba(238, 193, 77, 0.35) !important;
+  animation: none !important;
 }
 .podium-item.second .podium-circle {
   border-color: #c4d1cc !important;
@@ -2688,7 +2683,8 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
 
 .flame-icon {
   display: inline-block;
-  animation: flamePulse 1.4s ease-in-out infinite alternate;
+  animation: none !important;
+  transform: none !important;
 }
 @keyframes flamePulse {
   0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(233, 120, 80, 0.4)); }
@@ -3129,7 +3125,7 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
 .streak-toast-icon {
   font-size: 32px;
   line-height: 1;
-  animation: pulse-flame 1.5s infinite ease-in-out;
+  animation: none !important;
   flex-shrink: 0;
 }
 @keyframes pulse-flame {
@@ -3241,6 +3237,45 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
   font-size: 11px;
   color: var(--color-muted);
   text-align: right;
+}
+
+/* ==========================================================================
+   TRIỆT TIÊU TOÀN BỘ HIỆU ỨNG NHẤP NHÁY / CHỚP GIẬT / LẶP VÔ HẠN (ANTI-FLASHING)
+   Đảm bảo tất cả các trang đều tĩnh, êm mắt, độ tương phản chuẩn và dễ chịu
+   ========================================================================== */
+.pulse-dot,
+.radar-ping,
+.lime-glow,
+.warning-pulse,
+.flamePulse,
+.pulse-flame,
+.notifPulse,
+.status-pulse,
+.gold-glow,
+.bar-shine,
+.text-flow,
+.grid-drift,
+.nav-user-pill::before,
+.home-copy-inner .eyebrow::before,
+.home-title span,
+.home-warning,
+.button-lime,
+.notif-badge,
+.flame-icon,
+.streak-toast-icon,
+.podium-item.first .podium-circle,
+.progress span::after,
+.skill-track span::after,
+.forms-option-track span::after,
+.exam-app-timer-text.urgent,
+.site-loader-message {
+  animation: none !important;
+}
+
+.progress span::after,
+.skill-track span::after,
+.forms-option-track span::after {
+  display: none !important;
 }
 
 
