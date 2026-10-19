@@ -540,6 +540,61 @@
     localStorage.setItem("aicheck:password_reset_codes", JSON.stringify(list));
   }
 
+  // --- GỬI EMAIL CHỨA MÃ XÁC MINH 6 KÝ TỰ VỀ HÒM THƯ NGƯỜI DÙNG ---
+  async function sendPasswordResetEmail(email, code, link) {
+    const normEmail = String(email || "").trim().toLowerCase();
+    const cleanCode = String(code || "").trim().toUpperCase();
+    const effectiveLink = link || `${window.location.origin}/reset-password.html?email=${encodeURIComponent(normEmail)}&code=${cleanCode}`;
+
+    const emailSubject = `[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu của bạn: ${cleanCode}`;
+    const emailBody = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ (Trường THPT Trần Hưng Đạo) đã nhận được và PHÊ DUYỆT yêu cầu cấp lại mật khẩu cho tài khoản: ${normEmail}.\n\n🔑 MÃ XÁC MINH 6 KÝ TỰ (CHỮ VÀ SỐ) CỦA BẠN LÀ:\n>>> ${cleanCode} <<<\n(Mã có hiệu lực trong vòng 24 giờ và dùng 1 lần).\n\n👉 HƯỚNG DẪN ĐỔI MẬT KHẨU MỚI:\nBước 1: Bấm vào liên kết đặt lại mật khẩu bên dưới:\n${effectiveLink}\n\nBước 2: Nhập địa chỉ Email: ${normEmail}\nBước 3: Nhập mã xác minh: ${cleanCode}\nBước 4: Tạo mật khẩu mới và bấm hoàn tất.\n\nNếu bạn không yêu cầu hỗ trợ đổi mật khẩu, vui lòng bỏ qua email này.\n\nTrân trọng,\nBan Quản trị Hệ thống AI CHECK THĐ\nTrường THPT Trần Hưng Đạo`;
+
+    let apiSent = false;
+    let apiError = null;
+
+    // 1. Gửi qua cổng email API tự động (FormSubmit AJAX trực tiếp tới hộp thư Gmail của học sinh)
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(normEmail)}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: emailSubject,
+          "Tài khoản học sinh": normEmail,
+          "Mã xác nhận 6 ký tự": cleanCode,
+          "Liên kết đổi mật khẩu": effectiveLink,
+          "Hướng dẫn": "Vui lòng mở liên kết trên, nhập mã " + cleanCode + " để đổi mật khẩu mới.",
+          _template: "table"
+        })
+      });
+      if (response.ok) {
+        apiSent = true;
+      }
+    } catch (err) {
+      apiError = err.message;
+      console.warn("Lỗi gửi email tự động qua API:", err);
+    }
+
+    // 2. Tạo đường link mở Gmail trực tiếp (Google Mail Web Composer)
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(normEmail)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoUrl = `mailto:${normEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+    return {
+      success: true,
+      apiSent,
+      apiError,
+      subject: emailSubject,
+      body: emailBody,
+      gmailComposeUrl,
+      mailtoUrl,
+      email: normEmail,
+      code: cleanCode,
+      link: effectiveLink
+    };
+  }
+
   async function createPasswordResetCode(email, customCode = null) {
     const normEmail = String(email || "").trim().toLowerCase();
     if (!normEmail) return { error: "Email không hợp lệ" };
@@ -572,17 +627,14 @@
       console.warn("Lỗi lưu reset code lên Cloud Store:", e);
     }
 
-    // 3. Gửi thông báo đến icon chuông của tài khoản
-    if (window.AICheckNotificationStore) {
-      window.AICheckNotificationStore.sendNotification({
-        recipient: normEmail,
-        sender: "Ban Quản trị THĐ (adminthd)",
-        type: "password_reset",
-        title: "🔑 Mã đặt lại mật khẩu tài khoản của bạn",
-        message: `Chào bạn, yêu cầu cấp lại mật khẩu cho tài khoản <strong>${normEmail}</strong> đã được Ban Quản trị phê duyệt.<br>Mã xác minh 6 ký tự gồm chữ và số của bạn là: <div style="font-family:'Space Grotesk',monospace;font-size:20px;font-weight:800;letter-spacing:4px;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd;padding:6px 14px;border-radius:8px;margin:8px 0;display:inline-block">${code}</div><br>👉 Bấm vào liên kết bên dưới để nhập mã và tiến hành đổi mật khẩu mới.`,
-        adminPin: code,
-        link: `reset-password.html?email=${encodeURIComponent(normEmail)}&code=${code}`
-      });
+    const resetLink = `reset-password.html?email=${encodeURIComponent(normEmail)}&code=${code}`;
+
+    // 3. Tự động gửi Email chứa mã 6 ký tự về hòm thư Gmail/Email của người dùng
+    let emailResult = null;
+    try {
+      emailResult = await sendPasswordResetEmail(normEmail, code, resetLink);
+    } catch (err) {
+      console.warn("Lỗi gửi email khôi phục mật khẩu:", err);
     }
 
     // 4. Phát sóng Realtime
@@ -596,7 +648,8 @@
       success: true,
       code: code,
       email: normEmail,
-      link: `reset-password.html?email=${encodeURIComponent(normEmail)}&code=${code}`
+      link: resetLink,
+      emailResult
     };
   }
 
@@ -1730,6 +1783,7 @@
     // Password Reset System (6-char Alphanumeric Code)
     generatePasswordResetCode,
     createPasswordResetCode,
+    sendPasswordResetEmail,
     verifyPasswordResetCode,
     executePasswordReset,
     getLocalPasswordResetCodes,
