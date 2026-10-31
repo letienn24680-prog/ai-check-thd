@@ -831,8 +831,22 @@
       openStartScreen();
     });
 
-    window.addEventListener("DOMContentLoaded", initAssessmentFlow);
+    function checkUrlPhaseAutoStart() {
+      const params = new URLSearchParams(window.location.search);
+      const reqPhase = params.get("phase") || params.get("autostart");
+      if (reqPhase === "pre") {
+        setTimeout(() => startAssessmentWithPhase("pre"), 80);
+      } else if (reqPhase === "post") {
+        setTimeout(() => startAssessmentWithPhase("post"), 80);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initAssessmentFlow();
+      checkUrlPhaseAutoStart();
+    });
     initAssessmentFlow();
+    checkUrlPhaseAutoStart();
 
   </script>
   <script src="../site-nav.js"></script>
