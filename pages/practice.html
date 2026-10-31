@@ -192,30 +192,73 @@
       </aside>
     </div>
 
-    <!-- 💡 TRỢ GIÚP & GỢI Ý TRA CỨU TÌNH HUỐNG (MẶC ĐỊNH LUÔN ẨN) -->
+    <!-- 💡 THƯ VIỆN 1.060 TÌNH HUỐNG KIỂM CHỨNG (BẢO VỆ CHỐNG TRA CỨU ĐÁP ÁN TRONG LÚC LÀM BÀI) -->
     <details class="scenario-library" id="scenarioLibrary">
-      <summary id="libraryTitle">💡 Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (1.060 tình huống)</summary>
+      <summary id="libraryTitle">🔒 Thư viện tra cứu 1.060 tình huống (Tạm khóa trong khi làm bài)</summary>
       <div class="scenario-library-content">
-        <p class="panel-copy">Gợi ý dành cho bạn: Bạn có thể tra cứu nhanh theo từ khóa, chủ đề hoặc xem các tình huống tương tự để tìm phương pháp kiểm chứng chuẩn xác.</p>
-
-        <!-- 🔍 THANH TÌM KIẾM TỨC THÌ -->
-        <div class="scenario-search-box">
-          <span class="scenario-search-icon">🔍</span>
-          <input type="text" id="scenarioSearchInput" class="scenario-search-input" placeholder="Tìm kiếm nhanh trong 1.060 tình huống (ví dụ: Deepfake, Fansipan, Định luật Ohm, Phân số, ChatGPT...)">
+        <!-- Thông báo bảo vệ tính khách quan thực nghiệm khi đang làm 10 câu -->
+        <div id="libraryLockedNotice" style="background:#fef3c7;border:1.5px solid #f59e0b;border-radius:12px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px">
+          <div style="font-size:28px;line-height:1">🔒</div>
+          <div>
+            <strong style="color:#92400e;font-size:13.5px;display:block;margin-bottom:4px">
+              Thư viện tra cứu đang được bảo vệ trong lúc làm bài
+            </strong>
+            <p style="margin:0;font-size:12px;color:#78350f;line-height:1.5">
+              Để đảm bảo tính khách quan và khoa học trong thực nghiệm đo lường năng lực kiểm chứng, hệ thống tạm khóa tính năng tra cứu lời giải của kho 1.060 tình huống. 
+              Bạn hãy tự tin hoàn thành <strong>10 câu thực hành</strong> ở trên, thư viện và phân tích chuyên gia sẽ tự động mở khóa toàn bộ ngay sau khi hoàn thành lượt!
+            </p>
+          </div>
         </div>
 
-        <div class="filter-row" id="filters">
-          <button class="filter active" data-filter="Tất cả">Tất cả · 1.060</button>
-          <button class="filter" data-filter="Học tập">Học tập · 360</button>
-          <button class="filter" data-filter="Đời sống">Đời sống · 350</button>
-          <button class="filter" data-filter="AI">AI · 350</button>
+        <div id="scenarioLibraryContentBody" style="display:none">
+          <p class="panel-copy">Gợi ý dành cho bạn: Bạn có thể tra cứu nhanh theo từ khóa, chủ đề hoặc xem các tình huống tương tự để tìm phương pháp kiểm chứng chuẩn xác.</p>
+
+          <!-- 🔍 THANH TÌM KIẾM TỨC THÌ -->
+          <div class="scenario-search-box">
+            <span class="scenario-search-icon">🔍</span>
+            <input type="text" id="scenarioSearchInput" class="scenario-search-input" placeholder="Tìm kiếm nhanh trong 1.060 tình huống (ví dụ: Deepfake, Fansipan, Định luật Ohm, Phân số, ChatGPT...)">
+          </div>
+
+          <div class="filter-row" id="filters">
+            <button class="filter active" data-filter="Tất cả">Tất cả · 1.060</button>
+            <button class="filter" data-filter="Học tập">Học tập · 360</button>
+            <button class="filter" data-filter="Đời sống">Đời sống · 350</button>
+            <button class="filter" data-filter="AI">AI · 350</button>
+          </div>
+          <div class="scenario-grid" id="scenarioGrid"></div>
         </div>
-        <div class="scenario-grid" id="scenarioGrid"></div>
       </div>
     </details>
   </main>
 
   <footer class="site-footer">AI CHECK THĐ · Thực hành và thư viện tình huống</footer>
+
+  <!-- 💡 MODAL GỢI Ý PHƯƠNG PHÁP KIỂM CHỨNG (HƯỚNG DẪN TƯ DUY - KHÔNG LỘ ĐÁP ÁN) -->
+  <div class="modal" id="hintModal" role="dialog" aria-modal="true" aria-labelledby="hintModalTitle">
+    <div class="modal-content" style="max-width:540px">
+      <div class="modal-top">
+        <span class="tag-topic" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0">💡 HƯỚNG DẪN TƯ DUY PHẢN BIỆN</span>
+        <button class="modal-close" id="closeHintModal" aria-label="Đóng">×</button>
+      </div>
+      <h2 id="hintModalTitle" style="font-size:16px;margin:8px 0 12px;color:var(--forest)">Gợi ý cách tiếp cận tình huống này</h2>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:12.5px;line-height:1.6">
+        <p style="margin:0 0 6px"><strong>📌 Định hướng kiểm chứng:</strong></p>
+        <p id="hintContextQuestion" style="margin:0;color:#1e293b;font-weight:600"></p>
+      </div>
+      <div style="font-size:12px;line-height:1.6;color:#475569">
+        <strong>Áp dụng Quy trình 5 bước kiểm chứng:</strong>
+        <ul style="margin:6px 0 0;padding-left:18px">
+          <li><strong>Dừng lại:</strong> Không vội tin vào câu trả lời trôi chảy hay lời khẳng định tuyệt đối của AI.</li>
+          <li><strong>Khoanh vùng:</strong> Chú ý mốc thời gian, con số cụ thể, trích dẫn danh ngôn hoặc lời khuyên sức khỏe.</li>
+          <li><strong>Tìm nguồn:</strong> Tra cứu sách giáo khoa, cơ quan quản lý chuyên môn hoặc tài liệu gốc có tác giả uy tín.</li>
+          <li><strong>Đối chiếu:</strong> So sánh đa nguồn độc lập để xem các trang có chỉ sao chép lại của nhau không.</li>
+        </ul>
+      </div>
+      <div style="margin-top:16px;text-align:right">
+        <button type="button" class="button button-lime" id="btnGotHint" style="padding:8px 18px;font-size:12px">Đã hiểu, quay lại làm bài ✓</button>
+      </div>
+    </div>
+  </div>
 
   <!-- 🪟 MODAL CHI TIẾT TÌNH HUỐNG -->
   <div class="modal" id="scenarioModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -306,6 +349,9 @@
       complete = false; 
       renderQuestion(); 
       updateGamifyHud();
+      updateLibraryLockState();
+      const libEl = document.getElementById("scenarioLibrary");
+      if (libEl) libEl.open = false;
       currentPracticeSessionId = window.AICheckTracker?.startSession({
         activity: "practice",
         title: "Luyện 10 tình huống kiểm chứng thực tế",
@@ -508,6 +554,7 @@
       const score = Math.round(correct / set.length * 100); 
       saveResult(score); 
       complete = true;
+      updateLibraryLockState();
 
       // Đánh dấu hoàn thành giai đoạn can thiệp thực hành tình huống
       localStorage.setItem("aicheck:practice_completed", "true");
@@ -631,8 +678,18 @@
       document.getElementById("modalTitle").textContent = `“${item.quote}”`; 
       document.getElementById("modalTask").textContent = item.task; 
       document.getElementById("modalSource").textContent = item.source; 
-      document.getElementById("modalVerdict").textContent = item.verdict; 
-      document.getElementById("modalExplanation").textContent = item.explain; 
+
+      // 🛡️ BẢO VỆ TÍNH KHÁCH QUAN THỰC NGHIỆM: Nếu tình huống này đang nằm trong 10 câu mà học sinh chưa hoàn thành lượt
+      const isCurrentlyInActiveExam = !complete && (set || []).some(q => q.quote === item.quote);
+
+      if (isCurrentlyInActiveExam) {
+        document.getElementById("modalVerdict").innerHTML = `<span style="color:#b91c1c;font-weight:700">🔒 [Đang trong lượt làm bài]</span>`; 
+        document.getElementById("modalExplanation").innerHTML = `<span style="color:#64748b;font-style:italic">Tình huống này đang nằm trong 10 câu của lượt thực hành bạn đang làm. Hãy hoàn thành lượt làm bài ở trên để mở khóa kết luận và phân tích chuyên gia!</span>`; 
+      } else {
+        document.getElementById("modalVerdict").textContent = item.verdict; 
+        document.getElementById("modalExplanation").textContent = item.explain; 
+      }
+
       document.getElementById("scenarioModal").classList.add("open"); 
       document.getElementById("closeModal").focus(); 
     }
@@ -651,38 +708,72 @@
       }
     }
 
+    // 🔒 HÀM QUẢN LÝ TRẠNG THÁI KHÓA / MỞ KHÓA THƯ VIỆN TRA CỨU
+    function updateLibraryLockState() {
+      const lib = document.getElementById("scenarioLibrary");
+      const libTitle = document.getElementById("libraryTitle");
+      const lockNotice = document.getElementById("libraryLockedNotice");
+      const libContent = document.getElementById("scenarioLibraryContentBody");
+      const total = scenarios.length;
+
+      if (!complete) {
+        // Đang trong lượt làm bài: Khóa tra cứu để đảm bảo tính trung thực thực nghiệm
+        if (libTitle) {
+          libTitle.innerHTML = `🔒 Thư viện tra cứu ${total.toLocaleString("vi-VN")} tình huống <span class="tag" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;font-size:10.5px;font-weight:700;margin-left:6px">Tạm khóa khi đang làm bài</span>`;
+        }
+        if (lockNotice) lockNotice.style.display = "flex";
+        if (libContent) libContent.style.display = "none";
+      } else {
+        // Đã hoàn thành 10 câu: Tự động mở khóa toàn diện
+        if (libTitle) {
+          libTitle.innerHTML = `🔓 Thư viện tra cứu & giải thích chi tiết (${total.toLocaleString("vi-VN")} tình huống) <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-size:10.5px;font-weight:700;margin-left:6px">Đã mở khóa toàn bộ</span>`;
+        }
+        if (lockNotice) lockNotice.style.display = "none";
+        if (libContent) libContent.style.display = "block";
+        ensureLibraryRendered();
+      }
+    }
+
     const scenarioLibEl = document.getElementById("scenarioLibrary");
     if (scenarioLibEl) {
       scenarioLibEl.addEventListener("toggle", () => {
-        if (scenarioLibEl.open) {
+        if (scenarioLibEl.open && complete) {
           ensureLibraryRendered();
         }
       });
     }
 
-    // Bấm nút Trợ giúp / Gợi ý trong câu hỏi hiện tại
+    // 💡 BẤM NÚT TRỢ GIÚP / GỢI Ý: MỞ MODAL ĐỊNH HƯỚNG TƯ DUY (KHÔNG LỘ ĐÁP ÁN)
     document.getElementById("btnPracticeHint")?.addEventListener("click", () => {
       window.AICheckAudio?.playClick();
-      const lib = document.getElementById("scenarioLibrary");
-      if (lib) {
-        lib.open = true;
-        ensureLibraryRendered();
-        
-        const currentItem = set[index];
-        if (currentItem) {
-          const sInput = document.getElementById("scenarioSearchInput");
-          if (sInput) {
-            sInput.value = currentItem.topic || "";
-            currentFilter = currentItem.group || "Tất cả";
-            document.querySelectorAll(".filter").forEach(filter => {
-              filter.classList.toggle("active", filter.dataset.filter === currentFilter);
-            });
-            renderLibrary(currentFilter, currentItem.topic || "");
-          }
-        }
-        
-        lib.scrollIntoView({ behavior: "smooth", block: "start" });
+      const currentItem = set[index];
+      if (!currentItem) return;
+
+      const modal = document.getElementById("hintModal");
+      const qBox = document.getElementById("hintContextQuestion");
+      
+      let contextTip = "";
+      if (currentItem.group === "AI" || (currentItem.topic && currentItem.topic.includes("Ảo giác"))) {
+        contextTip = "🤖 Đặc tính AI: AI thường tạo văn phong rất tự tin nhưng dễ 'ảo giác' tự bịa ra đường link, danh ngôn hoặc tên nghiên cứu giả. Hãy tìm xem tài liệu gốc có thực sự tồn tại độc lập trên Google Scholar hoặc các trang báo khoa học uy tín không.";
+      } else if (currentItem.topic && (currentItem.topic.includes("Sức khỏe") || currentItem.topic.includes("Y tế"))) {
+        contextTip = "🏥 Tính an toàn y tế: Các mẹo vặt sức khỏe truyền miệng chưa kiểm chứng có thể gây hại nghiêm trọng. Hãy xem nguồn dẫn có phải từ cơ quan y tế uy tín (Bộ Y tế, WHO, bệnh viện) hay chỉ là quảng cáo thực phẩm chức năng.";
+      } else if (currentItem.topic && (currentItem.topic.includes("Lịch sử") || currentItem.topic.includes("Địa lí"))) {
+        contextTip = "📚 Mốc thời gian & dữ liệu: Các khẳng định mang tính tuyệt đối (100%, tất cả) hoặc mốc năm thường dễ bị nhầm lẫn. Hãy đối chiếu với Sách giáo khoa và tài liệu lịch sử chuẩn mực.";
+      } else {
+        contextTip = `🔍 Nhiệm vụ kiểm chứng: "${currentItem.task}". Hãy phân tích xem nguồn đối chiếu nào độc lập và có thẩm quyền cao nhất để kiểm chứng phát biểu này.`;
       }
+
+      if (qBox) qBox.textContent = contextTip;
+      if (modal) {
+        modal.classList.add("open");
+        document.getElementById("btnGotHint")?.focus();
+      }
+    });
+
+    document.getElementById("closeHintModal")?.addEventListener("click", () => document.getElementById("hintModal").classList.remove("open"));
+    document.getElementById("btnGotHint")?.addEventListener("click", () => document.getElementById("hintModal").classList.remove("open"));
+    document.getElementById("hintModal")?.addEventListener("click", event => {
+      if (event.target.id === "hintModal") event.currentTarget.classList.remove("open");
     });
 
     document.getElementById("filters").addEventListener("click", event => { 
@@ -716,7 +807,10 @@
       if (event.target.id === "scenarioModal") event.currentTarget.classList.remove("open"); 
     }); 
     document.addEventListener("keydown", event => { 
-      if (event.key === "Escape") document.getElementById("scenarioModal").classList.remove("open"); 
+      if (event.key === "Escape") {
+        document.getElementById("scenarioModal")?.classList.remove("open");
+        document.getElementById("hintModal")?.classList.remove("open");
+      }
     });
 
     const googleFormUrl = read("googleFormUrl", "") || window.AICHECK_CONFIG?.googleFormUrl || "";
@@ -734,8 +828,7 @@
       const ai = scenarios.filter(s => s.group === "AI").length;
       const pageCount = document.querySelector(".page-count");
       if (pageCount) pageCount.textContent = `${total.toLocaleString("vi-VN")} TÌNH HUỐNG · 3 CHỦ ĐỀ`;
-      const libTitle = document.getElementById("libraryTitle");
-      if (libTitle) libTitle.textContent = `💡 Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (${total.toLocaleString("vi-VN")} tình huống)`;
+      updateLibraryLockState();
       const btnAll = document.querySelector('[data-filter="Tất cả"]');
       if (btnAll) btnAll.textContent = `Tất cả · ${total.toLocaleString("vi-VN")}`;
       const btnHt = document.querySelector('[data-filter="Học tập"]');
