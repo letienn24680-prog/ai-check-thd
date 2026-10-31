@@ -11,16 +11,71 @@
   <link rel="stylesheet" href="../site-nav.css">
   <link rel="stylesheet" href="../site-visual.css">
   <script src="../auth-guard.js"></script>
-  <style>
+    <style>
     .start-screen{padding:6px 0}
-    .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
-    .start-card{padding:22px;background:#fff;border:1px solid #dce7dc;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;box-shadow:0 4px 14px rgba(16,45,40,.04)}
-    .start-card:hover{transform:translateY(-3px);border-color:var(--forest);box-shadow:0 10px 28px rgba(16,45,40,.1)}
-    .start-card h3{margin:10px 0 6px;font:700 19px "Space Grotesk",sans-serif;color:var(--forest)}
-    .start-card p{margin:0 0 16px;color:var(--muted);font-size:11px;line-height:1.6;flex:1}
+    .assessment-flow-hero{padding:4px 0}
+    .flow-badge{background:#eaf2e8;color:#286947;font-weight:800;margin-bottom:8px;display:inline-block}
+    .flow-title{margin:6px 0 8px;font:700 clamp(22px,3.2vw,27px)/1.25 "Space Grotesk",sans-serif;color:var(--forest)}
+    .flow-desc{margin:0 0 18px;color:var(--muted);font-size:12px;line-height:1.65;max-width:720px}
+    
+    .flow-timeline{display:flex;align-items:center;gap:12px;margin:18px 0;background:#f6f9f5;border:1px solid #dce7dc;border-radius:12px;padding:16px 20px}
+    .flow-timeline-step{display:flex;align-items:center;gap:12px;flex:1;min-width:0;position:relative}
+    .timeline-num{width:36px;height:36px;border-radius:50%;background:#e2ebe1;color:var(--forest);font:700 15px "Space Grotesk",sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .flow-timeline-step.active .timeline-num{background:var(--forest);color:var(--lime);box-shadow:0 0 0 4px rgba(217,242,108,.35)}
+    .flow-timeline-step.completed .timeline-num{background:#286947;color:#fff}
+    .timeline-info{display:flex;flex-direction:column;min-width:0}
+    .timeline-info strong{font-size:12px;color:var(--forest);font-family:"Space Grotesk",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .timeline-info span{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .timeline-tag{margin-left:auto;padding:3px 9px;border-radius:12px;font-size:9px;font-weight:700;background:#e9f2e8;color:#286947;white-space:nowrap}
+    .flow-timeline-connector{display:flex;align-items:center;color:#9cb5a0;font-size:14px;padding:0 4px}
+    @media(max-width:680px){
+      .flow-timeline{flex-direction:column;align-items:stretch;gap:14px}
+      .flow-timeline-connector{justify-content:center;transform:rotate(90deg);padding:0}
+    }
+    
+    .flow-cta-wrap{margin:20px 0 14px}
+    .btn-flow-start{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;padding:16px 22px;border-radius:12px;background:var(--lime);color:var(--forest);border:none;cursor:pointer;box-shadow:0 6px 20px rgba(217,242,108,.4);transition:all .2s ease;text-decoration:none}
+    .btn-flow-start:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(217,242,108,.55);filter:brightness(1.03)}
+    .btn-flow-icon{font-size:22px}
+    .btn-flow-body{display:flex;flex-direction:column;align-items:flex-start;text-align:left;flex:1}
+    .btn-flow-body strong{font:800 15px "Space Grotesk",sans-serif;letter-spacing:0.3px}
+    .btn-flow-body small{font-size:11px;font-weight:500;opacity:0.85;margin-top:2px}
+    .btn-flow-arrow{font-size:20px;font-weight:800;transition:transform .2s ease}
+    .btn-flow-start:hover .btn-flow-arrow{transform:translateX(4px)}
+
+    .saved-progress-note{margin-top:12px;padding:12px 16px;background:#edf5ec;border:1px solid #cce0cb;border-radius:8px;font-size:11px;color:#28573a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+
+    /* Thẻ chuyển tiếp sang Đợt 02 khi làm xong Đợt 01 */
+    .next-phase-card{margin-top:20px;padding:22px;background:linear-gradient(135deg,#153d33 0%,#1f5748 100%);color:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(16,45,40,.18)}
+    .next-phase-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+    .next-badge{background:var(--lime);color:var(--forest);font-weight:800;font-size:9px;padding:3px 8px;border-radius:4px}
+    .next-phase-card h3{margin:0;font:700 18px "Space Grotesk",sans-serif;color:#fff}
+    .next-phase-card p{margin:0 0 16px;color:#d7e8dd;font-size:11.5px;line-height:1.6}
+    .next-phase-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .next-phase-btn{background:var(--lime);color:var(--forest);font-weight:800;border:none;padding:11px 20px;border-radius:8px;cursor:pointer;font-size:12px}
+    .next-phase-btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
+    /* Thẻ đối sánh kết quả 2 đợt đo khi hoàn thành cả 2 */
+    .comparison-summary-card{margin-top:20px;padding:22px;background:#f5faf4;border:2px solid #9dc79e;border-radius:12px;box-shadow:0 6px 18px rgba(16,45,40,.06)}
+    .comparison-badge{display:inline-block;padding:3px 9px;border-radius:4px;background:var(--forest);color:var(--lime);font:800 10px "Space Grotesk",sans-serif;letter-spacing:0.5px;margin-bottom:12px}
+    .comparison-grid{display:grid;grid-template-columns:1fr auto 1fr 1.2fr;align-items:center;gap:12px;margin:12px 0 16px;background:#fff;padding:16px;border-radius:10px;border:1px solid #dce7dc}
+    .comp-col{display:flex;flex-direction:column;align-items:center;text-align:center}
+    .comp-label{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px;text-transform:uppercase}
+    .comp-score{font:800 28px/1 "Space Grotesk",sans-serif;color:var(--forest)}
+    .comp-score small{font-size:13px;font-weight:600;color:var(--muted)}
+    .comp-arrow{font-size:18px;color:#7d9e84;font-weight:800}
+    .comp-growth{font:800 26px/1 "Space Grotesk",sans-serif}
+    .comp-growth.positive{color:#238636}
+    .comp-growth.negative{color:#cf222e}
+    .comp-desc{margin:0 0 16px;font-size:12px;color:#28573a;line-height:1.6}
+    .comp-actions{display:flex;gap:10px;flex-wrap:wrap}
+    @media(max-width:640px){
+      .comparison-grid{grid-template-columns:1fr;gap:10px}
+      .comp-arrow{transform:rotate(90deg);padding:0}
+    }
+
     .quiz-back-btn{background:none;border:1px solid #cbd9cb;color:var(--forest);font-size:11px;font-weight:700;cursor:pointer;padding:6px 12px;border-radius:5px;display:inline-flex;align-items:center;gap:6px;transition:background .2s}
     .quiz-back-btn:hover{background:#eaf2e8;border-color:var(--forest)}
-    @media(max-width:680px){.start-grid{grid-template-columns:1fr}}
     .quiz-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px}
     .quiz-card h2{margin:0;color:var(--forest);font:700 clamp(21px,3vw,27px)/1.2 "Space Grotesk","Be Vietnam Pro",sans-serif}
     .q-meta{flex:none;padding:7px 10px;background:#e9f2e8;border-radius:20px;color:#286947;font-size:9px;font-weight:800;text-transform:uppercase}
@@ -59,10 +114,17 @@
     .band b{display:block;color:var(--lime);font-size:10px}
     @media(max-width:600px){.bands{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
     .quiz-hidden{display:none!important}
-    [data-theme="dark"] .start-card{background:#0b1726;border-color:rgba(0,229,255,.14);color:#f1f5f9}
-    [data-theme="dark"] .start-card:hover{background:#12283f;border-color:#00e5ff;box-shadow:0 8px 24px rgba(0,0,0,.45)}
-    [data-theme="dark"] .start-card h3{color:#ffffff}
-    [data-theme="dark"] .start-card p{color:#cbd5e1}
+    [data-theme="dark"] .flow-timeline{background:#0b1726;border-color:rgba(0,229,255,.14)}
+    [data-theme="dark"] .timeline-num{background:#0f2236;color:#00e5ff}
+    [data-theme="dark"] .timeline-info strong{color:#fff}
+    [data-theme="dark"] .timeline-info span{color:#94a3b8}
+    [data-theme="dark"] .flow-title{color:#fff}
+    [data-theme="dark"] .btn-flow-start{background:linear-gradient(135deg,#00e5ff 0%,#00b4d8 100%);color:#061118;box-shadow:0 6px 20px rgba(0,229,255,.3)}
+    [data-theme="dark"] .saved-progress-note{background:#0f2236;border-color:rgba(0,229,255,.2);color:#94a3b8}
+    [data-theme="dark"] .comparison-summary-card{background:#0b1726;border-color:rgba(0,229,255,.25)}
+    [data-theme="dark"] .comparison-grid{background:#0f2236;border-color:rgba(0,229,255,.15)}
+    [data-theme="dark"] .comp-score{color:#00e5ff}
+    [data-theme="dark"] .comp-desc{color:#cbd5e1}
     [data-theme="dark"] .quiz-card{background:#0b1726;border-color:rgba(0,229,255,.14);color:#f1f5f9}
     [data-theme="dark"] .quiz-card h2,[data-theme="dark"] .q-text{color:#ffffff}
     [data-theme="dark"] .quiz-card #quizIntro{color:#cbd5e1}
@@ -104,34 +166,54 @@
     <p class="panel-copy" id="syncStatus" aria-live="polite"></p>
     <div class="assessment-layout">
       <section class="quiz-card" aria-label="Bài đánh giá">
-        <!-- MÀN HÌNH BẮT ĐẦU: CHỌN GIAI ĐOẠN ĐO -->
+                <!-- MÀN HÌNH BẮT ĐẦU: QUY TRÌNH 2 ĐỢT ĐO TUẦN TỰ -->
         <div id="startScreen" class="start-screen">
-          <div style="margin-bottom:14px">
-            <span class="tag" style="background:#eaf2e8;color:#286947;font-weight:800;margin-bottom:6px">THPT TRẦN HƯNG ĐẠO · KHẢO SÁT NĂNG LỰC</span>
-            <h2 style="margin:4px 0 6px;font:700 24px 'Space Grotesk',sans-serif">Chọn đợt đo để bắt đầu</h2>
-            <p style="margin:0;color:var(--muted);font-size:12px">Bài đo gồm 20 câu hỏi tình huống chia đều cho 5 kỹ năng. Chọn đúng giai đoạn của bạn để kết quả được lưu và đồng bộ chính xác vào đề tài nghiên cứu.</p>
-          </div>
+          <div class="assessment-flow-hero">
+            <span class="tag flow-badge">THPT TRẦN HƯNG ĐẠO · QUY TRÌNH THỰC NGHIỆM 2 ĐỢT ĐO</span>
+            <h2 class="flow-title">Đo lường năng lực kiểm chứng thông tin AI</h2>
+            <p class="flow-desc">
+              Bài đánh giá gồm 20 tình huống kiểm chứng thực tế chia đều cho 5 kỹ năng then chốt. 
+              Theo mô hình thực nghiệm khoa học, bạn sẽ bắt đầu với <strong>Đợt 01 (Trước can thiệp)</strong> để xác định năng lực ban đầu, sau khi hoàn thành hệ thống sẽ tự động điều hướng sang <strong>Đợt 02 (Sau can thiệp)</strong> để đối sánh và ghi nhận sự tiến bộ.
+            </p>
 
-          <div class="start-grid">
-            <div class="start-card" id="cardPre" onclick="startAssessmentWithPhase('pre')">
-              <div>
-                <span class="tag" style="background:#eaf2e8;color:#286947;font-weight:800">ĐỢT ĐO 01</span>
-                <h3>Đo Trước can thiệp</h3>
-                <p>Khảo sát năng lực ban đầu của học sinh trước khi học quy trình 5 bước và các giải pháp kiểm chứng thông tin AI. Đề gồm 20 câu hỏi tình huống.</p>
+            <!-- Sơ đồ quy trình 2 đợt đo -->
+            <div class="flow-timeline">
+              <div class="flow-timeline-step active" id="timelineStep1">
+                <div class="timeline-num">01</div>
+                <div class="timeline-info">
+                  <strong>ĐỢT 01: TRƯỚC CAN THIỆP</strong>
+                  <span>20 tình huống ngẫu nhiên · Năng lực ban đầu</span>
+                </div>
+                <span class="timeline-tag" id="preStatusTag">Bắt đầu tại đây</span>
               </div>
-              <button type="button" class="button button-lime" style="width:100%">Bắt đầu Trước can thiệp →</button>
+              <div class="flow-timeline-connector">➔</div>
+              <div class="flow-timeline-step" id="timelineStep2">
+                <div class="timeline-num">02</div>
+                <div class="timeline-info">
+                  <strong>ĐỢT 02: SAU CAN THIỆP</strong>
+                  <span>20 tình huống ngẫu nhiên · Đánh giá tiến bộ</span>
+                </div>
+                <span class="timeline-tag" id="postStatusTag">Tự động chuyển tiếp</span>
+              </div>
             </div>
 
-            <div class="start-card" id="cardPost" onclick="startAssessmentWithPhase('post')">
-              <div>
-                <span class="tag" style="background:#fff3e6;color:#c84f36;font-weight:800">ĐỢT ĐO 02</span>
-                <h3>Đo Sau can thiệp</h3>
-                <p>Đánh giá sự tiến bộ sau khi đã tìm hiểu kiến thức, cẩm nang và thực hành các tình huống kiểm chứng. Đề gồm 20 câu hỏi tình huống.</p>
-              </div>
-              <button type="button" class="button button-dark" style="width:100%">Bắt đầu Sau can thiệp →</button>
+            <!-- Nút Bắt đầu quy trình nổi bật -->
+            <div class="flow-cta-wrap">
+              <button type="button" class="btn-flow-start" id="btnMainStart" onclick="startAssessmentFlow()">
+                <span class="btn-flow-icon">🚀</span>
+                <span class="btn-flow-body">
+                  <strong id="btnFlowText">BẮT ĐẦU ĐÁNH GIÁ (ĐỢT 01: TRƯỚC CAN THIỆP)</strong>
+                  <small id="btnFlowSub">Nhấn để bắt đầu làm 20 câu hỏi tình huống Đợt 01</small>
+                </span>
+                <span class="btn-flow-arrow">→</span>
+              </button>
             </div>
+
+            <!-- Ghi chú tiến độ đã lưu nếu có -->
+            <div id="savedProgressNote" class="saved-progress-note" style="display:none"></div>
           </div>
 
+          <!-- Banner Phòng thi trực tuyến -->
           <div class="exam-promo-banner">
             <div>
               <strong>
@@ -259,10 +341,73 @@
       {s:4,id:"r4a",q:"Sau khi đối chiếu với sách giáo khoa và các trang thông tin chính thống, em không tìm thấy bằng chứng cho câu AI nói. Kết luận nào hợp lý nhất?",o:["Tài liệu không nhắc đến nên chứng tỏ AI phát hiện ra điều mới, cứ dùng","Chưa tìm thấy căn cứ xác nhận; cần nêu rõ giới hạn hoặc không sử dụng thông tin này","Khẳng định câu AI nói chắc chắn đúng"],a:1},
       {s:4,id:"r4b",q:"Em xác minh được 2 ý trong câu trả lời của AI là đúng, nhưng ý thứ 3 chưa tìm được nguồn xác nhận. Em nên kết luận thế nào?",o:["Tách rõ phần đã được xác minh để sử dụng, còn phần chưa đủ căn cứ thì ghi chú rõ ràng","Dùng luôn toàn bộ câu trả lời vì 2 ý đầu đã đúng","Vứt bỏ toàn bộ cả bài dù 2 ý đầu đã được chứng minh"],a:0}
     ];
+    function initAssessmentFlow() {
+      const preScore = read("assessment_pre_score", null);
+      const postScore = read("assessment_post_score", null);
+      const step1 = document.getElementById("timelineStep1");
+      const step2 = document.getElementById("timelineStep2");
+      const tag1 = document.getElementById("preStatusTag");
+      const tag2 = document.getElementById("postStatusTag");
+      const btnText = document.getElementById("btnFlowText");
+      const btnSub = document.getElementById("btnFlowSub");
+      const note = document.getElementById("savedProgressNote");
+
+      if (!step1 || !step2) return;
+
+      if (preScore !== null && postScore === null) {
+        step1.classList.remove("active");
+        step1.classList.add("completed");
+        if (tag1) tag1.textContent = `Đã xong (${preScore} đ)`;
+        step2.classList.add("active");
+        step2.classList.remove("completed");
+        if (tag2) tag2.textContent = "Làm ngay";
+        if (btnText) btnText.textContent = "TIẾP TỤC ĐÁNH GIÁ (ĐỢT 02: SAU CAN THIỆP)";
+        if (btnSub) btnSub.textContent = `Bạn đã hoàn thành Đợt 01 (${preScore}/100 đ). Nhấn để bắt đầu Đợt 02!`;
+        if (note) {
+          note.style.display = "flex";
+          note.innerHTML = `<span>Đã ghi nhận Đợt 01: <strong>${preScore}/100 điểm</strong>. Bạn có thể bấm nút trên để tiếp tục Đợt 02 hoặc <a href="javascript:void(0)" onclick="startAssessmentWithPhase('pre')" style="text-decoration:underline;color:inherit;font-weight:700">làm lại Đợt 01</a>.</span>`;
+        }
+      } else if (preScore !== null && postScore !== null) {
+        step1.classList.remove("active");
+        step1.classList.add("completed");
+        step2.classList.remove("active");
+        step2.classList.add("completed");
+        if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ`;
+        if (tag2) tag2.textContent = `Đợt 2: ${postScore} đ`;
+        const diff = postScore - preScore;
+        if (btnText) btnText.textContent = "BẮT ĐẦU LẠI QUY TRÌNH ĐÁNH GIÁ (ĐỢT 01 → ĐỢT 02)";
+        if (btnSub) btnSub.textContent = `Đã hoàn thành cả 2 đợt đo: ${preScore} đ ➔ ${postScore} đ (${diff >= 0 ? '+' : ''}${diff} đ)`;
+        if (note) {
+          note.style.display = "flex";
+          note.innerHTML = `<span>Bạn đã hoàn thành cả 2 đợt đo! Đợt 1: <strong>${preScore} đ</strong> ➔ Đợt 2: <strong>${postScore} đ</strong> (Tiến bộ: <strong>${diff >= 0 ? '+' : ''}${diff} điểm</strong>). <a href="research.html" style="font-weight:700;color:inherit;text-decoration:underline">Xem biểu đồ đề tài tại trang Nghiên cứu ↗</a></span>`;
+        }
+      } else {
+        step1.classList.add("active");
+        step1.classList.remove("completed");
+        step2.classList.remove("active", "completed");
+        if (tag1) tag1.textContent = "Bắt đầu tại đây";
+        if (tag2) tag2.textContent = "Tự động chuyển tiếp";
+        if (btnText) btnText.textContent = "BẮT ĐẦU ĐÁNH GIÁ (ĐỢT 01: TRƯỚC CAN THIỆP)";
+        if (btnSub) btnSub.textContent = "Nhấn để bắt đầu làm 20 câu hỏi tình huống Đợt 01";
+        if (note) note.style.display = "none";
+      }
+    }
+
+    function startAssessmentFlow() {
+      const preScore = read("assessment_pre_score", null);
+      const postScore = read("assessment_post_score", null);
+      if (preScore !== null && postScore === null) {
+        startAssessmentWithPhase("post");
+      } else {
+        startAssessmentWithPhase("pre");
+      }
+    }
+
     function openStartScreen() {
       document.getElementById("startScreen").classList.remove("quiz-hidden");
       document.getElementById("quizView").classList.add("quiz-hidden");
       document.getElementById("resultView").classList.add("quiz-hidden");
+      initAssessmentFlow();
     }
 
     function startAssessmentWithPhase(phase) {
@@ -288,10 +433,12 @@
       document.getElementById("quizView").classList.remove("quiz-hidden");
       document.getElementById("resultView").classList.add("quiz-hidden");
       document.getElementById("quizTitle").textContent = mode === "assessment"
-        ? (assessmentPhase === "pre" ? "Đo Trước can thiệp (20 câu)" : "Đo Sau can thiệp (20 câu)")
+        ? (assessmentPhase === "pre" ? "Đợt 01: Đo Trước can thiệp (20 câu)" : "Đợt 02: Đo Sau can thiệp (20 câu)")
         : "Thử thách Rubric (5 câu)";
       document.getElementById("quizIntro").textContent = mode === "assessment"
-        ? "Mỗi câu là một tình huống riêng. Hãy đọc kỹ thông tin được nêu và chọn một phương án có căn cứ nhất."
+        ? (assessmentPhase === "pre" 
+            ? "Giai đoạn 1: Đo lường năng lực ban đầu trước can thiệp. Đọc kỹ từng tình huống và chọn phương án có căn cứ nhất." 
+            : "Giai đoạn 2: Đo lường sự tiến bộ sau can thiệp. Đọc kỹ từng tình huống và vận dụng quy trình kiểm chứng 5 bước.")
         : "Mỗi câu đưa ra một tình huống cụ thể. Hãy chọn cách kiểm chứng hoặc kết luận phù hợp nhất.";
       renderQuestion();
     }
@@ -300,7 +447,11 @@
       selected = null;
       const item = questions[cursor];
       const progress = Math.round(((cursor + 1) / questions.length) * 100);
-      const phaseLabel = assessmentPhase === "pre" ? "ĐỢT 01: TRƯỚC CAN THIỆP" : assessmentPhase === "post" ? "ĐỢT 02: SAU CAN THIỆP" : "THỬ THÁCH RUBRIC";
+      const phaseLabel = assessmentPhase === "pre" 
+        ? "GIAI ĐOẠN 1 / 2 · ĐỢT 01: TRƯỚC CAN THIỆP" 
+        : assessmentPhase === "post" 
+          ? "GIAI ĐOẠN 2 / 2 · ĐỢT 02: SAU CAN THIỆP" 
+          : "THỬ THÁCH RUBRIC";
       document.getElementById("qMeta").textContent = `${phaseLabel} · ${skills[item.s]}`;
       document.getElementById("questionNumber").textContent = `${mode === "assessment" ? "CÂU" : "CÂU RUBRIC"} ${cursor + 1} / ${questions.length}`;
       document.getElementById("qText").textContent = item.q;
@@ -347,6 +498,16 @@
       const label = level(total);
       const weakest = [...breakdown].sort((a, b) => a.rate - b.rate)[0];
       
+      if (mode === "assessment") {
+        if (assessmentPhase === "pre") {
+          write("assessment_pre_score", total);
+          write("assessment_pre_date", new Date().toISOString());
+        } else if (assessmentPhase === "post") {
+          write("assessment_post_score", total);
+          write("assessment_post_date", new Date().toISOString());
+        }
+      }
+
       saveRecord(mode, total, mode === "assessment" ? assessmentPhase : null);
       if (window.AICheckCloud?.processSyncQueue) {
         setTimeout(window.AICheckCloud.processSyncQueue, 1000);
@@ -371,8 +532,11 @@
       document.getElementById("progressLabel").textContent = `${questions.length} / ${questions.length} hoàn thành`;
       
       const phaseBadge = mode === "assessment"
-        ? (assessmentPhase === "pre" ? "ĐỢT ĐO 01: TRƯỚC CAN THIỆP" : "ĐỢT ĐO 02: SAU CAN THIỆP")
+        ? (assessmentPhase === "pre" ? "GIAI ĐOẠN 1 / 2 · ĐỢT ĐO 01: TRƯỚC CAN THIỆP" : "GIAI ĐOẠN 2 / 2 · ĐỢT ĐO 02: SAU CAN THIỆP")
         : "THỬ THÁCH RUBRIC";
+
+      const preScoreVal = read("assessment_pre_score", null);
+      const diffVal = (mode === "assessment" && assessmentPhase === "post" && preScoreVal !== null) ? (total - preScoreVal) : null;
 
       result.innerHTML = `
         <p class="eyebrow">${phaseBadge}</p>
@@ -380,6 +544,63 @@
         <p class="result-level">Mức ${["Yếu", "Trung bình", "Khá", "Giỏi"].indexOf(label) + 1}: ${label}</p>
         <div class="result-note">${noteFor(label, mode === "assessment" && weakest.rate < 100 ? weakest.skill : "")}</div>
         
+        ${mode === "assessment" && assessmentPhase === "pre" ? `
+          <div class="next-phase-card">
+            <div class="next-phase-header">
+              <span class="next-badge">BƯỚC TIẾP THEO</span>
+              <h3>Hoàn thành Đợt 01! Chuyển sang Đợt đo 02: Sau can thiệp</h3>
+            </div>
+            <p>Bạn đã hoàn thành 20 câu của Lần đo 01 với số điểm <strong>${total}/100</strong>. Hãy tiếp tục ngay Lần đo 02 (20 câu tình huống) để hệ thống ghi nhận đối sánh sự tiến bộ và đồng bộ dữ liệu vào công trình nghiên cứu khoa học.</p>
+            <div class="next-phase-actions">
+              <button type="button" class="next-phase-btn" id="btnGoToPost">
+                Tiến hành Đo Sau can thiệp (Đợt 02) ngay →
+              </button>
+              <button type="button" class="button button-outline" id="btnRetryPre" style="color:#fff;border-color:rgba(255,255,255,0.4)">
+                Làm lại Đợt 01 ↻
+              </button>
+              <button type="button" class="button button-outline" id="btnBackHomePre" style="color:#fff;border-color:rgba(255,255,255,0.4)">
+                Về màn hình chính ↩
+              </button>
+            </div>
+          </div>
+        ` : ""}
+
+        ${mode === "assessment" && assessmentPhase === "post" ? `
+          <div class="comparison-summary-card">
+            <span class="comparison-badge">KẾT QUẢ ĐỐI SÁNH NGHIÊN CỨU 2 ĐỢT ĐO</span>
+            <div class="comparison-grid">
+              <div class="comp-col">
+                <span class="comp-label">Đợt 01: Trước can thiệp</span>
+                <strong class="comp-score">${preScoreVal !== null ? preScoreVal : '—'}<small>/100</small></strong>
+              </div>
+              <div class="comp-arrow">➔</div>
+              <div class="comp-col">
+                <span class="comp-label">Đợt 02: Sau can thiệp</span>
+                <strong class="comp-score">${total}<small>/100</small></strong>
+              </div>
+              <div class="comp-col">
+                <span class="comp-label">Mức tăng trưởng</span>
+                <strong class="comp-growth ${diffVal !== null && diffVal >= 0 ? 'positive' : 'negative'}">
+                  ${diffVal !== null ? (diffVal >= 0 ? '+' : '') + diffVal + ' điểm' : '—'}
+                </strong>
+              </div>
+            </div>
+            <p class="comp-desc">
+              ${diffVal !== null && diffVal > 0 
+                ? `🎉 Tuyệt vời! Điểm năng lực kiểm chứng của bạn đã tăng <strong>+${diffVal} điểm</strong> sau khi áp dụng giải pháp. Dữ liệu đối sánh đã được đồng bộ vào công trình nghiên cứu của đề tài.` 
+                : `Dữ liệu đánh giá của bạn đã được ghi nhận và đồng bộ vào công trình nghiên cứu của đề tài.`}
+            </p>
+            <div class="comp-actions">
+              <a href="research.html" class="button button-lime" style="text-decoration:none">
+                Xem biểu đồ đề tài tại trang Nghiên cứu 📊
+              </a>
+              <button type="button" class="button button-dark" id="btnRetryPost">Làm lại Đợt 02 ↻</button>
+              <button type="button" class="button button-outline" id="btnRestartAll">Bắt đầu lại từ Đợt 01 ↻</button>
+              <button type="button" class="button button-outline" id="btnBackHomePost">Về màn hình chính ↩</button>
+            </div>
+          </div>
+        ` : ""}
+
         ${gamifyRes ? `
           <div class="assessment-gamify-card">
             <div class="assessment-gamify-badge">
@@ -413,14 +634,39 @@
             <div class="skill-track"><span style="width:${item.rate}%"></span></div>
           </div>
         `).join("")}
-        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
-          <button class="button button-dark" id="retryCurrent">Làm lại đợt này ↻</button>
-          <button class="button button-outline" id="btnChooseOther">← Chọn đợt đo khác</button>
-        </div>
+
+        ${mode === "rubric" ? `
+          <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="button button-dark" id="retryCurrent">Làm lại thử thách ↻</button>
+            <button class="button button-outline" id="btnChooseOther">← Quay lại trang đánh giá</button>
+          </div>
+        ` : ""}
       `;
 
-      document.getElementById("retryCurrent").addEventListener("click", () => startQuiz());
-      document.getElementById("btnChooseOther").addEventListener("click", () => openStartScreen());
+      if (document.getElementById("btnGoToPost")) {
+        document.getElementById("btnGoToPost").addEventListener("click", () => startAssessmentWithPhase("post"));
+      }
+      if (document.getElementById("btnRetryPre")) {
+        document.getElementById("btnRetryPre").addEventListener("click", () => startAssessmentWithPhase("pre"));
+      }
+      if (document.getElementById("btnBackHomePre")) {
+        document.getElementById("btnBackHomePre").addEventListener("click", () => openStartScreen());
+      }
+      if (document.getElementById("btnRetryPost")) {
+        document.getElementById("btnRetryPost").addEventListener("click", () => startAssessmentWithPhase("post"));
+      }
+      if (document.getElementById("btnRestartAll")) {
+        document.getElementById("btnRestartAll").addEventListener("click", () => startAssessmentWithPhase("pre"));
+      }
+      if (document.getElementById("btnBackHomePost")) {
+        document.getElementById("btnBackHomePost").addEventListener("click", () => openStartScreen());
+      }
+      if (document.getElementById("retryCurrent")) {
+        document.getElementById("retryCurrent").addEventListener("click", () => startQuiz());
+      }
+      if (document.getElementById("btnChooseOther")) {
+        document.getElementById("btnChooseOther").addEventListener("click", () => openStartScreen());
+      }
     }
 
     document.getElementById("nextQuestion").addEventListener("click", () => {
@@ -440,6 +686,10 @@
       }
       openStartScreen();
     });
+
+    window.addEventListener("DOMContentLoaded", initAssessmentFlow);
+    initAssessmentFlow();
+
   </script>
   <script src="../site-nav.js"></script>
 </body>
