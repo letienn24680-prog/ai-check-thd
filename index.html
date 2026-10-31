@@ -61,18 +61,24 @@
     </div>
   </header>
 
-  <!-- THANH ĐIỀU HƯỚNG NỔI BẬT: ĐO LƯỜNG NĂNG LỰC TRƯỚC CAN THIỆP (BẮT BUỘC ĐỢT 1) -->
-  <div class="pre-intervention-top-bar" id="topPreInterventionBar" style="background:linear-gradient(90deg, #123b32 0%, #1e5e50 100%);color:#ffffff;padding:12px 20px;border-bottom:2px solid var(--lime);box-shadow:0 4px 14px rgba(0,0,0,0.15)">
+  <!-- THANH THÔNG BÁO TIẾN TRÌNH THỰC NGHIỆM KHKT HIỆN ĐẠI & TINH TẾ -->
+  <div class="pre-intervention-top-bar" id="topPreInterventionBar" style="background:linear-gradient(90deg, rgba(10, 35, 29, 0.97) 0%, rgba(18, 59, 49, 0.97) 100%);color:#ffffff;padding:8px 20px;border-bottom:1px solid rgba(190, 242, 100, 0.28);box-shadow:0 2px 12px rgba(0,0,0,0.18);backdrop-filter:blur(6px);transition:all 0.3s ease">
     <div style="max-width:1240px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span class="tag" style="background:var(--lime);color:var(--forest);font-weight:800;font-size:11.5px;padding:4px 10px;border-radius:4px;letter-spacing:0.5px">BẮT BUỘC ĐỢT 1</span>
-        <span style="font-size:14px;font-weight:600" id="topPreBarText">
-          Khảo sát năng lực ban đầu: Học sinh cần hoàn thành bài đo <strong>Trước can thiệp</strong> để xác định mốc đối chứng KHKT!
+        <span class="tag" id="topPreBarTag" style="background:rgba(190,242,100,0.16);color:#bef264;border:1px solid rgba(190,242,100,0.35);font-weight:700;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px">
+          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#bef264;box-shadow:0 0 6px #bef264"></span>
+          ĐỢT 1 · KHẢO SÁT BAN ĐẦU
+        </span>
+        <span style="font-size:13px;color:#f0fdf4;font-weight:500" id="topPreBarText">
+          Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!
         </span>
       </div>
-      <a href="pages/assessment.html?phase=pre" id="topPreBarBtn" class="button button-lime" style="min-height:36px;padding:6px 18px;font-weight:800;font-size:13px;border-radius:6px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.18)">
-        Làm bài đo Trước can thiệp ngay →
-      </a>
+      <div style="display:flex;align-items:center;gap:8px">
+        <a href="pages/assessment.html?phase=pre" id="topPreBarBtn" class="button button-lime" style="min-height:30px;padding:4px 14px;font-weight:700;font-size:12px;border-radius:20px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.2);display:inline-flex;align-items:center;gap:4px">
+          Làm bài ngay →
+        </a>
+        <button type="button" id="topPreBarClose" onclick="document.getElementById('topPreInterventionBar').style.display='none'" style="background:transparent;border:none;color:#94a3b8;font-size:16px;cursor:pointer;padding:2px 6px;line-height:1;border-radius:4px" title="Đóng thông báo">✕</button>
+      </div>
     </div>
   </div>
 
@@ -348,6 +354,43 @@
 
       // Xoay đổi thông điệp sau dấu chấm chậm lại mỗi 5s (5000ms)
       startStatsRotation(stats, isEn, localProf);
+      updateTopPreBarState();
+    }
+
+    function updateTopPreBarState() {
+      const bar = document.getElementById("topPreInterventionBar");
+      const tag = document.getElementById("topPreBarTag");
+      const text = document.getElementById("topPreBarText");
+      const btn = document.getElementById("topPreBarBtn");
+      if (!bar || !text || !btn) return;
+
+      let preScore = null;
+      let postScore = null;
+      try { preScore = JSON.parse(localStorage.getItem("aicheck:assessment_pre_score")); } catch {}
+      try { postScore = JSON.parse(localStorage.getItem("aicheck:assessment_post_score")); } catch {}
+      let practiceCompleted = localStorage.getItem("aicheck:practice_completed") === "true";
+
+      if (preScore === null) {
+        if (tag) tag.innerHTML = '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#bef264;box-shadow:0 0 6px #bef264"></span> ĐỢT 1 · KHẢO SÁT BAN ĐẦU';
+        text.innerHTML = 'Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!';
+        btn.textContent = 'Làm bài ngay →';
+        btn.href = 'pages/assessment.html?phase=pre';
+      } else if (postScore !== null) {
+        if (tag) tag.innerHTML = '🎉 ĐÃ HOÀN THÀNH 2 ĐỢT';
+        text.innerHTML = `Bạn đã hoàn thành trọn vẹn 2 đợt đo: Đợt 1 (<strong>${preScore} đ</strong>) ➔ Đợt 2 (<strong>${postScore} đ</strong>)!`;
+        btn.textContent = 'Xem báo cáo KHKT →';
+        btn.href = 'pages/research.html';
+      } else if (!practiceCompleted) {
+        if (tag) tag.innerHTML = '⚡ BƯỚC 2: CAN THIỆP THỰC HÀNH';
+        text.innerHTML = `Đã ghi nhận Đợt 01 (<strong>${preScore} đ</strong>). Hãy hoàn thành 1 lượt Thực hành tình huống để mở Đợt 02!`;
+        btn.textContent = 'Vào Thực hành →';
+        btn.href = 'pages/practice.html?from=assessment_pre';
+      } else {
+        if (tag) tag.innerHTML = '🎯 BƯỚC 3: ĐO SAU CAN THIỆP';
+        text.innerHTML = `Đã hoàn thành thực hành tốt! Hãy xem tiến trình và chuẩn bị làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong>.`;
+        btn.textContent = 'Đo Sau can thiệp →';
+        btn.href = 'pages/assessment.html?phase=post';
+      }
     }
 
     let statsRotationTimer = null;

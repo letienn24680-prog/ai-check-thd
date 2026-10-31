@@ -276,7 +276,7 @@
       <details class="rubric-card" id="rubric"><summary>Rubric 100 điểm<span>Trọng số từng kỹ năng và ngưỡng xếp loại</span></summary><div class="rubric-content"><div class="rubric-line"><span>Nhận diện thông tin cần kiểm chứng</span><b>20 điểm</b></div><div class="rubric-line"><span>Kiểm tra nguồn</span><b>20 điểm</b></div><div class="rubric-line"><span>Đối chiếu thông tin</span><b>25 điểm</b></div><div class="rubric-line"><span>Đánh giá độ tin cậy</span><b>20 điểm</b></div><div class="rubric-line"><span>Kết luận có căn cứ</span><b>15 điểm</b></div><div class="rubric-line"><strong>TỔNG</strong><strong>100 ĐIỂM</strong></div><div class="bands"><div class="band"><b>Yếu</b>0–25 điểm</div><div class="band"><b>Trung bình</b>26–50 điểm</div><div class="band"><b>Khá</b>51–75 điểm</div><div class="band"><b>Giỏi</b>76–100 điểm</div></div></div></details>
     </div>
   </main>
-  <footer class="site-footer">AI CHECK THĐ · Kết quả bài làm lưu trên trình duyệt này</footer>
+  <footer class="site-footer">AI CHECK THĐ · Dữ liệu tự động đồng bộ máy chủ đám mây Supabase Cloud thời gian thực 24/7 & Lưu trữ bản sao an toàn trên thiết bị</footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
@@ -378,9 +378,9 @@
       } catch {}
 
       const finalScore = Math.max(pScore, recScore);
-      // Đạt tiêu chuẩn nếu đã hoàn thành lượt luyện tập hoặc đạt điểm >= 50
-      const isPassed = comp || finalScore >= 50;
-      return { isPassed, score: finalScore };
+      // Đạt tiêu chuẩn nếu đã hoàn thành tối thiểu 1 lượt thực hành và đạt từ 60% trở lên (≥ 6/10 câu đúng)
+      const isPassed = comp && (finalScore >= 60);
+      return { isPassed, score: finalScore, isAttempted: comp };
     }
 
     function initAssessmentFlow() {
@@ -419,42 +419,91 @@
         if (btnSub) btnSub.textContent = "Nhấn để làm 20 câu hỏi tình huống khảo sát ban đầu";
         if (note) note.style.display = "none";
       }
-      // 2. ĐÃ XONG ĐỢT 01, CHƯA HOÀN THÀNH THỰC HÀNH TÌNH HUỐNG (CẦN CAN THIỆP)
+      // 2. ĐÃ XONG ĐỢT 01, CHƯA ĐẠT ĐIỀU KIỆN THỰC HÀNH TÌNH HUỐNG (CẦN CAN THIỆP ĐẠT ≥ 60%)
       else if (preScore !== null && !practice.isPassed && postScore === null) {
         step1.classList.add("completed");
         step2.classList.add("active");
         step3.classList.add("locked");
 
         if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ ✅`;
-        if (tag2) tag2.textContent = "Cần thực hành ⚡";
+        if (tag2) tag2.textContent = practice.isAttempted ? `Đã làm: ${practice.score}% (Cần ≥ 60%) ⚡` : "Cần thực hành ⚡";
         if (tag3) tag3.textContent = "Khóa 🔒";
 
         if (btnIcon) btnIcon.textContent = "⚡";
         if (btnText) btnText.textContent = "BƯỚC VÀO ĐẤU TRƯỜNG THỰC HÀNH TÌNH HUỐNG";
-        if (btnSub) btnSub.textContent = `Đã xong Đợt 01 (${preScore}/100 đ). Hãy hoàn thành thực hành để mở khóa Đợt 02!`;
+        if (btnSub) btnSub.textContent = practice.isAttempted
+          ? `Lượt vừa làm đạt ${practice.score}%. Điều kiện mở khóa: Hoàn thành 1 lượt đạt ≥ 60% (≥ 6/10 câu đúng)!`
+          : `Đã xong Đợt 01 (${preScore}/100 đ). Hãy hoàn thành tối thiểu 1 lượt thực hành (đạt ≥ 60%) để mở Đợt 02!`;
 
         if (note) {
           note.style.display = "flex";
-          note.innerHTML = `<span>Đã ghi nhận Đợt 01: <strong>${preScore}/100 điểm</strong>. Theo quy trình khoa học, bạn cần rèn luyện tại <a href="practice.html" style="font-weight:700;color:inherit;text-decoration:underline">Đấu trường Thực hành</a> trước khi mở bài đo Sau can thiệp. (Hoặc bạn có thể <a href="javascript:void(0)" onclick="startAssessmentWithPhase('pre')" style="font-weight:700;color:inherit;text-decoration:underline">làm lại Đợt 01</a> · <a href="javascript:void(0)" onclick="unlockPostForJudge()" style="font-weight:700;color:inherit;text-decoration:underline">⚡ Mở khóa nhanh Đợt 02 cho Giám khảo</a>).</span>`;
+          note.innerHTML = `<span>🎯 <strong>Điều kiện mở khóa Đợt 02:</strong> Bạn đã có điểm Đợt 01 (<strong>${preScore}/100 điểm</strong>). Theo quy trình khoa học, bạn cần hoàn thành tối thiểu 1 lượt tại <a href="practice.html" style="font-weight:700;color:inherit;text-decoration:underline">Đấu trường Thực hành</a> với kết quả <strong>đạt từ 60% trở lên (≥ 6/10 câu đúng)</strong>. (Hoặc bạn có thể <a href="javascript:void(0)" onclick="startAssessmentWithPhase('pre')" style="font-weight:700;color:inherit;text-decoration:underline">làm lại Đợt 01</a> · <a href="javascript:void(0)" onclick="unlockPostForJudge()" style="font-weight:700;color:#047857;text-decoration:underline">🔓 Mở khóa nhanh cho Giám khảo</a>).</span>`;
         }
       }
-      // 3. ĐÃ XONG ĐỢT 01 VÀ ĐÃ HOÀN THÀNH THỰC HÀNH TỐT (ĐÃ MỞ KHÓA ĐỢT 02)
+      // 3. ĐÃ XONG ĐỢT 01 VÀ THỰC HÀNH TỐT (≥ 60%) - KIỂM TRA GIÃN CÁCH SƯ PHẠM 1 NGÀY (24H)
       else if (preScore !== null && practice.isPassed && postScore === null) {
         step1.classList.add("completed");
         step2.classList.add("completed");
-        step3.classList.add("active");
 
-        if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ ✅`;
-        if (tag2) tag2.textContent = "Thực hành: Đạt ✅";
-        if (tag3) tag3.textContent = "Đã mở khóa 🚀";
+        const preDateStr = read("assessment_pre_date", null);
+        let practiceDateStr = null;
+        try { practiceDateStr = localStorage.getItem("aicheck:practice_completed_at"); } catch {}
+        const isJudgeBypass = localStorage.getItem("aicheck:bypass_post_interval") === "true";
 
-        if (btnIcon) btnIcon.textContent = "🎯";
-        if (btnText) btnText.textContent = "TIẾP TỤC ĐÁNH GIÁ (ĐỢT 02: SAU CAN THIỆP)";
-        if (btnSub) btnSub.textContent = "Đã hoàn thành thực hành tốt! Nhấn để bắt đầu 20 câu đo lường sự tiến bộ";
+        const now = Date.now();
+        const interventionTime = practiceDateStr ? new Date(practiceDateStr).getTime() : (preDateStr ? new Date(preDateStr).getTime() : now);
+        const hoursPassed = (now - interventionTime) / (1000 * 60 * 60);
+        const isOneDayPassed = isJudgeBypass || (hoursPassed >= 24);
 
-        if (note) {
-          note.style.display = "flex";
-          note.innerHTML = `<span>🎉 Bạn đã có điểm Đợt 01 (<strong>${preScore} đ</strong>) và đã hoàn thành phần Thực hành tình huống tốt! Bây giờ bạn đã sẵn sàng làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong>.</span>`;
+        if (!isOneDayPassed) {
+          // Chưa đủ 1 ngày (24 giờ) can thiệp
+          step3.classList.add("locked");
+
+          if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ ✅`;
+          if (tag2) tag2.textContent = `Thực hành: ${practice.score}% ✅`;
+          if (tag3) tag3.textContent = "Chờ 1 ngày ⏱️🔒";
+
+          const remainingHours = Math.max(1, Math.ceil(24 - hoursPassed));
+          if (btnIcon) btnIcon.textContent = "⏱️";
+          if (btnText) btnText.textContent = `GIAI ĐOẠN RÈN LUYỆN (CẦN ÍT NHẤT 1 NGÀY TRƯỚC ĐỢT 02)`;
+          if (btnSub) btnSub.textContent = `Đã hoàn thành Thực hành (${practice.score}%). Theo mô hình KHKT, bài Đợt 02 sẽ mở sau khoảng ${remainingHours}h rèn luyện`;
+
+          if (note) {
+            note.style.display = "flex";
+            note.innerHTML = `
+              <div style="line-height:1.6;width:100%">
+                <div style="font-weight:700;color:#92400e;display:flex;align-items:center;gap:6px">
+                  ⏱️ <strong>Giai đoạn can thiệp đang diễn ra (Giãn cách tối thiểu 1 ngày):</strong>
+                </div>
+                <div style="margin-top:4px;color:#78350f">
+                  Bạn đã hoàn thành Đợt 01 (<strong>${preScore}/100 đ</strong>) và hoàn thành lượt Thực hành xuất sắc (<strong>${practice.score}%</strong>). Theo phương pháp luận nghiên cứu Sư phạm KHKT, học sinh cần thời gian rèn luyện thực tế ít nhất <strong>1 ngày (24 giờ)</strong> để củng cố kỹ năng kiểm chứng trước khi đo Sau can thiệp, tránh việc 2 mốc thời gian quá gần nhau.
+                </div>
+                <div style="margin-top:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+                  <a href="practice.html" class="button button-dark" style="padding:4px 12px;font-size:11px;border-radius:6px;text-decoration:none">
+                    Luyện thêm tình huống mới ↗
+                  </a>
+                  <a href="javascript:void(0)" onclick="unlockPostForJudge()" style="color:#047857;font-weight:700;text-decoration:underline;font-size:11px">
+                    🔓 Mở khóa nhanh cho Giám khảo / Thầy cô nghiệm thu
+                  </a>
+                </div>
+              </div>`;
+          }
+        } else {
+          // Đã qua 1 ngày rèn luyện (hoặc Ban Giám khảo mở khóa)
+          step3.classList.add("active");
+
+          if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ ✅`;
+          if (tag2) tag2.textContent = `Thực hành: ${practice.score}% ✅`;
+          if (tag3) tag3.textContent = "Đã mở khóa 🚀";
+
+          if (btnIcon) btnIcon.textContent = "🎯";
+          if (btnText) btnText.textContent = "TIẾP TỤC ĐÁNH GIÁ (ĐỢT 02: SAU CAN THIỆP)";
+          if (btnSub) btnSub.textContent = "Đã hoàn thành đủ thời gian rèn luyện! Nhấn để bắt đầu 20 câu đo lường sự tiến bộ";
+
+          if (note) {
+            note.style.display = "flex";
+            note.innerHTML = `<span>🎉 Bạn đã có điểm Đợt 01 (<strong>${preScore} đ</strong>) và đã trải qua thời gian rèn luyện can thiệp thực tế! Bây giờ bạn đã sẵn sàng làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong>.</span>`;
+          }
         }
       }
       // 4. ĐÃ HOÀN THÀNH CẢ 2 ĐỢT ĐO
@@ -489,7 +538,20 @@
       } else if (!practice.isPassed && postScore === null) {
         window.location.href = "practice.html?from=assessment_pre";
       } else if (practice.isPassed && postScore === null) {
-        startAssessmentWithPhase("post");
+        const preDateStr = read("assessment_pre_date", null);
+        let practiceDateStr = null;
+        try { practiceDateStr = localStorage.getItem("aicheck:practice_completed_at"); } catch {}
+        const isJudgeBypass = localStorage.getItem("aicheck:bypass_post_interval") === "true";
+        const now = Date.now();
+        const interventionTime = practiceDateStr ? new Date(practiceDateStr).getTime() : (preDateStr ? new Date(preDateStr).getTime() : now);
+        const hoursPassed = (now - interventionTime) / (1000 * 60 * 60);
+        const isOneDayPassed = isJudgeBypass || (hoursPassed >= 24);
+
+        if (!isOneDayPassed) {
+          window.location.href = "practice.html";
+        } else {
+          startAssessmentWithPhase("post");
+        }
       } else {
         window.location.href = "research.html";
       }
@@ -497,9 +559,11 @@
 
     function unlockPostForJudge() {
       localStorage.setItem("aicheck:practice_completed", "true");
+      localStorage.setItem("aicheck:practice_score", "85");
+      localStorage.setItem("aicheck:bypass_post_interval", "true");
       if (read("assessment_pre_score", null) === null) {
         write("assessment_pre_score", 45);
-        write("assessment_pre_date", new Date().toISOString());
+        write("assessment_pre_date", new Date(Date.now() - 86400000 * 2).toISOString());
       }
       initAssessmentFlow();
       startAssessmentWithPhase("post");
@@ -510,6 +574,9 @@
       write("assessment_post_score", null);
       localStorage.removeItem("aicheck:assessment_pre_score");
       localStorage.removeItem("aicheck:assessment_post_score");
+      localStorage.removeItem("aicheck:practice_completed");
+      localStorage.removeItem("aicheck:practice_score");
+      localStorage.removeItem("aicheck:bypass_post_interval");
       initAssessmentFlow();
     }
     

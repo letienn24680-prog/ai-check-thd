@@ -245,7 +245,16 @@
         resultSummary: "Đang thực hiện bài làm ⏳"
       };
 
-      const sessions = this.getSessions();
+      let sessions = this.getSessions();
+      // Dọn dẹp các phiên dở dang cũ chưa hoàn thành của cùng thí sinh và cùng hoạt động
+      // Tránh việc refresh/F5 nhiều lần tạo ra hàng loạt bản ghi "Đang làm bài..." bị treo
+      sessions = sessions.filter(s => {
+        if (s.studentName === student.name && s.activity === activity && s.status === "in_progress") {
+          return false;
+        }
+        return true;
+      });
+
       sessions.unshift(session);
       // Giới hạn lưu trữ 500 phiên gần nhất
       if (sessions.length > 500) sessions.length = 500;
@@ -309,8 +318,47 @@
       if (!sessions || sessions.length === 0) {
         sessions = getSeedSessions();
         writeSessions(sessions);
+      } else {
+        // Tự động gộp và loại bỏ các phiên dở dang bị trùng lặp của cùng thí sinh
+        const seenActive = new Set();
+        let changed = false;
+        sessions = sessions.filter(s => {
+          if (s.status === "in_progress") {
+            const key = `${s.studentName || ''}_${s.activity || ''}`;
+            if (seenActive.has(key)) {
+              changed = true;
+              return false; // Bỏ các phiên dở dang cũ hơn bị treo do F5/reload
+            }
+            seenActive.add(key);
+          }
+          return true;
+        });
+        if (changed) {
+          writeSessions(sessions);
+        }
       }
       return sessions;
+    },
+
+    // Dọn dẹp tất cả các phiên dở dang (abandoned) không hoàn thành
+    cleanupAbandonedSessions(forceAllInProgress = false) {
+      let sessions = readSessions() || [];
+      const now = Date.now();
+      const cutoff = 15 * 60 * 1000; // 15 phút
+      const beforeCount = sessions.length;
+
+      sessions = sessions.filter(s => {
+        if (s.status === "in_progress" && (s.score == null || s.score === undefined)) {
+          if (forceAllInProgress) return false;
+          const sessionTime = s.startedTimestamp || (s.startedAt ? new Date(s.startedAt).getTime() : 0);
+          return (now - sessionTime) < cutoff;
+        }
+        return true;
+      });
+
+      writeSessions(sessions);
+      this.notifyUpdate("cleanup", { removed: beforeCount - sessions.length });
+      return beforeCount - sessions.length;
     },
 
     // Xóa 1 phiên

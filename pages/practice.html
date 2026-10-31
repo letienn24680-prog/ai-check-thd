@@ -131,7 +131,7 @@
         <!-- BANNER HƯỚNG DẪN GIAI ĐOẠN CAN THIỆP -->
         <div id="interventionNotice" style="display:none;margin-bottom:14px;padding:12px 18px;background:rgba(217,242,108,0.14);border:1.5px solid rgba(40,105,71,0.3);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
           <div style="font-size:12px;color:var(--forest);line-height:1.5">
-            🎯 <strong>Giai đoạn Can thiệp Sư phạm:</strong> Bạn đã có điểm đo Trước can thiệp. Hãy hoàn thành tốt lượt thực hành tình huống bên dưới để mở khóa bài <strong>Đo Sau can thiệp (Đợt 02)</strong>!
+            🎯 <strong>Giai đoạn Can thiệp Sư phạm:</strong> Bạn đã có điểm đo Trước can thiệp. <strong>Điều kiện mở khóa:</strong> Hoàn thành tối thiểu 1 lượt thực hành (10/10 câu) đạt từ <strong>60% trở lên (≥ 6/10 câu đúng)</strong> và trải qua ít nhất 1 ngày rèn luyện để mở khóa bài <strong>Đo Sau can thiệp (Đợt 02)</strong>!
           </div>
           <span style="font-size:10.5px;font-weight:800;background:var(--forest);color:var(--lime);padding:3px 10px;border-radius:20px;white-space:nowrap">BƯỚC 2 / 3</span>
         </div>
@@ -171,11 +171,6 @@
 
         <p class="feedback" id="practiceFeedback" aria-live="polite"></p>
         <p class="muted" id="syncStatus" aria-live="polite" style="font-size:10px;margin-top:8px"></p>
-
-        <div class="example-row">
-          <article class="example"><strong>Ví dụ bổ sung · Sức khỏe</strong>“Nước chanh chữa khỏi mọi bệnh cảm cúm trong một ngày.” Hãy đối chiếu hướng dẫn y tế.</article>
-          <article class="example"><strong>Ví dụ bổ sung · Lịch sử</strong>“Câu nói đang lan truyền chắc chắn là nguyên văn của nhân vật lịch sử.” Hãy tìm văn bản gốc.</article>
-        </div>
       </section>
 
       <aside class="panel panel-dark">
@@ -184,6 +179,22 @@
         <p class="panel-copy">Mỗi lượt gồm 10 tình huống được chọn ngẫu nhiên từ kho 1.060 câu. Khi hoàn thành, hệ thống tự động xáo đề mới và tuyệt đối không trùng lặp với các câu vừa làm.</p>
         <button class="button button-lime" id="newPractice" style="width:100%;margin-top:14px">Bắt đầu lượt mới ↻</button>
         <p class="panel-copy" style="margin-top:16px;line-height:1.5">Các tình huống là tư liệu mô phỏng cho hoạt động học tập, không phải trích dẫn nghiên cứu thật nếu chưa kèm nguồn.</p>
+        
+        <!-- VÍ DỤ BỔ SUNG ĐƯỢC ĐƯA VÀO CỘT PHỤ ĐỂ KHÔNG GÂY PHÂN TÂM KHI LÀM BÀI -->
+        <details style="margin-top:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px 12px">
+          <summary style="font-size:11.5px;font-weight:700;color:var(--lime);cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px">
+            💡 Ví dụ kiểm chứng mẫu (Sức khỏe, Lịch sử) ▾
+          </summary>
+          <div class="example-row" style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <article class="example" style="font-size:11px;background:rgba(0,0,0,0.25);border-left:3px solid var(--lime);padding:8px 10px;border-radius:4px;color:#e2e8f0">
+              <strong style="color:var(--lime);display:block;margin-bottom:2px">Ví dụ Sức khỏe</strong>“Nước chanh chữa khỏi mọi bệnh cảm cúm trong một ngày.” ➔ Cần đối chiếu hướng dẫn y tế của Bộ Y tế / WHO.
+            </article>
+            <article class="example" style="font-size:11px;background:rgba(0,0,0,0.25);border-left:3px solid #38bdf8;padding:8px 10px;border-radius:4px;color:#e2e8f0">
+              <strong style="color:#38bdf8;display:block;margin-bottom:2px">Ví dụ Lịch sử</strong>“Câu nói đang lan truyền là nguyên văn của nhân vật.” ➔ Cần tra cứu văn bản gốc và SGK Lịch sử.
+            </article>
+          </div>
+        </details>
+
         <div style="margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,0.15);text-align:center">
           <a id="feedbackLink" href="resources.html#formConfig" style="font-size:11.5px;color:#94a3b8;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:color 0.15s">
             💬 Đóng góp tình huống / Báo lỗi ↗
@@ -550,15 +561,21 @@
         return; 
       } 
 
-      // Hoàn thành lượt làm bài (8 câu)
+      // Hoàn thành lượt làm bài (10 câu)
       const score = Math.round(correct / set.length * 100); 
       saveResult(score); 
       complete = true;
       updateLibraryLockState();
 
-      // Đánh dấu hoàn thành giai đoạn can thiệp thực hành tình huống
-      localStorage.setItem("aicheck:practice_completed", "true");
-      localStorage.setItem("aicheck:practice_score", String(score)); 
+      // Đánh dấu hoàn thành giai đoạn can thiệp thực hành tình huống khi đạt >= 60%
+      const isPassed = score >= 60;
+      if (isPassed) {
+        localStorage.setItem("aicheck:practice_completed", "true");
+        localStorage.setItem("aicheck:practice_score", String(score));
+        if (!localStorage.getItem("aicheck:practice_completed_at")) {
+          localStorage.setItem("aicheck:practice_completed_at", new Date().toISOString());
+        }
+      }
 
       // Gamification hoàn thành lượt bài
       let roundBonus = 0;
@@ -574,19 +591,37 @@
       document.getElementById("methodChoices").replaceChildren(); 
       const preScoreForUnlock = read("assessment_pre_score", null);
       if (preScoreForUnlock !== null) {
-        document.getElementById("practiceFeedback").innerHTML = `
-          <div style="background:rgba(217,242,108,0.18);border:1.5px solid #286947;border-radius:10px;padding:12px 14px;margin-top:10px;text-align:left">
-            <strong style="color:var(--forest);font-size:12.5px;display:block;margin-bottom:4px">
-              🎉 Chúc mừng! Bạn đã hoàn thành tốt giai đoạn Thực hành tình huống!
-            </strong>
-            <span style="font-size:11.5px;color:#1e4d35;line-height:1.5;display:block">
-              Kỹ năng kiểm chứng thông tin của bạn đã được rèn luyện. Bây giờ bài <strong>Đo Sau can thiệp (Đợt 02)</strong> đã chính thức được <strong>MỞ KHÓA</strong> để ghi nhận sự tiến bộ của bạn!
-            </span>
-            <a href="assessment.html?phase=post" class="button button-lime" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:800;text-decoration:none">
-              🚀 Tiến hành Đo Sau can thiệp (Đợt 02) ngay →
-            </a>
-          </div>
-        `;
+        if (!isPassed) {
+          document.getElementById("practiceFeedback").innerHTML = `
+            <div style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:10px;padding:12px 14px;margin-top:10px;text-align:left">
+              <strong style="color:#c2410c;font-size:12.5px;display:block;margin-bottom:4px">
+                ⚠️ Kết quả lượt này: ${score}/100 điểm (${correct}/${set.length} câu đúng)
+              </strong>
+              <span style="font-size:11.5px;color:#9a3412;line-height:1.5;display:block">
+                Để đủ điều kiện mở khóa bài <strong>Đo Sau can thiệp (Đợt 02)</strong>, bạn cần đạt từ <strong>60% trở lên (≥ 6/10 câu đúng)</strong>. Hãy bấm <strong>"Lượt mới ↻"</strong> bên dưới để thử sức với đề mới nhé!
+              </span>
+            </div>
+          `;
+        } else {
+          document.getElementById("practiceFeedback").innerHTML = `
+            <div style="background:rgba(217,242,108,0.18);border:1.5px solid #286947;border-radius:10px;padding:12px 14px;margin-top:10px;text-align:left">
+              <strong style="color:var(--forest);font-size:12.5px;display:block;margin-bottom:4px">
+                🎉 Chúc mừng! Bạn đã hoàn thành lượt Thực hành đạt chuẩn (${score}/100 đ)!
+              </strong>
+              <span style="font-size:11.5px;color:#1e4d35;line-height:1.5;display:block">
+                Kỹ năng kiểm chứng đã được rèn luyện. Theo quy trình nghiên cứu Sư phạm KHKT, bạn cần thời gian rèn luyện thực tế ít nhất <strong>1 ngày (24 giờ)</strong> để kỹ năng thẩm thấu trước khi mở bài <strong>Đo Sau can thiệp (Đợt 02)</strong>.
+              </span>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap">
+                <a href="assessment.html" class="button button-lime" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:11.5px;font-weight:800;text-decoration:none">
+                  ⏱️ Xem tiến trình mở khóa Đợt 02 →
+                </a>
+                <a href="javascript:void(0)" onclick="startRound()" class="button button-outline" style="padding:7px 14px;font-size:11.5px;font-weight:700">
+                  Luyện thêm lượt nữa ↻
+                </a>
+              </div>
+            </div>
+          `;
+        }
       } else {
         document.getElementById("practiceFeedback").textContent = "Thành tích đã được ghi nhận vào BXH THĐ. Bạn có thể tiếp tục lượt mới để rèn luyện các tình huống tiếp theo!";
       } 
