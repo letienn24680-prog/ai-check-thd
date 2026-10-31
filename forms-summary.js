@@ -339,353 +339,1087 @@
   // 2. BỘ DỮ LIỆU CƠ SỞ (ĐỒNG BỘ 100% TỪ 15 PHẢN HỒI THỰC TẾ LỚP 12A5)
   // ==========================================================================
   const BASELINE_SURVEY_DATA = {
-    totalResponses: 15,
-    updatedAt: new Date().toISOString(),
-    questions: [
-      {
-        key: "khoi_lop",
-        title: "Khối lớp của bạn",
-        responseCount: 15,
-        multiSelect: false,
-        options: [
-          { label: "Khối 12", count: 15, percentage: 100.0 }
-        ]
-      },
-      {
-        key: "chi_doan_lop",
-        title: "Chi đoàn / Lớp tham gia khảo sát",
-        responseCount: 15,
-        multiSelect: false,
-        options: [
-          { label: "12A5", count: 15, percentage: 100.0 }
-        ]
-      },
-      {
-        key: "mon_hoc",
-        title: "Bạn sử dụng AI trong những môn nào",
-        responseCount: 15,
-        multiSelect: true,
-        options: [
-          { label: "TIẾNG ANH", count: 15, percentage: 100.0 },
-          { label: "TOÁN", count: 12, percentage: 80.0 },
-          { label: "NGỮ VĂN", count: 8, percentage: 53.3 },
-          { label: "ĐỊA LÍ", count: 6, percentage: 40.0 },
-          { label: "LỊCH SỬ", count: 4, percentage: 26.7 }
-        ]
-      },
-      {
-        key: "tan_suat",
-        title: "Tần suất bạn sử dụng các công cụ AI (ChatGPT, Claude, Gemini, Copilot...) phục vụ học tập là bao nhiêu?",
-        responseCount: 15,
-        multiSelect: false,
-        options: [
-          { label: "2-3 lần/tuần", count: 8, percentage: 53.3 },
-          { label: "Hằng ngày", count: 6, percentage: 40.0 },
-          { label: "Hiếm khi", count: 1, percentage: 6.7 },
-          { label: "Chưa từng sử dụng", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Bạn thường dùng AI vào mục đích nào ?",
-        responseCount: 11,
-        multiSelect: true,
-        options: [
-          { label: "Tìm kiếm thông tin, định nghĩa, kiến thức chung", count: 6, percentage: 54.5 },
-          { label: "Viết dàn ý / Đoạn văn / Bài văn mẫu (Văn học, Lịch sử...)", count: 6, percentage: 54.5 },
-          { label: "Giải bài tập (Toán, Lí, Hóa, Anh...)", count: 5, percentage: 45.5 },
-          { label: "Dịch thuật", count: 4, percentage: 36.4 },
-          { label: "học ngoại ngữ", count: 4, percentage: 36.4 },
-          { label: "tám chuyện", count: 1, percentage: 9.1 }
-        ]
-      },
-      {
-        title: "Theo bạn, hiện tượng AI tạo ra thông tin hư cấu/sai lệch nhưng trình bày rất thuyết phục được gọi là gì?",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "AI ảo giác (AI Hallucination)", count: 4, percentage: 36.4 },
-          { label: "AI suy thoái (AI Degradation)", count: 3, percentage: 27.3 },
-          { label: "AI quá tải (AI Overloading)", count: 2, percentage: 18.2 },
-          { label: "AI thiên vị (AI Bias)", count: 2, percentage: 18.2 }
-        ]
-      },
-      {
-        title: "Khi sử dụng câu trả lời từ các công cụ AI phổ biến hiện nay, độ tin cậy bạn dành cho thông tin đó là bao nhiêu?",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Tin tưởng phần lớn (70 - 90%), chỉ kiểm tra nếu thấy nghi ngờ", count: 6, percentage: 54.5 },
-          { label: "Đặt nghi vấn (50%), luôn kiểm tra lại các chi tiết quan trọng", count: 5, percentage: 45.5 },
-          { label: "Xem là tham khảo sơ bộ, kiểm tra lại toàn bộ từ nguồn chính thống", count: 0, percentage: 0 },
-          { label: "Tin tưởng hoàn toàn (100%), không cần kiểm tra lại", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Dữ liệu huấn luyện của AI có thể bị lỗi thời hoặc mang tính thiên lệch (bias) tùy thuộc vào nguồn dữ liệu.",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Đúng", count: 6, percentage: 54.5 },
-          { label: "Không rõ", count: 5, percentage: 45.5 },
-          { label: "Sai", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Khi hỏi AI về các dữ liệu lịch sử hoặc số liệu thống kê cụ thể của Việt Nam, khả năng xuất hiện sai lệch là:",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Khá cao, do nguồn dữ liệu tiếng Việt và dữ liệu địa phương có thể hạn chế", count: 8, percentage: 80.0 },
-          { label: "Rất thấp, vì AI thông minh hơn con người", count: 2, percentage: 20.0 },
-          { label: "Không bao giờ sai nếu dùng các bản AI trả phí", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Khi bạn nhận được một kết quả từ AI, bạn có thường xuyên đối chiếu với SGK hoặc các website chính thống không?",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Thường xuyên", count: 6, percentage: 54.5 },
-          { label: "Luôn luôn", count: 4, percentage: 36.4 },
-          { label: "Thỉnh thoảng", count: 1, percentage: 9.1 },
-          { label: "Không bao giờ", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Lý do chính khiến bạn KHÔNG kiểm chứng thông tin từ AI là gì?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Thấy thông tin có vẻ hợp lý nên không nghĩ đến việc kiểm chứng", count: 5, percentage: 50.0 },
-          { label: "Lười / Tốn thời gian", count: 3, percentage: 30.0 },
-          { label: "Tin tưởng tuyệt đối vào độ chính xác của AI", count: 1, percentage: 10.0 },
-          { label: "Không biết cách kiểm chứng như thế nào", count: 1, percentage: 10.0 }
-        ]
-      },
-      {
-        title: "Bạn đã bao giờ nộp bài tập hoặc chia sẻ thông tin lấy từ AI mà sau đó phát hiện ra thông tin đó bị sai chưa?",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Đã từng 1-2 lần", count: 6, percentage: 54.5 },
-          { label: "Chưa từng", count: 3, percentage: 27.3 },
-          { label: "Đã từng nhiều lần", count: 1, percentage: 9.1 },
-          { label: "Không chú ý nên không biết", count: 1, percentage: 9.1 }
-        ]
-      },
-      {
-        title: "Yếu tố nào dưới đây của AI dễ khiến người dùng nhầm tưởng câu trả lời của nó luôn đúng?",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Tất cả các ý trên", count: 7, percentage: 63.6 },
-          { label: "Giọng văn tự tin, logic, cấu trúc câu mạch lạc", count: 3, percentage: 27.3 },
-          { label: "Tốc độ phản hồi cực nhanh", count: 1, percentage: 9.1 },
-          { label: "Dùng nhiều từ ngữ chuyên ngành", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Bạn đã từng nghe đến khái niệm \"Fact-checking\" (Kiểm chứng thông tin) trước đây chưa?",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Đã nghe nhưng chưa hiểu rõ cách làm", count: 7, percentage: 63.6 },
-          { label: "Đã nghe và hiểu rõ", count: 3, percentage: 27.3 },
-          { label: "Chưa từng nghe", count: 1, percentage: 9.1 }
-        ]
-      },
-      {
-        title: "Trường THPT Trần Hưng Đạo hoặc giáo viên của bạn đã từng hướng dẫn/cảnh báo về rủi ro sai sót khi dùng AI chưa?",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Đã được hướng dẫn cụ thể", count: 10, percentage: 90.9 },
-          { label: "Chỉ cảnh báo chung chung, chưa hướng dẫn kỹ năng", count: 1, percentage: 9.1 },
-          { label: "Chưa từng nghe đề cập đến", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Theo bạn, việc nâng cao năng lực kiểm chứng thông tin AI cho học sinh THPT là:",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Cực kỳ cấp thiết", count: 7, percentage: 63.6 },
-          { label: "Cần thiết nhưng không quá vội", count: 4, percentage: 36.4 },
-          { label: "Không cần thiết, tự học sinh sẽ biết", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Bạn thường dùng phương pháp nào sau đây để kiểm tra lại đáp án của AI? (Chọn các phương án bạn áp dụng)",
-        responseCount: 11,
-        multiSelect: true,
-        options: [
-          { label: "Mở Sách giáo khoa / Tài liệu học tập chính thức", count: 11, percentage: 100 },
-          { label: "Tra cứu Google Search với các từ khóa liên quan", count: 9, percentage: 81.8 },
-          { label: "Hỏi lại giáo viên hoặc bạn bè giỏi môn đó", count: 4, percentage: 36.4 },
-          { label: "Yêu cầu chính AI đó trích dẫn nguồn (URL / tên sách)", count: 4, percentage: 36.4 },
-          { label: "Không dùng phương pháp nào", count: 1, percentage: 9.1 }
-        ]
-      },
-      {
-        title: "Đánh giá mức độ tự tin: [Tôi nhận biết được khi nào AI đưa ra trích dẫn/link web giả mạo.]",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Đồng ý", count: 6, percentage: 54.5 },
-          { label: "Phân vân", count: 4, percentage: 36.4 },
-          { label: "Hoàn toàn đồng ý", count: 1, percentage: 9.1 },
-          { label: "Không đồng ý", count: 0, percentage: 0 },
-          { label: "Hoàn toàn không đồng ý", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Đánh giá mức độ tự tin: [Tôi biết cách đặt câu hỏi (Prompt) để ép AI đưa ra thông tin có kiểm chứng.]",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Đồng ý", count: 7, percentage: 63.6 },
-          { label: "Hoàn toàn đồng ý", count: 2, percentage: 18.2 },
-          { label: "Phân vân", count: 2, percentage: 18.2 },
-          { label: "Không đồng ý", count: 0, percentage: 0 },
-          { label: "Hoàn toàn không đồng ý", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Đánh giá mức độ tự tin: [Tôi có thói quen nghi ngờ tính chính xác của các con số thống kê do AI đưa ra.]",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Đồng ý", count: 8, percentage: 80.0 },
-          { label: "Hoàn toàn đồng ý", count: 1, percentage: 10.0 },
-          { label: "Phân vân", count: 1, percentage: 10.0 },
-          { label: "Không đồng ý", count: 0, percentage: 0 },
-          { label: "Hoàn toàn không đồng ý", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Đánh giá mức độ tự tin: [Tôi phân biệt được sự khác nhau giữa \"ý kiến/góc nhìn\" và \"sự thật khách quan\" trong văn bản AI viết.]",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Đồng ý", count: 6, percentage: 60.0 },
-          { label: "Phân vân", count: 3, percentage: 30.0 },
-          { label: "Hoàn toàn đồng ý", count: 1, percentage: 10.0 },
-          { label: "Không đồng ý", count: 0, percentage: 0 },
-          { label: "Hoàn toàn không đồng ý", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Đánh giá mức độ tự tin: [Tôi tự tin mình không bị phụ thuộc hoặc thụ động trước các câu trả lời của AI.]",
-        responseCount: 11,
-        multiSelect: false,
-        options: [
-          { label: "Phân vân", count: 6, percentage: 54.5 },
-          { label: "Đồng ý", count: 4, percentage: 36.4 },
-          { label: "Không đồng ý", count: 1, percentage: 9.1 },
-          { label: "Hoàn toàn không đồng ý", count: 0, percentage: 0 },
-          { label: "Hoàn toàn đồng ý", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 1: Bạn nhờ AI tóm tắt tác phẩm văn học X. AI trả lời rất chi tiết kèm câu trích dẫn: \"Nói như nhà văn Nguyễn Tuân: 'Sông Hương là bản trường ca của rừng già'...\". Bước xử lý đầu tiên đúng nhất của bạn là gì?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Kiểm tra lại SGK/văn bản gốc xem câu nói đó là của Nguyễn Tuân hay Hoàng Phủ Ngọc Tường", count: 10, percentage: 100 },
-          { label: "Copied ngay vào bài làm vì AI đã ghi rõ tên tác giả Nguyễn Tuân", count: 0, percentage: 0 },
-          { label: "Hỏi AI tiếp: \"Bạn có chắc câu này của Nguyễn Tuân không?\"", count: 0, percentage: 0 },
-          { label: "Bỏ câu đó đi cho an toàn", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 2: Bạn giải một bài tập Toán hình học không gian. AI đưa ra đáp án là (a√3)/2 với lời giải 5 bước rất chặt chẽ. Bạn nên làm gì?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Thay số thử lại hoặc tự giải độc lập trên nháp để so sánh kết quả", count: 8, percentage: 80 },
-          { label: "Chụp màn hình gửi cho bạn nhờ chép hộ", count: 1, percentage: 10 },
-          { label: "Tin tưởng đáp án vì lời giải trình bày rõ ràng, mạch lạc", count: 1, percentage: 10 },
-          { label: "Chép đáp án và lời giải vào vở bài tập ngay", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 3: Khi bạn yêu cầu AI cung cấp trích dẫn nguồn cho một số liệu lịch sử, AI đưa ra một đường link dạng https://lichsuvietnam.gov.vn/article/10293. Nhấp vào link thì bị lỗi 404 (Không tìm thấy trang). Nguyên nhân khả dĩ nhất là gì?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "AI đã tự \"bịa\" ra một URL trông có vẻ giống thật", count: 5, percentage: 50 },
-          { label: "Trang web đã đổi địa chỉ domain", count: 3, percentage: 30 },
-          { label: "Mạng internet của bạn bị lag", count: 1, percentage: 10 },
-          { label: "Trang web lịch sử bị sập đúng lúc bạn truy cập", count: 1, percentage: 10 }
-        ]
-      },
-      {
-        title: "Tình huống 4: Bạn cần tìm tài liệu về tình hình kinh tế - xã hội tỉnh Quảng Bình năm 2025 để làm báo cáo Địa lý. AI đưa ra các con số chính xác đến từng chữ số thập phân. Bạn nên đánh giá thông tin này như thế nào?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Nghi vấn và truy cập Cổng thông tin điện tử/Cục Thống kê tỉnh Quảng Bình để đối chiếu", count: 10, percentage: 100 },
-          { label: "Hoàn toàn tin tưởng vì số liệu chi tiết chứng tỏ AI có dữ liệu chuẩn", count: 0, percentage: 0 },
-          { label: "Tin tưởng nếu dùng phiên bản ChatGPT Plus hoặc Gemini Advanced", count: 0, percentage: 0 },
-          { label: "Dùng ngay không cần suy nghĩ", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 5: Kỹ thuật nào sau đây giúp bạn phát hiện ra \"bẫy\" AI ảo giác khi hỏi về một chủ đề phức tạp?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Đặt câu hỏi bẫy về một nhân vật/sự kiện không có thật (VD: \"Hãy phân tích tác phẩm 'Mùa thu vàng' của Nam Cao\")", count: 5, percentage: 50 },
-          { label: "Hỏi lại câu hỏi đó 3 lần ở 3 phiên chat khác nhau xem câu trả lời có nhất quán không", count: 3, percentage: 30 },
-          { label: "Tất cả các cách trên", count: 2, percentage: 20 },
-          { label: "Yêu cầu AI chỉ ra các điểm yếu hoặc khả năng sai lệch trong chính câu trả lời của nó", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 6: Bạn viết một bài luận Tiếng Anh bằng AI. AI dùng nhiều từ vựng C1-C2 rất hay. Bạn nên kiểm chứng điều gì trước khi nộp cho giáo viên?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Kiểm tra xem các từ đó có đúng ngữ cảnh và đúng trình độ/phong cách người viết hay không", count: 9, percentage: 90 },
-          { label: "Không cần kiểm tra, từ vựng nâng cao luôn giúp điểm cao hơn", count: 1, percentage: 10 },
-          { label: "Chỉ cần kiểm tra lỗi chính tả", count: 0, percentage: 0 },
-          { label: "Đổi toàn bộ sang các từ cơ bản A1-A2", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 7: Bạn thấy AI đưa ra thông tin khẳng định về một sự kiện thời sự vừa xảy ra sáng nay. Khả năng cao là:",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Thông tin có thể bị sai lệch do mô hình AI cần thời gian xử lý hoặc tổng hợp từ nguồn tin đồn chưa kiểm chứng", count: 8, percentage: 80 },
-          { label: "AI luôn cập nhật chính xác theo từng phút từng giây", count: 2, percentage: 20 },
-          { label: "AI lấy thông tin trực tiếp từ vệ tinh nên luôn đúng", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 8: Để trở thành một \"Người dùng AI thông thái\" (AI-literate), học sinh trường THPT Trần Hưng Đạo cần rèn luyện kỹ năng nào? (Chọn các phương án đúng)",
-        responseCount: 10,
-        multiSelect: true,
-        options: [
-          { label: "Kỹ năng tra cứu nâng cao trên Google (Dùng cú pháp tìm kiếm, chọn nguồn uy tín)", count: 5, percentage: 50 },
-          { label: "Tư duy phản biện - Luôn đặt câu hỏi \"Liệu thông tin này có đúng không?\"", count: 4, percentage: 40 },
-          { label: "Kỹ năng đối chiếu đa nguồn", count: 1, percentage: 10 },
-          { label: "Kỹ năng viết câu lệnh rõ ràng, yêu cầu AI đưa ra lập luận và trích dẫn", count: 0, percentage: 0 }
-        ]
-      },
-      {
-        title: "Tình huống 9: Khi phát hiện AI trả lời sai một kiến thức trong Sách giáo khoa, hành động đúng đắn nhất là gì?",
-        responseCount: 10,
-        multiSelect: false,
-        options: [
-          { label: "Phản hồi lại cho AI biết điểm sai kèm bằng chứng để AI sửa đổi", count: 9, percentage: 90 },
-          { label: "Tiếp tục dùng và lờ đi sai sót đó", count: 1, percentage: 10 },
-          { label: "Xóa ứng dụng AI đó ngay lập tức", count: 0, percentage: 0 },
-          { label: "Đăng bài phốt AI lên mạng xã hội", count: 0, percentage: 0 }
-        ]
-      }
-    ]
-  };
+  "totalResponses": 245,
+  "updatedAt": "2026-10-31T09:00:00.000Z",
+  "questions": [
+    {
+      "title": "Khối lớp của bạn",
+      "tag": "PHẦN 1: THÔNG TIN CHUNG",
+      "responseCount": 245,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Khối 12",
+          "count": 123,
+          "percentage": 50.2
+        },
+        {
+          "label": "Khối 10",
+          "count": 99,
+          "percentage": 40.4
+        },
+        {
+          "label": "Khối 11",
+          "count": 23,
+          "percentage": 9.4
+        }
+      ]
+    },
+    {
+      "title": "Chi đoàn / Lớp tham gia khảo sát",
+      "tag": "PHẦN 1: THÔNG TIN CHUNG",
+      "responseCount": 245,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "10A10",
+          "count": 55,
+          "percentage": 22.4
+        },
+        {
+          "label": "10A4",
+          "count": 43,
+          "percentage": 17.6
+        },
+        {
+          "label": "12A5",
+          "count": 39,
+          "percentage": 15.9
+        },
+        {
+          "label": "12A7",
+          "count": 32,
+          "percentage": 13.1
+        },
+        {
+          "label": "12A8",
+          "count": 24,
+          "percentage": 9.8
+        },
+        {
+          "label": "12A6",
+          "count": 19,
+          "percentage": 7.8
+        },
+        {
+          "label": "11A6",
+          "count": 14,
+          "percentage": 5.7
+        },
+        {
+          "label": "12A4",
+          "count": 8,
+          "percentage": 3.3
+        },
+        {
+          "label": "11A7",
+          "count": 7,
+          "percentage": 2.9
+        },
+        {
+          "label": "12A1",
+          "count": 2,
+          "percentage": 0.8
+        },
+        {
+          "label": "11A10",
+          "count": 1,
+          "percentage": 0.4
+        }
+      ]
+    },
+    {
+      "title": "Bạn sử dụng AI trong những môn nào",
+      "tag": "PHẦN 1: THÔNG TIN CHUNG",
+      "responseCount": 245,
+      "multiSelect": true,
+      "options": [
+        {
+          "label": "TIẾNG ANH",
+          "count": 197,
+          "percentage": 80.4
+        },
+        {
+          "label": "NGỮ VĂN",
+          "count": 157,
+          "percentage": 64.1
+        },
+        {
+          "label": "TOÁN",
+          "count": 153,
+          "percentage": 62.4
+        },
+        {
+          "label": "LỊCH SỬ",
+          "count": 76,
+          "percentage": 31.0
+        },
+        {
+          "label": "ĐỊA LÍ",
+          "count": 75,
+          "percentage": 30.6
+        },
+        {
+          "label": "VẬT LÍ",
+          "count": 45,
+          "percentage": 18.4
+        },
+        {
+          "label": "HÓA HỌC",
+          "count": 28,
+          "percentage": 11.4
+        },
+        {
+          "label": "SINH HỌC",
+          "count": 25,
+          "percentage": 10.2
+        }
+      ]
+    },
+    {
+      "title": "Tần suất bạn sử dụng các công cụ AI (ChatGPT, Claude, Gemini, Copilot...) phục vụ học tập là bao nhiêu?",
+      "tag": "PHẦN 1: THÔNG TIN CHUNG",
+      "responseCount": 241,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "2-3 lần/tuần",
+          "count": 109,
+          "percentage": 45.2
+        },
+        {
+          "label": "Hằng ngày",
+          "count": 63,
+          "percentage": 26.1
+        },
+        {
+          "label": "Hầu như hằng ngày",
+          "count": 41,
+          "percentage": 17.0
+        },
+        {
+          "label": "Hiếm khi",
+          "count": 28,
+          "percentage": 11.6
+        }
+      ]
+    },
+    {
+      "title": "Bạn thường dùng AI vào mục đích nào ?",
+      "tag": "PHẦN 1: THÔNG TIN CHUNG",
+      "responseCount": 228,
+      "multiSelect": true,
+      "options": [
+        {
+          "label": "Học tập",
+          "count": 27,
+          "percentage": 11.8
+        },
+        {
+          "label": "học tập",
+          "count": 14,
+          "percentage": 6.1
+        },
+        {
+          "label": "Tìm kiếm thông tin, định nghĩa, kiến thức chung",
+          "count": 8,
+          "percentage": 3.5
+        },
+        {
+          "label": "Viết dàn ý / Đoạn văn / Bài văn mẫu (Văn học, Lịch sử...)",
+          "count": 7,
+          "percentage": 3.1
+        },
+        {
+          "label": "học",
+          "count": 7,
+          "percentage": 3.1
+        },
+        {
+          "label": "giải bài tập",
+          "count": 6,
+          "percentage": 2.6
+        },
+        {
+          "label": "Giải bài tập (Toán, Lí, Hóa, Anh...)",
+          "count": 5,
+          "percentage": 2.2
+        },
+        {
+          "label": "Dịch thuật",
+          "count": 4,
+          "percentage": 1.8
+        },
+        {
+          "label": "học ngoại ngữ",
+          "count": 4,
+          "percentage": 1.8
+        },
+        {
+          "label": "Làm bài tập",
+          "count": 4,
+          "percentage": 1.8
+        },
+        {
+          "label": "giải đáp thắc mắc",
+          "count": 3,
+          "percentage": 1.3
+        },
+        {
+          "label": "tham khảo",
+          "count": 3,
+          "percentage": 1.3
+        },
+        {
+          "label": "Tham khảo",
+          "count": 3,
+          "percentage": 1.3
+        },
+        {
+          "label": "Giải bài tập",
+          "count": 3,
+          "percentage": 1.3
+        },
+        {
+          "label": "làm bài tập",
+          "count": 2,
+          "percentage": 0.9
+        },
+        {
+          "label": "tra những bài tập không hiểu",
+          "count": 2,
+          "percentage": 0.9
+        },
+        {
+          "label": "tìm kiếm thông tin",
+          "count": 2,
+          "percentage": 0.9
+        },
+        {
+          "label": "tìm hiểu kiến thức",
+          "count": 2,
+          "percentage": 0.9
+        },
+        {
+          "label": "tra cứu tài liệu",
+          "count": 2,
+          "percentage": 0.9
+        },
+        {
+          "label": "tra cứu",
+          "count": 2,
+          "percentage": 0.9
+        }
+      ]
+    },
+    {
+      "title": "Theo bạn, hiện tượng AI tạo ra thông tin hư cấu/sai lệch nhưng trình bày rất thuyết phục được gọi là gì?",
+      "tag": "PHẦN 2: KIẾN THỨC NỀN TẢNG",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "AI ảo giác",
+          "count": 134,
+          "percentage": 55.8
+        },
+        {
+          "label": "AI suy thoái",
+          "count": 49,
+          "percentage": 20.4
+        },
+        {
+          "label": "AI quá tải",
+          "count": 35,
+          "percentage": 14.6
+        },
+        {
+          "label": "AI ảo giác (AI Hallucination)",
+          "count": 12,
+          "percentage": 5.0
+        },
+        {
+          "label": "AI suy thoái (AI Degradation)",
+          "count": 5,
+          "percentage": 2.1
+        },
+        {
+          "label": "AI quá tải (AI Overloading)",
+          "count": 2,
+          "percentage": 0.8
+        },
+        {
+          "label": "AI thiên vị (AI Bias)",
+          "count": 2,
+          "percentage": 0.8
+        }
+      ]
+    },
+    {
+      "title": "Khi sử dụng câu trả lời từ các công cụ AI phổ biến hiện nay, độ tin cậy bạn dành cho thông tin đó là bao nhiêu?",
+      "tag": "PHẦN 2: THÁI ĐỘ & ĐỘ TIN CẬY",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đặt nghi vấn (50%), luôn kiểm tra lại các chi tiết quan trọng",
+          "count": 128,
+          "percentage": 53.3
+        },
+        {
+          "label": "Tin tưởng phần lớn (70 - 90%), chỉ kiểm tra nếu thấy nghi ngờ",
+          "count": 68,
+          "percentage": 28.3
+        },
+        {
+          "label": "Xem là tham khảo sơ bộ, kiểm tra lại toàn bộ từ nguồn chính thống",
+          "count": 38,
+          "percentage": 15.8
+        },
+        {
+          "label": "Tin tưởng hoàn toàn (100%), không cần kiểm tra lại",
+          "count": 6,
+          "percentage": 2.5
+        }
+      ]
+    },
+    {
+      "title": "Dữ liệu huấn luyện của AI có thể bị lỗi thời hoặc mang tính thiên lệch (bias) tùy thuộc vào nguồn dữ liệu.",
+      "tag": "PHẦN 2: KIẾN THỨC NỀN TẢNG",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đúng",
+          "count": 134,
+          "percentage": 55.8
+        },
+        {
+          "label": "Không rõ",
+          "count": 92,
+          "percentage": 38.3
+        },
+        {
+          "label": "Sai",
+          "count": 14,
+          "percentage": 5.8
+        }
+      ]
+    },
+    {
+      "title": "Khi hỏi AI về các dữ liệu lịch sử hoặc số liệu thống kê cụ thể của Việt Nam, khả năng xuất hiện sai lệch là:",
+      "tag": "PHẦN 2: RỦI RO THÔNG TIN",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Khá cao, do nguồn dữ liệu tiếng Việt và dữ liệu địa phương có thể hạn chế",
+          "count": 191,
+          "percentage": 79.6
+        },
+        {
+          "label": "Rất thấp, vì AI thông minh hơn con người",
+          "count": 40,
+          "percentage": 16.7
+        },
+        {
+          "label": "Không bao giờ sai nếu dùng các bản AI trả phí",
+          "count": 9,
+          "percentage": 3.8
+        }
+      ]
+    },
+    {
+      "title": "Khi bạn nhận được một kết quả từ AI, bạn có thường xuyên đối chiếu với SGK hoặc các website chính thống không?",
+      "tag": "PHẦN 2: THÓI QUEN KIỂM CHỨNG",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Thường xuyên",
+          "count": 100,
+          "percentage": 41.7
+        },
+        {
+          "label": "Luôn luôn",
+          "count": 95,
+          "percentage": 39.6
+        },
+        {
+          "label": "Thỉnh thoảng",
+          "count": 42,
+          "percentage": 17.5
+        },
+        {
+          "label": "Không bao giờ",
+          "count": 3,
+          "percentage": 1.2
+        }
+      ]
+    },
+    {
+      "title": "Lý do chính khiến bạn KHÔNG kiểm chứng thông tin từ AI là gì?",
+      "tag": "PHẦN 2: RÀO CẢN HÀNH VI",
+      "responseCount": 229,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Thấy thông tin có vẻ hợp lý nên không nghĩ đến việc kiểm chứng",
+          "count": 129,
+          "percentage": 56.3
+        },
+        {
+          "label": "Lười / Tốn thời gian",
+          "count": 43,
+          "percentage": 18.8
+        },
+        {
+          "label": "Không biết cách kiểm chứng như thế nào",
+          "count": 40,
+          "percentage": 17.5
+        },
+        {
+          "label": "Tin tưởng tuyệt đối vào độ chính xác của AI",
+          "count": 17,
+          "percentage": 7.4
+        }
+      ]
+    },
+    {
+      "title": "Bạn đã bao giờ nộp bài tập hoặc chia sẻ thông tin lấy từ AI mà sau đó phát hiện ra thông tin đó bị sai chưa?",
+      "tag": "PHẦN 2: RỦI RO THỰC TẾ",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đã từng 1-2 lần",
+          "count": 126,
+          "percentage": 52.5
+        },
+        {
+          "label": "Đã từng nhiều lần",
+          "count": 57,
+          "percentage": 23.8
+        },
+        {
+          "label": "Chưa từng",
+          "count": 45,
+          "percentage": 18.8
+        },
+        {
+          "label": "Không chú ý nên không biết",
+          "count": 12,
+          "percentage": 5.0
+        }
+      ]
+    },
+    {
+      "title": "Yếu tố nào dưới đây của AI dễ khiến người dùng nhầm tưởng câu trả lời của nó luôn đúng?",
+      "tag": "PHẦN 2: TÂM LÝ NGƯỜI DÙNG",
+      "responseCount": 239,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Tất cả các ý trên",
+          "count": 143,
+          "percentage": 59.8
+        },
+        {
+          "label": "Giọng văn tự tin, logic, cấu trúc câu mạch lạc",
+          "count": 69,
+          "percentage": 28.9
+        },
+        {
+          "label": "Tốc độ phản hồi cực nhanh",
+          "count": 21,
+          "percentage": 8.8
+        },
+        {
+          "label": "Dùng nhiều từ ngữ chuyên ngành",
+          "count": 6,
+          "percentage": 2.5
+        }
+      ]
+    },
+    {
+      "title": "Bạn đã từng nghe đến khái niệm \"Fact-checking\" (Kiểm chứng thông tin) trước đây chưa?",
+      "tag": "PHẦN 2: KIẾN THỨC NỀN TẢNG",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đã nghe nhưng chưa hiểu rõ cách làm",
+          "count": 113,
+          "percentage": 47.1
+        },
+        {
+          "label": "Đã nghe và hiểu rõ",
+          "count": 70,
+          "percentage": 29.2
+        },
+        {
+          "label": "Chưa từng nghe",
+          "count": 57,
+          "percentage": 23.8
+        }
+      ]
+    },
+    {
+      "title": "Trường THPT Trần Hưng Đạo hoặc giáo viên của bạn đã từng hướng dẫn/cảnh báo về rủi ro sai sót khi dùng AI chưa?",
+      "tag": "PHẦN 2: GIÁO DỤC NHÀ TRƯỜNG",
+      "responseCount": 239,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đã được hướng dẫn cụ thể",
+          "count": 166,
+          "percentage": 69.5
+        },
+        {
+          "label": "Chỉ cảnh báo chung chung, chưa hướng dẫn kỹ năng",
+          "count": 67,
+          "percentage": 28.0
+        },
+        {
+          "label": "Chưa từng nghe đề cập đến",
+          "count": 6,
+          "percentage": 2.5
+        }
+      ]
+    },
+    {
+      "title": "Theo bạn, việc nâng cao năng lực kiểm chứng thông tin AI cho học sinh THPT là:",
+      "tag": "PHẦN 2: NHU CẦU ĐÀO TẠO",
+      "responseCount": 240,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Cực kỳ cấp thiết",
+          "count": 153,
+          "percentage": 63.7
+        },
+        {
+          "label": "Cần thiết nhưng không quá vội",
+          "count": 70,
+          "percentage": 29.2
+        },
+        {
+          "label": "Không cần thiết, tự học sinh sẽ biết",
+          "count": 17,
+          "percentage": 7.1
+        }
+      ]
+    },
+    {
+      "title": "Bạn thường dùng phương pháp nào sau đây để kiểm tra lại đáp án của AI? (Chọn các phương án bạn áp dụng)",
+      "tag": "PHẦN 2: KỸ NĂNG THỰC HIỆN",
+      "responseCount": 240,
+      "multiSelect": true,
+      "options": [
+        {
+          "label": "Mở Sách giáo khoa / Tài liệu học tập chính thức",
+          "count": 183,
+          "percentage": 76.2
+        },
+        {
+          "label": "Tra cứu Google Search với các từ khóa liên quan",
+          "count": 126,
+          "percentage": 52.5
+        },
+        {
+          "label": "Hỏi lại giáo viên hoặc bạn bè giỏi môn đó",
+          "count": 93,
+          "percentage": 38.8
+        },
+        {
+          "label": "Yêu cầu chính AI đó trích dẫn nguồn (URL / tên sách)",
+          "count": 62,
+          "percentage": 25.8
+        },
+        {
+          "label": "Không dùng phương pháp nào",
+          "count": 8,
+          "percentage": 3.3
+        }
+      ]
+    },
+    {
+      "title": "Đánh giá mức độ tự tin: [Tôi nhận biết được khi nào AI đưa ra trích dẫn/link web giả mạo.]",
+      "tag": "PHẦN 3: THANG ĐO KỸ NĂNG",
+      "responseCount": 238,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Phân vân",
+          "count": 99,
+          "percentage": 41.6
+        },
+        {
+          "label": "Đồng ý",
+          "count": 79,
+          "percentage": 33.2
+        },
+        {
+          "label": "Hoàn toàn không đồng ý",
+          "count": 24,
+          "percentage": 10.1
+        },
+        {
+          "label": "Không đồng ý",
+          "count": 20,
+          "percentage": 8.4
+        },
+        {
+          "label": "Hoàn toàn đồng ý",
+          "count": 16,
+          "percentage": 6.7
+        }
+      ]
+    },
+    {
+      "title": "Đánh giá mức độ tự tin: [Tôi biết cách đặt câu hỏi (Prompt) để ép AI đưa ra thông tin có kiểm chứng.]",
+      "tag": "PHẦN 3: THANG ĐO KỸ NĂNG",
+      "responseCount": 238,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đồng ý",
+          "count": 104,
+          "percentage": 43.7
+        },
+        {
+          "label": "Phân vân",
+          "count": 63,
+          "percentage": 26.5
+        },
+        {
+          "label": "Hoàn toàn đồng ý",
+          "count": 25,
+          "percentage": 10.5
+        },
+        {
+          "label": "Không đồng ý",
+          "count": 25,
+          "percentage": 10.5
+        },
+        {
+          "label": "Hoàn toàn không đồng ý",
+          "count": 21,
+          "percentage": 8.8
+        }
+      ]
+    },
+    {
+      "title": "Đánh giá mức độ tự tin: [Tôi có thói quen nghi ngờ tính chính xác của các con số thống kê do AI đưa ra.]",
+      "tag": "PHẦN 3: THANG ĐO KỸ NĂNG",
+      "responseCount": 235,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đồng ý",
+          "count": 117,
+          "percentage": 49.8
+        },
+        {
+          "label": "Phân vân",
+          "count": 60,
+          "percentage": 25.5
+        },
+        {
+          "label": "Hoàn toàn đồng ý",
+          "count": 27,
+          "percentage": 11.5
+        },
+        {
+          "label": "Hoàn toàn không đồng ý",
+          "count": 17,
+          "percentage": 7.2
+        },
+        {
+          "label": "Không đồng ý",
+          "count": 14,
+          "percentage": 6.0
+        }
+      ]
+    },
+    {
+      "title": "Đánh giá mức độ tự tin: [Tôi phân biệt được sự khác nhau giữa \"ý kiến/góc nhìn\" và \"sự thật khách quan\" trong văn bản AI viết.]",
+      "tag": "PHẦN 3: THANG ĐO KỸ NĂNG",
+      "responseCount": 236,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đồng ý",
+          "count": 103,
+          "percentage": 43.6
+        },
+        {
+          "label": "Phân vân",
+          "count": 83,
+          "percentage": 35.2
+        },
+        {
+          "label": "Hoàn toàn đồng ý",
+          "count": 18,
+          "percentage": 7.6
+        },
+        {
+          "label": "Không đồng ý",
+          "count": 16,
+          "percentage": 6.8
+        },
+        {
+          "label": "Hoàn toàn không đồng ý",
+          "count": 16,
+          "percentage": 6.8
+        }
+      ]
+    },
+    {
+      "title": "Đánh giá mức độ tự tin: [Tôi tự tin mình không bị phụ thuộc hoặc thụ động trước các câu trả lời của AI.]",
+      "tag": "PHẦN 3: THANG ĐO KỸ NĂNG",
+      "responseCount": 238,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Phân vân",
+          "count": 95,
+          "percentage": 39.9
+        },
+        {
+          "label": "Đồng ý",
+          "count": 82,
+          "percentage": 34.5
+        },
+        {
+          "label": "Không đồng ý",
+          "count": 23,
+          "percentage": 9.7
+        },
+        {
+          "label": "Hoàn toàn không đồng ý",
+          "count": 23,
+          "percentage": 9.7
+        },
+        {
+          "label": "Hoàn toàn đồng ý",
+          "count": 15,
+          "percentage": 6.3
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 1: Bạn nhờ AI tóm tắt tác phẩm văn học X. AI trả lời rất chi tiết kèm câu trích dẫn: \"Nói như nhà văn Nguyễn Tuân: 'Sông Hương là bản trường ca của rừng già'...\". Bước xử lý đầu tiên đúng nhất của bạn là gì?",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 239,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Kiểm tra lại SGK/văn bản gốc xem câu nói đó là của Nguyễn Tuân hay Hoàng Phủ Ngọc Tường",
+          "count": 190,
+          "percentage": 79.5
+        },
+        {
+          "label": "Hỏi AI tiếp: \"Bạn có chắc câu này của Nguyễn Tuân không?\"",
+          "count": 25,
+          "percentage": 10.5
+        },
+        {
+          "label": "Copied ngay vào bài làm vì AI đã ghi rõ tên tác giả Nguyễn Tuân",
+          "count": 15,
+          "percentage": 6.3
+        },
+        {
+          "label": "Bỏ câu đó đi cho an toàn",
+          "count": 8,
+          "percentage": 3.3
+        },
+        {
+          "label": "Lên mạng tra xem đúng tên tác giả không",
+          "count": 1,
+          "percentage": 0.4
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 2: Bạn giải một bài tập Toán hình học không gian. AI đưa ra đáp án là (a√3)/2 với lời giải 5 bước rất chặt chẽ. Bạn nên làm gì?",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 238,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Thay số thử lại hoặc tự giải độc lập trên nháp để so sánh kết quả",
+          "count": 204,
+          "percentage": 85.7
+        },
+        {
+          "label": "Tin tưởng đáp án vì lời giải trình bày rõ ràng, mạch lạc",
+          "count": 18,
+          "percentage": 7.6
+        },
+        {
+          "label": "Chép đáp án và lời giải vào vở bài tập ngay",
+          "count": 11,
+          "percentage": 4.6
+        },
+        {
+          "label": "Chụp màn hình gửi cho bạn nhờ chép hộ",
+          "count": 4,
+          "percentage": 1.7
+        },
+        {
+          "label": "hỏi bạn bè,thầy cô",
+          "count": 1,
+          "percentage": 0.4
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 3: Khi bạn yêu cầu AI cung cấp trích dẫn nguồn cho một số liệu lịch sử, AI đưa ra một đường link dạng https://lichsuvietnam.gov.vn/article/10293. Nhấp vào link thì bị lỗi 404 (Không tìm thấy trang). Nguyên nhân khả dĩ nhất là gì?",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 233,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "AI đã tự \"bịa\" ra một URL trông có vẻ giống thật",
+          "count": 143,
+          "percentage": 61.4
+        },
+        {
+          "label": "Trang web lịch sử bị sập đúng lúc bạn truy cập",
+          "count": 43,
+          "percentage": 18.5
+        },
+        {
+          "label": "Mạng internet của bạn bị lag",
+          "count": 28,
+          "percentage": 12.0
+        },
+        {
+          "label": "Trang web đã đổi địa chỉ domain",
+          "count": 19,
+          "percentage": 8.2
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 4: Bạn cần tìm tài liệu về tình hình kinh tế - xã hội tỉnh Quảng Bình năm 2025 để làm báo cáo Địa lý. AI đưa ra các con số chính xác đến từng chữ số thập phân. Bạn nên đánh giá thông tin này như thế nào?",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 237,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Nghi vấn và truy cập Cổng thông tin điện tử/Cục Thống kê tỉnh Quảng Bình để đối chiếu",
+          "count": 206,
+          "percentage": 86.9
+        },
+        {
+          "label": "Hoàn toàn tin tưởng vì số liệu chi tiết chứng tỏ AI có dữ liệu chuẩn",
+          "count": 13,
+          "percentage": 5.5
+        },
+        {
+          "label": "Tin tưởng nếu dùng phiên bản ChatGPT Plus hoặc Gemini Advanced",
+          "count": 12,
+          "percentage": 5.1
+        },
+        {
+          "label": "Dùng ngay không cần suy nghĩ",
+          "count": 5,
+          "percentage": 2.1
+        },
+        {
+          "label": "\"con số chính xác đến tường chữ số thập phân \" đây chứng tỏ là nó nói đúng rồi với gemini nó đọc web rồi mới trả lời ta mà có gắn link dưới câu hỏi rồi",
+          "count": 1,
+          "percentage": 0.4
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 5: Kỹ thuật nào sau đây giúp bạn phát hiện ra \"bẫy\" AI ảo giác khi hỏi về một chủ đề phức tạp?",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 238,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Đặt câu hỏi bẫy về một nhân vật/sự kiện không có thật (VD: \"Hãy phân tích tác phẩm 'Mùa thu vàng' của Nam Cao\")",
+          "count": 94,
+          "percentage": 39.5
+        },
+        {
+          "label": "Tất cả các cách trên",
+          "count": 85,
+          "percentage": 35.7
+        },
+        {
+          "label": "Hỏi lại câu hỏi đó 3 lần ở 3 phiên chat khác nhau xem câu trả lời có nhất quán không",
+          "count": 45,
+          "percentage": 18.9
+        },
+        {
+          "label": "Yêu cầu AI chỉ ra các điểm yếu hoặc khả năng sai lệch trong chính câu trả lời của nó",
+          "count": 14,
+          "percentage": 5.9
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 6: Bạn viết một bài luận Tiếng Anh bằng AI. AI dùng nhiều từ vựng C1-C2 rất hay. Bạn nên kiểm chứng điều gì trước khi nộp cho giáo viên?",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 234,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Kiểm tra xem các từ đó có đúng ngữ cảnh và đúng trình độ/phong cách người viết hay không",
+          "count": 203,
+          "percentage": 86.8
+        },
+        {
+          "label": "Đổi toàn bộ sang các từ cơ bản A1-A2",
+          "count": 14,
+          "percentage": 6.0
+        },
+        {
+          "label": "Chỉ cần kiểm tra lỗi chính tả",
+          "count": 10,
+          "percentage": 4.3
+        },
+        {
+          "label": "Không cần kiểm tra, từ vựng nâng cao luôn giúp điểm cao hơn",
+          "count": 7,
+          "percentage": 3.0
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 7: Bạn thấy AI đưa ra thông tin khẳng định về một sự kiện thời sự vừa xảy ra sáng nay. Khả năng cao là:",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 239,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Thông tin có thể bị sai lệch do mô hình AI cần thời gian xử lý hoặc tổng hợp từ nguồn tin đồn chưa kiểm chứng",
+          "count": 200,
+          "percentage": 83.7
+        },
+        {
+          "label": "AI lấy thông tin trực tiếp từ vệ tinh nên luôn đúng",
+          "count": 21,
+          "percentage": 8.8
+        },
+        {
+          "label": "AI luôn cập nhật chính xác theo từng phút từng giây",
+          "count": 17,
+          "percentage": 7.1
+        },
+        {
+          "label": "Cập nhật thông tin nhanh",
+          "count": 1,
+          "percentage": 0.4
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 8: Để trở thành một \"Người dùng AI thông thái\" (AI-literate), học sinh trường THPT Trần Hưng Đạo cần rèn luyện kỹ năng nào? (Chọn các phương án đúng)",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 238,
+      "multiSelect": true,
+      "options": [
+        {
+          "label": "Tư duy phản biện - Luôn đặt câu hỏi \"Liệu thông tin này có đúng không?\"",
+          "count": 106,
+          "percentage": 44.5
+        },
+        {
+          "label": "Kỹ năng tra cứu nâng cao trên Google (Dùng cú pháp tìm kiếm, chọn nguồn uy tín)",
+          "count": 76,
+          "percentage": 31.9
+        },
+        {
+          "label": "Kỹ năng đối chiếu đa nguồn",
+          "count": 31,
+          "percentage": 13.0
+        },
+        {
+          "label": "Kỹ năng viết câu lệnh rõ ràng",
+          "count": 18,
+          "percentage": 7.6
+        },
+        {
+          "label": "yêu cầu AI đưa ra lập luận và trích dẫn",
+          "count": 18,
+          "percentage": 7.6
+        },
+        {
+          "label": "Tất cả đáp án trên",
+          "count": 2,
+          "percentage": 0.8
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 9: Khi phát hiện AI trả lời sai một kiến thức trong Sách giáo khoa, hành động đúng đắn nhất là gì?",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 237,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Phản hồi lại cho AI biết điểm sai kèm bằng chứng để AI sửa đổi",
+          "count": 213,
+          "percentage": 89.9
+        },
+        {
+          "label": "Đăng bài phốt AI lên mạng xã hội",
+          "count": 9,
+          "percentage": 3.8
+        },
+        {
+          "label": "Tiếp tục dùng và lờ đi sai sót đó",
+          "count": 8,
+          "percentage": 3.4
+        },
+        {
+          "label": "Xóa ứng dụng AI đó ngay lập tức",
+          "count": 7,
+          "percentage": 3.0
+        }
+      ]
+    },
+    {
+      "title": "Tình huống 10: Giải pháp nâng cao năng lực kiểm chứng AI cho học sinh THPT",
+      "tag": "PHẦN 4: TÌNH HUỐNG THỰC HÀNH",
+      "responseCount": 164,
+      "multiSelect": false,
+      "options": [
+        {
+          "label": "Các ý kiến đóng góp xây dựng giải pháp thiết thực khác",
+          "count": 76,
+          "percentage": 46.3
+        },
+        {
+          "label": "Rèn luyện thói quen tự đối chiếu thông tin từ SGK & nguồn chính thống",
+          "count": 52,
+          "percentage": 31.7
+        },
+        {
+          "label": "Tổ chức chuyên đề / Hoạt động ngoại khóa / Tuyên truyền về AI an toàn",
+          "count": 23,
+          "percentage": 14.0
+        },
+        {
+          "label": "Không lạm dụng, xây dựng tư duy phản biện độc lập trước khi tra cứu AI",
+          "count": 8,
+          "percentage": 4.9
+        },
+        {
+          "label": "Thầy cô giáo định hướng, hướng dẫn phương pháp kiểm chứng trong từng môn học",
+          "count": 5,
+          "percentage": 3.0
+        }
+      ]
+    }
+  ]
+};
 
   function setStatus(message, isError) {
     if (!status) return;
@@ -699,6 +1433,154 @@
     element.textContent = text;
     parent.append(element);
     return element;
+  }
+
+
+  // ==========================================================================
+  // 2.5. XỬ LÝ DỮ LIỆU BẢNG GOOGLE SHEETS GViz API TRỰC TIẾP
+  // ==========================================================================
+  function processGvizTable(table) {
+    if (!table || !table.cols || !table.rows) {
+      throw new Error("Không nhận được dữ liệu bảng hợp lệ từ Google Sheets.");
+    }
+    const cols = (table.cols || []).map(c => String(c.label || c.id || "").trim());
+    const rows = (table.rows || []).map(r => (r.c || []).map(cell => cell ? (cell.f !== undefined && cell.f !== null ? String(cell.f) : (cell.v !== undefined && cell.v !== null ? String(cell.v) : "")) : ""));
+    const totalResponses = rows.length;
+    if (!totalResponses) {
+      return { totalResponses: 0, updatedAt: new Date().toISOString(), questions: [] };
+    }
+
+    let gradeCol = cols.findIndex(c => /khối lớp/i.test(c));
+    let classCol = cols.findIndex(c => /chi đoàn|thuộc.*lớp|lớp nào|chi đoàn \(lớp\)/i.test(c));
+
+    function normalizeClass(raw) {
+      let c = String(raw || "").toUpperCase().trim().replace(/LỚP/g, "").replace(/CHI ĐOÀN/g, "").replace(/TRƯỜNG THPT TRẦN HƯNG ĐẠO/g, "").replace(/@/g, "").trim();
+      const m = c.match(/([10-12]+A\d+|126)/);
+      if (m) {
+        let v = m[1];
+        if (v === "126") v = "12A6";
+        return v;
+      }
+      if (c === "A7") return "12A7";
+      return c || "12A5";
+    }
+
+    function splitMulti(val) {
+      const parts = String(val || "").split(/,\s*(?![^\(]*\))/g);
+      const clean = [];
+      for (let p of parts) {
+        p = p.trim();
+        if (!p || p === "định nghĩa" || p === "kiến thức chung") continue;
+        if (p === "Tìm kiếm thông tin") {
+          clean.push("Tìm kiếm thông tin, định nghĩa, kiến thức chung");
+          continue;
+        }
+        clean.push(p);
+      }
+      return clean;
+    }
+
+    const classCounter = Object.create(null);
+    const gradeCounter = { "Khối 12": 0, "Khối 10": 0, "Khối 11": 0 };
+
+    rows.forEach(r => {
+      let cl = normalizeClass(classCol >= 0 ? r[classCol] : "");
+      if (cl && cl !== "KHONG" && cl !== "KHÁC") {
+        classCounter[cl] = (classCounter[cl] || 0) + 1;
+      }
+      let gr = gradeCol >= 0 ? String(r[gradeCol] || "").trim() : "";
+      if (!gr) {
+        if (cl.startsWith("12")) gr = "Khối 12";
+        else if (cl.startsWith("11")) gr = "Khối 11";
+        else if (cl.startsWith("10")) gr = "Khối 10";
+        else gr = "Khối 12";
+      }
+      if (gradeCounter[gr] !== undefined) gradeCounter[gr]++;
+      else gradeCounter["Khối 12"]++;
+    });
+
+    const finalClassOptions = Object.keys(classCounter)
+      .map(cl => ({
+        label: cl,
+        count: classCounter[cl],
+        percentage: totalResponses ? Math.round((classCounter[cl] / totalResponses) * 1000) / 10 : 0
+      }))
+      .sort((a, b) => b.count - a.count);
+
+    const finalGradeOptions = ["Khối 12", "Khối 10", "Khối 11"].map(g => ({
+      label: g,
+      count: gradeCounter[g] || 0,
+      percentage: totalResponses ? Math.round(((gradeCounter[g] || 0) / totalResponses) * 1000) / 10 : 0
+    }));
+
+    const questions = [];
+    questions.push({
+      key: "khoi_lop",
+      title: "Khối lớp của bạn",
+      tag: "PHẦN 1: THÔNG TIN CHUNG",
+      responseCount: totalResponses,
+      multiSelect: false,
+      options: finalGradeOptions
+    });
+
+    questions.push({
+      key: "chi_doan_lop",
+      title: "Chi đoàn / Lớp tham gia khảo sát",
+      tag: "PHẦN 1: THÔNG TIN CHUNG",
+      responseCount: totalResponses,
+      multiSelect: false,
+      options: finalClassOptions
+    });
+
+    cols.forEach((header, colIdx) => {
+      if (!header || colIdx === 0 || colIdx === 1 || colIdx === gradeCol || colIdx === classCol || /cột\s*\d+/i.test(header)) return;
+      
+      const canon = CANONICAL_QUESTIONS.find(cq => cq.key !== "khoi_lop" && cq.key !== "chi_doan_lop" && cq.match && cq.match.test(header));
+      const title = canon ? canon.title : header;
+      const tag = canon ? canon.tag : "KHẢO SÁT CHUNG";
+      const isMulti = canon ? Boolean(canon.multiSelect) : /chọn nhiều|các phương án|môn nào|mục đích nào/i.test(header);
+
+      const counts = Object.create(null);
+      let validCount = 0;
+
+      rows.forEach(r => {
+        const val = String(r[colIdx] || "").trim();
+        if (!val) return;
+        validCount++;
+        if (isMulti) {
+          splitMulti(val).forEach(opt => {
+            counts[opt] = (counts[opt] || 0) + 1;
+          });
+        } else {
+          counts[val] = (counts[val] || 0) + 1;
+        }
+      });
+
+      if (validCount === 0) return;
+
+      const options = Object.keys(counts)
+        .map(lbl => ({
+          label: lbl,
+          count: counts[lbl],
+          percentage: validCount ? Math.round((counts[lbl] / validCount) * 1000) / 10 : 0
+        }))
+        .filter(o => o.count >= 2 || Object.keys(counts).length <= 5)
+        .sort((a, b) => b.count - a.count);
+
+      questions.push({
+        title,
+        tag,
+        responseCount: validCount,
+        multiSelect: isMulti,
+        options
+      });
+    });
+
+    return {
+      totalResponses,
+      updatedAt: new Date().toISOString(),
+      questions
+    };
   }
 
   // ==========================================================================
@@ -1074,9 +1956,9 @@
     const timeout = window.setTimeout(() => {
       finish();
       if (!liveLoaded) {
-        setStatus("Đang hiển thị dữ liệu khảo sát. Đang kết nối làm mới từ Google Sheets...", false);
+        setStatus("Đang hiển thị 245 phản hồi khảo sát thực tế. Đang kết nối làm mới từ Google Sheets...", false);
       } else {
-        setStatus("Hết thời gian chờ Apps Script. Đang tự thử lại sau 30 giây...", false);
+        setStatus("Hết thời gian chờ kết nối. Đang tự thử lại sau 30 giây...", false);
       }
     }, 15000);
 
@@ -1087,13 +1969,19 @@
       requestPending = false;
     }
 
-    window[callbackName] = (summary) => {
+    window[callbackName] = (res) => {
       finish();
       try {
+        let summary = res;
+        // Nếu kết quả trả về từ Google Sheets GViz API
+        if (res && res.status === "ok" && res.table) {
+          summary = processGvizTable(res.table);
+        }
         renderSummary(summary, false);
       } catch (error) {
+        console.warn("Render summary error:", error);
         if (!liveLoaded) {
-          setStatus("Đang hiển thị dữ liệu khảo sát. Đang kết nối làm mới từ Google Sheets...", false);
+          setStatus("Đang hiển thị 245 phản hồi khảo sát thực tế. Đang đồng bộ từ Google Sheets...", false);
         } else {
           setStatus(`Không thể hiển thị thống kê: ${error.message}`, true);
         }
@@ -1103,17 +1991,27 @@
     script.onerror = () => {
       finish();
       if (!liveLoaded) {
-        setStatus("Đang hiển thị dữ liệu khảo sát. Đang kết nối làm mới từ Google Sheets...", false);
+        setStatus("Đang hiển thị 245 phản hồi khảo sát thực tế. Đang kết nối làm mới từ Google Sheets...", false);
       } else {
-        setStatus("Không tải được Apps Script. Đang tự thử lại sau 30 giây...", false);
+        setStatus("Không tải được dữ liệu từ Google. Đang tự thử lại sau 30 giây...", false);
       }
     };
 
-    const requestUrl = new URL(endpoint);
-    requestUrl.searchParams.set("callback", callbackName);
-    requestUrl.searchParams.set("_", String(Date.now()));
-    script.src = requestUrl.href;
-    document.head.append(script);
+    try {
+      const requestUrl = new URL(endpoint);
+      if (requestUrl.hostname.includes("docs.google.com")) {
+        requestUrl.searchParams.set("tqx", `responseHandler:${callbackName}`);
+        requestUrl.searchParams.set("gid", (window.AICheckFormSummaryConfig && window.AICheckFormSummaryConfig.gid) || "663335255");
+      } else {
+        requestUrl.searchParams.set("callback", callbackName);
+      }
+      requestUrl.searchParams.set("_", String(Date.now()));
+      script.src = requestUrl.href;
+      document.head.append(script);
+    } catch (e) {
+      finish();
+      console.warn("URL parse error:", e);
+    }
   }
 
   // ==========================================================================
@@ -1133,8 +2031,8 @@
 
   try {
     const url = new URL(endpoint);
-    if (url.protocol !== "https:" || url.hostname !== "script.google.com") {
-      throw new Error("URL phải là địa chỉ Web App HTTPS từ script.google.com.");
+    if (url.protocol !== "https:" || (!url.hostname.includes("google.com") && !url.hostname.includes("script.google.com"))) {
+      throw new Error("URL phải là địa chỉ HTTPS từ Google Sheets hoặc Google Apps Script.");
     }
     loadSummary();
     window.setInterval(loadSummary, refreshInterval);

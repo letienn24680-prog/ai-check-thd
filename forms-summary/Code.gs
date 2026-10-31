@@ -4,8 +4,8 @@
 // 2. Nhìn lên thanh địa chỉ URL: https://docs.google.com/spreadsheets/d/[ID_NẰM_Ở_ĐÂY]/edit
 // 3. Sao chép đoạn mã ID đó và dán vào SPREADSHEET_ID dưới đây:
 // ============================================================================
-const SPREADSHEET_ID = "1Q-ny5KLtcqEk6hxkoryK1Bd-6f4DGtPVU_Swwrky538";
-const RESPONSE_SHEET_NAME = "Câu trả lời biểu mẫu 1";
+const SPREADSHEET_ID = "1Q-ny5KLtcqEk6hxkoryK1Bd-6F4DGtPVU_Swwrky538";
+const RESPONSE_SHEET_NAME = ""; // Tự động tìm sheet câu trả lời biểu mẫu
 
 // Mẫu lọc các cột nhạy cảm / định danh cá nhân / cột hệ thống
 const EXCLUDED_HEADER_PATTERN =
