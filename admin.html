@@ -778,7 +778,7 @@
       <div class="admin-nav-actions">
         <!-- BỘ ĐIỀU CHỈNH CỠ CHỮ TO / NHỎ TIỆN DỤNG -->
         <div class="font-zoom-ctrl" title="Điều chỉnh cỡ chữ hiển thị để không mỏi mắt">
-          <span style="font-size:12.5px;color:#475569;font-weight:800;margin-right:2px">👁️ Cỡ chữ:</span>
+          <span style="font-size:12.5px;color:#475569;font-weight:800;margin-right:2px">Cỡ chữ:</span>
           <button type="button" class="btn-zoom" onclick="adjustAdminZoom(-1)" title="Thu nhỏ cỡ chữ">A-</button>
           <span id="zoomLevelDisplay" style="font-weight:800;font-size:13.5px;color:var(--forest);min-width:44px;text-align:center">115%</span>
           <button type="button" class="btn-zoom" onclick="adjustAdminZoom(1)" title="Phóng to cỡ chữ">A+</button>
@@ -786,7 +786,7 @@
         </div>
 
         <button type="button" class="button" onclick="scrollToUnlockSection()" style="background:#fee2e2;border:1px solid #fecaca;color:#991b1b;font-weight:800;font-size:12.5px;display:inline-flex;align-items:center;gap:6px;cursor:pointer" title="Xem danh sách tài khoản bị khóa chờ duyệt">
-          <span>🛡️ Duyệt mở khóa (<strong id="navUnlockBadge">0</strong>)</span>
+          <span>Duyệt mở khóa (<strong id="navUnlockBadge">0</strong>)</span>
         </button>
         <a href="index.html" class="button button-outline" style="font-size:12.5px">← Về Trang chủ</a>
         <button class="button button-dark" id="btnAdminLogout" style="font-size:12.5px">Đăng xuất</button>
@@ -794,7 +794,7 @@
     </header>
 
     <div id="authGateNotice" class="auth-banner" style="display:none">
-      <strong>⚠️ Xác thực Quản trị viên (Admin & Giáo viên):</strong>
+      <strong>Xác thực Quản trị viên (Admin & Giáo viên):</strong>
       <p style="margin:6px 0 10px">Khu vực quản trị chỉ dành cho Ban nghiên cứu đề tài và Giáo viên hướng dẫn. Vui lòng nhập mã PIN bảo mật hoặc đăng nhập tài khoản có thẩm quyền.</p>
       <div class="admin-pass-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <input type="password" id="adminPinInput" placeholder="Nhập mã PIN bảo mật..." class="filter-input" style="width:200px">
@@ -822,7 +822,7 @@
         <div class="stat-box"><span>Tỷ lệ Khá/Giỏi (≥51đ)</span><strong id="statGoodRate">—</strong></div>
         <div class="stat-box"><span>Yêu cầu hỗ trợ chung</span><strong id="statPendingSupport">—</strong></div>
         <div class="stat-box" style="border:1.5px solid #fecaca;background:#fff5f5;cursor:pointer" onclick="scrollToUnlockSection()" title="Bấm để cuộn đến phần Duyệt mở khóa tài khoản">
-          <span style="color:#991b1b;font-weight:700">🚨 Chờ duyệt mở khóa</span>
+          <span style="color:#991b1b;font-weight:700">Chờ duyệt mở khóa</span>
           <strong id="statPendingUnlockCount" style="color:#b91c1c">0</strong>
         </div>
       </div>
@@ -833,9 +833,7 @@
     <section class="card" id="sectionLiveActivitySessions" style="border:2px solid #10b981;background:linear-gradient(180deg,#fcfdfc 0%,#ffffff 100%);box-shadow:0 6px 24px rgba(16,185,129,0.08);margin-bottom:24px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:44px;height:44px;border-radius:10px;background:#ecfdf5;border:1.5px solid #a7f3d0;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">
-            🔴
-          </div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#10b981;margin-right:4px"></div>
           <div>
             <h2 class="panel-title" style="margin:0;color:#065f46;font-size:18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               NHẬT KÝ GIÁM SÁT
@@ -845,7 +843,7 @@
         </div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <button type="button" class="button button-lime" onclick="exportLiveSessionsExcel()" style="font-size:11.5px;font-weight:800;padding:8px 16px;display:inline-flex;align-items:center;gap:6px">
-            📥 Xuất Báo cáo Minh chứng Giám khảo (Excel/CSV) ↓
+            Xuất Báo cáo Minh chứng (Excel/CSV) ↓
           </button>
           <button type="button" class="btn-small" onclick="loadLiveActivitySessions()" style="font-weight:700">↻ Làm mới</button>
           <button type="button" class="btn-small" id="btnClearSessions" onclick="clearLiveSessions()" style="color:#b91c1c;transition:all .2s ease" title="Xóa lịch sử phiên">Dọn dẹp</button>
@@ -855,7 +853,7 @@
       <!-- 4 THẺ THỐNG KÊ MINH CHỨNG PHỤC VỤ THUYẾT TRÌNH ĐỀ TÀI -->
       <div class="stat-grid" style="margin-top:0;margin-bottom:14px">
         <div class="stat-box" style="border-color:#bbf7d0;background:#f0fdf4">
-          <span style="color:#166534">📋 TỔNG LƯỢT VÀO LÀM</span>
+          <span style="color:#166534">TỔNG LƯỢT VÀO LÀM</span>
           <strong id="sessionStatTotal" style="color:#15803d">0</strong>
         </div>
         <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
@@ -863,11 +861,11 @@
           <strong id="sessionStatInProgress" style="color:#c2410c">0</strong>
         </div>
         <div class="stat-box" style="border-color:#a7f3d0;background:#ecfdf5">
-          <span style="color:#047857">✅ ĐÃ HOÀN THÀNH NỘP BÀI</span>
+          <span style="color:#047857">ĐÃ HOÀN THÀNH NỘP BÀI</span>
           <strong id="sessionStatCompleted" style="color:#059669">0</strong>
         </div>
         <div class="stat-box" style="border-color:#bae6fd;background:#f0f9ff">
-          <span style="color:#0369a1">🎯 ĐIỂM TRUNG BÌNH THỰC NGHIỆM</span>
+          <span style="color:#0369a1">ĐIỂM TRUNG BÌNH THỰC NGHIỆM</span>
           <strong id="sessionStatAvgScore" style="color:#0284c7">—</strong>
         </div>
       </div>
@@ -877,19 +875,19 @@
         <div class="filter-group">
           <select id="filterSessionActivity" class="filter-input" onchange="renderLiveActivityTable()">
             <option value="all">Tất cả nội dung làm bài</option>
-            <option value="practice">⚡ Thực hành tình huống</option>
-            <option value="assessment">🎯 Đánh giá năng lực (Cả 2 đợt)</option>
-            <option value="assessment_pre">🎯 Đánh giá: Đợt 01 (Trước can thiệp)</option>
-            <option value="assessment_post">🎯 Đánh giá: Đợt 02 (Sau can thiệp)</option>
-            <option value="exam">📝 Phòng thi trực tuyến</option>
-            <option value="rubric">📐 Thử thách Rubric</option>
+            <option value="practice">Thực hành tình huống</option>
+            <option value="assessment">Đánh giá năng lực (Cả 2 đợt)</option>
+            <option value="assessment_pre">Đánh giá: Đợt 01 (Trước can thiệp)</option>
+            <option value="assessment_post">Đánh giá: Đợt 02 (Sau can thiệp)</option>
+            <option value="exam">Phòng thi trực tuyến</option>
+            <option value="rubric">Thử thách Rubric</option>
           </select>
           <select id="filterSessionStatus" class="filter-input" onchange="renderLiveActivityTable()">
             <option value="all">Tất cả trạng thái</option>
-            <option value="completed">✅ Đã hoàn thành (Có kết quả)</option>
+            <option value="completed">Đã hoàn thành (Có kết quả)</option>
             <option value="in_progress">⏳ Đang làm bài trực tiếp</option>
           </select>
-          <input type="text" id="searchSessionStudent" class="filter-input" placeholder="🔍 Tìm theo học sinh, lớp, email..." oninput="renderLiveActivityTable()" style="width:230px">
+          <input type="text" id="searchSessionStudent" class="filter-input" placeholder="Tìm theo học sinh, lớp, email..." oninput="renderLiveActivityTable()" style="width:230px">
         </div>
         <div style="font-size:11px;color:#64748b;display:flex;align-items:center;gap:6px">
           <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981"></span>
@@ -898,7 +896,7 @@
       </div>
 
       <!-- BẢNG DANH SÁCH PHIÊN CHI TIẾT -->
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thời điểm bắt đầu, thời gian nộp bài và kết quả chi tiết</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thời điểm bắt đầu, thời gian nộp bài và kết quả chi tiết</p>
       <div class="table-responsive" id="liveActivitySessionsContainer">
         <p class="panel-copy" style="text-align:center;padding:16px">Đang tải nhật ký thời gian thực...</p>
       </div>
@@ -934,18 +932,18 @@
             ⏳ Chờ duyệt mở khóa <span class="tab-count-badge" id="unlockTabPendingCount">0</span>
           </button>
           <button type="button" class="score-act-tab" id="unlockTabResolved" onclick="filterUnlockRequests('resolved')">
-            ✅ Đã duyệt & Cấp mã <span class="tab-count-badge" id="unlockTabResolvedCount">0</span>
+            Đã duyệt & Cấp mã <span class="tab-count-badge" id="unlockTabResolvedCount">0</span>
           </button>
           <button type="button" class="score-act-tab" id="unlockTabAll" onclick="filterUnlockRequests('all')">
-            📋 Tất cả <span class="tab-count-badge" id="unlockTabAllCount">0</span>
+            Tất cả <span class="tab-count-badge" id="unlockTabAllCount">0</span>
           </button>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <input type="text" id="unlockSearchInput" oninput="handleUnlockSearch()" placeholder="🔍 Tìm kiếm email, họ tên, lớp..." class="filter-input" style="width:230px;height:34px;font-size:12px">
+          <input type="text" id="unlockSearchInput" oninput="handleUnlockSearch()" placeholder="Tìm kiếm email, họ tên, lớp..." class="filter-input" style="width:230px;height:34px;font-size:12px">
         </div>
       </div>
 
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ các cột và nút bấm duyệt gửi mã</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ các cột và nút bấm duyệt gửi mã</p>
       <div class="table-responsive" id="unlockApprovalContainer">
         <p class="panel-copy" style="text-align:center;padding:16px">Đang tải danh sách tài khoản chờ duyệt mở khóa...</p>
       </div>
@@ -960,7 +958,7 @@
         </div>
         <button class="btn-small" onclick="loadUsersList()">↻ Tải lại danh sách</button>
       </div>
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive">
         <table>
           <thead>
@@ -989,11 +987,11 @@
           <p class="panel-copy" style="margin:4px 0 0">Các yêu cầu gửi từ học sinh trong quá trình tham gia trạm.</p>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
-          <button type="button" class="btn-small" onclick="openManualResetCodeModal()" style="font-weight:700;background:#0284c7;color:#fff;border:none">🔑 Cấp mã đổi MK thủ công</button>
+          <button type="button" class="btn-small" onclick="openManualResetCodeModal()" style="font-weight:700;background:#0284c7;color:#fff;border:none">Cấp mã đổi MK thủ công</button>
           <span id="supportSourceBadge" class="tag">Đang tải...</span>
         </div>
       </div>
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="supportContainer">
         <p class="panel-copy">Đang tải danh sách yêu cầu...</p>
       </div>
@@ -1003,7 +1001,7 @@
     <section class="card" id="adminCodesSection">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
         <div>
-          <h2 class="panel-title" style="margin:0">🔑 Cấp mã Admin & Quản lý Quyền truy cập</h2>
+          <h2 class="panel-title" style="margin:0">Cấp mã Admin & Quản lý Quyền truy cập</h2>
           <p class="panel-copy" style="margin:4px 0 0">
             Cấp mã PIN / mật mã truy cập riêng cho Giáo viên hướng dẫn hoặc Quản trị viên để mở khóa bảng điều khiển Admin.
           </p>
@@ -1014,18 +1012,18 @@
       <!-- FORM CẤP MÃ MỚI & GỬI THÔNG BÁO TỚI TÀI KHOẢN -->
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
         <div style="font-weight:800;font-size:13px;color:var(--forest);margin-bottom:12px;display:flex;align-items:center;gap:6px">
-          <span>➕</span> Cấp mã Admin & Tự động gửi thông báo đến tài khoản người nhận:
+          Cấp mã Admin & Gửi thông báo đến tài khoản:
         </div>
         
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;margin-bottom:12px">
           <!-- BƯỚC 1: TẠO MÃ ADMIN -->
           <div>
             <label style="display:block;font-size:11px;font-weight:700;color:var(--forest);margin-bottom:4px">
-              1️⃣ TẠO MÃ ADMIN (PIN):
+              1. TẠO MÃ ADMIN (PIN):
             </label>
             <div style="display:flex;gap:6px">
               <input type="text" id="newAdminCodeInput" class="filter-input" placeholder="Nhập mã PIN (VD: GV2026, THD88...)" style="font-weight:800;letter-spacing:1px;flex:1">
-              <button type="button" class="btn-small" onclick="generateRandomAdminCode()" title="Tự động sinh mã ngẫu nhiên">🎲 Sinh mã</button>
+              <button type="button" class="btn-small" onclick="generateRandomAdminCode()" title="Tự động sinh mã ngẫu nhiên">Sinh mã</button>
             </div>
             <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Mã bảo mật dùng để mở khóa quyền Admin</small>
           </div>
@@ -1033,7 +1031,7 @@
           <!-- BƯỚC 2: GHI CHÚ / VAI TRÒ -->
           <div>
             <label style="display:block;font-size:11px;font-weight:700;color:var(--forest);margin-bottom:4px">
-              2️⃣ GHI CHÚ / VAI TRÒ NGƯỜI NHẬN:
+              2. GHI CHÚ / VAI TRÒ NGƯỜI NHẬN:
             </label>
             <input type="text" id="newAdminCodeLabel" class="filter-input" placeholder="Ví dụ: Thầy Nam - GV Hướng dẫn KHKT" style="width:100%">
             <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Lý do cấp, chức vụ hoặc đơn vị công tác</small>
@@ -1042,7 +1040,7 @@
           <!-- BƯỚC 3: GMAIL / TÀI KHOẢN NGƯỜI NHẬN -->
           <div>
             <label style="display:block;font-size:11px;font-weight:700;color:var(--forest);margin-bottom:4px">
-              3️⃣ GMAIL / TÀI KHOẢN NHẬN MÃ (TRÊN WEB):
+              3. GMAIL / TÀI KHOẢN NHẬN MÃ (TRÊN WEB):
             </label>
             <input type="text" id="newAdminCodeRecipient" list="adminRecipientDatalist" class="filter-input" placeholder="Chọn hoặc nhập Gmail (VD: vuongquan24680@gmail.com, giaovien1)..." style="width:100%">
             <datalist id="adminRecipientDatalist">
@@ -1050,26 +1048,26 @@
               <option value="adminthd">Tài khoản Quản trị THĐ (adminthd)</option>
               <option value="all">Tất cả tài khoản hệ thống (all)</option>
             </datalist>
-            <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Hệ thống sẽ gửi thông báo kèm liên kết vào chuông 🔔 của Gmail này</small>
+            <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Hệ thống sẽ gửi thông báo kèm liên kết vào hòm thư của Gmail này</small>
           </div>
         </div>
 
         <!-- DANH SÁCH GMAIL CHỌN NHANH (QUICK CHIPS - CHỈ HIỆN GMAIL) -->
         <div style="margin-bottom:12px;background:#ffffff;border:1px dashed #cbd5e1;border-radius:6px;padding:8px 10px;font-size:11px">
-          <span style="font-weight:700;color:var(--forest);margin-right:6px">👥 Chọn nhanh Gmail tài khoản trên web:</span>
+          <span style="font-weight:700;color:var(--forest);margin-right:6px">Chọn nhanh tài khoản:</span>
           <span id="adminRecipientQuickChips" style="display:inline-flex;flex-wrap:wrap;gap:6px;margin-top:4px;vertical-align:middle">
-            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('giaovien1')">👨‍🏫 giaovien1</button>
-            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('adminthd')">🛡️ adminthd</button>
-            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('all')">📢 all (Tất cả)</button>
+            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('giaovien1')">giaovien1</button>
+            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('adminthd')">adminthd</button>
+            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('all')">Tất cả (all)</button>
           </span>
         </div>
 
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:6px">
           <div style="font-size:11px;color:#64748b">
-            💡 <em>Thông báo cấp mã và liên kết vào trang Admin sẽ lập tức được lưu vào icon Chuông 🔔 của tài khoản người nhận.</em>
+            <em>Thông báo cấp mã và liên kết vào trang Admin sẽ được gửi đến tài khoản người nhận.</em>
           </div>
           <button type="button" class="button button-lime" onclick="addNewAdminCode()" style="font-size:12px;font-weight:800;padding:9px 18px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px">
-            🚀 Cấp mã & Gửi thông báo đến tài khoản ✓
+            Cấp mã & Gửi thông báo đến tài khoản
           </button>
         </div>
         
@@ -1077,7 +1075,7 @@
       </div>
 
       <!-- BẢNG DANH SÁCH MÃ ADMIN -->
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="adminCodesTableContainer">
         <p class="panel-copy">Đang tải danh sách mã Admin...</p>
       </div>
@@ -1092,7 +1090,7 @@
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="button button-lime" onclick="openCreateExamModal()" style="font-size:11px;display:inline-flex;align-items:center;gap:6px">
-            <span>➕</span> Upload / Tạo đề thi mới
+            Upload / Tạo đề thi mới
           </button>
           <button class="btn-small" onclick="loadAdminExams()">↻ Làm mới</button>
         </div>
@@ -1116,7 +1114,7 @@
           <button class="btn-small" onclick="clearAllExamResults()" style="color:#b91c1c">Xóa lịch sử thi</button>
         </div>
       </div>
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="examResultsTableContainer">
         <p class="panel-copy">Đang tải lịch sử bài thi...</p>
       </div>
@@ -1146,11 +1144,11 @@
           <strong id="examStatTotal">0</strong>
         </div>
         <div class="stat-box" style="border-color:#a7f3d0;background:#f0fdf4">
-          <span style="color:#047857">✓ Đã đạt yêu cầu</span>
+          <span style="color:#047857">Đã đạt yêu cầu</span>
           <strong id="examStatPassed" style="color:#047857">0</strong>
         </div>
         <div class="stat-box" style="border-color:#fecaca;background:#fef2f2">
-          <span style="color:#b91c1c">✕ Chưa đạt yêu cầu</span>
+          <span style="color:#b91c1c">Chưa đạt yêu cầu</span>
           <strong id="examStatFailed" style="color:#b91c1c">0</strong>
         </div>
         <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
@@ -1164,8 +1162,8 @@
         <div class="filter-group">
           <select id="filterExamStatus" class="filter-input" onchange="renderExamStudentsTable()">
             <option value="all">Tất cả (Cả đạt & chưa đạt)</option>
-            <option value="passed">✓ Đã đạt yêu cầu</option>
-            <option value="failed">✕ Chưa đạt yêu cầu</option>
+            <option value="passed">Đã đạt yêu cầu</option>
+            <option value="failed">Chưa đạt yêu cầu</option>
           </select>
           <select id="filterExamTitle" class="filter-input" onchange="renderExamStudentsTable()">
             <option value="all">Tất cả đề thi</option>
@@ -1174,7 +1172,7 @@
         </div>
       </div>
 
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="examStudentsTableContainer">
         <p class="panel-copy">Đang tải danh sách thí sinh...</p>
       </div>
@@ -1185,14 +1183,14 @@
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px">
         <div>
           <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px">
-            <span>📊</span> Bảng kết quả & Điểm chi tiết
+            Bảng kết quả & Điểm chi tiết
           </h2>
           <p class="panel-copy" style="margin:4px 0 0">Dữ liệu phân loại theo từng ô hoạt động riêng biệt, sẵn sàng xuất Excel chuẩn phục vụ đề tài nghiên cứu khoa học.</p>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           <input type="text" id="searchStudent" placeholder="Tìm theo họ và tên..." class="filter-input" style="width:190px">
           <button type="button" class="button button-lime" id="btnExportActiveTab" style="font-size:11px;padding:7px 14px;border-radius:6px;font-weight:700">
-            📥 Xuất Excel Hoạt động này ↓
+            Xuất Excel hoạt động này ↓
           </button>
         </div>
       </div>
@@ -1200,19 +1198,19 @@
       <!-- THANH TAB PHÂN CHIA HOẠT ĐỘNG RIÊNG BIỆT -->
       <div class="score-activity-tabs" id="scoreActivityTabs">
         <button type="button" class="score-act-tab active" data-tab="exam" onclick="switchScoreActivityTab('exam')">
-          📝 Phòng thi trực tuyến <span class="tab-count-badge" id="badgeTabExam">0</span>
+          Phòng thi trực tuyến <span class="tab-count-badge" id="badgeTabExam">0</span>
         </button>
         <button type="button" class="score-act-tab" data-tab="assessment" onclick="switchScoreActivityTab('assessment')">
-          🎯 Đánh giá 20 câu <span class="tab-count-badge" id="badgeTabAssessment">0</span>
+          Đánh giá 20 câu <span class="tab-count-badge" id="badgeTabAssessment">0</span>
         </button>
         <button type="button" class="score-act-tab" data-tab="rubric" onclick="switchScoreActivityTab('rubric')">
-          📐 Thử thách Rubric <span class="tab-count-badge" id="badgeTabRubric">0</span>
+          Thử thách Rubric <span class="tab-count-badge" id="badgeTabRubric">0</span>
         </button>
         <button type="button" class="score-act-tab" data-tab="practice" onclick="switchScoreActivityTab('practice')">
-          ⚡ Luyện tình huống <span class="tab-count-badge" id="badgeTabPractice">0</span>
+          Luyện tình huống <span class="tab-count-badge" id="badgeTabPractice">0</span>
         </button>
         <button type="button" class="score-act-tab" data-tab="all" onclick="switchScoreActivityTab('all')">
-          📋 Tất cả hoạt động <span class="tab-count-badge" id="badgeTabAll">0</span>
+          Tất cả hoạt động <span class="tab-count-badge" id="badgeTabAll">0</span>
         </button>
       </div>
 
@@ -1221,7 +1219,7 @@
         <!-- Render động qua JS -->
       </div>
 
-      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
       <div class="table-responsive" id="scoreTableContainer">
         <p class="panel-copy">Đang tải dữ liệu điểm...</p>
       </div>
@@ -1234,14 +1232,13 @@
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <div>
           <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;color:#0284c7">
-            <span>💾</span>
             <span>Sao lưu & Phục hồi dữ liệu hệ thống (24/7)</span>
           </h2>
           <p class="panel-copy" style="margin:4px 0 0">Tự động sao lưu định kỳ liên tục 24/7 tránh mất mát dữ liệu khi gặp sự cố, sập nguồn hoặc chuyển máy chủ.</p>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
-          <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">🟢 24/7 Auto-Backup Hoạt động</span>
-          <button type="button" class="btn-small" onclick="loadBackupArchiveList()" style="font-weight:700">🔄 Làm mới</button>
+          <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">Auto-Backup 24/7 Hoạt động</span>
+          <button type="button" class="btn-small" onclick="loadBackupArchiveList()" style="font-weight:700">Làm mới</button>
         </div>
       </div>
 
@@ -1251,7 +1248,7 @@
         <div style="background:#f8fafc;padding:18px;border-radius:14px;border:1px solid #e2e8f0;display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-              <span style="font-size:20px">📥</span>
+              
               <strong style="font-size:14px;color:#0f172a">Sao lưu toàn bộ dữ liệu (JSON)</strong>
             </div>
             <p style="font-size:12px;color:#64748b;line-height:1.5;margin:0 0 14px">
@@ -1267,7 +1264,7 @@
         <div style="background:#f8fafc;padding:18px;border-radius:14px;border:1px solid #e2e8f0;display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-              <span style="font-size:20px">📤</span>
+              
               <strong style="font-size:14px;color:#0f172a">Khôi phục hệ thống từ tệp sao lưu</strong>
             </div>
             <p style="font-size:12px;color:#64748b;line-height:1.5;margin:0 0 14px">
@@ -1275,7 +1272,7 @@
             </p>
           </div>
           <label style="background:#0f172a;color:#fff;border:none;font-weight:800;padding:10px 16px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-align:center;font-size:12.5px">
-            <span>📁</span> Chọn tệp JSON để phục hồi
+            Chọn tệp JSON để phục hồi
             <input type="file" id="inputRestoreBackupFile" accept=".json" style="display:none" onchange="handleRestoreBackupFile(event)">
           </label>
         </div>
@@ -1283,7 +1280,7 @@
 
       <!-- DANH SÁCH BẢN SAO LƯU TỰ ĐỘNG NỘI BỘ (ROLLING ARCHIVE) -->
       <h3 style="font-size:13.5px;font-weight:800;color:var(--text);margin:0 0 8px;display:flex;align-items:center;gap:6px">
-        <span>📋</span> Lịch sử các bản sao lưu tự động cục bộ (Lưu trữ an toàn trên máy)
+        Lịch sử các bản sao lưu tự động cục bộ (Lưu trữ an toàn trên máy)
       </h3>
       <div class="table-responsive" id="backupArchiveContainer">
         <p class="panel-copy">Đang tải lịch sử sao lưu...</p>
@@ -1297,7 +1294,7 @@
     <div class="admin-modal-content">
       <div class="admin-modal-header">
         <h3 class="admin-modal-title" id="examModalHeaderTitle">Setup Đề Thi & Phòng Làm Bài Tập</h3>
-        <button type="button" class="btn-small" onclick="closeExamSetupModal()">✕ Đóng</button>
+        <button type="button" class="btn-small" onclick="closeExamSetupModal()">Đóng</button>
       </div>
       
       <div class="admin-modal-body">
@@ -1324,20 +1321,20 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8faf8;padding:12px;border-radius:8px;border:1px solid #dce8db;margin:12px 0">
           <div>
             <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:var(--forest)">
-              🎯 ĐIỂM CHO MỖI CÂU HỎI (ĐIỂM):
+              ĐIỂM CHO MỖI CÂU HỎI (ĐIỂM):
             </label>
             <input type="number" id="setupPointsPerQ" min="0.1" step="0.5" value="2" class="filter-input" style="width:100%" oninput="updateSetupScoreSummary()">
             <small style="display:block;color:#64748b;font-size:10.5px;margin-top:2px">Ví dụ: Mỗi câu 2 điểm (30 câu = 60đ)</small>
           </div>
           <div>
             <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;color:var(--forest)">
-              🏆 ĐIỂM TỐI THIỂU ĐỂ HOÀN THÀNH (NGƯỠNG ĐẠT):
+              ĐIỂM TỐI THIỂU ĐỂ HOÀN THÀNH (NGƯỠNG ĐẠT):
             </label>
             <input type="number" id="setupPassingScore" min="1" step="1" value="30" class="filter-input" style="width:100%" oninput="updateSetupScoreSummary()">
             <small style="display:block;color:#64748b;font-size:10.5px;margin-top:2px">Ví dụ: Phải trên 30đ mới hoàn thành bài</small>
           </div>
           <div style="grid-column:1/-1;background:#ffffff;border:1px solid #c8e0cc;border-radius:6px;padding:8px 12px;font-size:11.5px;color:#1e593a;font-weight:700;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px" id="setupScoreSummaryBox">
-            <span>📊 Tổng điểm tối đa: <b id="summaryMaxScoreText">60 điểm</b> (<span id="summaryQCountText">30 câu</span> × <span id="summaryPointPerQText">2đ</span>)</span>
+            <span>Tổng điểm tối đa: <b id="summaryMaxScoreText">60 điểm</b> (<span id="summaryQCountText">30 câu</span> × <span id="summaryPointPerQText">2đ</span>)</span>
             <span>Ngưỡng đạt hoàn thành: <b id="summaryPassingScoreText" style="color:#b45309">≥ 30 điểm</b></span>
           </div>
         </div>
@@ -1350,10 +1347,10 @@
             </h4>
             <div style="display:flex;gap:8px">
               <button type="button" class="button button-lime" onclick="addNewQuestionToSetup()" style="font-size:11px">
-                ➕ Thêm câu hỏi
+                Thêm câu hỏi
               </button>
               <button type="button" class="btn-small" onclick="openFastImportModal()" style="font-size:11px">
-                📥 Nhập nhanh từ văn bản
+                Nhập nhanh từ văn bản
               </button>
             </div>
           </div>
@@ -1368,7 +1365,7 @@
       <div class="admin-modal-footer">
         <button type="button" class="btn-small" onclick="closeExamSetupModal()">Hủy bỏ</button>
         <button type="button" class="button button-dark" onclick="saveExamFromSetup()" style="font-size:11px">
-          💾 Lưu đề thi vào hệ thống
+          Lưu đề thi vào hệ thống
         </button>
       </div>
     </div>
@@ -1379,7 +1376,7 @@
     <div class="admin-modal-content" style="max-width:640px">
       <div class="admin-modal-header">
         <h3 class="admin-modal-title">Nhập nhanh danh sách câu hỏi</h3>
-        <button type="button" class="btn-small" onclick="closeFastImportModal()">✕ Đóng</button>
+        <button type="button" class="btn-small" onclick="closeFastImportModal()">Đóng</button>
       </div>
       <div class="admin-modal-body">
         <p style="font-size:12px;color:#64748b;margin:0 0 10px">
@@ -1399,7 +1396,7 @@
       <div class="admin-modal-footer">
         <button type="button" class="btn-small" onclick="closeFastImportModal()">Hủy</button>
         <button type="button" class="button button-lime" onclick="processFastImport()" style="font-size:11px">
-          ⚡ Phân tích & Thêm vào đề thi
+          Phân tích & Thêm vào đề thi
         </button>
       </div>
     </div>
@@ -1426,7 +1423,7 @@
     <div class="admin-modal-content" style="max-width:780px">
       <div class="admin-modal-header" style="background:#fef2f2;border-bottom:1px solid #fecaca">
         <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:22px">🚨</span>
+          
           <div>
             <h3 class="admin-modal-title" style="color:#991b1b;font-size:16px">Đối chiếu Thông tin Mở khóa Tranh chấp Thiết bị</h3>
             <p style="margin:2px 0 0;font-size:11.5px;color:#7f1d1d">Kiểm tra thông tin do học sinh khai báo với dữ liệu lưu trong hệ thống trước khi cấp mã</p>
@@ -1451,7 +1448,7 @@
     <div class="admin-modal-content" style="max-width:560px">
       <div class="admin-modal-header" style="background:#f0f9ff;border-bottom:1px solid #bae6fd">
         <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:24px">✉️</span>
+          
           <div>
             <h3 class="admin-modal-title" style="color:#0369a1;font-size:16px">Đã duyệt & Gửi mã về Email của học sinh</h3>
             <p style="margin:2px 0 0;font-size:11.5px;color:#0284c7">Mã xác minh 6 ký tự gồm chữ và số được gửi trực tiếp đến hộp thư</p>
@@ -1595,7 +1592,7 @@
     function showAdminWelcomeToast(msg) {
       const toast = document.createElement("div");
       toast.style.cssText = "position:fixed;top:20px;right:20px;z-index:99999;background:#047857;color:#ffffff;padding:12px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.25);font-weight:700;font-size:13px;display:flex;align-items:center;gap:10px;font-family:'Be Vietnam Pro',sans-serif;";
-      toast.innerHTML = `<span style="font-size:20px">🎉</span><span>${escapeHtml(msg)}</span>`;
+      toast.innerHTML = `<span style="font-size:20px"></span><span>${escapeHtml(msg)}</span>`;
       document.body.appendChild(toast);
       setTimeout(() => {
         toast.style.transition = "opacity 0.4s ease";
@@ -1880,7 +1877,7 @@
       if (!btn) return;
       if (!clearSessionsPending) {
         clearSessionsPending = true;
-        btn.textContent = "⚠️ Bấm lại để xác nhận xóa hết";
+        btn.textContent = "Bấm lại để xác nhận xóa hết";
         btn.style.color = "#ffffff";
         btn.style.background = "#dc2626";
         btn.style.borderColor = "#b91c1c";
@@ -2065,7 +2062,7 @@
 
       // 1. XỬ LÝ THỜI GIAN ĐỢT 1: TRƯỚC CAN THIỆP
       if (custom.preDate) {
-        preTimeStr = new Date(custom.preDate).toLocaleString("vi-VN") + " ✏️";
+        preTimeStr = new Date(custom.preDate).toLocaleString("vi-VN") + "";
       } else if (preRawIso) {
         if (assessmentTimelineMode === "standardized") {
           if (postRawIso) {
@@ -2086,7 +2083,7 @@
 
       // 2. XỬ LÝ THỜI GIAN ĐỢT 2: SAU CAN THIỆP
       if (custom.postDate) {
-        postTimeStr = new Date(custom.postDate).toLocaleString("vi-VN") + " ✏️";
+        postTimeStr = new Date(custom.postDate).toLocaleString("vi-VN") + "";
       } else if (postRawIso) {
         postTimeStr = new Date(postRawIso).toLocaleString("vi-VN");
       }
@@ -2098,7 +2095,7 @@
       if (!s) return "—";
       const custom = customAssessmentDates[s.display_name] || {};
       if (s.phase === "pre") {
-        if (custom.preDate) return new Date(custom.preDate).toLocaleString("vi-VN") + " ✏️";
+        if (custom.preDate) return new Date(custom.preDate).toLocaleString("vi-VN") + "";
         if (assessmentTimelineMode === "standardized" && s.created_at) {
           const postIso = pairedRecord ? pairedRecord.created_at : null;
           if (postIso) {
@@ -2111,7 +2108,7 @@
         }
         return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
       } else if (s.phase === "post") {
-        if (custom.postDate) return new Date(custom.postDate).toLocaleString("vi-VN") + " ✏️";
+        if (custom.postDate) return new Date(custom.postDate).toLocaleString("vi-VN") + "";
         return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
       }
       return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
@@ -2278,10 +2275,10 @@
           const rate = totalExams.length > 0 ? Math.round((passedCount / totalExams.length) * 100) : 0;
           headerBox.innerHTML = `
             <div>
-              <p>📌 Đang xem: <strong>Phòng thi trực tuyến chuẩn hóa</strong> · Tổng số: <strong>${totalExams.length} lượt thi</strong> (lưu độc lập từng lần thi) · Đạt: <strong style="color:#047857">${passedCount}</strong> · Chưa đạt: <strong style="color:#b91c1c">${failedCount}</strong> (Tỷ lệ đạt: <strong>${rate}%</strong>)</p>
+              <p>Đang xem: <strong>Phòng thi trực tuyến chuẩn hóa</strong> · Tổng số: <strong>${totalExams.length} lượt thi</strong> (lưu độc lập từng lần thi) · Đạt: <strong style="color:#047857">${passedCount}</strong> · Chưa đạt: <strong style="color:#b91c1c">${failedCount}</strong> (Tỷ lệ đạt: <strong>${rate}%</strong>)</p>
             </div>
             <div style="font-size:11px;color:#64748b">
-              💡 Thí sinh có thể thi 1 đề nhiều lần; mỗi lần thi được ghi nhận thành một kết quả độc lập (Lần 1, Lần 2...).
+              Thí sinh có thể thi 1 đề nhiều lần; mỗi lần thi được ghi nhận thành một kết quả độc lập (Lần 1, Lần 2...).
             </div>
           `;
         } else if (currentScoreTab === "assessment") {
@@ -2309,7 +2306,7 @@
               <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
                 <div>
                   <p style="font-size:13px;margin:0">
-                    📌 Đang xem: <strong style="color:var(--forest)">Đánh giá 20 câu (Khảo sát năng lực - Mô hình thực nghiệm KHKT)</strong>
+                    Đang xem: <strong style="color:var(--forest)">Đánh giá 20 câu (Khảo sát năng lực - Mô hình thực nghiệm KHKT)</strong>
                   </p>
                   <div style="display:flex;gap:14px;font-size:11.5px;color:#475569;margin-top:5px;flex-wrap:wrap">
                     <span>🟢 Trước can thiệp (Đợt 1): <strong style="color:#047857">${preScores.length}</strong> (ĐTB: <strong>${preAvg}/100</strong>)</span>
@@ -2319,14 +2316,14 @@
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
                   <div style="display:flex;align-items:center;gap:6px;background:white;padding:5px 10px;border-radius:6px;border:1px solid #cbd5e1;font-size:11px">
-                    <span style="color:#64748b;font-weight:700">⏱️ Mốc thời gian:</span>
+                    <span style="color:#64748b;font-weight:700">Mốc thời gian:</span>
                     <select id="selTimelineMode" onchange="changeAssessmentTimelineMode(this.value)" style="border:none;background:transparent;font-weight:700;color:var(--forest);cursor:pointer;outline:none">
-                      <option value="standardized" ${assessmentTimelineMode === 'standardized' ? 'selected' : ''}>📅 Chuẩn hóa mốc KHKT (Tuần 1 ➔ Tuần 4)</option>
-                      <option value="raw" ${assessmentTimelineMode === 'raw' ? 'selected' : ''}>⏱️ Giờ thực tế hệ thống ghi nhận</option>
+                      <option value="standardized" ${assessmentTimelineMode === 'standardized' ? 'selected' : ''}>Chuẩn hóa mốc KHKT (Tuần 1 ➔ Tuần 4)</option>
+                      <option value="raw" ${assessmentTimelineMode === 'raw' ? 'selected' : ''}>Giờ thực tế hệ thống ghi nhận</option>
                     </select>
                   </div>
                   <button type="button" class="btn-small" onclick="cleanDuplicateAssessmentRecords()" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:700" title="Loại bỏ các bản ghi bấm nộp trùng lặp">
-                    🧹 Dọn bản ghi trùng
+                    Dọn bản ghi trùng
                   </button>
                 </div>
               </div>
@@ -2334,7 +2331,7 @@
               <!-- THANH SUB-TAB PHÂN TÁCH GIAI ĐOẠN ĐO LƯỜNG & ĐỐI SÁNH -->
               <div style="display:flex;gap:8px;flex-wrap:wrap;border-top:1px dashed #cbd5e1;padding-top:10px">
                 <button type="button" class="score-act-subtab ${assessmentSubTab === 'comparison' ? 'active' : ''}" onclick="switchAssessmentSubTab('comparison')">
-                  📊 Bảng đối sánh Trước vs Sau theo từng thí sinh <span class="tag" style="background:#ecfdf5;color:#047857;font-weight:800;margin-left:4px">⭐ Chuẩn Báo Cáo KHKT</span>
+                  Bảng đối sánh Trước vs Sau theo từng thí sinh <span class="tag" style="background:#ecfdf5;color:#047857;font-weight:800;margin-left:4px">Chuẩn Báo Cáo KHKT</span>
                 </button>
                 <button type="button" class="score-act-subtab ${assessmentSubTab === 'pre' ? 'active' : ''}" onclick="switchAssessmentSubTab('pre')">
                   🟢 Đợt 01: Trước can thiệp (${preScores.length})
@@ -2353,7 +2350,7 @@
           const avg = totalRubric.length > 0 ? (totalRubric.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / totalRubric.length).toFixed(1) : "—";
           headerBox.innerHTML = `
             <div>
-              <p>📌 Đang xem: <strong>Thử thách Rubric tự đánh giá</strong> · Tổng: <strong>${totalRubric.length} bản ghi</strong> · Điểm TB: <strong>${avg}/100</strong></p>
+              <p>Đang xem: <strong>Thử thách Rubric tự đánh giá</strong> · Tổng: <strong>${totalRubric.length} bản ghi</strong> · Điểm TB: <strong>${avg}/100</strong></p>
             </div>
           `;
         } else if (currentScoreTab === "practice") {
@@ -2361,13 +2358,13 @@
           const avg = totalPractice.length > 0 ? (totalPractice.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / totalPractice.length).toFixed(1) : "—";
           headerBox.innerHTML = `
             <div>
-              <p>📌 Đang xem: <strong>Luyện tình huống tương tác</strong> · Tổng: <strong>${totalPractice.length} bản ghi</strong> · Điểm TB: <strong>${avg}/100</strong></p>
+              <p>Đang xem: <strong>Luyện tình huống tương tác</strong> · Tổng: <strong>${totalPractice.length} bản ghi</strong> · Điểm TB: <strong>${avg}/100</strong></p>
             </div>
           `;
         } else {
           headerBox.innerHTML = `
             <div>
-              <p>📌 Đang xem: <strong>Tất cả hoạt động hệ thống</strong> · Tổng cộng: <strong>${allScores.length} bản ghi</strong> từ tất cả các trạm kiểm chứng</p>
+              <p>Đang xem: <strong>Tất cả hoạt động hệ thống</strong> · Tổng cộng: <strong>${allScores.length} bản ghi</strong> từ tất cả các trạm kiểm chứng</p>
             </div>
           `;
         }
@@ -2401,18 +2398,18 @@
             ${tabScores.map((s, idx) => {
               const attemptNum = s.attempt_number || 1;
               const statusBadge = s.passed
-                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐẠT</span>`
-                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">✕ CHƯA ĐẠT</span>`;
+                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">ĐẠT</span>`
+                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">CHƯA ĐẠT</span>`;
               const violBadge = (s.violations_count === 0)
                 ? `<span style="color:#10b981;font-weight:700">0 lần</span>`
-                : `<span style="color:#b91c1c;font-weight:700">⚠️ ${s.violations_count} lần</span>`;
+                : `<span style="color:#b91c1c;font-weight:700">${s.violations_count} lần</span>`;
               const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
 
               return `<tr>
                 <td>${idx + 1}</td>
                 <td>
                   <div style="display:flex;align-items:center;gap:6px">
-                    <span style="font-size:14px">👤</span>
+                    
                     <strong>${escapeHtml(s.display_name || "—")}</strong>
                   </div>
                 </td>
@@ -2460,9 +2457,9 @@
               <tr>
                 <th>STT</th>
                 <th>Họ và tên thí sinh</th>
-                <th style="background:#f0fdf4;color:#166534">🟢 Thời gian đo Trước CT</th>
+                <th style="background:#f0fdf4;color:#166534">Thời gian đo Trước CT</th>
                 <th style="background:#f0fdf4;color:#166534">Điểm Trước CT</th>
-                <th style="background:#f0f9ff;color:#075985">🔵 Thời gian đo Sau CT</th>
+                <th style="background:#f0f9ff;color:#075985">Thời gian đo Sau CT</th>
                 <th style="background:#f0f9ff;color:#075985">Điểm Sau CT</th>
                 <th>Khoảng cách can thiệp</th>
                 <th>Mức tăng trưởng (Δ điểm)</th>
@@ -2500,14 +2497,14 @@
                     const pct = preScore > 0 ? Math.round((delta / preScore) * 100) : 100;
                     deltaHtml = `<span class="growth-pill growth-positive">+${delta} đ <small>(+${pct}%)</small> ↗</span>`;
                     effectBadge = delta >= 40 
-                      ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">🚀 Tiến bộ vượt bậc</span>`
+                      ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">Tiến bộ vượt bậc</span>`
                       : delta >= 15
-                      ? `<span class="tag" style="background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;font-weight:700">✓ Tiến bộ rõ rệt</span>`
+                      ? `<span class="tag" style="background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;font-weight:700">Tiến bộ rõ rệt</span>`
                       : `<span class="tag" style="background:#f8fafc;color:#334155;border:1px solid #cbd5e1;font-weight:700">Ổn định</span>`;
                   } else if (delta === 0) {
                     deltaHtml = `<span class="growth-pill growth-neutral">0 đ (Giữ vững)</span>`;
                     effectBadge = preScore >= 80 
-                      ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">⭐ Duy trì xuất sắc</span>`
+                      ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">Duy trì xuất sắc</span>`
                       : `<span class="tag" style="background:#f8fafc;color:#64748b;border:1px solid #cbd5e1">Duy trì</span>`;
                   } else {
                     deltaHtml = `<span class="growth-pill growth-negative">${delta} đ ↘</span>`;
@@ -2521,7 +2518,7 @@
                   <td>${idx + 1}</td>
                   <td>
                     <div style="display:flex;align-items:center;gap:6px">
-                      <span style="font-size:14px">👤</span>
+                      
                       <strong>${escapeHtml(st.name)}</strong>
                     </div>
                   </td>
@@ -2539,7 +2536,7 @@
                   <td>
                     <div style="display:flex;gap:4px;flex-wrap:wrap">
                       <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(st.name)}')" title="Tùy chỉnh ngày giờ Trước / Sau can thiệp" style="background:#f8fafc;border:1px solid #cbd5e1">
-                        ✏️ Sửa mốc giờ
+                        Sửa mốc giờ
                       </button>
                       <button class="btn-small" style="color:#b91c1c" onclick="deleteStudentAssessment('${escapeHtml(st.name)}')" title="Xóa toàn bộ bản ghi thí sinh này">
                         Xóa
@@ -2565,7 +2562,7 @@
                 <th>Đợt khảo sát</th>
                 <th>Điểm số (Thang 100)</th>
                 <th>Xếp loại năng lực đầu vào</th>
-                <th style="background:#f0fdf4;color:#166534">🟢 Thời gian đo Trước can thiệp</th>
+                <th style="background:#f0fdf4;color:#166534">Thời gian đo Trước can thiệp</th>
                 <th>Thao tác</th>
               </tr>
             </thead>
@@ -2585,7 +2582,7 @@
                   <td style="color:#166534;font-weight:700">🟢 ${timeFormatted}</td>
                   <td>
                     <div style="display:flex;gap:4px">
-                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">✏️ Sửa ngày</button>
+                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">Sửa ngày</button>
                       ${s.id ? `<button class="btn-small" style="color:#b91c1c" onclick="deleteScoreRecord('${s.id}')">Xóa</button>` : ``}
                     </div>
                   </td>
@@ -2608,7 +2605,7 @@
                 <th>Đợt khảo sát</th>
                 <th>Điểm số (Thang 100)</th>
                 <th>Xếp loại năng lực sau rèn luyện</th>
-                <th style="background:#f0f9ff;color:#075985">🔵 Thời gian đo Sau can thiệp</th>
+                <th style="background:#f0f9ff;color:#075985">Thời gian đo Sau can thiệp</th>
                 <th>Thao tác</th>
               </tr>
             </thead>
@@ -2628,7 +2625,7 @@
                   <td style="color:#0369a1;font-weight:700">🔵 ${timeFormatted}</td>
                   <td>
                     <div style="display:flex;gap:4px">
-                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">✏️ Sửa ngày</button>
+                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">Sửa ngày</button>
                       ${s.id ? `<button class="btn-small" style="color:#b91c1c" onclick="deleteScoreRecord('${s.id}')">Xóa</button>` : ``}
                     </div>
                   </td>
@@ -2671,7 +2668,7 @@
                   <td style="color:#475569;font-weight:600">${s.phase === 'pre' ? '🟢 Đợt 1: ' : s.phase === 'post' ? '🔵 Đợt 2: ' : ''}${timeFormatted}</td>
                   <td>
                     <div style="display:flex;gap:4px">
-                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">✏️ Sửa ngày</button>
+                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">Sửa ngày</button>
                       ${s.id ? `<button class="btn-small" style="color:#b91c1c" onclick="deleteScoreRecord('${s.id}')">Xóa</button>` : ``}
                     </div>
                   </td>
@@ -2740,7 +2737,7 @@
               }
 
               const resultText = s.activity === "exam" 
-                ? (s.passed ? `<span style="color:#047857;font-weight:700">✓ Đạt</span>` : `<span style="color:#b91c1c;font-weight:700">✕ Chưa đạt</span>`)
+                ? (s.passed ? `<span style="color:#047857;font-weight:700">Đạt</span>` : `<span style="color:#b91c1c;font-weight:700">Chưa đạt</span>`)
                 : `<span style="color:${levelColor};font-weight:700">${level}</span>`;
 
               const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
@@ -3078,7 +3075,7 @@
                     </div>
                   </div>
                   <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">
-                    <span class="tag" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;font-weight:800;font-size:10px">🚨 TRANH CHẤP THIẾT BỊ</span>
+                    <span class="tag" style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;font-weight:800;font-size:10px">TRANH CHẤP THIẾT BỊ</span>
                     ${sClass !== '—' ? `<span class="tag" style="background:#e0e7ff;color:#3730a3;font-weight:700;font-size:10px">Lớp: ${escapeHtml(sClass)}</span>` : ''}
                   </div>
                 </td>
@@ -3117,7 +3114,7 @@
                        </div>`
                     : `<div style="display:flex;gap:6px;align-items:center">
                         <button class="btn-small" style="background:#f8fafc;color:#475569;border:1px solid #cbd5e1" onclick="viewUnlockComparisonModal('${r.id}')">
-                          👁️ Xem chi tiết
+                          Xem mã Xem chi tiết
                         </button>
                         <button class="btn-small" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-weight:700" onclick="handleGrantUnlockCode('${r.id}', '${escapeHtml(r.user_email)}', '${escapeHtml(r.display_name)}')" title="Cấp lại mã mở khóa mới">
                           ↻ Cấp mã mới
@@ -3329,7 +3326,7 @@
         currentPraLink = (res.link && res.link.startsWith("http")) ? res.link : `${baseUrl}/reset-password.html?email=${encodeURIComponent(email)}&code=${res.code}`;
 
         const subject = `[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu của bạn: ${currentPraCode}`;
-        const body = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ (Trường THPT Trần Hưng Đạo) đã nhận được và PHÊ DUYỆT yêu cầu cấp lại mật khẩu cho tài khoản:\n${currentPraEmail}\n\n🔑 MÃ XÁC MINH 6 KÝ TỰ (CHỮ VÀ SỐ) CỦA BẠN LÀ:\n>>> ${currentPraCode} <<<\n(Mã có hiệu lực trong vòng 24 giờ và dùng 1 lần).\n\n👉 HƯỚNG DẪN ĐỔI MẬT KHẨU MỚI:\nBước 1: Bấm trực tiếp vào đường liên kết dưới đây:\n${currentPraLink}\n\nBước 2: Hệ thống sẽ tự động điền sẵn Email và Mã xác minh. Bạn chỉ cần nhập mật khẩu mới và bấm hoàn tất.\n\nNếu bạn không yêu cầu hỗ trợ đổi mật khẩu, vui lòng bỏ qua email này.\n\nTrân trọng,\nBan Quản trị Hệ thống AI CHECK THĐ\nTrường THPT Trần Hưng Đạo`;
+        const body = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ (Trường THPT Trần Hưng Đạo) đã nhận được và PHÊ DUYỆT yêu cầu cấp lại mật khẩu cho tài khoản:\n${currentPraEmail}\n\n🔑 MÃ XÁC MINH 6 KÝ TỰ (CHỮ VÀ SỐ) CỦA BẠN LÀ:\n>>> ${currentPraCode} <<<\n(Mã có hiệu lực trong vòng 24 giờ và dùng 1 lần).\n\nHƯỚNG DẪN ĐỔI MẬT KHẨU MỚI:\nBước 1: Bấm trực tiếp vào đường liên kết dưới đây:\n${currentPraLink}\n\nBước 2: Hệ thống sẽ tự động điền sẵn Email và Mã xác minh. Bạn chỉ cần nhập mật khẩu mới và bấm hoàn tất.\n\nNếu bạn không yêu cầu hỗ trợ đổi mật khẩu, vui lòng bỏ qua email này.\n\nTrân trọng,\nBan Quản trị Hệ thống AI CHECK THĐ\nTrường THPT Trần Hưng Đạo`;
 
         currentPraEmailBody = body;
         currentPraGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentPraEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -3387,7 +3384,7 @@
     function openDirectGmailComposer() {
       if (!currentPraEmail) return alert("Chưa có thông tin email!");
       const subject = `[AI CHECK THĐ] Mã xác nhận đặt lại mật khẩu của bạn: ${currentPraCode}`;
-      const body = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ (Trường THPT Trần Hưng Đạo) đã nhận được và PHÊ DUYỆT yêu cầu cấp lại mật khẩu cho tài khoản:\n${currentPraEmail}\n\n🔑 MÃ XÁC MINH 6 KÝ TỰ (CHỮ VÀ SỐ) CỦA BẠN LÀ:\n>>> ${currentPraCode} <<<\n(Mã có hiệu lực trong vòng 24 giờ và dùng 1 lần).\n\n👉 HƯỚNG DẪN ĐỔI MẬT KHẨU MỚI:\nBước 1: Bấm trực tiếp vào đường liên kết dưới đây:\n${currentPraLink}\n\nBước 2: Hệ thống sẽ tự động điền sẵn Email và Mã xác minh. Bạn chỉ cần nhập mật khẩu mới và bấm hoàn tất.\n\nNếu bạn không yêu cầu hỗ trợ đổi mật khẩu, vui lòng bỏ qua email này.\n\nTrân trọng,\nBan Quản trị Hệ thống AI CHECK THĐ\nTrường THPT Trần Hưng Đạo`;
+      const body = `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ (Trường THPT Trần Hưng Đạo) đã nhận được và PHÊ DUYỆT yêu cầu cấp lại mật khẩu cho tài khoản:\n${currentPraEmail}\n\n🔑 MÃ XÁC MINH 6 KÝ TỰ (CHỮ VÀ SỐ) CỦA BẠN LÀ:\n>>> ${currentPraCode} <<<\n(Mã có hiệu lực trong vòng 24 giờ và dùng 1 lần).\n\nHƯỚNG DẪN ĐỔI MẬT KHẨU MỚI:\nBước 1: Bấm trực tiếp vào đường liên kết dưới đây:\n${currentPraLink}\n\nBước 2: Hệ thống sẽ tự động điền sẵn Email và Mã xác minh. Bạn chỉ cần nhập mật khẩu mới và bấm hoàn tất.\n\nNếu bạn không yêu cầu hỗ trợ đổi mật khẩu, vui lòng bỏ qua email này.\n\nTrân trọng,\nBan Quản trị Hệ thống AI CHECK THĐ\nTrường THPT Trần Hưng Đạo`;
       const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(currentPraEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       const mailtoUrl = `mailto:${encodeURIComponent(currentPraEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
@@ -3412,7 +3409,7 @@
           if (statusTitle) statusTitle.textContent = `✓ Đã tự động gửi email thành công đến ${currentPraEmail}!`;
         } else {
           const reason = res?.apiError ? ` (${res.apiError})` : "";
-          if (confirm(`Cổng gửi tự động thông báo giới hạn tần suất gửi email${reason}.\n\n👉 Bạn hãy bấm nút đỏ "✉️ Mở Gmail gửi ngay (1 Click)" để gửi thư chính thức từ Gmail Admin tới hòm thư của học sinh ngay lập tức trong 1 giây mà không lo bị chặn.\n\nBạn có muốn mở Gmail ngay bây giờ không?`)) {
+          if (confirm(`Cổng gửi tự động thông báo giới hạn tần suất gửi email${reason}.\n\nBạn hãy bấm nút đỏ "✉️ Mở Gmail gửi ngay (1 Click)" để gửi thư chính thức từ Gmail Admin tới hòm thư của học sinh ngay lập tức trong 1 giây mà không lo bị chặn.\n\nBạn có muốn mở Gmail ngay bây giờ không?`)) {
             openDirectGmailComposer();
           }
         }
@@ -3427,7 +3424,7 @@
     }
 
     function copyPraEmailBody() {
-      const text = currentPraEmailBody || `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ đã phê duyệt yêu cầu cấp lại mật khẩu cho tài khoản: ${currentPraEmail}.\n\n🔑 Mã xác minh 6 ký tự của bạn là: ${currentPraCode}\n\n👉 Liên kết đặt lại mật khẩu:\n${currentPraLink}\n\nTrân trọng,\nBan Quản trị AI CHECK THĐ`;
+      const text = currentPraEmailBody || `Kính gửi bạn học sinh,\n\nBan Quản trị AI CHECK THĐ đã phê duyệt yêu cầu cấp lại mật khẩu cho tài khoản: ${currentPraEmail}.\n\n🔑 Mã xác minh 6 ký tự của bạn là: ${currentPraCode}\n\nLiên kết đặt lại mật khẩu:\n${currentPraLink}\n\nTrân trọng,\nBan Quản trị AI CHECK THĐ`;
       navigator.clipboard.writeText(text);
       alert("✓ Đã sao chép toàn bộ nội dung email vào bộ nhớ tạm!");
     }
@@ -3505,7 +3502,7 @@
       if (!file) return;
 
       const confirmRestore = confirm(
-        `⚠️ CẢNH BÁO QUAN TRỌNG VỀ PHỤC HỒI HỆ THỐNG:\n\nBạn có chắc chắn muốn nạp tệp sao lưu "${file.name}"?\nThao tác này sẽ cập nhật lại toàn bộ tài khoản, điểm số, lịch sử bài thi và cài đặt.\n\nBấm OK để tiếp tục.`
+        `CẢNH BÁO QUAN TRỌNG VỀ PHỤC HỒI HỆ THỐNG:\n\nBạn có chắc chắn muốn nạp tệp sao lưu "${file.name}"?\nThao tác này sẽ cập nhật lại toàn bộ tài khoản, điểm số, lịch sử bài thi và cài đặt.\n\nBấm OK để tiếp tục.`
       );
       if (!confirmRestore) {
         event.target.value = "";
@@ -3518,7 +3515,7 @@
 
         const res = await window.AICheckCloud.restoreFullSystemBackup(backupJson);
         alert(
-          `🎉 KHÔI PHỤC HỆ THỐNG THÀNH CÔNG!\n\n• Số khoá dữ liệu đã nạp lại: ${res.restoredKeys}\n• Đồng bộ Cloud: ${res.restoredCloud ? 'Thành công' : 'Không có'}\n• Mã bản sao lưu: ${res.backup_id}\n\nTrang quản trị sẽ tự động tải lại để áp dụng dữ liệu mới.`
+          `KHÔI PHỤC HỆ THỐNG THÀNH CÔNG!\n\n• Số khoá dữ liệu đã nạp lại: ${res.restoredKeys}\n• Đồng bộ Cloud: ${res.restoredCloud ? 'Thành công' : 'Không có'}\n• Mã bản sao lưu: ${res.backup_id}\n\nTrang quản trị sẽ tự động tải lại để áp dụng dữ liệu mới.`
         );
         window.location.reload();
       } catch (err) {
@@ -3557,7 +3554,7 @@
                 <td><code style="font-family:'Space Grotesk',monospace;font-size:11px;color:#0284c7">${escapeHtml(b.backup_id || "—")}</code></td>
                 <td>${b.keys_count || 0} mục dữ liệu</td>
                 <td>${kbSize}</td>
-                <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-size:11px">✓ Sẵn sàng 24/7</span></td>
+                <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-size:11px">Sẵn sàng 24/7</span></td>
               </tr>
             `;
           }).join("")}
@@ -3619,7 +3616,7 @@
         const isNameMatch = dbUser.display_name.trim().toLowerCase() === sName.trim().toLowerCase();
         matchBadge = isNameMatch
           ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Khớp họ tên (${escapeHtml(dbUser.display_name)})</span>`
-          : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">⚠️ Khác họ tên hệ thống (${escapeHtml(dbUser.display_name)})</span>`;
+          : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">Khác họ tên hệ thống (${escapeHtml(dbUser.display_name)})</span>`;
       } else {
         matchBadge = `<span class="tag" style="background:#f1f5f9;color:#64748b">Chưa có thông tin profile DB</span>`;
       }
@@ -3635,29 +3632,29 @@
 
             <div style="display:grid;gap:8px;font-size:12px">
               <div>
-                <span style="color:#64748b;display:block;font-size:11px">1️⃣ Gmail / Tài khoản:</span>
+                <span style="color:#64748b;display:block;font-size:11px">1. Gmail / Tài khoản:</span>
                 <strong style="color:#0f172a">${escapeHtml(req.user_email || "—")}</strong>
               </div>
               <div>
-                <span style="color:#64748b;display:block;font-size:11px">2️⃣ Họ và tên:</span>
+                <span style="color:#64748b;display:block;font-size:11px">2. Họ và tên:</span>
                 <strong style="color:#0f172a">${escapeHtml(sName)}</strong>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
                 <div>
-                  <span style="color:#64748b;display:block;font-size:11px">3️⃣ Lớp / Khối:</span>
+                  <span style="color:#64748b;display:block;font-size:11px">3. Lớp / Khối:</span>
                   <strong style="color:#0f172a">${escapeHtml(sClass)}</strong>
                 </div>
                 <div>
-                  <span style="color:#64748b;display:block;font-size:11px">4️⃣ Thiết bị chính chủ:</span>
+                  <span style="color:#64748b;display:block;font-size:11px">4. Thiết bị chính chủ:</span>
                   <strong style="color:#0f172a">${escapeHtml(sDevice)}</strong>
                 </div>
               </div>
               <div>
-                <span style="color:#64748b;display:block;font-size:11px">5️⃣ Mật khẩu / Mã xác minh:</span>
+                <span style="color:#64748b;display:block;font-size:11px">5. Mật khẩu / Mã xác minh:</span>
                 <code style="background:#f1f5f9;color:#b91c1c;padding:3px 8px;border-radius:4px;font-weight:700">${escapeHtml(sPass)}</code>
               </div>
               <div>
-                <span style="color:#64748b;display:block;font-size:11px">6️⃣ Trình bày sự cố:</span>
+                <span style="color:#64748b;display:block;font-size:11px">6. Trình bày sự cố:</span>
                 <div style="background:#f8fafc;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;color:#334155;line-height:1.45;white-space:pre-line">${escapeHtml(sDesc)}</div>
               </div>
             </div>
@@ -3712,7 +3709,7 @@
         </div>
 
         <div style="background:#f0fdf4;border:1px solid #a7f3d0;padding:10px 14px;border-radius:8px;font-size:12px;color:#065f46;line-height:1.5">
-          💡 <strong>Quy trình Admin:</strong> Nếu thông tin học sinh khai báo khớp với hồ sơ và lý do sự cố hợp lý, Quản trị viên bấm nút <strong>"Duyệt & Gửi mã về mail của tài khoản"</strong> bên dưới. Hệ thống sẽ tự động tạo mã mở khóa 6 số, gửi thông báo kèm mã về hộp thư (chuông 🔔) và email của tài khoản, cho phép học sinh đăng nhập lại.
+          <strong>Quy trình Admin:</strong> Nếu thông tin học sinh khai báo khớp với hồ sơ và lý do sự cố hợp lý, Quản trị viên bấm nút <strong>"Duyệt & Gửi mã về mail của tài khoản"</strong> bên dưới. Hệ thống sẽ tự động tạo mã mở khóa 6 số, gửi thông báo kèm mã về hộp thư (chuông ) và email của tài khoản, cho phép học sinh đăng nhập lại.
         </div>
       `;
 
@@ -3734,7 +3731,7 @@
       const email = String(userEmail || "").trim();
       if (!email) return alert("Không tìm thấy địa chỉ email tài khoản!");
 
-      const confirmMsg = `Xác nhận DUYỆT THÔNG TIN và GỬI MÃ MỞ KHÓA về tài khoản:\n\n• Gmail / Tài khoản: ${email}\n• Học sinh: ${displayName || email}\n\nSau khi bấm OK:\n1. Hệ thống sẽ tự động tạo mã mở khóa 6 số ngẫu nhiên an toàn.\n2. Gửi thông báo kèm mã mở khóa vào icon Chuông 🔔 và lưu trạng thái mở khóa cho tài khoản.\n3. Đổi trạng thái tài khoản sang sẵn sàng mở khóa khi học sinh đăng nhập lại.`;
+      const confirmMsg = `Xác nhận DUYỆT THÔNG TIN và GỬI MÃ MỞ KHÓA về tài khoản:\n\n• Gmail / Tài khoản: ${email}\n• Học sinh: ${displayName || email}\n\nSau khi bấm OK:\n1. Hệ thống sẽ tự động tạo mã mở khóa 6 số ngẫu nhiên an toàn.\n2. Gửi thông báo kèm mã mở khóa vào hòm thư và lưu trạng thái mở khóa cho tài khoản.\n3. Đổi trạng thái tài khoản sang sẵn sàng mở khóa khi học sinh đăng nhập lại.`;
 
       if (!confirm(confirmMsg)) return;
 
@@ -3753,7 +3750,7 @@
       closeUnlockComparisonModal();
       await loadSupportRequests();
 
-      alert(`🎉 ĐÃ DUYỆT VÀ GỬI MÃ MỞ KHÓA THÀNH CÔNG!\n\n• Tài khoản: ${email}\n• Mã mở khóa 6 số đã cấp: ${unlockCode}\n\n✓ Đã gửi thông báo chứa mã mở khóa đến icon Chuông 🔔 và email của tài khoản.\n✓ Học sinh vào lại trang Đăng nhập và nhập đúng mã "${unlockCode}" là có thể mở khóa tài khoản ngay lập tức.`);
+      alert(`ĐÃ DUYỆT VÀ GỬI MÃ MỞ KHÓA THÀNH CÔNG!\n\n• Tài khoản: ${email}\n• Mã mở khóa 6 số đã cấp: ${unlockCode}\n\n✓ Đã gửi thông báo chứa mã mở khóa đến hòm thư và email của tài khoản.\n✓ Học sinh vào lại trang Đăng nhập và nhập đúng mã "${unlockCode}" là có thể mở khóa tài khoản ngay lập tức.`);
     }
 
     function calculateStats() {
@@ -3987,22 +3984,22 @@
               <h3 class="exam-card-title">${escapeHtml(exam.title)}</h3>
               <p style="font-size:12px;color:#64748b;margin:0 0 10px;line-height:1.5">${escapeHtml(exam.description || "Đề thi trắc nghiệm")}</p>
               <div class="exam-card-meta">
-                <span>📚 ${qCount} câu hỏi</span>
+                <span>${qCount} câu hỏi</span>
                 <span>⏱️ ${dur} phút</span>
-                <span>🎯 ${pointsPerQ}đ/câu</span>
-                <span style="background:#e0f2fe;color:#0369a1;font-weight:700">🏆 Đạt: ≥ ${passingScore}/${maxScore}đ</span>
-                <span>📅 ${exam.createdAt ? new Date(exam.createdAt).toLocaleDateString("vi-VN") : "Gần đây"}</span>
+                <span>${pointsPerQ}đ/câu</span>
+                <span style="background:#e0f2fe;color:#0369a1;font-weight:700">Đạt: ≥ ${passingScore}/${maxScore}đ</span>
+                <span>${exam.createdAt ? new Date(exam.createdAt).toLocaleDateString("vi-VN") : "Gần đây"}</span>
               </div>
             </div>
             <div class="exam-card-actions">
               <a href="${examUrl}" target="_blank" class="btn-action-exam btn-action-primary">
-                🚀 Vào phòng thi
+                Vào phòng thi
               </a>
               <button type="button" class="btn-action-exam" onclick="openEditExamModal('${exam.id}')">
-                ✏️ Chỉnh sửa
+                Chỉnh sửa
               </button>
               <button type="button" class="btn-action-exam" onclick="copyExamLink('${exam.id}')">
-                📋 Link thi
+                Link thi
               </button>
               <button type="button" class="btn-action-exam btn-action-danger" onclick="deleteAdminExam('${exam.id}')">
                 🗑️ Xóa
@@ -4115,7 +4112,7 @@
             <div class="q-setup-header">
               <span class="q-setup-num">Câu hỏi ${idx + 1}</span>
               <button type="button" class="btn-action-exam btn-action-danger" onclick="removeQuestionFromSetup(${idx})">
-                🗑️ Xóa câu
+                Xóa câu
               </button>
             </div>
 
@@ -4147,7 +4144,7 @@
 
             <!-- Ô VUÔNG GÓC DƯỚI BÊN PHẢI ĐIỀU CHỈNH ĐÁP ÁN ĐÚNG/SAI -->
             <div class="q-correct-selector-bar">
-              <span class="correct-label-note">👉 Ô VUÔNG CHỌN ĐÁP ÁN ĐÚNG:</span>
+              <span class="correct-label-note">Ô VUÔNG CHỌN ĐÁP ÁN ĐÚNG:</span>
               <div class="square-picker-group">
                 <label class="square-picker-item" title="Chọn A là đáp án đúng">
                   <input type="radio" name="q_correct_${idx}" value="0" ${correct === 0 ? "checked" : ""}>
@@ -4376,7 +4373,7 @@
               const violCount = r.violationsCount || 0;
               const violBadge = violCount === 0
                 ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
-                : `<button class="btn-small" style="color:#b91c1c;border-color:#fca5a5;background:#fef2f2" onclick="viewViolationDetail('${r.id}')">⚠️ ${violCount} lần vi phạm (Xem)</button>`;
+                : `<button class="btn-small" style="color:#b91c1c;border-color:#fca5a5;background:#fef2f2" onclick="viewViolationDetail('${r.id}')">${violCount} lần vi phạm (Xem)</button>`;
 
               const correctCount = r.correctCount != null ? r.correctCount : 0;
               const totalQ = r.totalQuestions || 20;
@@ -4472,7 +4469,7 @@
     }
 
     function clearAllExamResults() {
-      if (!confirm("⚠️ CẢNH BÁO: Thao tác này sẽ xóa toàn bộ lịch sử bài thi và dữ liệu giám sát vi phạm trên thiết bị này. Bạn có chắc chắn muốn tiếp tục?")) return;
+      if (!confirm("CẢNH BÁO: Thao tác này sẽ xóa toàn bộ lịch sử bài thi và dữ liệu giám sát vi phạm trên thiết bị này. Bạn có chắc chắn muốn tiếp tục?")) return;
       window.AICheckExamStore.clearAllResults();
       loadScores();
       loadExamResultsTable();
@@ -4605,7 +4602,7 @@
 
               const statusBadge = isPassed
                 ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐÃ ĐẠT YÊU CẦU</span>`
-                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">✕ CHƯA ĐẠT YÊU CẦU</span>`;
+                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">CHƯA ĐẠT YÊU CẦU</span>`;
 
               const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
               const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "—";
@@ -4615,7 +4612,7 @@
                   <td>${idx + 1}</td>
                   <td>
                     <div style="display:flex;align-items:center;gap:6px">
-                      <span style="font-size:14px">👤</span>
+                      
                       <strong>${escapeHtml(r.studentName || "Thí sinh THĐ")}</strong>
                       <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:10.5px;padding:1px 6px;font-weight:700">Lần ${attemptNum}</span>
                     </div>
@@ -4786,8 +4783,8 @@
                   <td>
                     <div style="display:flex;align-items:center;gap:6px">
                       <code id="${codeMaskId}" style="background:#f1f5f9;color:var(--forest);font-weight:800;font-size:13px;padding:3px 8px;border-radius:4px;letter-spacing:1px">••••••••</code>
-                      <button type="button" class="btn-small" onclick="toggleMaskAdminCode('${c.id}', '${escapeHtml(c.code)}')">👁️</button>
-                      <button type="button" class="btn-small" onclick="copyAdminCode('${escapeHtml(c.code)}')" title="Sao chép mã PIN">📋 Copy PIN</button>
+                      <button type="button" class="btn-small" onclick="toggleMaskAdminCode('${c.id}', '${escapeHtml(c.code)}')">Xem mã</button>
+                      <button type="button" class="btn-small" onclick="copyAdminCode('${escapeHtml(c.code)}')" title="Sao chép mã PIN">Copy PIN</button>
                     </div>
                   </td>
                   <td>
@@ -4796,19 +4793,19 @@
                     </span>
                   </td>
                   <td><strong>${escapeHtml(c.label || "Quản trị viên")}</strong></td>
-                  <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Đang hoạt động</span></td>
+                  <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">Đang hoạt động</span></td>
                   <td style="color:#64748b">${c.createdAt || "Hệ thống"}</td>
                   <td>
                     <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
                       <button type="button" class="btn-small" onclick="copyAdminUnlockLink('${escapeHtml(c.code)}')" title="Sao chép liên kết mở khóa kèm mã PIN">
-                        🔗 Link mở khóa
+                        Link mở khóa
                       </button>
                       <button type="button" class="btn-small" onclick="resendAdminNotification('${escapeHtml(c.code)}', '${escapeHtml(c.recipient || 'all')}', '${escapeHtml(c.label || '')}')" title="Gửi lại thông báo đến tài khoản">
-                        ✉️ Gửi lại
+                        Gửi lại
                       </button>
                       ${isProt 
                         ? `<span style="font-size:11px;color:#94a3b8;font-style:italic">Mã Master</span>` 
-                        : `<button type="button" class="btn-small" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;font-weight:700" onclick="deleteAdminCode('${c.id}')" title="Xóa mã này khi tài khoản không còn dùng nữa">🗑️ Xóa mã này</button>`
+                        : `<button type="button" class="btn-small" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;font-weight:700" onclick="deleteAdminCode('${c.id}')" title="Xóa mã này khi tài khoản không còn dùng nữa">Xóa mã này</button>`
                       }
                     </div>
                   </td>
@@ -4857,7 +4854,7 @@
         recipient: rec,
         sender: "Ban Quản trị THĐ (adminthd)",
         type: "admin_grant",
-        title: "🔑 Bạn được cấp quyền Quản trị viên (Admin)",
+        title: "Bạn được cấp quyền Quản trị viên (Admin)",
         message: `Chào <strong>${escapeHtml(label || rec)}</strong>, bạn vừa được Quản trị viên gửi lại quyền truy cập Bảng điều khiển Quản trị với mã PIN: <strong>${escapeHtml(code)}</strong>. Bấm nút bên dưới để mở khóa và truy cập ngay:`,
         adminPin: code,
         link: relativeAdminUrl
@@ -4932,7 +4929,7 @@
           recipient: recipientVal,
           sender: "Ban Quản trị THĐ (adminthd)",
           type: "admin_grant",
-          title: "🔑 Bạn được cấp quyền Quản trị viên (Admin)",
+          title: "Bạn được cấp quyền Quản trị viên (Admin)",
           message: `Chào <strong>${escapeHtml(labelVal || recipientVal)}</strong>, bạn vừa được Quản trị viên cấp quyền Quản trị viên (Admin Portal) với mã PIN truy cập: <strong>${escapeHtml(codeVal)}</strong>. Bấm nút bên dưới để mở khóa và truy cập trực tiếp:`,
           adminPin: codeVal,
           link: relativeAdminUrl
@@ -4948,7 +4945,7 @@
         notice.style.background = "#ecfdf5";
         notice.style.borderColor = "#a7f3d0";
         notice.style.color = "#047857";
-        notice.innerHTML = `✓ Đã tạo mã <strong>${escapeHtml(codeVal)}</strong> thành công và tự động gửi thông báo đến icon Chuông 🔔 của tài khoản: <strong>${escapeHtml(recipientVal)}</strong>!`;
+        notice.innerHTML = `✓ Đã tạo mã <strong>${escapeHtml(codeVal)}</strong> thành công và tự động gửi thông báo đến hòm thư của tài khoản: <strong>${escapeHtml(recipientVal)}</strong>!`;
         setTimeout(() => { notice.style.display = "none"; }, 6000);
       }
     }
@@ -4958,7 +4955,7 @@
       const item = list.find(c => c.id === id);
       if (!item) return;
 
-      if (!confirm(`Bạn có chắc chắn muốn XÓA mã Admin "${item.code}" cấp cho "${item.recipient || item.label}" khi tài khoản này không còn dùng nữa không?\n\n⚠️ LƯU Ý:\n- Mã này sẽ bị xóa khỏi hệ thống và không thể mở khóa Admin được nữa.\n- Thông báo cấp mã và nút mở Admin trong icon Chuông của tài khoản "${item.recipient || item.label}" sẽ tự động bị xóa bỏ.`)) {
+      if (!confirm(`Bạn có chắc chắn muốn XÓA mã Admin "${item.code}" cấp cho "${item.recipient || item.label}" khi tài khoản này không còn dùng nữa không?\n\nLƯU Ý:\n- Mã này sẽ bị xóa khỏi hệ thống và không thể mở khóa Admin được nữa.\n- Thông báo cấp mã và nút mở Admin trong hòm thư của tài khoản "${item.recipient || item.label}" sẽ tự động bị xóa bỏ.`)) {
         return;
       }
 
