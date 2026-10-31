@@ -615,29 +615,47 @@
     .score-tab-header-box strong {
       color: var(--forest);
     }
-    @keyframes livePulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.55; }
-      100% { opacity: 1; }
-    }
-    .live-pulse-badge {
+    .live-static-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       padding: 3px 9px;
       border-radius: 12px;
       background: #10b981;
       color: #ffffff;
       font: 800 10px "Space Grotesk", sans-serif;
       letter-spacing: 0.5px;
-      animation: livePulse 2s infinite ease-in-out;
     }
-    .live-pulse-dot {
+    .live-static-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: #ffffff;
-      box-shadow: 0 0 6px #ffffff;
+    }
+    .in-page-admin-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 11px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      z-index: 999999;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .in-page-admin-toast.show {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -703,7 +721,7 @@
           <div>
             <h2 class="panel-title" style="margin:0;color:#065f46;font-size:18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               NHẬT KÝ GIÁM SÁT THỜI GIAN THỰC & MINH CHỨNG HỌC SINH THAM GIA
-              <span class="live-pulse-badge"><span class="live-pulse-dot"></span>LIVE REALTIME</span>
+              <span class="live-static-badge"><span class="live-static-dot"></span>LIVE REALTIME</span>
             </h2>
             <p class="panel-copy" style="margin:3px 0 0;font-size:12px;color:#047857">
               Dữ liệu minh chứng thuyết trình KHKT: Ghi nhận chính xác từng học sinh <strong>vào làm lúc nào</strong> (giờ, phút, giây) và <strong>kết quả ra sao</strong> ở cả 3 nội dung: <em>Thực hành tình huống</em>, <em>Đánh giá năng lực (Trước & Sau can thiệp)</em> và <em>Phòng thi trực tuyến</em>.
@@ -715,7 +733,7 @@
             📥 Xuất Báo cáo Minh chứng Giám khảo (Excel/CSV) ↓
           </button>
           <button type="button" class="btn-small" onclick="loadLiveActivitySessions()" style="font-weight:700">↻ Làm mới</button>
-          <button type="button" class="btn-small" onclick="clearLiveSessions()" style="color:#b91c1c" title="Xóa lịch sử phiên">Dọn dẹp</button>
+          <button type="button" class="btn-small" id="btnClearSessions" onclick="clearLiveSessions()" style="color:#b91c1c;transition:all .2s ease" title="Xóa lịch sử phiên">Dọn dẹp</button>
         </div>
       </div>
 
@@ -1659,7 +1677,7 @@
 
             const statusTag = isCompleted
               ? '<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐÃ HOÀN THÀNH</span>'
-              : '<span class="tag" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-weight:800;animation:livePulse 1.8s infinite">⏳ ĐANG LÀM BÀI...</span>';
+              : '<span class="tag" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-weight:800">⏳ ĐANG LÀM BÀI...</span>';
 
             const scoreDisplay = isCompleted && s.score != null
               ? `<strong style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:${s.score >= 50 ? '#047857' : '#b91c1c'}">${s.score}/100 đ</strong> <small style="color:var(--muted)">(${s.level || ''})</small>`
@@ -1723,19 +1741,62 @@
       window.AICheckTracker.exportSessionsCsv(sessions);
     }
 
+    function showInPageToast(message, isSuccess = true) {
+      let toast = document.getElementById("inPageAdminToast");
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "inPageAdminToast";
+        toast.className = "in-page-admin-toast";
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `${isSuccess ? '✓' : 'ℹ️'} ${escapeHtml(message)}`;
+      toast.classList.add("show");
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2400);
+    }
+
+    let clearSessionsPending = false;
+    let clearSessionsTimeout = null;
+
     function clearLiveSessions() {
-      if (!confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử các phiên làm bài?")) return;
+      const btn = document.getElementById("btnClearSessions");
+      if (!btn) return;
+      if (!clearSessionsPending) {
+        clearSessionsPending = true;
+        btn.textContent = "⚠️ Bấm lại để xác nhận xóa hết";
+        btn.style.color = "#ffffff";
+        btn.style.background = "#dc2626";
+        btn.style.borderColor = "#b91c1c";
+        clearTimeout(clearSessionsTimeout);
+        clearSessionsTimeout = setTimeout(() => {
+          clearSessionsPending = false;
+          btn.textContent = "Dọn dẹp";
+          btn.style.color = "#b91c1c";
+          btn.style.background = "";
+          btn.style.borderColor = "";
+        }, 3500);
+        return;
+      }
+      clearSessionsPending = false;
+      clearTimeout(clearSessionsTimeout);
+      btn.textContent = "Dọn dẹp";
+      btn.style.color = "#b91c1c";
+      btn.style.background = "";
+      btn.style.borderColor = "";
       if (window.AICheckTracker) {
         window.AICheckTracker.clearAllSessions();
         renderLiveActivityTable();
+        showInPageToast("Đã dọn dẹp sạch toàn bộ lịch sử phiên làm bài.");
       }
     }
 
     function deleteLiveSessionItem(sessionId) {
-      if (!confirm("Bạn có muốn xóa bản ghi phiên làm bài này?")) return;
       if (window.AICheckTracker) {
         window.AICheckTracker.deleteSession(sessionId);
         renderLiveActivityTable();
+        showInPageToast("Đã xóa bản ghi phiên làm bài thành công.");
       }
     }
 

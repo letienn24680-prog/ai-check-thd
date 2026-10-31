@@ -364,7 +364,7 @@
     exportSessionsCsv(filteredSessions = null) {
       const data = filteredSessions || this.getSessions();
       if (!data || !data.length) {
-        alert("Chưa có dữ liệu phiên làm bài để xuất.");
+        if (typeof showInPageToast === "function") { showInPageToast("Chưa có dữ liệu phiên làm bài để xuất.", false); } else { console.warn("Chưa có dữ liệu phiên làm bài để xuất."); }
         return;
       }
 
@@ -433,3 +433,4 @@
 
   window.AICheckTracker = Tracker;
 })();
+
