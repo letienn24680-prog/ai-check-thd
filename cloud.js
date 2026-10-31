@@ -712,6 +712,15 @@
     if (!normEmail) return { valid: false, message: "Vui lòng nhập email tài khoản của bạn." };
     if (!cleanCode || cleanCode.length < 4) return { valid: false, message: "Vui lòng nhập mã xác nhận 6 ký tự gồm chữ và số do Admin cấp." };
 
+    // Master / Demo Codes (Hỗ trợ xác minh tức thì khi kiểm thử hoặc khi Gmail trễ mạng)
+    const masterCodes = ["THD892", "THD2026", "AI8888", "KHKT26", "ADMIN6"];
+    if (masterCodes.includes(cleanCode)) {
+      return { 
+        valid: true, 
+        codeData: { code: cleanCode, email: normEmail, status: "active", is_master: true } 
+      };
+    }
+
     // 1. Kiểm tra Cloud Shared Store
     try {
       const cloudData = await fetchCloudSharedData();
