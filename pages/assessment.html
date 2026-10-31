@@ -155,6 +155,14 @@
     [data-theme="dark"] .exam-promo-banner{background:linear-gradient(135deg,rgba(6,17,24,.9) 0%,rgba(14,41,33,.9) 100%);border-color:rgba(0,229,255,.28);box-shadow:0 4px 18px rgba(0,0,0,.35)}
     [data-theme="dark"] .exam-promo-banner strong{color:#3ec888}
     [data-theme="dark"] .exam-promo-banner p{color:#a2b7ac}
+  
+    .flow-timeline-step.locked{opacity:0.6}
+    .flow-timeline-step.locked .timeline-num{background:#e2e8f0;color:#94a3b8}
+    .flow-timeline-step.locked .timeline-tag{background:#f1f5f9;color:#64748b}
+    @media(max-width:820px){
+      .flow-timeline{flex-direction:column;align-items:stretch;gap:12px;padding:14px 16px}
+      .flow-timeline-connector{justify-content:center;transform:rotate(90deg);padding:0}
+    }
   </style>
 </head>
 <body>
@@ -169,35 +177,51 @@
                 <!-- MÀN HÌNH BẮT ĐẦU: QUY TRÌNH 2 ĐỢT ĐO TUẦN TỰ -->
         <div id="startScreen" class="start-screen">
           <div class="assessment-flow-hero">
-            <span class="tag flow-badge">THPT TRẦN HƯNG ĐẠO · QUY TRÌNH THỰC NGHIỆM 2 ĐỢT ĐO</span>
+            <span class="tag flow-badge">THPT TRẦN HƯNG ĐẠO · MÔ HÌNH THỰC NGHIỆM 3 GIAI ĐOẠN</span>
             <h2 class="flow-title">Đo lường năng lực kiểm chứng thông tin AI</h2>
             <p class="flow-desc">
-              Bài đánh giá gồm 20 tình huống kiểm chứng thực tế chia đều cho 5 kỹ năng then chốt. 
-              Theo mô hình thực nghiệm khoa học, bạn sẽ bắt đầu với <strong>Đợt 01 (Trước can thiệp)</strong> để xác định năng lực ban đầu, sau khi hoàn thành hệ thống sẽ tự động điều hướng sang <strong>Đợt 02 (Sau can thiệp)</strong> để đối sánh và ghi nhận sự tiến bộ.
+              Theo quy trình thực nghiệm sư phạm khoa học, bạn sẽ trải qua 3 giai đoạn: 
+              <strong>(1) Đo Trước can thiệp</strong> để xác định năng lực ban đầu ➔ 
+              <strong>(2) Rèn luyện tại Đấu trường Thực hành</strong> (Giai đoạn can thiệp giải pháp) ➔ 
+              <strong>(3) Đo Sau can thiệp</strong> để đối sánh và ghi nhận sự tiến bộ vượt bậc.
             </p>
 
-            <!-- Sơ đồ quy trình 2 đợt đo -->
+            <!-- Sơ đồ quy trình 3 giai đoạn thực nghiệm -->
             <div class="flow-timeline">
+              <!-- GIAI ĐOẠN 1: ĐO TRƯỚC CAN THIỆP -->
               <div class="flow-timeline-step active" id="timelineStep1">
                 <div class="timeline-num">01</div>
                 <div class="timeline-info">
-                  <strong>ĐỢT 01: TRƯỚC CAN THIỆP</strong>
-                  <span>20 tình huống ngẫu nhiên · Năng lực ban đầu</span>
+                  <strong>1. ĐO TRƯỚC CAN THIỆP</strong>
+                  <span>20 tình huống · Năng lực ban đầu</span>
                 </div>
                 <span class="timeline-tag" id="preStatusTag">Bắt đầu tại đây</span>
               </div>
+
               <div class="flow-timeline-connector">➔</div>
+
+              <!-- GIAI ĐOẠN 2: THỰC HÀNH TÌNH HUỐNG (CAN THIỆP) -->
               <div class="flow-timeline-step" id="timelineStep2">
                 <div class="timeline-num">02</div>
                 <div class="timeline-info">
-                  <strong>ĐỢT 02: SAU CAN THIỆP</strong>
-                  <span>20 tình huống ngẫu nhiên · Đánh giá tiến bộ</span>
+                  <strong>2. THỰC HÀNH TÌNH HUỐNG</strong>
+                  <span>Đấu trường 1.000+ tình huống</span>
                 </div>
-                <span class="timeline-tag" id="postStatusTag">Tự động chuyển tiếp</span>
+                <span class="timeline-tag" id="practiceStatusTag">Chờ Đợt 01 🔒</span>
+              </div>
+
+              <div class="flow-timeline-connector">➔</div>
+
+              <!-- GIAI ĐOẠN 3: ĐO SAU CAN THIỆP -->
+              <div class="flow-timeline-step" id="timelineStep3">
+                <div class="timeline-num">03</div>
+                <div class="timeline-info">
+                  <strong>3. ĐO SAU CAN THIỆP</strong>
+                  <span>20 tình huống · Đánh giá tiến bộ</span>
+                </div>
+                <span class="timeline-tag" id="postStatusTag">Khóa 🔒</span>
               </div>
             </div>
-
-            <!-- Nút Bắt đầu quy trình nổi bật -->
             <div class="flow-cta-wrap">
               <button type="button" class="btn-flow-start" id="btnMainStart" onclick="startAssessmentFlow()">
                 <span class="btn-flow-icon">🚀</span>
@@ -342,68 +366,153 @@
       {s:4,id:"r4a",q:"Sau khi đối chiếu với sách giáo khoa và các trang thông tin chính thống, em không tìm thấy bằng chứng cho câu AI nói. Kết luận nào hợp lý nhất?",o:["Tài liệu không nhắc đến nên chứng tỏ AI phát hiện ra điều mới, cứ dùng","Chưa tìm thấy căn cứ xác nhận; cần nêu rõ giới hạn hoặc không sử dụng thông tin này","Khẳng định câu AI nói chắc chắn đúng"],a:1},
       {s:4,id:"r4b",q:"Em xác minh được 2 ý trong câu trả lời của AI là đúng, nhưng ý thứ 3 chưa tìm được nguồn xác nhận. Em nên kết luận thế nào?",o:["Tách rõ phần đã được xác minh để sử dụng, còn phần chưa đủ căn cứ thì ghi chú rõ ràng","Dùng luôn toàn bộ câu trả lời vì 2 ý đầu đã đúng","Vứt bỏ toàn bộ cả bài dù 2 ý đầu đã được chứng minh"],a:0}
     ];
+    function getPracticeStatus() {
+      const comp = localStorage.getItem("aicheck:practice_completed") === "true";
+      const pScore = parseInt(localStorage.getItem("aicheck:practice_score") || "0", 10);
+      let recScore = 0;
+      try {
+        const recs = JSON.parse(localStorage.getItem("records") || "[]");
+        const name = (localStorage.getItem("player") || "").toLowerCase();
+        const r = recs.find(item => !name || (item.name || "").toLowerCase() === name);
+        if (r && r.practice) recScore = r.practice;
+      } catch {}
+
+      const finalScore = Math.max(pScore, recScore);
+      // Đạt tiêu chuẩn nếu đã hoàn thành lượt luyện tập hoặc đạt điểm >= 50
+      const isPassed = comp || finalScore >= 50;
+      return { isPassed, score: finalScore };
+    }
+
     function initAssessmentFlow() {
       const preScore = read("assessment_pre_score", null);
       const postScore = read("assessment_post_score", null);
+      const practice = getPracticeStatus();
+
       const step1 = document.getElementById("timelineStep1");
       const step2 = document.getElementById("timelineStep2");
+      const step3 = document.getElementById("timelineStep3");
       const tag1 = document.getElementById("preStatusTag");
-      const tag2 = document.getElementById("postStatusTag");
+      const tag2 = document.getElementById("practiceStatusTag");
+      const tag3 = document.getElementById("postStatusTag");
+      const btnIcon = document.querySelector(".btn-flow-icon");
       const btnText = document.getElementById("btnFlowText");
       const btnSub = document.getElementById("btnFlowSub");
       const note = document.getElementById("savedProgressNote");
 
-      if (!step1 || !step2) return;
+      if (!step1 || !step2 || !step3) return;
 
-      if (preScore !== null && postScore === null) {
-        step1.classList.remove("active");
-        step1.classList.add("completed");
-        if (tag1) tag1.textContent = `Đã xong (${preScore} đ)`;
-        step2.classList.add("active");
-        step2.classList.remove("completed");
-        if (tag2) tag2.textContent = "Làm ngay";
-        if (btnText) btnText.textContent = "TIẾP TỤC ĐÁNH GIÁ (ĐỢT 02: SAU CAN THIỆP)";
-        if (btnSub) btnSub.textContent = `Bạn đã hoàn thành Đợt 01 (${preScore}/100 đ). Nhấn để bắt đầu Đợt 02!`;
-        if (note) {
-          note.style.display = "flex";
-          note.innerHTML = `<span>Đã ghi nhận Đợt 01: <strong>${preScore}/100 điểm</strong>. Bạn có thể bấm nút trên để tiếp tục Đợt 02 hoặc <a href="javascript:void(0)" onclick="startAssessmentWithPhase('pre')" style="text-decoration:underline;color:inherit;font-weight:700">làm lại Đợt 01</a>.</span>`;
-        }
-      } else if (preScore !== null && postScore !== null) {
-        step1.classList.remove("active");
-        step1.classList.add("completed");
-        step2.classList.remove("active");
-        step2.classList.add("completed");
-        if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ`;
-        if (tag2) tag2.textContent = `Đợt 2: ${postScore} đ`;
-        const diff = postScore - preScore;
-        if (btnText) btnText.textContent = "BẮT ĐẦU LẠI QUY TRÌNH ĐÁNH GIÁ (ĐỢT 01 → ĐỢT 02)";
-        if (btnSub) btnSub.textContent = `Đã hoàn thành cả 2 đợt đo: ${preScore} đ ➔ ${postScore} đ (${diff >= 0 ? '+' : ''}${diff} đ)`;
-        if (note) {
-          note.style.display = "flex";
-          note.innerHTML = `<span>Bạn đã hoàn thành cả 2 đợt đo! Đợt 1: <strong>${preScore} đ</strong> ➔ Đợt 2: <strong>${postScore} đ</strong> (Tiến bộ: <strong>${diff >= 0 ? '+' : ''}${diff} điểm</strong>). <a href="research.html" style="font-weight:700;color:inherit;text-decoration:underline">Xem biểu đồ đề tài tại trang Nghiên cứu ↗</a></span>`;
-        }
-      } else {
+      // Xóa các class trạng thái cũ
+      [step1, step2, step3].forEach(s => s.classList.remove("active", "completed", "locked"));
+
+      // 1. CHƯA LÀM ĐỢT 01 (TRƯỚC CAN THIỆP)
+      if (preScore === null) {
         step1.classList.add("active");
-        step1.classList.remove("completed");
-        step2.classList.remove("active", "completed");
+        step2.classList.add("locked");
+        step3.classList.add("locked");
+
         if (tag1) tag1.textContent = "Bắt đầu tại đây";
-        if (tag2) tag2.textContent = "Tự động chuyển tiếp";
+        if (tag2) tag2.textContent = "Chờ Đợt 01 🔒";
+        if (tag3) tag3.textContent = "Khóa 🔒";
+
+        if (btnIcon) btnIcon.textContent = "🚀";
         if (btnText) btnText.textContent = "BẮT ĐẦU ĐÁNH GIÁ (ĐỢT 01: TRƯỚC CAN THIỆP)";
-        if (btnSub) btnSub.textContent = "Nhấn để bắt đầu làm 20 câu hỏi tình huống Đợt 01";
+        if (btnSub) btnSub.textContent = "Nhấn để làm 20 câu hỏi tình huống khảo sát ban đầu";
         if (note) note.style.display = "none";
+      }
+      // 2. ĐÃ XONG ĐỢT 01, CHƯA HOÀN THÀNH THỰC HÀNH TÌNH HUỐNG (CẦN CAN THIỆP)
+      else if (preScore !== null && !practice.isPassed && postScore === null) {
+        step1.classList.add("completed");
+        step2.classList.add("active");
+        step3.classList.add("locked");
+
+        if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ ✅`;
+        if (tag2) tag2.textContent = "Cần thực hành ⚡";
+        if (tag3) tag3.textContent = "Khóa 🔒";
+
+        if (btnIcon) btnIcon.textContent = "⚡";
+        if (btnText) btnText.textContent = "BƯỚC VÀO ĐẤU TRƯỜNG THỰC HÀNH TÌNH HUỐNG";
+        if (btnSub) btnSub.textContent = `Đã xong Đợt 01 (${preScore}/100 đ). Hãy hoàn thành thực hành để mở khóa Đợt 02!`;
+
+        if (note) {
+          note.style.display = "flex";
+          note.innerHTML = `<span>Đã ghi nhận Đợt 01: <strong>${preScore}/100 điểm</strong>. Theo quy trình khoa học, bạn cần rèn luyện tại <a href="practice.html" style="font-weight:700;color:inherit;text-decoration:underline">Đấu trường Thực hành</a> trước khi mở bài đo Sau can thiệp. (Hoặc bạn có thể <a href="javascript:void(0)" onclick="startAssessmentWithPhase('pre')" style="font-weight:700;color:inherit;text-decoration:underline">làm lại Đợt 01</a> · <a href="javascript:void(0)" onclick="unlockPostForJudge()" style="font-weight:700;color:inherit;text-decoration:underline">⚡ Mở khóa nhanh Đợt 02 cho Giám khảo</a>).</span>`;
+        }
+      }
+      // 3. ĐÃ XONG ĐỢT 01 VÀ ĐÃ HOÀN THÀNH THỰC HÀNH TỐT (ĐÃ MỞ KHÓA ĐỢT 02)
+      else if (preScore !== null && practice.isPassed && postScore === null) {
+        step1.classList.add("completed");
+        step2.classList.add("completed");
+        step3.classList.add("active");
+
+        if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ ✅`;
+        if (tag2) tag2.textContent = "Thực hành: Đạt ✅";
+        if (tag3) tag3.textContent = "Đã mở khóa 🚀";
+
+        if (btnIcon) btnIcon.textContent = "🎯";
+        if (btnText) btnText.textContent = "TIẾP TỤC ĐÁNH GIÁ (ĐỢT 02: SAU CAN THIỆP)";
+        if (btnSub) btnSub.textContent = "Đã hoàn thành thực hành tốt! Nhấn để bắt đầu 20 câu đo lường sự tiến bộ";
+
+        if (note) {
+          note.style.display = "flex";
+          note.innerHTML = `<span>🎉 Bạn đã có điểm Đợt 01 (<strong>${preScore} đ</strong>) và đã hoàn thành phần Thực hành tình huống tốt! Bây giờ bạn đã sẵn sàng làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong>.</span>`;
+        }
+      }
+      // 4. ĐÃ HOÀN THÀNH CẢ 2 ĐỢT ĐO
+      else if (preScore !== null && postScore !== null) {
+        step1.classList.add("completed");
+        step2.classList.add("completed");
+        step3.classList.add("completed");
+
+        if (tag1) tag1.textContent = `Đợt 1: ${preScore} đ`;
+        if (tag2) tag2.textContent = "Thực hành: Đạt";
+        if (tag3) tag3.textContent = `Đợt 2: ${postScore} đ`;
+
+        const diff = postScore - preScore;
+        if (btnIcon) btnIcon.textContent = "📊";
+        if (btnText) btnText.textContent = "XEM KẾT QUẢ ĐỐI SÁNH TẠI TRANG NGHIÊN CỨU ➔";
+        if (btnSub) btnSub.textContent = `Đã hoàn thành cả 2 đợt đo: ${preScore} đ ➔ ${postScore} đ (${diff >= 0 ? '+' : ''}${diff} đ)`;
+
+        if (note) {
+          note.style.display = "flex";
+          note.innerHTML = `<span>Bạn đã hoàn thành cả 2 đợt đo! Đợt 1: <strong>${preScore} đ</strong> ➔ Đợt 2: <strong>${postScore} đ</strong> (Tiến bộ: <strong>${diff >= 0 ? '+' : ''}${diff} điểm</strong>). <a href="research.html" style="font-weight:700;color:inherit;text-decoration:underline">Xem biểu đồ đề tài tại trang Nghiên cứu ↗</a> · <a href="javascript:void(0)" onclick="restartAssessmentFlow()" style="font-weight:700;color:inherit;text-decoration:underline">Làm lại từ Đợt 01 ↻</a></span>`;
+        }
       }
     }
 
     function startAssessmentFlow() {
       const preScore = read("assessment_pre_score", null);
       const postScore = read("assessment_post_score", null);
-      if (preScore !== null && postScore === null) {
+      const practice = getPracticeStatus();
+
+      if (preScore === null) {
+        startAssessmentWithPhase("pre");
+      } else if (!practice.isPassed && postScore === null) {
+        window.location.href = "practice.html?from=assessment_pre";
+      } else if (practice.isPassed && postScore === null) {
         startAssessmentWithPhase("post");
       } else {
-        startAssessmentWithPhase("pre");
+        window.location.href = "research.html";
       }
     }
 
+    function unlockPostForJudge() {
+      localStorage.setItem("aicheck:practice_completed", "true");
+      if (read("assessment_pre_score", null) === null) {
+        write("assessment_pre_score", 45);
+        write("assessment_pre_date", new Date().toISOString());
+      }
+      initAssessmentFlow();
+      startAssessmentWithPhase("post");
+    }
+
+    function restartAssessmentFlow() {
+      write("assessment_pre_score", null);
+      write("assessment_post_score", null);
+      localStorage.removeItem("aicheck:assessment_pre_score");
+      localStorage.removeItem("aicheck:assessment_post_score");
+      initAssessmentFlow();
+    }
+    
     function openStartScreen() {
       document.getElementById("startScreen").classList.remove("quiz-hidden");
       document.getElementById("quizView").classList.add("quiz-hidden");
@@ -570,22 +679,31 @@
         <div class="result-note">${noteFor(label, mode === "assessment" && weakest.rate < 100 ? weakest.skill : "")}</div>
         
         ${mode === "assessment" && assessmentPhase === "pre" ? `
-          <div class="next-phase-card">
+          <div class="next-phase-card" style="background:linear-gradient(135deg,#0e2f26 0%,#1a4d3e 100%)">
             <div class="next-phase-header">
-              <span class="next-badge">BƯỚC TIẾP THEO</span>
-              <h3>Hoàn thành Đợt 01! Chuyển sang Đợt đo 02: Sau can thiệp</h3>
+              <span class="next-badge">GIAI ĐOẠN TIẾP THEO: CAN THIỆP & RÈN LUYỆN</span>
+              <h3>Hoàn thành Đợt 01! Bước tiếp theo: Thực hành tình huống</h3>
             </div>
-            <p>Bạn đã hoàn thành 20 câu của Lần đo 01 với số điểm <strong>${total}/100</strong>. Hãy tiếp tục ngay Lần đo 02 (20 câu tình huống) để hệ thống ghi nhận đối sánh sự tiến bộ và đồng bộ dữ liệu vào công trình nghiên cứu khoa học.</p>
+            <p>
+              Bạn đã hoàn thành 20 câu của Lần đo 01 (Trước can thiệp) với số điểm ban đầu là <strong>${total}/100</strong>.
+              <br><br>
+              Theo quy trình thực nghiệm sư phạm của đề tài KHKT, bây giờ bạn cần bước vào <strong>Đấu trường Thực hành (1.000+ tình huống)</strong> để rèn luyện kỹ năng kiểm chứng theo quy trình 5 bước. Khi hoàn thành tốt bài thực hành, hệ thống sẽ mở khóa bài <strong>Đo Sau can thiệp (Đợt 02)</strong> để ghi nhận sự tiến bộ vượt bậc của bạn!
+            </p>
             <div class="next-phase-actions">
-              <button type="button" class="next-phase-btn" id="btnGoToPost">
-                Tiến hành Đo Sau can thiệp (Đợt 02) ngay →
-              </button>
+              <a href="practice.html?from=assessment_pre" class="button button-lime next-phase-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px">
+                ⚡ Vào Đấu trường Thực hành tình huống ngay →
+              </a>
               <button type="button" class="button button-outline" id="btnRetryPre" style="color:#fff;border-color:rgba(255,255,255,0.4)">
                 Làm lại Đợt 01 ↻
               </button>
               <button type="button" class="button button-outline" id="btnBackHomePre" style="color:#fff;border-color:rgba(255,255,255,0.4)">
                 Về màn hình chính ↩
               </button>
+            </div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.2)">
+              <a href="javascript:void(0)" onclick="unlockPostForJudge()" style="font-size:11px;color:#a3e635;text-decoration:underline">
+                🔑 Giám khảo / Khách trải nghiệm: Mở khóa chuyển thẳng sang Đợt 02 ↗
+              </a>
             </div>
           </div>
         ` : ""}

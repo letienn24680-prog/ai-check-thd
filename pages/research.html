@@ -109,7 +109,7 @@
       <article class="fact"><b>Tên đề tài</b><p>“Thực trạng và giải pháp nâng cao năng lực kiểm chứng thông tin do trí tuệ nhân tạo (AI) cung cấp cho học sinh Trường THPT Trần Hưng Đạo”.</p></article>
       <article class="fact"><b>Lý do chọn đề tài</b><p>AI ngày càng phổ biến trong học tập; học sinh cần biết đánh giá và kiểm chứng thông tin trước khi sử dụng.</p></article>
       <article class="fact"><b>Mục tiêu & đối tượng</b><p>Khảo sát và nâng cao năng lực kiểm chứng thông tin AI của học sinh THPT.</p></article>
-      <article class="fact"><b>Phương pháp</b><p>Khảo sát, xây dựng công cụ và tình huống, tổ chức can thiệp, so sánh kết quả trước – sau.</p></article>
+      <article class="fact"><b>Phương pháp</b><p>Mô hình thực nghiệm sư phạm 3 giai đoạn: Khảo sát đo trước can thiệp ➔ Tổ chức can thiệp rèn luyện qua quy trình 5 bước và Đấu trường 1.000+ tình huống thực tế ➔ Khảo sát đo sau can thiệp đối sánh kết quả.</p></article>
       <article class="fact"><b>Sản phẩm</b><p>Bộ công cụ đánh giá; quy trình 5 bước; 30 tình huống; website, infographic và sổ tay.</p></article>
       <article class="fact"><b>Nhóm nghiên cứu · Giáo viên hướng dẫn</b><p>Cập nhật họ tên chính thức trước khi công bố.</p></article>
     </div>
@@ -125,22 +125,27 @@
       try {
         const pre = JSON.parse(localStorage.getItem("aicheck:assessment_pre_score") ?? "null");
         const post = JSON.parse(localStorage.getItem("aicheck:assessment_post_score") ?? "null");
+        const practiceDone = localStorage.getItem("aicheck:practice_completed") === "true";
         const banner = document.getElementById("personalComparisonCard");
         if (!banner) return;
-        if (pre !== null || post !== null) {
+        if (pre !== null || post !== null || practiceDone) {
           banner.style.display = "flex";
           const diff = (pre !== null && post !== null) ? (post - pre) : null;
           banner.innerHTML = `
             <div>
-              <strong>🎯 Kết quả đánh giá thực nghiệm của bạn trên thiết bị này:</strong>
-              <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-                <span class="personal-pill">Lần đo 01: <strong>${pre !== null ? pre + '/100 đ' : 'Chưa làm'}</strong></span>
+              <strong>🎯 Tiến trình thực nghiệm 3 giai đoạn của bạn trên thiết bị này:</strong>
+              <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <span class="personal-pill">1. Trước can thiệp: <strong>${pre !== null ? pre + '/100 đ' : 'Chưa làm'}</strong></span>
                 <span style="color:#71947b;font-weight:800">➔</span>
-                <span class="personal-pill">Lần đo 02: <strong>${post !== null ? post + '/100 đ' : 'Chưa làm'}</strong></span>
+                <span class="personal-pill">2. Thực hành tình huống: <strong>${practiceDone ? 'Đã đạt tiêu chuẩn ✅' : 'Đang rèn luyện'}</strong></span>
+                <span style="color:#71947b;font-weight:800">➔</span>
+                <span class="personal-pill">3. Sau can thiệp: <strong>${post !== null ? post + '/100 đ' : 'Chưa làm'}</strong></span>
                 ${diff !== null ? `<span class="personal-pill" style="background:${diff >= 0 ? '#d9f26c' : '#ffd2cc'};color:var(--forest)">Tiến bộ: <strong>${diff >= 0 ? '+' : ''}${diff} điểm</strong></span>` : ''}
               </div>
             </div>
-            <a href="assessment.html" class="button button-dark" style="font-size:11px;padding:7px 14px">Làm lại bài đo ↗</a>
+            <a href="assessment.html" class="button button-dark" style="font-size:11px;padding:7px 14px">
+              ${post === null ? (practiceDone ? 'Làm tiếp Đo Sau can thiệp ➔' : 'Vào trang Đánh giá ➔') : 'Xem lại bài đo ↗'}
+            </a>
           `;
         }
       } catch (e) {}
