@@ -19,7 +19,7 @@
       questions: [
         {
           id: "q1",
-          question: "AI đưa ra một con số thống kê rất cụ thể nhưng không dẫn nguồn kiểm chứng. Việc đầu tiên em nên làm là gì?",
+          question: "AI đưa ra một con số thống kê rất cụ thể nhưng không dẫn nguồn kiểm chứng. Việc đầu tiên bạn nên làm là gì?",
           options: [
             "A. Ghi lại như số liệu đã được xác nhận chính thức",
             "B. Đánh dấu con số là khẳng định cần kiểm chứng độc lập",
@@ -91,7 +91,7 @@
         },
         {
           id: "q7",
-          question: "Khi truy cập một trang web do AI dẫn chứng, em nhận thấy trang không ghi tên tác giả và không có ngày đăng. Em nên xử lý thế nào?",
+          question: "Khi truy cập một trang web do AI dẫn chứng, bạn nhận thấy trang không ghi tên tác giả và không có ngày đăng. Bạn nên xử lý thế nào?",
           options: [
             "A. Vẫn sử dụng nếu nội dung nghe có vẻ hợp lý và lôi cuốn",
             "B. Thận trọng, kiểm tra thông tin xuất xứ tên miền và tìm nguồn có trách nhiệm pháp lý rõ ràng",
@@ -151,7 +151,7 @@
         },
         {
           id: "q12",
-          question: "Một bức ảnh sự kiện do AI mô tả kèm theo. Muốn xác minh bức ảnh có phải bị cắt ghép hoặc chụp ở thời điểm khác, em làm gì?",
+          question: "Một bức ảnh sự kiện do AI mô tả kèm theo. Muốn xác minh bức ảnh có phải bị cắt ghép hoặc chụp ở thời điểm khác, bạn làm gì?",
           options: [
             "A. Tin vào nhận định mô tả bằng lời của AI",
             "B. Sử dụng công cụ tìm kiếm hình ảnh ngược (Reverse Image Search) để đối chiếu bối cảnh và nguồn gốc ban đầu",
@@ -175,7 +175,7 @@
         },
         {
           id: "q14",
-          question: "Một bài báo khoa học được dán nhãn 'Preprint' (Bản thảo chưa bình duyệt). Em nên hiểu về tài liệu này thế nào?",
+          question: "Một bài báo khoa học được dán nhãn 'Preprint' (Bản thảo chưa bình duyệt). Bạn nên hiểu về tài liệu này thế nào?",
           options: [
             "A. Là tài liệu đã được thẩm định chuyên môn tuyệt đối bởi hội đồng khoa học",
             "B. Là nghiên cứu sơ bộ chưa qua phản biện đồng nghiệp, cần thận trọng và kiểm chứng thêm trước khi ứng dụng",
@@ -187,7 +187,7 @@
         },
         {
           id: "q15",
-          question: "Một tài liệu do chuyên gia có tên tuổi viết nhưng được xuất bản từ năm 1995 trong lĩnh vực Trí tuệ nhân tạo. Em cần lưu ý điều gì?",
+          question: "Một tài liệu do chuyên gia có tên tuổi viết nhưng được xuất bản từ năm 1995 trong lĩnh vực Trí tuệ nhân tạo. Bạn cần lưu ý điều gì?",
           options: [
             "A. Kiểm tra tính cập nhật vì công nghệ và dữ liệu AI thay đổi rất nhanh chóng theo thời gian",
             "B. Chấp nhận ngay toàn bộ vì tác giả là người có chuyên môn cao",

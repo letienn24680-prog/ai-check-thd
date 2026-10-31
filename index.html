@@ -278,7 +278,7 @@
         <header class="page-header"><div><p class="eyebrow">GIẢI ĐÁP NHANH</p><h2 class="page-title" id="faqTitle">Câu hỏi thường gặp.</h2><p class="page-lead">Một vài điều cần biết trước khi bắt đầu.</p></div></header>
         <div class="faq-list">
           <details><summary>AI CHECK THĐ có phải là một chatbot AI không?</summary><p>Không. Đây là website học tập và thực hành kỹ năng kiểm chứng thông tin do AI cung cấp; website không đưa ra câu trả lời thay cho việc tra cứu nguồn.</p></details>
-          <details><summary>Bắt đầu học và luyện tập như thế nào?</summary><p>Đọc quy trình 5 bước trong mục Kiến thức, sau đó luyện các tình huống trong mục Thực hành. Em có thể làm bài đánh giá để xem kết quả theo kỹ năng.</p></details>
+          <details><summary>Bắt đầu học và luyện tập như thế nào?</summary><p>Đọc quy trình 5 bước trong mục Kiến thức, sau đó luyện các tình huống trong mục Thực hành. Bạn có thể làm bài đánh giá để xem kết quả theo kỹ năng.</p></details>
           <details><summary>Tình huống trong phần thực hành có phải trích dẫn thật không?</summary><p>Các tình huống mô phỏng dùng để luyện tập. Hãy mở phần giải thích và truy cập nguồn đối chiếu trước khi dùng một thông tin ngoài đời thực.</p></details>
           <details><summary>Ai thực hiện đề tài và website lưu dữ liệu ở đâu?</summary><p>Danh sách thành viên và giáo viên hướng dẫn được cập nhật tại mục Nghiên cứu khi có xác nhận chính thức. Một số kết quả học tập được lưu trên trình duyệt hoặc đồng bộ theo cấu hình của dự án; xem thông báo tại từng công cụ trước khi sử dụng.</p></details>
         </div>
@@ -338,12 +338,12 @@
         window.AICheckCloud.getUser().then(u => {
           if (u) {
             const displayName = localProf.display_name || u.user_metadata?.display_name || u.email?.split("@")[0] || defaultWarrior;
-            if (nameEl) nameEl.textContent = isEn ? `Welcome back, ${displayName}!` : `Chào mừng em trở lại, ${displayName}!`;
+            if (nameEl) nameEl.textContent = isEn ? `Welcome back, ${displayName}!` : `Chào mừng bạn trở lại, ${displayName}!`;
           }
         });
       }
       if (playerName && nameEl) {
-        nameEl.textContent = isEn ? `Welcome back, ${playerName}!` : `Chào mừng em trở lại, ${playerName}!`;
+        nameEl.textContent = isEn ? `Welcome back, ${playerName}!` : `Chào mừng bạn trở lại, ${playerName}!`;
       }
 
       // Xoay đổi thông điệp sau dấu chấm chậm lại mỗi 5s (5000ms)
@@ -362,7 +362,7 @@
       }
       const prefix = isEn
         ? `You are at Level ${stats.level} (${stats.levelTitle}). `
-        : `Em đang ở Cấp ${stats.level} (${stats.levelTitle}). `;
+        : `Bạn đang ở Cấp ${stats.level} (${stats.levelTitle}). `;
 
       const xpNeeded = Math.max(0, (stats.nextLevelXp || 0) - (stats.xp || 0));
       const suffixes = isEn ? [

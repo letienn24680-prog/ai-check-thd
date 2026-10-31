@@ -435,7 +435,7 @@
 
               <div>
                 <label style="display:block;font-size:11px;font-weight:800;color:#1e293b;margin-bottom:4px">6️⃣ TRÌNH BÀY CHI TIẾT SỰ CỐ TRANH CHẤP (*):</label>
-                <textarea id="reqUnlockReason" required rows="3" placeholder="Em đang làm bài trên máy tính thì bạn/em ở nhà cũng đăng nhập vào điện thoại, dẫn đến việc bị tranh chấp phiên..." style="width:100%;padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:12.5px;box-sizing:border-box;font-family:inherit"></textarea>
+                <textarea id="reqUnlockReason" required rows="3" placeholder="Tôi đang làm bài trên máy tính thì người khác ở nhà cũng đăng nhập vào điện thoại, dẫn đến việc bị tranh chấp phiên..." style="width:100%;padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:12.5px;box-sizing:border-box;font-family:inherit"></textarea>
               </div>
 
               <div style="background:#f8fafc;padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:11px;color:#475569">

@@ -314,10 +314,10 @@
       let subtitle = "";
       if (type === "starter") {
         title = isEn ? "🔥 Day 1 Login Streak!" : "🔥 Khởi Đầu Chuỗi Ngày Đăng Nhập!";
-        subtitle = isEn ? `Welcome! You earned +${xp} XP. Log in tomorrow to keep the flame burning!` : `Chào mừng em! Nhận +${xp} XP. Hãy đăng nhập mỗi ngày để giữ vững chuỗi nhé!`;
+        subtitle = isEn ? `Welcome! You earned +${xp} XP. Log in tomorrow to keep the flame burning!` : `Chào mừng bạn! Nhận +${xp} XP. Hãy đăng nhập mỗi ngày để giữ vững chuỗi nhé!`;
       } else if (type === "maintained") {
         title = isEn ? `🔥 ${streak}-Day Login Streak!` : `🔥 Chuỗi ${streak} Ngày Liên Tiếp!`;
-        subtitle = isEn ? `Awesome persistence! You earned +${xp} XP today. (Record: ${bestStreak} days)` : `Rất xuất sắc! Em nhận được +${xp} XP hôm nay. (Kỷ lục: ${bestStreak} ngày)`;
+        subtitle = isEn ? `Awesome persistence! You earned +${xp} XP today. (Record: ${bestStreak} days)` : `Rất xuất sắc! Bạn nhận được +${xp} XP hôm nay. (Kỷ lục: ${bestStreak} ngày)`;
       } else {
         title = isEn ? "🔥 Login Streak Restarted!" : "🔥 Khởi Động Lại Chuỗi Ngày!";
         subtitle = isEn ? `Streak reset to Day 1 (+${xp} XP). Remember to log in daily!` : `Chuỗi bắt đầu lại: 1 Ngày (+${xp} XP). Hãy nhớ đăng nhập mỗi ngày nhé!`;
@@ -582,7 +582,7 @@
         <div class="gamify-levelup-card">
           <div class="gamify-levelup-icon">${stats.levelIcon}</div>
           <h3>${isEn ? "CONGRATULATIONS ON LEVELING UP!" : "CHÚC MỪNG LÊN CẤP!"}</h3>
-          <p class="gamify-levelup-title">${isEn ? `You have leveled up to <strong>Level ${stats.level}: ${stats.levelTitle}</strong>` : `Em đã xuất sắc thăng hạng lên <strong>Cấp ${stats.level}: ${stats.levelTitle}</strong>`}</p>
+          <p class="gamify-levelup-title">${isEn ? `You have leveled up to <strong>Level ${stats.level}: ${stats.levelTitle}</strong>` : `Bạn đã xuất sắc thăng hạng lên <strong>Cấp ${stats.level}: ${stats.levelTitle}</strong>`}</p>
           <p class="gamify-levelup-xp">${isEn ? `Total accumulated experience points: <strong>${stats.xp} XP</strong>` : `Tổng điểm kinh nghiệm tích lũy: <strong>${stats.xp} XP</strong>`}</p>
           <button type="button" class="button button-lime" id="btnCloseLevelUp">${isEn ? "Awesome! Continue training →" : "Tuyệt vời! Tiếp tục rèn luyện →"}</button>
         </div>
@@ -881,7 +881,7 @@
       "AI CHECK THĐ có phải là một chatbot AI không?": "Is AI CHECK THD an AI chatbot?",
       "Không. Đây là website học tập và thực hành kỹ năng kiểm chứng thông tin do AI cung cấp; website không đưa ra câu trả lời thay cho việc tra cứu nguồn.": "No. This is an educational platform to practice AI fact-checking skills; it does not replace original source verification.",
       "Bắt đầu học và luyện tập như thế nào?": "How do I start learning and practicing?",
-      "Đọc quy trình 5 bước trong mục Kiến thức, sau đó luyện các tình huống trong mục Thực hành. Em có thể làm bài đánh giá để xem kết quả theo kỹ năng.": "Read the 5-step process in Knowledge, then practice scenarios in Practice. You can take the assessment to evaluate your skills.",
+      "Đọc quy trình 5 bước trong mục Kiến thức, sau đó luyện các tình huống trong mục Thực hành. Bạn có thể làm bài đánh giá để xem kết quả theo kỹ năng.": "Read the 5-step process in Knowledge, then practice scenarios in Practice. You can take the assessment to evaluate your skills.",
       "Tình huống trong phần thực hành có phải trích dẫn thật không?": "Are practice scenarios real quotes?",
       "Các tình huống mô phỏng dùng để luyện tập. Hãy mở phần giải thích và truy cập nguồn đối chiếu trước khi dùng một thông tin ngoài đời thực.": "Scenarios are simulated for educational practice. Always review explanations and cross-check primary sources before using claims in real life.",
       "Ai thực hiện đề tài và website lưu dữ liệu ở đâu?": "Who created this project and where is data stored?",
@@ -949,7 +949,7 @@
       "02 / THỬ NGHIỆM THỰC CHIẾN": "02 / LIVE ARENA",
       "Check AI: Đấu trường 1.000+ tình huống.": "Check AI: 1,000+ Scenarios Arena.",
       "Check AI: Đấu trường 60 tình huống.": "Check AI: 1,000+ Scenarios Arena.",
-      "Mỗi thẻ đưa ra một phát biểu do AI cung cấp và nêu việc cần kiểm tra. Hãy đọc cả hai, chọn một kết luận cùng cách kiểm chứng phù hợp; hệ thống sẽ phân tích sư phạm và tính điểm kinh nghiệm ngay sau khi em trả lời.": "Each scenario presents an AI assertion and a verification task. Review both, select a conclusion with an appropriate method; pedagogical breakdown and XP are awarded instantly.",
+      "Mỗi thẻ đưa ra một phát biểu do AI cung cấp và nêu việc cần kiểm tra. Hãy đọc cả hai, chọn một kết luận cùng cách kiểm chứng phù hợp; hệ thống sẽ phân tích sư phạm và tính điểm kinh nghiệm ngay sau khi bạn trả lời.": "Each scenario presents an AI assertion and a verification task. Review both, select a conclusion with an appropriate method; pedagogical breakdown and XP are awarded instantly.",
       "1.060 TÌNH HUỐNG · 3 CHỦ ĐỀ": "1,060 SCENARIOS · 3 TOPICS",
       "60 TÌNH HUỐNG · 3 CHỦ ĐỀ": "1,060 SCENARIOS · 3 TOPICS",
       "🔊 Âm thanh: Bật": "🔊 Sound: On",
@@ -959,7 +959,7 @@
       "CÂU 1 / 10": "QUESTION 1 / 10",
       "CÂU 1 / 8": "QUESTION 1 / 10",
       "Câu hỏi tình huống": "Scenario Question",
-      "Bước 1: Dựa trên phát biểu AI ở trên, em chọn kết luận nào?": "Step 1: Based on the AI statement above, which conclusion do you choose?",
+      "Bước 1: Dựa trên phát biểu AI ở trên, bạn chọn kết luận nào?": "Step 1: Based on the AI statement above, which conclusion do you choose?",
       "Bước 2: Cách nào phù hợp nhất để kiểm chứng phát biểu này?": "Step 2: What is the most appropriate method to verify this statement?",
       "Chọn kết luận và cách kiểm chứng": "Select a conclusion and verification method",
       "Kiểm tra đáp án →": "Check Answer →",
@@ -978,7 +978,7 @@
       "Mở Google Form ↗": "Open Google Form ↗",
       "💡 Trợ giúp / Gợi ý": "💡 Help / Hint",
       "💡 Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (1.060 tình huống)": "💡 Need help? Click to expand hints & lookup (1,060 scenarios)",
-      "Gợi ý dành cho em: Em có thể tra cứu nhanh theo từ khóa, chủ đề hoặc xem các tình huống tương tự để tìm phương pháp kiểm chứng chuẩn xác.": "Tips for you: Quickly search by keyword, topic, or view similar sample scenarios for verification hints.",
+      "Gợi ý dành cho bạn: Bạn có thể tra cứu nhanh theo từ khóa, chủ đề hoặc xem các tình huống tương tự để tìm phương pháp kiểm chứng chuẩn xác.": "Tips for you: Quickly search by keyword, topic, or view similar sample scenarios for verification hints.",
       "Các tình huống là tư liệu mô phỏng cho hoạt động học tập, không phải trích dẫn nghiên cứu thật nếu chưa kèm nguồn.": "Scenarios are simulated for educational practice, not real citations unless accompanied by verified sources.",
       "Thư viện tình huống · 1.060 tình huống": "Scenario Library · 1,060 Scenarios",
       "Thư viện tình huống · 60 tình huống": "Scenario Library · 1,060 Scenarios",
@@ -1157,7 +1157,7 @@
       "Trường học": "School",
       "Ngày sinh": "Birthdate",
       "Câu nói yêu thích / Châm ngôn (Motto)": "Favorite Motto / Bio",
-      "Tối đa 160 ký tự. Sẽ lưu cùng hồ sơ học tập của em.": "Max 160 characters. Saved with your profile.",
+      "Tối đa 160 ký tự. Sẽ lưu cùng hồ sơ học tập của bạn.": "Max 160 characters. Saved with your profile.",
       "Mật khẩu mới": "New Password",
       "Xác nhận mật khẩu mới": "Confirm New Password",
       "Tối thiểu 6 ký tự": "At least 6 characters",
@@ -2137,7 +2137,7 @@
                     <span>Câu nói yêu thích / Châm ngôn học tập (Motto)</span>
                   </label>
                   <textarea id="profileInputBio" class="profile-textarea" rows="2" maxlength="160" placeholder="Ví dụ: Kiểm chứng thông tin trước khi tin - Tư duy phản biện thời đại AI."></textarea>
-                  <span class="profile-hint">Tối đa 160 ký tự. Sẽ lưu đồng bộ cùng hồ sơ học tập của em.</span>
+                  <span class="profile-hint">Tối đa 160 ký tự. Sẽ lưu đồng bộ cùng hồ sơ học tập của bạn.</span>
                 </div>
               </div>
             </div>
