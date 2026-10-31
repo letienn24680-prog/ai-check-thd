@@ -979,6 +979,177 @@
     }
 
 
+  
+    /* =========================================================
+       AI CHECK THĐ BRANDED MODAL ALERT (THAY THẾ WINDOW.ALERT)
+       ========================================================= */
+    .aicheck-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 13, 23, 0.84);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 100000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      animation: aicheckModalFadeIn 0.22s ease-out;
+      font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .aicheck-modal-box {
+      background: #ffffff;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 20px;
+      max-width: 440px;
+      width: 100%;
+      padding: 26px 22px 22px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(16, 185, 129, 0.18);
+      animation: aicheckModalPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .aicheck-modal-box {
+      background: #09121d;
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.25);
+    }
+    .aicheck-modal-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s ease;
+    }
+    .icon-success {
+      background: #ecfdf5;
+      border: 2px solid #a7f3d0;
+      color: #059669;
+    }
+    [data-theme="dark"] .icon-success {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.45);
+    }
+    .icon-error {
+      background: #fef2f2;
+      border: 2px solid #fecaca;
+      color: #dc2626;
+    }
+    [data-theme="dark"] .icon-error {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.45);
+    }
+    .icon-warning {
+      background: #fffbeb;
+      border: 2px solid #fde68a;
+      color: #d97706;
+    }
+    [data-theme="dark"] .icon-warning {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+    .icon-info {
+      background: #f0f9ff;
+      border: 2px solid #bae6fd;
+      color: #0284c7;
+    }
+    [data-theme="dark"] .icon-info {
+      background: rgba(14, 165, 233, 0.15);
+      border-color: rgba(14, 165, 233, 0.45);
+    }
+    .aicheck-modal-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 12px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .aicheck-modal-tag .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    .aicheck-modal-title {
+      margin: 0 0 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+    }
+    [data-theme="dark"] .aicheck-modal-title {
+      color: #ffffff;
+    }
+    .aicheck-modal-msg {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #475569;
+      background: #f8fafc;
+      padding: 13px 15px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+      margin-bottom: 18px;
+      max-height: 260px;
+      overflow-y: auto;
+      white-space: pre-line;
+      word-break: break-word;
+    }
+    [data-theme="dark"] .aicheck-modal-msg {
+      background: rgba(15, 23, 42, 0.6);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+    .aicheck-modal-btn {
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 20px;
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+      transition: transform 0.16s, box-shadow 0.16s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .aicheck-modal-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+    }
+    .aicheck-modal-btn:active {
+      transform: translateY(1px);
+    }
+    @keyframes aicheckModalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes aicheckModalPopIn {
+      from { opacity: 0; transform: scale(0.92) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
   </style>
 </head>
 <body>
@@ -1730,16 +1901,24 @@
             btnSend.textContent = "✉️ Gửi lại mã xác minh về Email";
           }
         } else {
-          alert("✅ Mã xác minh (OTP 6 số) đã được gửi về hộp thư Gmail của bạn!\n\nVui lòng kiểm tra hộp thư đến (hoặc Thư rác / Spam) và nhập mã bên dưới để tiếp tục đổi mật khẩu.");
           const stepOTP = document.getElementById('stepOTPGroup');
           if (stepOTP) {
             stepOTP.style.display = 'block';
-            document.getElementById('supportOTP')?.focus();
           }
           if (btnSend) {
             btnSend.textContent = "✉️ Gửi lại mã xác minh";
             btnSend.disabled = false;
           }
+          window.showCustomAlert({
+            title: "Đã gửi mã xác minh OTP",
+            message: "Mã xác minh (OTP 6 số) đã được gửi về hộp thư Gmail của bạn!\n\nVui lòng kiểm tra hộp thư đến (hoặc mục Thư rác / Spam) và nhập mã bên dưới để tiếp tục đổi mật khẩu.",
+            type: "success",
+            icon: "✉️",
+            buttonText: "Nhập mã OTP ngay →",
+            onConfirm: () => {
+              document.getElementById('supportOTP')?.focus();
+            }
+          });
         }
       } catch (err) {
         window.AICheckLoader?.hide();
@@ -1800,11 +1979,25 @@
             btnVerify.textContent = "✅ Xác minh OTP & Đổi mật khẩu mới →";
           }
         } else {
-          alert("🎉 Xác minh danh tính thành công!\n\nĐang chuyển sang trang đặt lại mật khẩu mới...");
-          try {
-            sessionStorage.setItem("aicheck:verified_recovery", "true");
-          } catch(e){}
-          window.location.href = "reset-password.html";
+          window.showCustomAlert({
+            title: "Xác minh danh tính thành công!",
+            message: "Mã OTP hợp lệ. Hệ thống đang chuyển sang trang đặt lại mật khẩu mới...",
+            type: "success",
+            icon: "🎉",
+            buttonText: "Đến trang Đổi mật khẩu ngay →",
+            onConfirm: () => {
+              try {
+                sessionStorage.setItem("aicheck:verified_recovery", "true");
+              } catch(e){}
+              window.location.href = "reset-password.html";
+            }
+          });
+          setTimeout(() => {
+            try {
+              sessionStorage.setItem("aicheck:verified_recovery", "true");
+            } catch(e){}
+            window.location.href = "reset-password.html";
+          }, 2000);
         }
       } catch (err) {
         window.AICheckLoader?.hide();
@@ -1839,10 +2032,19 @@
         window.AICheckLoader?.hide();
       }
 
-      alert(`✅ Đã gửi yêu cầu hỗ trợ cho tài khoản (${email}) tới Ban Quản trị THĐ thành công!\n\nSau khi Admin phê duyệt, mã xác minh 6 ký tự sẽ được gửi về hộp thư Email của bạn.\nHệ thống đang chuyển sang trang Đặt lại mật khẩu...`);
-
-      // 2. Chuyển thẳng sang trang reset-password.html với email đã nạp sẵn
-      window.location.href = `reset-password.html?email=${encodeURIComponent(email)}`;
+      window.showCustomAlert({
+        title: "Đã gửi yêu cầu tới Admin THĐ",
+        message: `Yêu cầu cấp lại mật khẩu cho tài khoản (${email}) đã được gửi tới Ban Quản trị THĐ thành công!\n\nSau khi Admin phê duyệt, mã xác minh 6 ký tự sẽ được gửi về hộp thư Email của bạn.`,
+        type: "success",
+        icon: "🛡️",
+        buttonText: "Chuyển sang trang Đổi mật khẩu →",
+        onConfirm: () => {
+          window.location.href = `reset-password.html?email=${encodeURIComponent(email)}`;
+        }
+      });
+      setTimeout(() => {
+        window.location.href = `reset-password.html?email=${encodeURIComponent(email)}`;
+      }, 2400);
     }
 
     // Tự động đồng bộ đường dẫn link sang reset-password.html khi nhập email
@@ -1959,6 +2161,117 @@
       }
     }
 
+    
+    // Hệ thống Modal Thông báo độc quyền AI CHECK THĐ (Thay thế hoàn toàn window.alert mặc định)
+    let customAlertCallback = null;
+
+    window.showCustomAlert = function(optionsOrMsg, maybeCallback) {
+      let opts = {};
+      if (typeof optionsOrMsg === 'string') {
+        opts.message = optionsOrMsg;
+        customAlertCallback = (typeof maybeCallback === 'function') ? maybeCallback : null;
+      } else if (typeof optionsOrMsg === 'object' && optionsOrMsg !== null) {
+        opts = Object.assign({}, optionsOrMsg);
+        customAlertCallback = opts.onConfirm || maybeCallback || null;
+      }
+
+      const rawMsg = opts.message || '';
+      let type = opts.type || 'info';
+      let title = opts.title || '';
+      let icon = opts.icon || '';
+      let btnText = opts.buttonText || 'Đã hiểu & Tiếp tục →';
+
+      const lowerMsg = rawMsg.toLowerCase();
+      if (type === 'info') {
+        if (rawMsg.includes('✅') || rawMsg.includes('🎉') || lowerMsg.includes('thành công') || lowerMsg.includes('đã được gửi')) {
+          type = 'success';
+        } else if (rawMsg.includes('❌') || lowerMsg.includes('lỗi') || lowerMsg.includes('không chính xác') || lowerMsg.includes('hết hạn')) {
+          type = 'error';
+        } else if (rawMsg.includes('⚠️') || lowerMsg.includes('lưu ý') || lowerMsg.includes('cảnh báo')) {
+          type = 'warning';
+        }
+      }
+
+      if (!icon) {
+        if (type === 'success') {
+          icon = (lowerMsg.includes('gmail') || lowerMsg.includes('email') || lowerMsg.includes('otp')) ? '✉️' : '✅';
+        } else if (type === 'error') {
+          icon = '❌';
+        } else if (type === 'warning') {
+          icon = '⚠️';
+        } else {
+          icon = '💡';
+        }
+      }
+
+      if (!title) {
+        if (lowerMsg.includes('otp') || lowerMsg.includes('mã xác minh')) {
+          title = type === 'error' ? 'Mã xác minh không hợp lệ' : 'Đã gửi mã xác minh OTP';
+        } else if (type === 'success') {
+          title = 'Thao tác thành công';
+        } else if (type === 'error') {
+          title = 'Thông báo lỗi';
+        } else if (type === 'warning') {
+          title = 'Lưu ý từ hệ thống';
+        } else {
+          title = 'Thông báo từ AI CHECK THĐ';
+        }
+      }
+
+      let cleanMsg = rawMsg.replace(/^[✅❌⚠️🎉💡\s]+/, '');
+
+      const modal = document.getElementById('aiCheckAlertModal');
+      const iconWrap = document.getElementById('aiCheckAlertIconWrap');
+      const iconEl = document.getElementById('aiCheckAlertIcon');
+      const titleEl = document.getElementById('aiCheckAlertTitle');
+      const msgEl = document.getElementById('aiCheckAlertMsg');
+      const btnTextEl = document.getElementById('aiCheckAlertBtnText');
+
+      if (!modal) {
+        console.warn("Custom alert modal not found, fallback to message:", cleanMsg);
+        return;
+      }
+
+      if (iconWrap) {
+        iconWrap.className = 'aicheck-modal-icon-wrap icon-' + type;
+      }
+      if (iconEl) iconEl.textContent = icon;
+      if (titleEl) titleEl.textContent = title;
+      if (msgEl) msgEl.textContent = cleanMsg;
+      if (btnTextEl) btnTextEl.textContent = btnText;
+
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('aiCheckAlertBtn')?.focus();
+      }, 50);
+    };
+
+    window.closeCustomAlert = function() {
+      const modal = document.getElementById('aiCheckAlertModal');
+      if (modal) modal.style.display = 'none';
+      if (typeof customAlertCallback === 'function') {
+        const cb = customAlertCallback;
+        customAlertCallback = null;
+        cb();
+      }
+    };
+
+    // Lắng nghe phím Enter và Escape để đóng modal thông báo nhanh
+    document.addEventListener('keydown', function(e) {
+      const modal = document.getElementById('aiCheckAlertModal');
+      if (modal && modal.style.display === 'flex') {
+        if (e.key === 'Enter' || e.key === 'Escape') {
+          e.preventDefault();
+          window.closeCustomAlert();
+        }
+      }
+    });
+
+    // Ghi đè toàn bộ alert() để dùng modal website AI CHECK THĐ
+    window.alert = function(msg) {
+      window.showCustomAlert(msg);
+    };
+
     // Unused social listeners removed
   </script>
 
@@ -1997,5 +2310,24 @@
       </div>
     </div>
   </div>
+
+  <!-- MODAL THÔNG BÁO ĐẶC QUYỀN AI CHECK THĐ (THAY THẾ WINDOW.ALERT) -->
+  <div id="aiCheckAlertModal" class="aicheck-modal-backdrop" onclick="if(event.target === this) closeCustomAlert()">
+    <div class="aicheck-modal-box">
+      <div id="aiCheckAlertIconWrap" class="aicheck-modal-icon-wrap icon-success">
+        <span id="aiCheckAlertIcon">✉️</span>
+      </div>
+      <div class="aicheck-modal-tag">
+        <span class="pulse-dot"></span>
+        <span id="aiCheckAlertTag">AI CHECK THĐ · THÔNG BÁO</span>
+      </div>
+      <h3 id="aiCheckAlertTitle" class="aicheck-modal-title">Đã gửi mã xác minh OTP</h3>
+      <div id="aiCheckAlertMsg" class="aicheck-modal-msg">Mã xác minh đã được gửi về Gmail của bạn.</div>
+      <button type="button" id="aiCheckAlertBtn" class="aicheck-modal-btn" onclick="closeCustomAlert()">
+        <span id="aiCheckAlertBtnText">Đã hiểu & Tiếp tục →</span>
+      </button>
+    </div>
+  </div>
+
 </body>
 </html>
