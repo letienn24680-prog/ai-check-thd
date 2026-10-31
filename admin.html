@@ -18,7 +18,8 @@
       margin: 0;
     }
     .admin-container {
-      max-width: 1100px;
+      max-width: 1280px;
+      font-size: 15px;
       margin: auto;
     }
     .admin-header {
@@ -74,14 +75,14 @@
     }
     .stat-box span {
       display: block;
-      font-size: 10px;
+      font-size: 12.5px;
       color: var(--muted);
       font-weight: 700;
       text-transform: uppercase;
     }
     .stat-box strong {
       display: block;
-      font: 700 26px "Space Grotesk", sans-serif;
+      font: 700 30px "Space Grotesk", sans-serif;
       color: var(--forest);
       margin-top: 4px;
     }
@@ -101,23 +102,25 @@
       border-collapse: collapse;
     }
     th, td {
-      padding: 11px 13px;
+      padding: 13px 16px;
       text-align: left;
       border-bottom: 1px solid #eef2ed;
-      font-size: 12px;
+      font-size: 14.5px;
+      line-height: 1.5;
       white-space: nowrap;
     }
     th {
       background: #f4f8f3;
       color: var(--forest);
-      font-weight: 700;
-      font-size: 11px;
+      font-weight: 800;
+      font-size: 13.5px;
+      letter-spacing: 0.2px;
     }
     .status-pending { color: #c84f36; font-weight: 700; }
     .status-resolved { color: #28744f; font-weight: 700; }
     .btn-small {
-      padding: 6px 12px;
-      font-size: 11px;
+      padding: 7px 14px;
+      font-size: 13px;
       font-weight: 700;
       border-radius: 6px;
       border: 1px solid var(--line);
@@ -142,20 +145,20 @@
       flex-wrap: wrap;
     }
     .filter-input {
-      padding: 8px 12px;
-      font-size: 12px;
+      padding: 9px 14px;
+      font-size: 14px;
       border: 1px solid var(--line);
       border-radius: 6px;
       box-sizing: border-box;
       font-family: inherit;
     }
     .auth-banner {
-      padding: 16px;
+      padding: 18px;
       background: #fff8e8;
       border-left: 4px solid var(--orange);
       border-radius: 8px;
       margin-bottom: 20px;
-      font-size: 12px;
+      font-size: 14px;
     }
     .admin-pass-form {
       display: flex;
@@ -166,7 +169,7 @@
     }
     .table-scroll-hint {
       display: none;
-      font-size: 11px;
+      font-size: 13px;
       color: #64748b;
       margin: 8px 0 0;
       font-style: italic;
@@ -560,13 +563,13 @@
     .score-act-tab {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
+      gap: 7px;
+      padding: 10px 18px;
       border-radius: 8px;
       border: 1px solid #cbd5e1;
       background: #f8fafc;
       color: #334155;
-      font-size: 11.5px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.16s ease-out;
@@ -583,9 +586,9 @@
     }
     .tab-count-badge {
       display: inline-block;
-      padding: 1px 7px;
+      padding: 2px 8px;
       border-radius: 10px;
-      font-size: 10px;
+      font-size: 12px;
       font-family: "Space Grotesk", sans-serif;
       font-weight: 800;
       background: rgba(0, 0, 0, 0.08);
@@ -600,13 +603,13 @@
     .score-act-subtab {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 7px 14px;
+      gap: 7px;
+      padding: 9px 16px;
       border-radius: 6px;
       border: 1px solid #cbd5e1;
       background: #ffffff;
       color: #334155;
-      font-size: 11px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.16s ease;
@@ -629,12 +632,12 @@
     .growth-pill {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 3px 8px;
+      gap: 5px;
+      padding: 4px 10px;
       border-radius: 6px;
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
-      font-size: 12px;
+      font-size: 13.5px;
     }
     .growth-positive {
       background: #ecfdf5;
@@ -652,6 +655,54 @@
       border: 1px solid #fecaca;
     }
 
+    
+    /* Nút phóng to / thu nhỏ cỡ chữ trực quan */
+    .font-zoom-ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #ffffff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 13px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+    .btn-zoom {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: var(--forest);
+      font-weight: 800;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-zoom:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+      transform: translateY(-1px);
+    }
+    .btn-zoom-reset {
+      padding: 0 9px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-zoom-reset:hover {
+      background: #e2e8f0;
+    }
+
     .score-tab-header-box {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -666,8 +717,9 @@
     }
     .score-tab-header-box p {
       margin: 0;
-      font-size: 11.5px;
-      color: #475569;
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.6;
     }
     .score-tab-header-box strong {
       color: var(--forest);
@@ -724,11 +776,20 @@
         <h1>Bảng điều khiển Quản trị (Admin Portal)</h1>
       </div>
       <div class="admin-nav-actions">
-        <button type="button" class="button" onclick="scrollToUnlockSection()" style="background:#fee2e2;border:1px solid #fecaca;color:#991b1b;font-weight:800;font-size:11px;display:inline-flex;align-items:center;gap:6px;cursor:pointer" title="Xem danh sách tài khoản bị khóa chờ duyệt">
+        <!-- BỘ ĐIỀU CHỈNH CỠ CHỮ TO / NHỎ TIỆN DỤNG -->
+        <div class="font-zoom-ctrl" title="Điều chỉnh cỡ chữ hiển thị để không mỏi mắt">
+          <span style="font-size:12.5px;color:#475569;font-weight:800;margin-right:2px">👁️ Cỡ chữ:</span>
+          <button type="button" class="btn-zoom" onclick="adjustAdminZoom(-1)" title="Thu nhỏ cỡ chữ">A-</button>
+          <span id="zoomLevelDisplay" style="font-weight:800;font-size:13.5px;color:var(--forest);min-width:44px;text-align:center">115%</span>
+          <button type="button" class="btn-zoom" onclick="adjustAdminZoom(1)" title="Phóng to cỡ chữ">A+</button>
+          <button type="button" class="btn-zoom-reset" onclick="resetAdminZoom()" title="Về cỡ chữ tiêu chuẩn">Chuẩn</button>
+        </div>
+
+        <button type="button" class="button" onclick="scrollToUnlockSection()" style="background:#fee2e2;border:1px solid #fecaca;color:#991b1b;font-weight:800;font-size:12.5px;display:inline-flex;align-items:center;gap:6px;cursor:pointer" title="Xem danh sách tài khoản bị khóa chờ duyệt">
           <span>🛡️ Duyệt mở khóa (<strong id="navUnlockBadge">0</strong>)</span>
         </button>
-        <a href="index.html" class="button button-outline" style="font-size:11px">← Về Trang chủ</a>
-        <button class="button button-dark" id="btnAdminLogout" style="font-size:11px">Đăng xuất</button>
+        <a href="index.html" class="button button-outline" style="font-size:12.5px">← Về Trang chủ</a>
+        <button class="button button-dark" id="btnAdminLogout" style="font-size:12.5px">Đăng xuất</button>
       </div>
     </header>
 
@@ -1919,6 +1980,41 @@
     }
 
     
+    
+    // =========================================================================
+    // ĐIỀU CHỈNH CỠ CHỮ HỆ THỐNG (FONT ZOOM CONTROLLER - CHỐNG MỎI MẮT)
+    // =========================================================================
+    let currentAdminZoom = parseInt(localStorage.getItem("aicheck:admin_zoom") || "115");
+
+    function applyAdminZoom(val) {
+      currentAdminZoom = Math.max(90, Math.min(160, val));
+      localStorage.setItem("aicheck:admin_zoom", currentAdminZoom);
+
+      const container = document.querySelector(".admin-container");
+      if (container) {
+        container.style.zoom = (currentAdminZoom / 100).toString();
+      }
+
+      const disp = document.getElementById("zoomLevelDisplay");
+      if (disp) disp.textContent = currentAdminZoom + "%";
+    }
+
+    function adjustAdminZoom(delta) {
+      applyAdminZoom(currentAdminZoom + delta * 10);
+    }
+
+    function resetAdminZoom() {
+      applyAdminZoom(115);
+    }
+
+    // Tự động khởi động cỡ chữ lớn dịu mắt khi tải trang
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => applyAdminZoom(currentAdminZoom));
+    } else {
+      applyAdminZoom(currentAdminZoom);
+    }
+
+
     let currentScoreTab = "exam"; // Mặc định mở tab Phòng thi trực tuyến
     let assessmentSubTab = "comparison"; // "comparison" | "pre" | "post" | "all"
     let assessmentTimelineMode = "standardized"; // "standardized" (Mốc chuẩn hóa KHKT) | "raw" (Giờ hệ thống ghi nhận)
