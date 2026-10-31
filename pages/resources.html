@@ -57,13 +57,18 @@
           <span class="dot"></span>
           <span>🎬 VIDEO HƯỚNG DẪN & GIỚI THIỆU DỰ ÁN AI CHECK THĐ</span>
         </div>
-        <span class="video-badge-pill">
-          ▶ Phát trực tiếp trên trang
-        </span>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span class="video-badge-pill" style="color:#0284c7;background:#f0f9ff;border-color:#bae6fd">
+            ⚡ Tối ưu tốc độ 1.25x (~3p44s)
+          </span>
+          <span class="video-badge-pill">
+            ▶ Phát trực tiếp trên trang
+          </span>
+        </div>
       </div>
 
       <!-- Khung phát video trực tiếp 16:9 với lớp bảo vệ chống chuyển hướng -->
-      <div style="position:relative;width:100%;padding-top:56.25%;background:#000000;overflow:hidden">
+      <div id="videoPlayerContainer" style="position:relative;width:100%;padding-top:56.25%;background:#000000;overflow:hidden">
         <iframe 
           id="projectVideoIframe"
           src="https://drive.google.com/file/d/1Wt-UvEXUO4PdMT67bpOhLSOi5EBr78Sp/preview" 
@@ -85,7 +90,7 @@
 
       <div class="video-card-guide">
         <span style="color:#10b981;font-size:14px;flex-shrink:0">💡</span>
-        <span><strong>Hướng dẫn xem:</strong> Bấm biểu tượng <strong>Play (▶)</strong> ở giữa màn hình để phát video trực tiếp trên trang. Bạn có thể bấm nút <strong>[ ⛶ ]</strong> ở thanh điều khiển góc dưới để phóng to toàn màn hình.</span>
+        <span><strong>Hướng dẫn xem nhanh:</strong> Video giới thiệu và hướng dẫn sử dụng website đã được xử lý tăng tốc độ phát lên <strong>1.25x</strong> giúp rút ngắn thời gian theo dõi (tiết kiệm gần 1 phút) mà vẫn đảm bảo giọng thuyết minh to, rõ ràng và mạch lạc. Bạn có thể bấm biểu tượng <strong>[ ⛶ ]</strong> ở thanh điều khiển góc dưới để phóng to toàn màn hình.</span>
       </div>
     </div>
 
@@ -102,6 +107,21 @@
     const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(`aicheck:${key}`))??fallback}catch{return fallback}};
     function updateForm(url){const box=document.getElementById("formEmbed"),frame=document.getElementById("formFrame");box.hidden=!url;if(!url)return;document.getElementById("openForm").href=url;if(/^https:\/\/docs\.google\.com\/forms\//i.test(url)){const embed=new URL(url);embed.searchParams.set("embedded","true");frame.src=embed.href;frame.hidden=false}else{frame.removeAttribute("src");frame.hidden=true}}
     const config=window.AICHECK_CONFIG||{};const formUrl=config.googleFormUrl||read("googleFormUrl","");updateForm(formUrl);
+  </script>
+  <script>
+    // Tự động nhận diện nếu đang chạy offline (file://) trên máy tính chấm thi KHKT
+    if (window.location.protocol === "file:") {
+      const container = document.getElementById("videoPlayerContainer");
+      if (container) {
+        container.innerHTML = `
+          <video id="localVideoPlayer" controls playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#000" poster="../assets/ai-check-thd-infographic.png">
+            <source src="../video_gioi_thieu_web_fast.mp4" type="video/mp4">
+            <source src="../video giới thiệu web.mp4" type="video/mp4">
+            Trình duyệt không hỗ trợ phát trực tiếp video.
+          </video>
+        `;
+      }
+    }
   </script>
   <script src="../site-nav.js"></script>
 </body>
