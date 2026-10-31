@@ -533,6 +533,7 @@
     }
 
     function startQuiz() {
+      isFinishingQuiz = false;
       cursor = 0;
       answers = [];
       selected = null;
@@ -606,7 +607,17 @@
       });
     }
 
+    let isFinishingQuiz = false;
+
     function finish() {
+      if (isFinishingQuiz) return;
+      isFinishingQuiz = true;
+
+      const nextBtn = document.getElementById("nextQuestion");
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = "Đang tổng hợp kết quả...";
+      }
       const counts = {}, correct = {};
       questions.forEach((item, i) => {
         counts[item.s] = (counts[item.s] || 0) + 1;
@@ -814,12 +825,17 @@
     }
 
     document.getElementById("nextQuestion").addEventListener("click", () => {
-      if (selected === null) return;
+      if (selected === null || isFinishingQuiz) return;
       answers[cursor] = selected;
       if (cursor < questions.length - 1) {
         cursor++;
         renderQuestion();
       } else {
+        const nextBtn = document.getElementById("nextQuestion");
+        if (nextBtn) {
+          nextBtn.disabled = true;
+          nextBtn.textContent = "Đang tổng hợp kết quả...";
+        }
         finish();
       }
     });

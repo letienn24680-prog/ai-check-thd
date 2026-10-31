@@ -1098,7 +1098,20 @@
     if (!displayName || !["rubric", "assessment", "practice", "exam"].includes(activity) || !Number.isInteger(score) || score < 0 || score > 100 || (activity === "assessment" && !["pre", "post"].includes(phase))) {
       return { synced: false, reason: "invalid-data" };
     }
-        try {
+
+    // 🛡️ CHỐNG LƯU ĐÚP / DEBOUNCE IDEMPOTENCY: Chặn lệnh nộp trùng lặp cho cùng người, hoạt động, đợt và điểm trong 10 giây
+    const lockKey = `score_lock:${displayName.toLowerCase()}_${activity}_${phase || 'none'}_${score}`;
+    const now = Date.now();
+    try {
+      const lastSavedTime = Number(sessionStorage.getItem("aicheck:" + lockKey) || 0);
+      if (now - lastSavedTime < 10000) {
+        console.warn("🛡️ Bỏ qua lệnh lưu điểm trùng lặp trong 10 giây:", lockKey);
+        return { synced: true, deduplicated: true };
+      }
+      sessionStorage.setItem("aicheck:" + lockKey, String(now));
+    } catch (e) {}
+
+    try {
       const { error } = await client.from("leaderboard_scores").insert({
         participant_id: getParticipantId(),
         display_name: displayName,

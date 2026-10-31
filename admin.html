@@ -2209,18 +2209,62 @@
         combined = combined.filter(s => !deletedScoreIds.includes(s.id));
       }
 
-      // Tự động deduplicate các bản ghi trùng lặp (cùng student, phase, score và timestamps < 60s)
+      // Tự động deduplicate thông minh các bản ghi trùng lặp (cùng student, phase, score hoặc cách nhau < 15 phút)
       const dedupedScores = [];
+      let foundDupCount = 0;
       combined.forEach(s => {
-        const isDup = dedupedScores.some(k => 
-          k.activity === s.activity &&
-          k.display_name === s.display_name &&
-          k.phase === s.phase &&
-          k.score === s.score &&
-          Math.abs(new Date(k.created_at || 0) - new Date(s.created_at || 0)) < 60000
-        );
-        if (!isDup) dedupedScores.push(s);
+        const name = (s.display_name || '').trim().toLowerCase();
+        const act = s.activity || '';
+        const phase = s.phase || '';
+        const score = Number(s.score) || 0;
+        const timeMs = new Date(s.created_at || 0).getTime();
+
+        let isDup = false;
+        for (const k of dedupedScores) {
+          const kName = (k.display_name || '').trim().toLowerCase();
+          const kAct = k.activity || '';
+          const kPhase = k.phase || '';
+          const kScore = Number(k.score) || 0;
+          const kTimeMs = new Date(k.created_at || 0).getTime();
+
+          if (kName === name && kAct === act) {
+            if (act === 'assessment') {
+              // Cùng giai đoạn (pre hoặc post)
+              if (kPhase === phase) {
+                // Trùng điểm hoặc cách nhau dưới 15 phút (900,000 ms)
+                if (kScore === score || Math.abs(kTimeMs - timeMs) < 900000) {
+                  isDup = true;
+                  if (s.id && !deletedScoreIds.includes(s.id)) {
+                    deletedScoreIds.push(s.id);
+                    foundDupCount++;
+                  }
+                  break;
+                }
+              }
+            } else {
+              // Rubric hoặc Practice: cùng hoạt động, cùng điểm trong vòng 10 phút
+              if (kScore === score && Math.abs(kTimeMs - timeMs) < 600000) {
+                isDup = true;
+                if (s.id && !deletedScoreIds.includes(s.id)) {
+                  deletedScoreIds.push(s.id);
+                  foundDupCount++;
+                }
+                break;
+              }
+            }
+          }
+        }
+
+        if (!isDup) {
+          dedupedScores.push(s);
+        }
       });
+
+      if (foundDupCount > 0) {
+        try {
+          localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+        } catch (e) {}
+      }
 
       allScores = dedupedScores;
       allScores.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
@@ -2929,15 +2973,28 @@
       const dupIds = [];
 
       assessScores.forEach(s => {
-        const isDup = kept.some(k => 
-          k.display_name === s.display_name &&
-          k.phase === s.phase &&
-          k.score === s.score &&
-          Math.abs(new Date(k.created_at || 0) - new Date(s.created_at || 0)) < 60000
-        );
-        if (isDup) {
-          if (s.id) dupIds.push(s.id);
-        } else {
+        const name = (s.display_name || '').trim().toLowerCase();
+        const phase = s.phase || '';
+        const score = Number(s.score) || 0;
+        const timeMs = new Date(s.created_at || 0).getTime();
+
+        let isDup = false;
+        for (const k of kept) {
+          const kName = (k.display_name || '').trim().toLowerCase();
+          const kPhase = k.phase || '';
+          const kScore = Number(k.score) || 0;
+          const kTimeMs = new Date(k.created_at || 0).getTime();
+
+          if (kName === name && kPhase === phase) {
+            if (kScore === score || Math.abs(kTimeMs - timeMs) < 900000) {
+              isDup = true;
+              if (s.id && !dupIds.includes(s.id)) dupIds.push(s.id);
+              break;
+            }
+          }
+        }
+
+        if (!isDup) {
           kept.push(s);
         }
       });
@@ -2947,7 +3004,9 @@
         return;
       }
 
-      dupIds.forEach(id => deletedScoreIds.push(id));
+      dupIds.forEach(id => {
+        if (!deletedScoreIds.includes(id)) deletedScoreIds.push(id);
+      });
       localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
 
       allScores = allScores.filter(s => !dupIds.includes(s.id));
@@ -2964,7 +3023,7 @@
       }
 
       renderScoreTable();
-      alert(`🧹 Đã dọn dẹp thành công ${dupIds.length} bản ghi bị bấm nộp trùng lặp!`);
+      alert(`🧹 Đã dọn dẹp và ẩn thành công ${dupIds.length} bản ghi bị bấm nộp trùng lặp!`);
     }
 
 
