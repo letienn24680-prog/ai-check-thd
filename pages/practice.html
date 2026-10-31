@@ -226,6 +226,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
+  <script src="../activity-tracker.js"></script>
   <script src="../site-nav.js"></script>
   <script src="practice-data.js"></script>
   <script>
@@ -235,6 +236,7 @@
     const shuffle = items => { const result = [...items]; for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [result[i], result[j]] = [result[j], result[i]]; } return result; };
     
     let set = [], index = 0, trustChoice = null, methodChoice = null, correct = 0, checked = false, complete = false;
+    let currentPracticeSessionId = null;
     let currentFilter = "Tất cả";
     let currentSearchTerm = "";
 
@@ -292,6 +294,11 @@
       complete = false; 
       renderQuestion(); 
       updateGamifyHud();
+      currentPracticeSessionId = window.AICheckTracker?.startSession({
+        activity: "practice",
+        title: "Luyện 10 tình huống kiểm chứng thực tế",
+        totalQuestions: ROUND_SIZE
+      });
     }
 
     function renderChoices(container, labels, group) { 
@@ -398,6 +405,15 @@
       row.practice = Math.max(row.practice || 0, score); 
       row.date = new Date().toISOString().slice(0, 10); 
       write("records", records); 
+      if (window.AICheckTracker && currentPracticeSessionId) {
+        window.AICheckTracker.completeSession(currentPracticeSessionId, {
+          score,
+          rawScore: correct,
+          correctCount: correct,
+          totalQuestions: set.length,
+          level: score >= 80 ? "Giỏi" : score >= 60 ? "Khá" : score >= 40 ? "Trung bình" : "Yếu"
+        });
+      } 
       
       const cloud = window.AICheckCloud; 
       const status = document.getElementById("syncStatus"); 

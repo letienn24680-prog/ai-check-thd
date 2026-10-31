@@ -256,6 +256,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
+  <script src="../activity-tracker.js"></script>
   <script src="../site-nav.js"></script>
   <script>
     const skills = ["Nhận diện thông tin", "Kiểm tra nguồn", "Đối chiếu thông tin", "Đánh giá độ tin cậy", "Kết luận có căn cứ"];
@@ -328,7 +329,7 @@
     }
     function level(score){return score<=25?"Yếu":score<=50?"Trung bình":score<=75?"Khá":"Giỏi"}
     function noteFor(label,weakest){const messages={"Yếu":"Bạn đang ở giai đoạn làm quen. Hãy dừng lại, khoanh vùng khẳng định và tìm một nguồn chính thức.","Trung bình":"Bạn đã nhận ra một số thông tin đáng nghi. Hãy luyện xác minh nguồn gốc và đối chiếu nhiều nguồn độc lập.","Khá":"Bạn đã biết kiểm tra thông tin trước khi sử dụng. Hãy cải thiện thêm khả năng đánh giá độ tin cậy của nguồn.","Giỏi":"Bạn vận dụng tốt quy trình kiểm chứng và biết kết luận theo bằng chứng. Hãy tiếp tục chú ý giới hạn của dữ liệu."};return `${messages[label]}${weakest?` Kỹ năng cần ưu tiên: ${weakest.toLowerCase()}.`:""}`}
-    let mode="assessment",questions=[],answers=[],cursor=0,selected=null,assessmentPhase=null;
+    let mode="assessment",questions=[],answers=[],cursor=0,selected=null,assessmentPhase=null,currentAssessmentSessionId=null;
     const rubricBank = [
       {s:0,id:"r0a",q:"AI viết: 'Hiện nay 80% học sinh dùng AI mỗi ngày' nhưng không ghi năm điều tra hay cơ quan nghiên cứu nào. Em cần làm gì trước tiên?",o:["Ghi lại số liệu này như một sự thật vì có tỷ lệ phần trăm cụ thể","Khoanh vùng tỷ lệ và đặt nghi vấn để kiểm tra lại nguồn gốc","Chỉ kiểm tra xem phép tính 80% có đúng không"],a:1},
       {s:0,id:"r0b",q:"AI khẳng định một loại nước uống 'luôn chữa khỏi 100% bệnh cảm cúm'. Dấu hiệu nào trong câu cho thấy cần cảnh giác?",o:["Từ 'luôn chữa khỏi 100%' đưa ra khẳng định tuyệt đối về y tế rất phi thực tế","Câu không nêu nhóm người hoặc điều kiện áp dụng","Câu văn viết quá ngắn"],a:0},
@@ -440,6 +441,20 @@
             ? "Giai đoạn 1: Đo lường năng lực ban đầu trước can thiệp. Đọc kỹ từng tình huống và chọn phương án có căn cứ nhất." 
             : "Giai đoạn 2: Đo lường sự tiến bộ sau can thiệp. Đọc kỹ từng tình huống và vận dụng quy trình kiểm chứng 5 bước.")
         : "Mỗi câu đưa ra một tình huống cụ thể. Hãy chọn cách kiểm chứng hoặc kết luận phù hợp nhất.";
+
+      // Ghi nhận bắt đầu phiên đánh giá thời gian thực (Activity Tracker)
+      if (window.AICheckTracker) {
+        const title = mode === "assessment"
+          ? (assessmentPhase === "pre" ? "Đo Trước can thiệp (Đợt 01 - 20 câu)" : "Đo Sau can thiệp (Đợt 02 - 20 câu)")
+          : "Thử thách Rubric (5 câu)";
+        currentAssessmentSessionId = window.AICheckTracker.startSession({
+          activity: mode === "assessment" ? "assessment" : "rubric",
+          phase: assessmentPhase,
+          title: title,
+          totalQuestions: questions.length
+        });
+      }
+
       renderQuestion();
     }
 
@@ -509,6 +524,16 @@
       }
 
       saveRecord(mode, total, mode === "assessment" ? assessmentPhase : null);
+      if (window.AICheckTracker && currentAssessmentSessionId) {
+        const totalCorrect = Object.values(correct).reduce((a, b) => a + b, 0);
+        window.AICheckTracker.completeSession(currentAssessmentSessionId, {
+          score: total,
+          correctCount: totalCorrect,
+          totalQuestions: questions.length,
+          level: label,
+          phase: assessmentPhase
+        });
+      }
       if (window.AICheckCloud?.processSyncQueue) {
         setTimeout(window.AICheckCloud.processSyncQueue, 1000);
       }

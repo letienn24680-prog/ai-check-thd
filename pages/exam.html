@@ -1673,6 +1673,7 @@
   <script src="../supabase-config.js"></script>
   <script src="../cloud.js"></script>
   <script src="../site-nav.js"></script>
+  <script src="../activity-tracker.js"></script>
   <script src="exam-store.js"></script>
 
   <script>
@@ -1687,10 +1688,21 @@
     let isReviewMode = false;
     let isExamFinished = false;
     let isExamActive = false;
+    let currentExamSessionId = null;
 
     // Giám sát vi phạm
     let violationsCount = 0;
     let violationsList = [];
+
+      // Ghi nhận bắt đầu thi thời gian thực
+      if (window.AICheckTracker) {
+        currentExamSessionId = window.AICheckTracker.startSession({
+          activity: "exam",
+          title: `Phòng thi: ${currentExam?.title || "Đề thi trực tuyến"}`,
+          examId: currentExam?.id,
+          totalQuestions: currentExam?.questions?.length || 20
+        });
+      }
     let isHandlingViolation = false;
 
     // Bộ đếm thời gian
@@ -2434,6 +2446,19 @@
       };
 
       window.AICheckExamStore.addResult(resultObj);
+
+      if (window.AICheckTracker && currentExamSessionId) {
+        const scale100 = maxScore > 0 ? Math.min(100, Math.max(0, Math.round((earnedScore / maxScore) * 100))) : earnedScore;
+        window.AICheckTracker.completeSession(currentExamSessionId, {
+          score: scale100,
+          rawScore: earnedScore,
+          correctCount: correctCount,
+          totalQuestions: totalQ,
+          violations: violationsCount,
+          passed: isPassed,
+          level: isPassed ? "Đạt yêu cầu" : "Chưa đạt"
+        });
+      }
 
       // 3. Ẩn các thanh App phòng thi & Hiện lại Header chuẩn web
       const appH = document.getElementById("examAppHeader");

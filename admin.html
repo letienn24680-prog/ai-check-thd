@@ -615,6 +615,30 @@
     .score-tab-header-box strong {
       color: var(--forest);
     }
+    @keyframes livePulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.55; }
+      100% { opacity: 1; }
+    }
+    .live-pulse-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 12px;
+      background: #10b981;
+      color: #ffffff;
+      font: 800 10px "Space Grotesk", sans-serif;
+      letter-spacing: 0.5px;
+      animation: livePulse 2s infinite ease-in-out;
+    }
+    .live-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 6px #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -665,6 +689,85 @@
           <span style="color:#991b1b;font-weight:700">🚨 Chờ duyệt mở khóa</span>
           <strong id="statPendingUnlockCount" style="color:#b91c1c">0</strong>
         </div>
+      </div>
+    </section>
+
+
+    <!-- 🔴 NHẬT KÝ THỜI GIAN THỰC & MINH CHỨNG HỌC SINH THAM GIA LÀM BÀI (THUYẾT TRÌNH KHKT) -->
+    <section class="card" id="sectionLiveActivitySessions" style="border:2px solid #10b981;background:linear-gradient(180deg,#fcfdfc 0%,#ffffff 100%);box-shadow:0 6px 24px rgba(16,185,129,0.08);margin-bottom:24px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:44px;height:44px;border-radius:10px;background:#ecfdf5;border:1.5px solid #a7f3d0;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">
+            🔴
+          </div>
+          <div>
+            <h2 class="panel-title" style="margin:0;color:#065f46;font-size:18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              NHẬT KÝ GIÁM SÁT THỜI GIAN THỰC & MINH CHỨNG HỌC SINH THAM GIA
+              <span class="live-pulse-badge"><span class="live-pulse-dot"></span>LIVE REALTIME</span>
+            </h2>
+            <p class="panel-copy" style="margin:3px 0 0;font-size:12px;color:#047857">
+              Dữ liệu minh chứng thuyết trình KHKT: Ghi nhận chính xác từng học sinh <strong>vào làm lúc nào</strong> (giờ, phút, giây) và <strong>kết quả ra sao</strong> ở cả 3 nội dung: <em>Thực hành tình huống</em>, <em>Đánh giá năng lực (Trước & Sau can thiệp)</em> và <em>Phòng thi trực tuyến</em>.
+            </p>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button type="button" class="button button-lime" onclick="exportLiveSessionsExcel()" style="font-size:11.5px;font-weight:800;padding:8px 16px;display:inline-flex;align-items:center;gap:6px">
+            📥 Xuất Báo cáo Minh chứng Giám khảo (Excel/CSV) ↓
+          </button>
+          <button type="button" class="btn-small" onclick="loadLiveActivitySessions()" style="font-weight:700">↻ Làm mới</button>
+          <button type="button" class="btn-small" onclick="clearLiveSessions()" style="color:#b91c1c" title="Xóa lịch sử phiên">Dọn dẹp</button>
+        </div>
+      </div>
+
+      <!-- 4 THẺ THỐNG KÊ MINH CHỨNG PHỤC VỤ THUYẾT TRÌNH ĐỀ TÀI -->
+      <div class="stat-grid" style="margin-top:0;margin-bottom:14px">
+        <div class="stat-box" style="border-color:#bbf7d0;background:#f0fdf4">
+          <span style="color:#166534">📋 TỔNG LƯỢT VÀO LÀM</span>
+          <strong id="sessionStatTotal" style="color:#15803d">0</strong>
+        </div>
+        <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
+          <span style="color:#9a3412">⏳ ĐANG LÀM BÀI TRỰC TIẾP</span>
+          <strong id="sessionStatInProgress" style="color:#c2410c">0</strong>
+        </div>
+        <div class="stat-box" style="border-color:#a7f3d0;background:#ecfdf5">
+          <span style="color:#047857">✅ ĐÃ HOÀN THÀNH NỘP BÀI</span>
+          <strong id="sessionStatCompleted" style="color:#059669">0</strong>
+        </div>
+        <div class="stat-box" style="border-color:#bae6fd;background:#f0f9ff">
+          <span style="color:#0369a1">🎯 ĐIỂM TRUNG BÌNH THỰC NGHIỆM</span>
+          <strong id="sessionStatAvgScore" style="color:#0284c7">—</strong>
+        </div>
+      </div>
+
+      <!-- BỘ LỌC VÀ TÌM KIẾM -->
+      <div class="filter-bar" style="margin-bottom:12px;background:#f8fafc;padding:10px 14px;border:1px solid #e2e8f0;border-radius:10px">
+        <div class="filter-group">
+          <select id="filterSessionActivity" class="filter-input" onchange="renderLiveActivityTable()">
+            <option value="all">Tất cả nội dung làm bài</option>
+            <option value="practice">⚡ Thực hành tình huống</option>
+            <option value="assessment">🎯 Đánh giá năng lực (Cả 2 đợt)</option>
+            <option value="assessment_pre">🎯 Đánh giá: Đợt 01 (Trước can thiệp)</option>
+            <option value="assessment_post">🎯 Đánh giá: Đợt 02 (Sau can thiệp)</option>
+            <option value="exam">📝 Phòng thi trực tuyến</option>
+            <option value="rubric">📐 Thử thách Rubric</option>
+          </select>
+          <select id="filterSessionStatus" class="filter-input" onchange="renderLiveActivityTable()">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="completed">✅ Đã hoàn thành (Có kết quả)</option>
+            <option value="in_progress">⏳ Đang làm bài trực tiếp</option>
+          </select>
+          <input type="text" id="searchSessionStudent" class="filter-input" placeholder="🔍 Tìm theo học sinh, lớp, email..." oninput="renderLiveActivityTable()" style="width:230px">
+        </div>
+        <div style="font-size:11px;color:#64748b;display:flex;align-items:center;gap:6px">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981"></span>
+          Tự động đồng bộ thời gian thực mỗi 10 giây
+        </div>
+      </div>
+
+      <!-- BẢNG DANH SÁCH PHIÊN CHI TIẾT -->
+      <p class="table-scroll-hint">👉 Vuốt sang ngang để xem đầy đủ thời điểm bắt đầu, thời gian nộp bài và kết quả chi tiết</p>
+      <div class="table-responsive" id="liveActivitySessionsContainer">
+        <p class="panel-copy" style="text-align:center;padding:16px">Đang tải nhật ký thời gian thực...</p>
       </div>
     </section>
 
@@ -1309,6 +1412,7 @@
   <script src="cloud.js"></script>
   <script src="site-nav.js"></script>
   <script src="pages/exam-store.js"></script>
+  <script src="activity-tracker.js"></script>
   <script>
     let allScores = [];
     let currentAdminUnlocked = sessionStorage.getItem("aicheck:admin_unlocked") === "true";
@@ -1459,6 +1563,182 @@
       }
     }
 
+
+    // =========================================================================
+    // QUẢN LÝ NHẬT KÝ THỜI GIAN THỰC & MINH CHỨNG HỌC SINH LÀM BÀI (KHKT)
+    // =========================================================================
+    function loadLiveActivitySessions() {
+      renderLiveActivityTable();
+    }
+
+    function renderLiveActivityTable() {
+      const container = document.getElementById("liveActivitySessionsContainer");
+      if (!container || !window.AICheckTracker) return;
+
+      const activityFilter = document.getElementById("filterSessionActivity")?.value || "all";
+      const statusFilter = document.getElementById("filterSessionStatus")?.value || "all";
+      const search = (document.getElementById("searchSessionStudent")?.value || "").trim().toLowerCase();
+
+      let sessions = window.AICheckTracker.getSessions();
+
+      // Cập nhật 4 thẻ thống kê
+      const total = sessions.length;
+      const inProgress = sessions.filter(s => s.status === "in_progress").length;
+      const completed = sessions.filter(s => s.status === "completed").length;
+      const completedWithScore = sessions.filter(s => s.status === "completed" && s.score != null);
+      const avg = completedWithScore.length > 0
+        ? (completedWithScore.reduce((a, b) => a + Number(b.score), 0) / completedWithScore.length).toFixed(1) + "/100"
+        : "—";
+
+      const elTotal = document.getElementById("sessionStatTotal");
+      const elProg = document.getElementById("sessionStatInProgress");
+      const elComp = document.getElementById("sessionStatCompleted");
+      const elAvg = document.getElementById("sessionStatAvgScore");
+
+      if (elTotal) elTotal.textContent = total;
+      if (elProg) elProg.textContent = inProgress;
+      if (elComp) elComp.textContent = completed;
+      if (elAvg) elAvg.textContent = avg;
+
+      // Lọc theo hoạt động
+      if (activityFilter === "assessment_pre") {
+        sessions = sessions.filter(s => s.activity === "assessment" && s.phase === "pre");
+      } else if (activityFilter === "assessment_post") {
+        sessions = sessions.filter(s => s.activity === "assessment" && s.phase === "post");
+      } else if (activityFilter !== "all") {
+        sessions = sessions.filter(s => s.activity === activityFilter);
+      }
+
+      // Lọc theo trạng thái
+      if (statusFilter !== "all") {
+        sessions = sessions.filter(s => s.status === statusFilter);
+      }
+
+      // Lọc theo từ khóa tìm kiếm
+      if (search) {
+        sessions = sessions.filter(s => {
+          const matchName = s.studentName && s.studentName.toLowerCase().includes(search);
+          const matchClass = s.studentClass && s.studentClass.toLowerCase().includes(search);
+          const matchEmail = s.studentEmail && s.studentEmail.toLowerCase().includes(search);
+          const matchTitle = s.title && s.title.toLowerCase().includes(search);
+          return matchName || matchClass || matchEmail || matchTitle;
+        });
+      }
+
+      if (!sessions.length) {
+        container.innerHTML = '<p class="panel-copy" style="padding:22px;text-align:center;color:var(--muted)">Không có phiên làm bài nào phù hợp với bộ lọc hiện tại.</p>';
+        return;
+      }
+
+      container.innerHTML = `<table>
+        <thead>
+          <tr>
+            <th style="width:40px">STT</th>
+            <th>Thời điểm bắt đầu</th>
+            <th>Học sinh / Chi đoàn</th>
+            <th>Nội dung làm bài</th>
+            <th>Thời điểm nộp bài</th>
+            <th>Thời lượng làm</th>
+            <th>Kết quả / Điểm số</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${sessions.map((s, idx) => {
+            const isCompleted = s.status === "completed";
+            const actBadge = s.activity === "practice"
+              ? '<span class="tag" style="background:#fef3c7;color:#b45309;font-weight:700">⚡ Thực hành</span>'
+              : s.activity === "assessment"
+                ? (s.phase === "pre"
+                    ? '<span class="tag" style="background:#e0f2fe;color:#0369a1;font-weight:700">🎯 Đánh giá (Đợt 1 - Trước)</span>'
+                    : '<span class="tag" style="background:#ecfdf5;color:#047857;font-weight:700">🎯 Đánh giá (Đợt 2 - Sau)</span>')
+                : s.activity === "exam"
+                  ? '<span class="tag" style="background:#eff6ff;color:#1d4ed8;font-weight:700">📝 Phòng thi</span>'
+                  : '<span class="tag" style="background:#f3f4f6;color:#374151;font-weight:700">📐 Rubric</span>';
+
+            const statusTag = isCompleted
+              ? '<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐÃ HOÀN THÀNH</span>'
+              : '<span class="tag" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-weight:800;animation:livePulse 1.8s infinite">⏳ ĐANG LÀM BÀI...</span>';
+
+            const scoreDisplay = isCompleted && s.score != null
+              ? `<strong style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:${s.score >= 50 ? '#047857' : '#b91c1c'}">${s.score}/100 đ</strong> <small style="color:var(--muted)">(${s.level || ''})</small>`
+              : '<span style="color:#94a3b8;font-style:italic">Chưa có kết quả</span>';
+
+            return `<tr>
+              <td style="color:var(--muted);font-weight:700">${idx + 1}</td>
+              <td>
+                <div style="font-weight:700;color:var(--forest)">${window.AICheckTracker.formatDateTime(s.startedAt)}</div>
+              </td>
+              <td>
+                <div style="font-weight:800;color:var(--forest);font-size:12.5px">${escapeHtml(s.studentName || '—')}</div>
+                <div style="font-size:11px;color:#64748b">Lớp: <strong>${escapeHtml(s.studentClass || '12A5')}</strong>${s.studentEmail && s.studentEmail !== '—' ? ` · ${escapeHtml(s.studentEmail)}` : ''}</div>
+              </td>
+              <td>
+                <div>${actBadge}</div>
+                <div style="font-size:11px;color:#475569;margin-top:2px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(s.title || '')}">${escapeHtml(s.title || '')}</div>
+              </td>
+              <td>
+                <div style="font-size:11.5px;color:${isCompleted ? '#334155' : '#ea580c'}">${isCompleted ? window.AICheckTracker.formatDateTime(s.completedAt) : '⏳ Đang làm bài...'}</div>
+              </td>
+              <td style="font-size:11.5px;color:#475569">
+                <strong>${escapeHtml(s.durationFormatted || '—')}</strong>
+              </td>
+              <td>
+                ${scoreDisplay}
+                ${s.correctCount != null ? `<div style="font-size:10.5px;color:#64748b">${s.correctCount}/${s.totalQuestions || 20} câu đúng</div>` : ''}
+              </td>
+              <td>${statusTag}</td>
+              <td>
+                <button type="button" class="btn-small" onclick="deleteLiveSessionItem('${s.id}')" style="color:#b91c1c;padding:3px 8px;font-size:10px" title="Xóa phiên này">🗑️</button>
+              </td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>`;
+    }
+
+    function exportLiveSessionsExcel() {
+      if (!window.AICheckTracker) return;
+      const activityFilter = document.getElementById("filterSessionActivity")?.value || "all";
+      const statusFilter = document.getElementById("filterSessionStatus")?.value || "all";
+      const search = (document.getElementById("searchSessionStudent")?.value || "").trim().toLowerCase();
+
+      let sessions = window.AICheckTracker.getSessions();
+      if (activityFilter === "assessment_pre") {
+        sessions = sessions.filter(s => s.activity === "assessment" && s.phase === "pre");
+      } else if (activityFilter === "assessment_post") {
+        sessions = sessions.filter(s => s.activity === "assessment" && s.phase === "post");
+      } else if (activityFilter !== "all") {
+        sessions = sessions.filter(s => s.activity === activityFilter);
+      }
+      if (statusFilter !== "all") sessions = sessions.filter(s => s.status === statusFilter);
+      if (search) {
+        sessions = sessions.filter(s => 
+          (s.studentName && s.studentName.toLowerCase().includes(search)) ||
+          (s.studentClass && s.studentClass.toLowerCase().includes(search)) ||
+          (s.title && s.title.toLowerCase().includes(search))
+        );
+      }
+      window.AICheckTracker.exportSessionsCsv(sessions);
+    }
+
+    function clearLiveSessions() {
+      if (!confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử các phiên làm bài?")) return;
+      if (window.AICheckTracker) {
+        window.AICheckTracker.clearAllSessions();
+        renderLiveActivityTable();
+      }
+    }
+
+    function deleteLiveSessionItem(sessionId) {
+      if (!confirm("Bạn có muốn xóa bản ghi phiên làm bài này?")) return;
+      if (window.AICheckTracker) {
+        window.AICheckTracker.deleteSession(sessionId);
+        renderLiveActivityTable();
+      }
+    }
+
     async function loadAllData() {
       if (!currentAdminUnlocked) {
         const user = await window.AICheckCloud.getUser();
@@ -1471,6 +1751,7 @@
       ]);
       loadAdminExams();
       loadAdminCodesTable();
+      loadLiveActivitySessions();
       loadExamResultsTable();
       loadExamStudentsSummaryTable();
       calculateStats();
