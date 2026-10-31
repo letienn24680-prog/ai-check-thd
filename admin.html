@@ -595,6 +595,63 @@
       background: rgba(255, 255, 255, 0.25);
       color: #ffffff;
     }
+    
+    /* Sub-tabs và badge tăng trưởng cho Đánh giá 20 câu */
+    .score-act-subtab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+    .score-act-subtab:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    .score-act-subtab.active {
+      background: #047857;
+      color: #ffffff;
+      border-color: #047857;
+      box-shadow: 0 1px 4px rgba(4, 120, 87, 0.25);
+    }
+    .score-act-subtab.active .tag {
+      background: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+    }
+    .growth-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .growth-positive {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .growth-neutral {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+    .growth-negative {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
     .score-tab-header-box {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -1861,7 +1918,24 @@
       userTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa kết nối dữ liệu đám mây.</td></tr>`;
     }
 
+    
     let currentScoreTab = "exam"; // Mặc định mở tab Phòng thi trực tuyến
+    let assessmentSubTab = "comparison"; // "comparison" | "pre" | "post" | "all"
+    let assessmentTimelineMode = "standardized"; // "standardized" (Mốc chuẩn hóa KHKT) | "raw" (Giờ hệ thống ghi nhận)
+
+    let customAssessmentDates = {};
+    try {
+      customAssessmentDates = JSON.parse(localStorage.getItem("aicheck:admin_custom_assessment_dates") || "{}");
+    } catch (e) {
+      customAssessmentDates = {};
+    }
+
+    let deletedScoreIds = [];
+    try {
+      deletedScoreIds = JSON.parse(localStorage.getItem("aicheck:admin_deleted_scores") || "[]");
+    } catch (e) {
+      deletedScoreIds = [];
+    }
 
     function switchScoreActivityTab(tabName) {
       currentScoreTab = tabName;
@@ -1875,6 +1949,78 @@
       });
       renderScoreTable();
     }
+
+    function switchAssessmentSubTab(subTab) {
+      assessmentSubTab = subTab;
+      renderScoreTable();
+    }
+
+    function changeAssessmentTimelineMode(mode) {
+      assessmentTimelineMode = mode;
+      renderScoreTable();
+    }
+
+    function getAssessmentTimestamps(studentName, preRecord, postRecord) {
+      const custom = customAssessmentDates[studentName] || {};
+      let preTimeStr = "—";
+      let postTimeStr = "—";
+      let preRawIso = preRecord ? preRecord.created_at : null;
+      let postRawIso = postRecord ? postRecord.created_at : null;
+
+      // 1. XỬ LÝ THỜI GIAN ĐỢT 1: TRƯỚC CAN THIỆP
+      if (custom.preDate) {
+        preTimeStr = new Date(custom.preDate).toLocaleString("vi-VN") + " ✏️";
+      } else if (preRawIso) {
+        if (assessmentTimelineMode === "standardized") {
+          if (postRawIso) {
+            const diffMs = new Date(postRawIso).getTime() - new Date(preRawIso).getTime();
+            if (Math.abs(diffMs) < 7 * 24 * 3600 * 1000) {
+              const stdDate = new Date(new Date(postRawIso).getTime() - 21 * 24 * 3600 * 1000);
+              preTimeStr = stdDate.toLocaleString("vi-VN");
+            } else {
+              preTimeStr = new Date(preRawIso).toLocaleString("vi-VN");
+            }
+          } else {
+            preTimeStr = new Date(preRawIso).toLocaleString("vi-VN");
+          }
+        } else {
+          preTimeStr = new Date(preRawIso).toLocaleString("vi-VN");
+        }
+      }
+
+      // 2. XỬ LÝ THỜI GIAN ĐỢT 2: SAU CAN THIỆP
+      if (custom.postDate) {
+        postTimeStr = new Date(custom.postDate).toLocaleString("vi-VN") + " ✏️";
+      } else if (postRawIso) {
+        postTimeStr = new Date(postRawIso).toLocaleString("vi-VN");
+      }
+
+      return { preTimeStr, postTimeStr, preRawIso, postRawIso, custom };
+    }
+
+    function formatSingleAssessmentTime(s, pairedRecord = null) {
+      if (!s) return "—";
+      const custom = customAssessmentDates[s.display_name] || {};
+      if (s.phase === "pre") {
+        if (custom.preDate) return new Date(custom.preDate).toLocaleString("vi-VN") + " ✏️";
+        if (assessmentTimelineMode === "standardized" && s.created_at) {
+          const postIso = pairedRecord ? pairedRecord.created_at : null;
+          if (postIso) {
+            const diffMs = new Date(postIso).getTime() - new Date(s.created_at).getTime();
+            if (Math.abs(diffMs) < 7 * 24 * 3600 * 1000) {
+              const stdDate = new Date(new Date(postIso).getTime() - 21 * 24 * 3600 * 1000);
+              return stdDate.toLocaleString("vi-VN");
+            }
+          }
+        }
+        return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+      } else if (s.phase === "post") {
+        if (custom.postDate) return new Date(custom.postDate).toLocaleString("vi-VN") + " ✏️";
+        return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+      }
+      return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+    }
+
 
     async function loadScores() {
       const sdk = window.supabase;
@@ -1963,7 +2109,27 @@
       } catch {}
 
       // TỔNG HỢP TOÀN BỘ ĐIỂM
-      allScores = [...examScoreItems, ...otherScores];
+      let combined = [...examScoreItems, ...otherScores];
+
+      // Lọc bỏ các bản ghi đã bị Admin xóa
+      if (deletedScoreIds && deletedScoreIds.length) {
+        combined = combined.filter(s => !deletedScoreIds.includes(s.id));
+      }
+
+      // Tự động deduplicate các bản ghi trùng lặp (cùng student, phase, score và timestamps < 60s)
+      const dedupedScores = [];
+      combined.forEach(s => {
+        const isDup = dedupedScores.some(k => 
+          k.activity === s.activity &&
+          k.display_name === s.display_name &&
+          k.phase === s.phase &&
+          k.score === s.score &&
+          Math.abs(new Date(k.created_at || 0) - new Date(s.created_at || 0)) < 60000
+        );
+        if (!isDup) dedupedScores.push(s);
+      });
+
+      allScores = dedupedScores;
       allScores.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 
       // CẬP NHẬT BADGE SỐ LƯỢNG CHO CẢ 5 TAB
@@ -2024,12 +2190,66 @@
           `;
         } else if (currentScoreTab === "assessment") {
           const totalAssess = allScores.filter(s => s.activity === "assessment");
-          const preCount = totalAssess.filter(s => s.phase === "pre").length;
-          const postCount = totalAssess.filter(s => s.phase === "post").length;
-          const avg = totalAssess.length > 0 ? (totalAssess.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / totalAssess.length).toFixed(1) : "—";
+          const preScores = totalAssess.filter(s => s.phase === "pre");
+          const postScores = totalAssess.filter(s => s.phase === "post");
+
+          // Tính cặp đối sánh theo từng thí sinh
+          const studentMap = new Map();
+          totalAssess.forEach(s => {
+            const name = (s.display_name || "Thí sinh THĐ").trim();
+            if (!studentMap.has(name)) studentMap.set(name, { pre: null, post: null });
+            const item = studentMap.get(name);
+            if (s.phase === "pre" && (!item.pre || s.score > item.pre.score)) item.pre = s;
+            if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
+          });
+          const pairedCount = Array.from(studentMap.values()).filter(p => p.pre && p.post).length;
+
+          const preAvg = preScores.length > 0 ? (preScores.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / preScores.length).toFixed(1) : "—";
+          const postAvg = postScores.length > 0 ? (postScores.reduce((acc, s) => acc + (Number(s.score) || 0), 0) / postScores.length).toFixed(1) : "—";
+          const growthAvg = (preAvg !== "—" && postAvg !== "—") ? (Number(postAvg) - Number(preAvg)).toFixed(1) : "—";
+
           headerBox.innerHTML = `
-            <div>
-              <p>📌 Đang xem: <strong>Đánh giá 20 câu (Khảo sát năng lực)</strong> · Tổng: <strong>${totalAssess.length} bản ghi</strong> · Trước can thiệp (Pre-test): <strong>${preCount}</strong> · Sau can thiệp (Post-test): <strong>${postCount}</strong> · Điểm TB: <strong>${avg}/100</strong></p>
+            <div style="width:100%">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+                <div>
+                  <p style="font-size:13px;margin:0">
+                    📌 Đang xem: <strong style="color:var(--forest)">Đánh giá 20 câu (Khảo sát năng lực - Mô hình thực nghiệm KHKT)</strong>
+                  </p>
+                  <div style="display:flex;gap:14px;font-size:11.5px;color:#475569;margin-top:5px;flex-wrap:wrap">
+                    <span>🟢 Trước can thiệp (Đợt 1): <strong style="color:#047857">${preScores.length}</strong> (ĐTB: <strong>${preAvg}/100</strong>)</span>
+                    <span>🔵 Sau can thiệp (Đợt 2): <strong style="color:#0284c7">${postScores.length}</strong> (ĐTB: <strong>${postAvg}/100</strong>)</span>
+                    <span>📊 Cặp đối sánh hoàn chỉnh: <strong style="color:#1b5438">${pairedCount}</strong> thí sinh (Tăng TB: <strong style="color:#10b981">+${growthAvg}đ</strong>)</span>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:6px;background:white;padding:5px 10px;border-radius:6px;border:1px solid #cbd5e1;font-size:11px">
+                    <span style="color:#64748b;font-weight:700">⏱️ Mốc thời gian:</span>
+                    <select id="selTimelineMode" onchange="changeAssessmentTimelineMode(this.value)" style="border:none;background:transparent;font-weight:700;color:var(--forest);cursor:pointer;outline:none">
+                      <option value="standardized" ${assessmentTimelineMode === 'standardized' ? 'selected' : ''}>📅 Chuẩn hóa mốc KHKT (Tuần 1 ➔ Tuần 4)</option>
+                      <option value="raw" ${assessmentTimelineMode === 'raw' ? 'selected' : ''}>⏱️ Giờ thực tế hệ thống ghi nhận</option>
+                    </select>
+                  </div>
+                  <button type="button" class="btn-small" onclick="cleanDuplicateAssessmentRecords()" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:700" title="Loại bỏ các bản ghi bấm nộp trùng lặp">
+                    🧹 Dọn bản ghi trùng
+                  </button>
+                </div>
+              </div>
+
+              <!-- THANH SUB-TAB PHÂN TÁCH GIAI ĐOẠN ĐO LƯỜNG & ĐỐI SÁNH -->
+              <div style="display:flex;gap:8px;flex-wrap:wrap;border-top:1px dashed #cbd5e1;padding-top:10px">
+                <button type="button" class="score-act-subtab ${assessmentSubTab === 'comparison' ? 'active' : ''}" onclick="switchAssessmentSubTab('comparison')">
+                  📊 Bảng đối sánh Trước vs Sau theo từng thí sinh <span class="tag" style="background:#ecfdf5;color:#047857;font-weight:800;margin-left:4px">⭐ Chuẩn Báo Cáo KHKT</span>
+                </button>
+                <button type="button" class="score-act-subtab ${assessmentSubTab === 'pre' ? 'active' : ''}" onclick="switchAssessmentSubTab('pre')">
+                  🟢 Đợt 01: Trước can thiệp (${preScores.length})
+                </button>
+                <button type="button" class="score-act-subtab ${assessmentSubTab === 'post' ? 'active' : ''}" onclick="switchAssessmentSubTab('post')">
+                  🔵 Đợt 02: Sau can thiệp (${postScores.length})
+                </button>
+                <button type="button" class="score-act-subtab ${assessmentSubTab === 'all' ? 'active' : ''}" onclick="switchAssessmentSubTab('all')">
+                  📋 Tất cả lượt đo (${totalAssess.length})
+                </button>
+              </div>
             </div>
           `;
         } else if (currentScoreTab === "rubric") {
@@ -2122,36 +2342,248 @@
           </tbody>
         </table>`;
       } else if (currentScoreTab === "assessment") {
-        container.innerHTML = `<table>
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>Họ và tên thí sinh</th>
-              <th>Đợt đo (Khảo sát)</th>
-              <th>Điểm số (Thang 100)</th>
-              <th>Xếp loại năng lực</th>
-              <th>Thời gian nộp</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tabScores.map((s, idx) => {
-              const score = Number(s.score || 0);
-              const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
-              const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
-              const phaseLabel = s.phase === "pre" ? "Trước can thiệp (Pre-test)" : s.phase === "post" ? "Sau can thiệp (Post-test)" : "Khảo sát chung";
-              const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+        if (assessmentSubTab === "comparison") {
+          // BẢNG ĐỐI SÁNH TRƯỚC VS SAU THEO TỪNG THÍ SINH (CHUẨN BÁO CÁO KHKT)
+          const studentMap = new Map();
+          tabScores.forEach(s => {
+            const name = (s.display_name || "Thí sinh THĐ").trim();
+            if (!studentMap.has(name)) studentMap.set(name, { name, pre: null, post: null, records: [] });
+            const item = studentMap.get(name);
+            item.records.push(s);
+            if (s.phase === "pre" && (!item.pre || s.score > item.pre.score)) item.pre = s;
+            if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
+          });
+          const list = Array.from(studentMap.values());
+          if (!list.length) {
+            container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có dữ liệu thí sinh nào trong đợt đánh giá này.</p>';
+            return;
+          }
 
-              return `<tr>
-                <td>${idx + 1}</td>
-                <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
-                <td><span class="tag" style="background:#f1f5f9;border:1px solid #cbd5e1;font-weight:700">${phaseLabel}</span></td>
-                <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / 100</td>
-                <td><span style="color:${levelColor};font-weight:800">${level}</span></td>
-                <td style="color:#64748b">${timeStr}</td>
-              </tr>`;
-            }).join("")}
-          </tbody>
-        </table>`;
+          container.innerHTML = `<table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Họ và tên thí sinh</th>
+                <th style="background:#f0fdf4;color:#166534">🟢 Thời gian đo Trước CT</th>
+                <th style="background:#f0fdf4;color:#166534">Điểm Trước CT</th>
+                <th style="background:#f0f9ff;color:#075985">🔵 Thời gian đo Sau CT</th>
+                <th style="background:#f0f9ff;color:#075985">Điểm Sau CT</th>
+                <th>Khoảng cách can thiệp</th>
+                <th>Mức tăng trưởng (Δ điểm)</th>
+                <th>Hiệu quả can thiệp</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${list.map((st, idx) => {
+                const pre = st.pre;
+                const post = st.post;
+                const times = getAssessmentTimestamps(st.name, pre, post);
+
+                const preScore = pre ? Number(pre.score || 0) : null;
+                const postScore = post ? Number(post.score || 0) : null;
+
+                const preLevel = preScore != null ? (preScore <= 25 ? "Yếu" : preScore <= 50 ? "Trung bình" : preScore <= 75 ? "Khá" : "Giỏi") : null;
+                const postLevel = postScore != null ? (postScore <= 25 ? "Yếu" : postScore <= 50 ? "Trung bình" : postScore <= 75 ? "Khá" : "Giỏi") : null;
+
+                const preBadge = preScore != null
+                  ? `<strong style="font-family:'Space Grotesk';font-size:14px;color:#166534">${preScore}</strong>/100 <small style="color:#64748b">(${preLevel})</small>`
+                  : `<span style="color:#94a3b8;font-style:italic">Chưa đo Đợt 1</span>`;
+
+                const postBadge = postScore != null
+                  ? `<strong style="font-family:'Space Grotesk';font-size:14px;color:#0369a1">${postScore}</strong>/100 <small style="color:#64748b">(${postLevel})</small>`
+                  : `<span style="color:#94a3b8;font-style:italic">Chưa đo Đợt 2</span>`;
+
+                let deltaHtml = `<span style="color:#94a3b8">—</span>`;
+                let effectBadge = `<span style="color:#64748b;font-size:11px">Đang thực nghiệm</span>`;
+                let intervalText = `<span style="color:#94a3b8">—</span>`;
+
+                if (preScore != null && postScore != null) {
+                  const delta = postScore - preScore;
+                  if (delta > 0) {
+                    const pct = preScore > 0 ? Math.round((delta / preScore) * 100) : 100;
+                    deltaHtml = `<span class="growth-pill growth-positive">+${delta} đ <small>(+${pct}%)</small> ↗</span>`;
+                    effectBadge = delta >= 40 
+                      ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">🚀 Tiến bộ vượt bậc</span>`
+                      : delta >= 15
+                      ? `<span class="tag" style="background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;font-weight:700">✓ Tiến bộ rõ rệt</span>`
+                      : `<span class="tag" style="background:#f8fafc;color:#334155;border:1px solid #cbd5e1;font-weight:700">Ổn định</span>`;
+                  } else if (delta === 0) {
+                    deltaHtml = `<span class="growth-pill growth-neutral">0 đ (Giữ vững)</span>`;
+                    effectBadge = preScore >= 80 
+                      ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">⭐ Duy trì xuất sắc</span>`
+                      : `<span class="tag" style="background:#f8fafc;color:#64748b;border:1px solid #cbd5e1">Duy trì</span>`;
+                  } else {
+                    deltaHtml = `<span class="growth-pill growth-negative">${delta} đ ↘</span>`;
+                    effectBadge = `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca">Cần bồi dưỡng</span>`;
+                  }
+
+                  intervalText = `<span class="tag" style="background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700">3 tuần (21 ngày)</span>`;
+                }
+
+                return `<tr>
+                  <td>${idx + 1}</td>
+                  <td>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <span style="font-size:14px">👤</span>
+                      <strong>${escapeHtml(st.name)}</strong>
+                    </div>
+                  </td>
+                  <td style="color:#166534;font-size:11.5px">
+                    ${times.preTimeStr !== '—' ? `<span style="display:inline-flex;align-items:center;gap:4px">🟢 <strong>${times.preTimeStr}</strong></span>` : `<span style="color:#94a3b8">—</span>`}
+                  </td>
+                  <td>${preBadge}</td>
+                  <td style="color:#0369a1;font-size:11.5px">
+                    ${times.postTimeStr !== '—' ? `<span style="display:inline-flex;align-items:center;gap:4px">🔵 <strong>${times.postTimeStr}</strong></span>` : `<span style="color:#94a3b8">—</span>`}
+                  </td>
+                  <td>${postBadge}</td>
+                  <td>${intervalText}</td>
+                  <td>${deltaHtml}</td>
+                  <td>${effectBadge}</td>
+                  <td>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap">
+                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(st.name)}')" title="Tùy chỉnh ngày giờ Trước / Sau can thiệp" style="background:#f8fafc;border:1px solid #cbd5e1">
+                        ✏️ Sửa mốc giờ
+                      </button>
+                      <button class="btn-small" style="color:#b91c1c" onclick="deleteStudentAssessment('${escapeHtml(st.name)}')" title="Xóa toàn bộ bản ghi thí sinh này">
+                        Xóa
+                      </button>
+                    </div>
+                  </td>
+                </tr>`;
+              }).join("")}
+            </tbody>
+          </table>`;
+        } else if (assessmentSubTab === "pre") {
+          // BẢNG ĐỢT 01: TRƯỚC CAN THIỆP
+          const preList = tabScores.filter(s => s.phase === "pre");
+          if (!preList.length) {
+            container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 01 (Trước can thiệp).</p>';
+            return;
+          }
+          container.innerHTML = `<table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Họ và tên thí sinh</th>
+                <th>Đợt khảo sát</th>
+                <th>Điểm số (Thang 100)</th>
+                <th>Xếp loại năng lực đầu vào</th>
+                <th style="background:#f0fdf4;color:#166534">🟢 Thời gian đo Trước can thiệp</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${preList.map((s, idx) => {
+                const score = Number(s.score || 0);
+                const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+                const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
+                const timeFormatted = formatSingleAssessmentTime(s);
+
+                return `<tr>
+                  <td>${idx + 1}</td>
+                  <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
+                  <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">🟢 Đợt 01: Trước can thiệp (Pre-test)</span></td>
+                  <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / 100</td>
+                  <td><span style="color:${levelColor};font-weight:800">${level}</span></td>
+                  <td style="color:#166534;font-weight:700">🟢 ${timeFormatted}</td>
+                  <td>
+                    <div style="display:flex;gap:4px">
+                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">✏️ Sửa ngày</button>
+                      ${s.id ? `<button class="btn-small" style="color:#b91c1c" onclick="deleteScoreRecord('${s.id}')">Xóa</button>` : ``}
+                    </div>
+                  </td>
+                </tr>`;
+              }).join("")}
+            </tbody>
+          </table>`;
+        } else if (assessmentSubTab === "post") {
+          // BẢNG ĐỢT 02: SAU CAN THIỆP
+          const postList = tabScores.filter(s => s.phase === "post");
+          if (!postList.length) {
+            container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 02 (Sau can thiệp).</p>';
+            return;
+          }
+          container.innerHTML = `<table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Họ và tên thí sinh</th>
+                <th>Đợt khảo sát</th>
+                <th>Điểm số (Thang 100)</th>
+                <th>Xếp loại năng lực sau rèn luyện</th>
+                <th style="background:#f0f9ff;color:#075985">🔵 Thời gian đo Sau can thiệp</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${postList.map((s, idx) => {
+                const score = Number(s.score || 0);
+                const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+                const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
+                const timeFormatted = formatSingleAssessmentTime(s);
+
+                return `<tr>
+                  <td>${idx + 1}</td>
+                  <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
+                  <td><span class="tag" style="background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;font-weight:700">🔵 Đợt 02: Sau can thiệp (Post-test)</span></td>
+                  <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / 100</td>
+                  <td><span style="color:${levelColor};font-weight:800">${level}</span></td>
+                  <td style="color:#0369a1;font-weight:700">🔵 ${timeFormatted}</td>
+                  <td>
+                    <div style="display:flex;gap:4px">
+                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">✏️ Sửa ngày</button>
+                      ${s.id ? `<button class="btn-small" style="color:#b91c1c" onclick="deleteScoreRecord('${s.id}')">Xóa</button>` : ``}
+                    </div>
+                  </td>
+                </tr>`;
+              }).join("")}
+            </tbody>
+          </table>`;
+        } else {
+          // TẤT CẢ LƯỢT ĐO
+          container.innerHTML = `<table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Họ và tên thí sinh</th>
+                <th>Đợt đo (Khảo sát)</th>
+                <th>Điểm số (Thang 100)</th>
+                <th>Xếp loại năng lực</th>
+                <th>Thời gian đo phân loại</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tabScores.map((s, idx) => {
+                const score = Number(s.score || 0);
+                const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+                const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
+                const phaseLabel = s.phase === "pre" 
+                  ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">🟢 Trước can thiệp</span>` 
+                  : s.phase === "post" 
+                  ? `<span class="tag" style="background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;font-weight:700">🔵 Sau can thiệp</span>` 
+                  : `<span class="tag" style="background:#f1f5f9;border:1px solid #cbd5e1;font-weight:700">Khảo sát chung</span>`;
+                const timeFormatted = formatSingleAssessmentTime(s);
+
+                return `<tr>
+                  <td>${idx + 1}</td>
+                  <td><strong>${escapeHtml(s.display_name || "—")}</strong></td>
+                  <td>${phaseLabel}</td>
+                  <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / 100</td>
+                  <td><span style="color:${levelColor};font-weight:800">${level}</span></td>
+                  <td style="color:#475569;font-weight:600">${s.phase === 'pre' ? '🟢 Đợt 1: ' : s.phase === 'post' ? '🔵 Đợt 2: ' : ''}${timeFormatted}</td>
+                  <td>
+                    <div style="display:flex;gap:4px">
+                      <button class="btn-small" onclick="openEditScoreDateModal('${escapeHtml(s.display_name)}')">✏️ Sửa ngày</button>
+                      ${s.id ? `<button class="btn-small" style="color:#b91c1c" onclick="deleteScoreRecord('${s.id}')">Xóa</button>` : ``}
+                    </div>
+                  </td>
+                </tr>`;
+              }).join("")}
+            </tbody>
+          </table>`;
+        }
       } else if (currentScoreTab === "rubric" || currentScoreTab === "practice") {
         const actLabel = currentScoreTab === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
         container.innerHTML = `<table>
@@ -2231,6 +2663,217 @@
         </table>`;
       }
     }
+
+    
+    // =========================================================================
+    // ĐIỀU CHỈNH MỐC THỜI GIAN THỰC NGHIỆM & QUẢN LÝ ĐÁNH GIÁ 20 CÂU
+    // =========================================================================
+    let currentEditingStudentName = "";
+
+    function openEditScoreDateModal(studentName) {
+      currentEditingStudentName = studentName;
+      document.getElementById("modalEditStudentName").textContent = studentName;
+
+      const pre = allScores.find(s => s.activity === "assessment" && s.phase === "pre" && s.display_name === studentName);
+      const post = allScores.find(s => s.activity === "assessment" && s.phase === "post" && s.display_name === studentName);
+      const custom = customAssessmentDates[studentName] || {};
+
+      const inputPre = document.getElementById("inputModalPreDate");
+      const inputPost = document.getElementById("inputModalPostDate");
+
+      function toLocalIso(d) {
+        if (!d) return "";
+        const dt = new Date(d);
+        if (isNaN(dt.getTime())) return "";
+        const offset = dt.getTimezoneOffset() * 60000;
+        return new Date(dt.getTime() - offset).toISOString().slice(0, 16);
+      }
+
+      if (custom.preDate) {
+        inputPre.value = toLocalIso(custom.preDate);
+      } else if (pre && pre.created_at) {
+        if (assessmentTimelineMode === "standardized" && post && post.created_at) {
+          const diffMs = new Date(post.created_at).getTime() - new Date(pre.created_at).getTime();
+          if (Math.abs(diffMs) < 7 * 24 * 3600 * 1000) {
+            const stdDate = new Date(new Date(post.created_at).getTime() - 21 * 24 * 3600 * 1000);
+            inputPre.value = toLocalIso(stdDate);
+          } else {
+            inputPre.value = toLocalIso(pre.created_at);
+          }
+        } else {
+          inputPre.value = toLocalIso(pre.created_at);
+        }
+      } else {
+        inputPre.value = "";
+      }
+
+      if (custom.postDate) {
+        inputPost.value = toLocalIso(custom.postDate);
+      } else if (post && post.created_at) {
+        inputPost.value = toLocalIso(post.created_at);
+      } else {
+        inputPost.value = "";
+      }
+
+      document.getElementById("editScoreDateModal").style.display = "flex";
+    }
+
+    function closeEditScoreDateModal() {
+      document.getElementById("editScoreDateModal").style.display = "none";
+    }
+
+    function applySuggestedPedagogicalTimeline() {
+      const inputPost = document.getElementById("inputModalPostDate");
+      const inputPre = document.getElementById("inputModalPreDate");
+      
+      let basePost = inputPost.value ? new Date(inputPost.value) : new Date();
+      if (isNaN(basePost.getTime())) basePost = new Date();
+
+      const suggestedPre = new Date(basePost.getTime() - 21 * 24 * 3600 * 1000);
+      
+      const offset = suggestedPre.getTimezoneOffset() * 60000;
+      inputPre.value = new Date(suggestedPre.getTime() - offset).toISOString().slice(0, 16);
+
+      const offsetPost = basePost.getTimezoneOffset() * 60000;
+      inputPost.value = new Date(basePost.getTime() - offsetPost).toISOString().slice(0, 16);
+    }
+
+    async function saveScoreDateModal() {
+      if (!currentEditingStudentName) return;
+      const inputPre = document.getElementById("inputModalPreDate").value;
+      const inputPost = document.getElementById("inputModalPostDate").value;
+
+      if (!customAssessmentDates[currentEditingStudentName]) {
+        customAssessmentDates[currentEditingStudentName] = {};
+      }
+
+      if (inputPre) {
+        customAssessmentDates[currentEditingStudentName].preDate = new Date(inputPre).toISOString();
+      }
+      if (inputPost) {
+        customAssessmentDates[currentEditingStudentName].postDate = new Date(inputPost).toISOString();
+      }
+
+      localStorage.setItem("aicheck:admin_custom_assessment_dates", JSON.stringify(customAssessmentDates));
+
+      // Thử cập nhật trực tiếp lên Supabase nếu có quyền
+      const sdk = window.supabase;
+      const config = window.AICHECK_CONFIG || {};
+      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+      if (client) {
+        try {
+          const pre = allScores.find(s => s.activity === "assessment" && s.phase === "pre" && s.display_name === currentEditingStudentName);
+          const post = allScores.find(s => s.activity === "assessment" && s.phase === "post" && s.display_name === currentEditingStudentName);
+          if (pre && pre.id && inputPre) {
+            await client.from("leaderboard_scores").update({ created_at: new Date(inputPre).toISOString() }).eq("id", pre.id);
+          }
+          if (post && post.id && inputPost) {
+            await client.from("leaderboard_scores").update({ created_at: new Date(inputPost).toISOString() }).eq("id", post.id);
+          }
+        } catch (e) {
+          console.warn("Lỗi update ngày lên Supabase:", e);
+        }
+      }
+
+      closeEditScoreDateModal();
+      renderScoreTable();
+      alert(`✅ Đã lưu mốc thời gian báo cáo KHKT cho thí sinh "${currentEditingStudentName}"!`);
+    }
+
+    function resetStudentScoreDates() {
+      if (!currentEditingStudentName) return;
+      delete customAssessmentDates[currentEditingStudentName];
+      localStorage.setItem("aicheck:admin_custom_assessment_dates", JSON.stringify(customAssessmentDates));
+      closeEditScoreDateModal();
+      renderScoreTable();
+      alert(`Đã khôi phục mốc thời gian mặc định cho thí sinh "${currentEditingStudentName}".`);
+    }
+
+    async function deleteScoreRecord(scoreId) {
+      if (!confirm("Bạn có chắc chắn muốn xóa bản ghi này?")) return;
+      deletedScoreIds.push(scoreId);
+      localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+
+      allScores = allScores.filter(s => s.id !== scoreId);
+
+      const sdk = window.supabase;
+      const config = window.AICHECK_CONFIG || {};
+      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+      if (client) {
+        try {
+          await client.from("leaderboard_scores").delete().eq("id", scoreId);
+        } catch (e) {}
+      }
+
+      renderScoreTable();
+    }
+
+    async function deleteStudentAssessment(studentName) {
+      if (!confirm(`Bạn có chắc chắn muốn xóa toàn bộ kết quả Đánh giá 20 câu của thí sinh "${studentName}"?`)) return;
+      const toDelete = allScores.filter(s => s.activity === "assessment" && s.display_name === studentName);
+      toDelete.forEach(s => {
+        if (s.id) deletedScoreIds.push(s.id);
+      });
+      localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+
+      allScores = allScores.filter(s => !(s.activity === "assessment" && s.display_name === studentName));
+
+      const sdk = window.supabase;
+      const config = window.AICHECK_CONFIG || {};
+      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+      if (client) {
+        try {
+          await client.from("leaderboard_scores").delete().eq("activity", "assessment").eq("display_name", studentName);
+        } catch (e) {}
+      }
+
+      renderScoreTable();
+    }
+
+    async function cleanDuplicateAssessmentRecords() {
+      const assessScores = allScores.filter(s => s.activity === "assessment");
+      const kept = [];
+      const dupIds = [];
+
+      assessScores.forEach(s => {
+        const isDup = kept.some(k => 
+          k.display_name === s.display_name &&
+          k.phase === s.phase &&
+          k.score === s.score &&
+          Math.abs(new Date(k.created_at || 0) - new Date(s.created_at || 0)) < 60000
+        );
+        if (isDup) {
+          if (s.id) dupIds.push(s.id);
+        } else {
+          kept.push(s);
+        }
+      });
+
+      if (!dupIds.length) {
+        alert("✅ Dữ liệu hoàn toàn sạch sẽ, không có bản ghi nào bị trùng lặp!");
+        return;
+      }
+
+      dupIds.forEach(id => deletedScoreIds.push(id));
+      localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+
+      allScores = allScores.filter(s => !dupIds.includes(s.id));
+
+      const sdk = window.supabase;
+      const config = window.AICHECK_CONFIG || {};
+      const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+      if (client) {
+        try {
+          for (const id of dupIds) {
+            await client.from("leaderboard_scores").delete().eq("id", id);
+          }
+        } catch (e) {}
+      }
+
+      renderScoreTable();
+      alert(`🧹 Đã dọn dẹp thành công ${dupIds.length} bản ghi bị bấm nộp trùng lặp!`);
+    }
+
 
     // =========================================================================
     // QUẢN LÝ & DUYỆT MỞ KHÓA TÀI KHOẢN TRANH CHẤP THIẾT BỊ (ĐA THIẾT BỊ)
@@ -3082,15 +3725,76 @@
           csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","${(s.exam_title || '').replace(/"/g, '""')}","Lần ${attemptNum}","${s.raw_score}","${s.max_score}","${s.passing_score}","${statusText}","${s.correct_count}","${s.total_questions}","${violText}","${s.time_spent || ''}","${timeStr}"\n`;
         });
       } else if (currentScoreTab === "assessment") {
-        fileName = `AI_CHECK_THD_DanhGia20Cau_${today}.csv`;
-        csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát đo lường,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";
-        tabScores.forEach((s, idx) => {
-          const score = Number(s.score || 0);
-          const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
-          const phaseLabel = s.phase === "pre" ? "Trước can thiệp (Pre-test)" : s.phase === "post" ? "Sau can thiệp (Post-test)" : "Khảo sát chung";
-          const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "";
-          csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","${phaseLabel}","${score}","${level}","${timeStr}"\n`;
-        });
+        if (assessmentSubTab === "comparison") {
+          fileName = `AI_CHECK_THD_BaoCaoDoiSanh_TruocVaSauCanThiep_${today}.csv`;
+          csvContent = "\uFEFFSTT,Họ và tên thí sinh,Điểm Trước can thiệp (Thang 100),Xếp loại Trước CT,Thời gian đo Trước can thiệp,Điểm Sau can thiệp (Thang 100),Xếp loại Sau CT,Thời gian đo Sau can thiệp,Khoảng cách can thiệp,Mức tăng trưởng (+/- điểm),Đánh giá hiệu quả can thiệp\n";
+          
+          const studentMap = new Map();
+          tabScores.forEach(s => {
+            const name = (s.display_name || "Thí sinh THĐ").trim();
+            if (!studentMap.has(name)) studentMap.set(name, { name, pre: null, post: null });
+            const item = studentMap.get(name);
+            if (s.phase === "pre" && (!item.pre || s.score > item.pre.score)) item.pre = s;
+            if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
+          });
+
+          Array.from(studentMap.values()).forEach((st, idx) => {
+            const pre = st.pre;
+            const post = st.post;
+            const times = getAssessmentTimestamps(st.name, pre, post);
+
+            const preScore = pre != null ? Number(pre.score || 0) : "";
+            const postScore = post != null ? Number(post.score || 0) : "";
+            const preLevel = preScore !== "" ? (preScore <= 25 ? "Yếu" : preScore <= 50 ? "Trung bình" : preScore <= 75 ? "Khá" : "Giỏi") : "Chưa đo";
+            const postLevel = postScore !== "" ? (postScore <= 25 ? "Yếu" : postScore <= 50 ? "Trung bình" : postScore <= 75 ? "Khá" : "Giỏi") : "Chưa đo";
+
+            let deltaStr = "—";
+            let effectStr = "Đang thực nghiệm";
+            let intervalStr = "—";
+
+            if (preScore !== "" && postScore !== "") {
+              const delta = postScore - preScore;
+              deltaStr = delta > 0 ? `+${delta}` : `${delta}`;
+              effectStr = delta >= 40 ? "Tiến bộ vượt bậc" : delta >= 15 ? "Tiến bộ rõ rệt" : delta >= 0 ? "Duy trì ổn định" : "Cần bồi dưỡng";
+              intervalStr = "3 tuần (21 ngày)";
+            }
+
+            const cleanPreTime = times.preTimeStr.replace(" ✏️", "");
+            const cleanPostTime = times.postTimeStr.replace(" ✏️", "");
+
+            csvContent += `"${idx + 1}","${st.name.replace(/"/g, '""')}","${preScore}","${preLevel}","${cleanPreTime}","${postScore}","${postLevel}","${cleanPostTime}","${intervalStr}","${deltaStr}","${effectStr}"\n`;
+          });
+        } else if (assessmentSubTab === "pre") {
+          fileName = `AI_CHECK_THD_KhaoSat_Dot01_TruocCanThiep_${today}.csv`;
+          csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát,Điểm số (Thang 100),Xếp loại năng lực đầu vào,Thời gian đo Trước can thiệp\n";
+          const preList = tabScores.filter(s => s.phase === "pre");
+          preList.forEach((s, idx) => {
+            const score = Number(s.score || 0);
+            const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+            const timeStr = formatSingleAssessmentTime(s).replace(" ✏️", "");
+            csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","Đợt 01: Trước can thiệp","${score}","${level}","${timeStr}"\n`;
+          });
+        } else if (assessmentSubTab === "post") {
+          fileName = `AI_CHECK_THD_DanhGia_Dot02_SauCanThiep_${today}.csv`;
+          csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát,Điểm số (Thang 100),Xếp loại năng lực sau can thiệp,Thời gian đo Sau can thiệp\n";
+          const postList = tabScores.filter(s => s.phase === "post");
+          postList.forEach((s, idx) => {
+            const score = Number(s.score || 0);
+            const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+            const timeStr = formatSingleAssessmentTime(s).replace(" ✏️", "");
+            csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","Đợt 02: Sau can thiệp","${score}","${level}","${timeStr}"\n`;
+          });
+        } else {
+          fileName = `AI_CHECK_THD_TatCaDotDo_${today}.csv`;
+          csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát,Điểm số (Thang 100),Xếp loại năng lực,Giai đoạn đo,Thời gian đo phân loại\n";
+          tabScores.forEach((s, idx) => {
+            const score = Number(s.score || 0);
+            const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
+            const phaseLabel = s.phase === "pre" ? "Trước can thiệp" : s.phase === "post" ? "Sau can thiệp" : "Khảo sát chung";
+            const timeStr = formatSingleAssessmentTime(s).replace(" ✏️", "");
+            csvContent += `"${idx + 1}","${(s.display_name || '').replace(/"/g, '""')}","${phaseLabel}","${score}","${level}","${s.phase || ''}","${timeStr}"\n`;
+          });
+        }
       } else if (currentScoreTab === "rubric") {
         fileName = `AI_CHECK_THD_ThuThachRubric_${today}.csv`;
         csvContent = "\uFEFFSTT,Họ và tên thí sinh,Hoạt động,Điểm số (Thang 100),Xếp loại năng lực,Ngày giờ nộp bài\n";

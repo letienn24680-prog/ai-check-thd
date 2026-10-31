@@ -295,8 +295,10 @@
       writeSessions(sessions);
       this.notifyUpdate("complete", session);
 
-      // Đồng bộ thông tin lên cloud nếu có thể
-      this.syncSessionToCloud(session);
+      // Đồng bộ thông tin lên cloud nếu có thể (tránh ghi trùng nếu caller đã lưu cloud)
+      if (!resultData.skipCloudSync) {
+        this.syncSessionToCloud(session);
+      }
 
       return session;
     },

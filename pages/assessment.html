@@ -640,7 +640,8 @@
           correctCount: totalCorrect,
           totalQuestions: questions.length,
           level: label,
-          phase: assessmentPhase
+          phase: assessmentPhase,
+          skipCloudSync: true
         });
       }
       if (window.AICheckCloud?.processSyncQueue) {
