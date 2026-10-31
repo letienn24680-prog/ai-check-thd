@@ -300,8 +300,10 @@
     try {
       sessionStorage.removeItem("aicheck:master_admin_session");
       sessionStorage.removeItem("aicheck:admin_unlocked");
+      sessionStorage.removeItem("aicheck:guest_session");
       localStorage.removeItem("aicheck:master_admin_session");
       localStorage.removeItem("aicheck:admin_unlocked");
+      localStorage.removeItem("aicheck:guest_session");
       localStorage.removeItem("aicheck:active_session_id");
       localStorage.removeItem("aicheck:active_account");
       if (client) await client.auth.signOut();
@@ -324,6 +326,14 @@
       const masterAdminRaw = sessionStorage.getItem("aicheck:master_admin_session") || localStorage.getItem("aicheck:master_admin_session");
       if (masterAdminRaw) {
         return JSON.parse(masterAdminRaw);
+      }
+    } catch {}
+
+    // 2. Kiểm tra session của Khách / Giám khảo KHKT
+    try {
+      const guestRaw = sessionStorage.getItem("aicheck:guest_session") || localStorage.getItem("aicheck:guest_session");
+      if (guestRaw) {
+        return JSON.parse(guestRaw);
       }
     } catch {}
 
@@ -1861,6 +1871,24 @@
     }
   };
 
+  function loginAsGuest(guestName = "Giám khảo KHKT") {
+    const guestUser = {
+      id: "guest_" + Date.now(),
+      email: "giamkhao@aicheck.thd",
+      user_metadata: {
+        display_name: guestName,
+        full_name: guestName,
+        school: "Ban Giám khảo KHKT",
+        role: "judge"
+      }
+    };
+    try {
+      localStorage.setItem("aicheck:guest_session", JSON.stringify(guestUser));
+      sessionStorage.setItem("aicheck:guest_session", JSON.stringify(guestUser));
+    } catch {}
+    return guestUser;
+  }
+
   window.AICheckSessionManager = AICheckSessionManager;
 
   window.AICheckCloud = {
@@ -1905,6 +1933,7 @@
     processSyncQueue,
     syncGamification,
     // Session & Device Conflict Manager
-    sessionManager: AICheckSessionManager
+    sessionManager: AICheckSessionManager,
+    loginAsGuest
   };
 })();

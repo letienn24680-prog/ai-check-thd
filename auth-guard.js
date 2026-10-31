@@ -28,7 +28,7 @@
   function hasLocalAuthToken() {
     // 0. Kiểm tra tài khoản Quản trị viên cấp cao (adminthd)
     try {
-      if (sessionStorage.getItem("aicheck:master_admin_session") || localStorage.getItem("aicheck:master_admin_session")) {
+      if (sessionStorage.getItem("aicheck:master_admin_session") || localStorage.getItem("aicheck:master_admin_session") || sessionStorage.getItem("aicheck:guest_session") || localStorage.getItem("aicheck:guest_session")) {
         return true;
       }
     } catch {}
