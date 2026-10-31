@@ -183,8 +183,12 @@
         <h2 class="panel-title">Mỗi lượt là một đề mới.</h2>
         <p class="panel-copy">Mỗi lượt gồm 10 tình huống được chọn ngẫu nhiên từ kho 1.060 câu. Khi hoàn thành, hệ thống tự động xáo đề mới và tuyệt đối không trùng lặp với các câu vừa làm.</p>
         <button class="button button-lime" id="newPractice" style="width:100%;margin-top:14px">Bắt đầu lượt mới ↻</button>
-        <a class="button button-outline" id="googleFormLink" href="resources.html#formConfig" style="width:100%;margin-top:8px">Mở Google Form ↗</a>
         <p class="panel-copy" style="margin-top:16px;line-height:1.5">Các tình huống là tư liệu mô phỏng cho hoạt động học tập, không phải trích dẫn nghiên cứu thật nếu chưa kèm nguồn.</p>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,0.15);text-align:center">
+          <a id="feedbackLink" href="resources.html#formConfig" style="font-size:11.5px;color:#94a3b8;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:color 0.15s">
+            💬 Đóng góp tình huống / Báo lỗi ↗
+          </a>
+        </div>
       </aside>
     </div>
 
@@ -716,11 +720,11 @@
     });
 
     const googleFormUrl = read("googleFormUrl", "") || window.AICHECK_CONFIG?.googleFormUrl || "";
-    if (googleFormUrl) { 
-      const link = document.getElementById("googleFormLink"); 
-      link.href = googleFormUrl; 
-      link.target = "_blank"; 
-      link.rel = "noopener noreferrer"; 
+    const feedbackLink = document.getElementById("feedbackLink");
+    if (feedbackLink && googleFormUrl) { 
+      feedbackLink.href = googleFormUrl; 
+      feedbackLink.target = "_blank"; 
+      feedbackLink.rel = "noopener noreferrer"; 
     }
 
     function updateCounts() {

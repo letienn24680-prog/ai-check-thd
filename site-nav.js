@@ -975,6 +975,7 @@
       "Mỗi lượt gồm 10 tình huống được chọn ngẫu nhiên từ kho 1.060 câu. Khi hoàn thành, hệ thống tự động xáo đề mới và tuyệt đối không trùng lặp với các câu vừa làm.": "Each round consists of 10 randomized scenarios from a pool of 1,060. Completed questions will never repeat in consecutive rounds.",
       "Câu đã làm không lặp cho đến khi dùng hết kho 60 tình huống. Lượt cuối có thể ngắn hơn để giữ nguyên nguyên tắc đó.": "Answered questions will not repeat until all 1,060 scenarios are exhausted.",
       "Bắt đầu lượt mới ↻": "Start New Round ↻",
+      "Đóng góp tình huống / Báo lỗi ↗": "Contribute Scenarios / Report Issue ↗",
       "Mở Google Form ↗": "Open Google Form ↗",
       "💡 Trợ giúp / Gợi ý": "💡 Help / Hint",
       "💡 Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (1.060 tình huống)": "💡 Need help? Click to expand hints & lookup (1,060 scenarios)",
