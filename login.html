@@ -977,13 +977,7 @@
     [data-theme="dark"] .btn-admin-fill:hover {
       background: rgba(255, 255, 255, 0.15) !important;
     }
-    [data-theme="dark"] #passwordSafetyBox {
-      background: rgba(16, 185, 129, 0.12) !important;
-      border-color: rgba(16, 185, 129, 0.3) !important;
-    }
-    [data-theme="dark"] #passwordSafetyBox div {
-      color: #e2e8f0 !important;
-    }
+
 
   </style>
 </head>
@@ -1061,7 +1055,7 @@
 
     <!-- Trường Email -->
     <div class="flex-column">
-      <label for="email">Tài khoản Email đăng ký <span style="font-size:11px;font-weight:normal;color:#059669">(Dùng để lưu điểm và nhận mã OTP)</span></label>
+      <label for="email">Tài khoản hoặc Địa chỉ Email</label>
       <div class="inputForm">
         <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
           <g id="Layer_3" data-name="Layer 3">
@@ -1072,32 +1066,20 @@
       </div>
     </div>
 
-    <!-- Hộp lưu ý an toàn mật khẩu chống cảnh báo nhầm của Cốc Cốc / Chrome -->
-    <div id="passwordSafetyBox" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:9px 12px;margin:2px 0 10px;display:flex;align-items:flex-start;gap:9px">
-      <span style="font-size:16px;line-height:1.2;flex-shrink:0">🛡️</span>
-      <div style="font-size:11.5px;color:#166534;line-height:1.45">
-        <strong>Lưu ý bảo mật:</strong> Đặt mật khẩu riêng cho dự án AI CHECK THĐ. 
-        <span style="color:#b91c1c;font-weight:700">Tuyệt đối KHÔNG nhập mật khẩu gốc của hộp thư Gmail</span> để tránh trình duyệt Cốc Cốc/Chrome kích hoạt cảnh báo bảo vệ mật khẩu.
-      </div>
-    </div>
-
     <!-- Trường Password -->
     <div class="flex-column">
-      <label for="password">Mật khẩu tài khoản AI CHECK</label>
+      <label for="password">Mật khẩu</label>
       <div class="inputForm">
         <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
           <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
           <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path>
         </svg>        
-        <input type="password" id="password" class="input" placeholder="Mật khẩu riêng cho AI CHECK (từ 6 ký tự)" required autocomplete="new-password" minlength="6">
+        <input type="password" id="password" class="input" placeholder="Nhập mật khẩu của bạn" required autocomplete="new-password" minlength="6">
         <button type="button" class="eye-toggle-btn" id="togglePasswordBtn" aria-label="Hiện hoặc ẩn mật khẩu" title="Hiện hoặc ẩn mật khẩu">
           <svg viewBox="0 0 576 512" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
             <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"></path>
           </svg>
         </button>
-      </div>
-      <div id="gmailPasswordWarning" style="display:none;font-size:11px;color:#dc2626;margin-top:5px;font-weight:700;line-height:1.4">
-        ⚠️ Lưu ý: Bạn đang nhập email Gmail. Vui lòng nhập mật khẩu tài khoản AI CHECK, KHÔNG nhập mật khẩu Gmail cá nhân!
       </div>
     </div>
 
@@ -1935,6 +1917,45 @@
           window.AICheckLoader?.hide();
           alert("Hệ thống chưa kết nối được Supabase Client!");
         }
+      }
+    }
+
+    // 9. Xử lý Đăng nhập nhanh cho Giám khảo & Điền nhanh Admin
+    function handleGuestJudgeLogin() {
+      window.AICheckLoader?.show("Đang chuẩn bị phiên làm việc Giám khảo / Khách trải nghiệm...");
+      if (window.AICheckCloud?.loginAsGuest) {
+        window.AICheckCloud.loginAsGuest();
+      } else {
+        const guestUser = {
+          id: "guest_" + Date.now(),
+          email: "giamkhao@aicheck.thd",
+          user_metadata: {
+            display_name: "Giám khảo KHKT",
+            full_name: "Giám khảo KHKT",
+            school: "Ban Giám khảo KHKT",
+            role: "judge"
+          }
+        };
+        try {
+          localStorage.setItem("aicheck:guest_session", JSON.stringify(guestUser));
+          sessionStorage.setItem("aicheck:guest_session", JSON.stringify(guestUser));
+        } catch {}
+      }
+      setTimeout(() => {
+        const redirect = localStorage.getItem('aicheck:redirectAfterLogin');
+        localStorage.removeItem('aicheck:redirectAfterLogin');
+        location.href = redirect || 'index.html';
+      }, 250);
+    }
+
+    function quickFillAdmin() {
+      updateAuthMode(true);
+      const emailEl = document.getElementById('email');
+      const passEl = document.getElementById('password');
+      if (emailEl) emailEl.value = 'adminthd';
+      if (passEl) {
+        passEl.value = '';
+        passEl.focus();
       }
     }
 
