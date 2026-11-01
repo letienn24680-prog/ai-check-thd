@@ -409,7 +409,7 @@
   ];
 
   const AICheckExamStore = {
-    // 1. Quản lý danh sách Đề thi
+    // 1. Quản lý danh sách Đề thi (Đồng bộ đa thiết bị)
     getExams() {
       try {
         const raw = localStorage.getItem(EXAM_BANK_KEY);
@@ -417,6 +417,10 @@
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
             let modified = false;
+            // Áp dụng trạng thái khóa/mở từ exam_statuses
+            let statuses = {};
+            try { statuses = JSON.parse(localStorage.getItem("aicheck:exam_statuses") || "{}"); } catch {}
+
             parsed.forEach(e => {
               const qCount = e.questions?.length || 10;
               if (e.pointsPerQuestion == null || isNaN(e.pointsPerQuestion) || Number(e.pointsPerQuestion) <= 0) {
@@ -428,9 +432,13 @@
                 e.passingScore = Math.ceil(maxS * 0.5);
                 modified = true;
               }
+              if (statuses[e.id]) {
+                e.status = statuses[e.id];
+                e.isEnded = (statuses[e.id] === "ended");
+              }
             });
             if (modified) {
-              this.saveExams(parsed);
+              this.saveExams(parsed, false);
             }
             return parsed;
           }
@@ -439,15 +447,63 @@
         console.warn("Lỗi đọc exam_bank từ localStorage:", e);
       }
       // Lưu lại đề mặc định nếu chưa có
-      this.saveExams(DEFAULT_EXAMS);
+      this.saveExams(DEFAULT_EXAMS, false);
       return DEFAULT_EXAMS;
     },
 
-    saveExams(exams) {
+    // Nạp toàn bộ ngân hàng đề thi từ cloud (exams-data.json) để đồng bộ mọi thiết bị
+    async fetchExamsFromCloud() {
+      try {
+        const isPagesDir = typeof window !== "undefined" && window.location.pathname.includes("/pages/");
+        const candidates = isPagesDir ? ["exams-data.json", "../pages/exams-data.json"] : ["pages/exams-data.json", "/pages/exams-data.json"];
+        let cloudExams = null;
+
+        for (const url of candidates) {
+          try {
+            const res = await fetch(url, { cache: "no-cache" });
+            if (res.ok) {
+              cloudExams = await res.json();
+              if (Array.isArray(cloudExams) && cloudExams.length > 0) break;
+            }
+          } catch {}
+        }
+
+        if (Array.isArray(cloudExams) && cloudExams.length > 0) {
+          const currentLocal = this.getExams();
+          // Giữ lại các đề thi riêng do admin tạo thêm tại thiết bị này
+          const customCreated = currentLocal.filter(l => !cloudExams.some(c => c.id === l.id));
+
+          let statuses = {};
+          try { statuses = JSON.parse(localStorage.getItem("aicheck:exam_statuses") || "{}"); } catch {}
+
+          const mergedExams = [...cloudExams, ...customCreated].map(ex => {
+            if (statuses[ex.id]) {
+              ex.status = statuses[ex.id];
+              ex.isEnded = (statuses[ex.id] === "ended");
+            }
+            return ex;
+          });
+
+          this.saveExams(mergedExams, false);
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("aicheck:exams-updated", { detail: mergedExams }));
+          }
+          return mergedExams;
+        }
+      } catch (e) {
+        console.warn("Lỗi tải exams-data.json:", e);
+      }
+      return this.getExams();
+    },
+
+    saveExams(exams, broadcast = true) {
       try {
         localStorage.setItem(EXAM_BANK_KEY, JSON.stringify(exams));
       } catch (e) {
         console.error("Lỗi lưu exam_bank vào localStorage:", e);
+      }
+      if (broadcast && typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.broadcastGlobalRealtime === "function") {
+        window.AICheckCloud.broadcastGlobalRealtime("EXAM_BANK_SYNC", { exams });
       }
     },
 
@@ -464,14 +520,14 @@
       } else {
         exams.unshift(exam);
       }
-      this.saveExams(exams);
+      this.saveExams(exams, true);
       return exam;
     },
 
     deleteExam(id) {
       let exams = this.getExams();
       exams = exams.filter(e => e.id !== id);
-      this.saveExams(exams);
+      this.saveExams(exams, true);
       return exams;
     },
 
@@ -553,15 +609,24 @@
         }));
       } catch {}
 
+      // Phát sóng Realtime qua Supabase đa thiết bị để máy Admin nhận bài nộp ngay lập tức
+      try {
+        if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.broadcastGlobalRealtime === "function") {
+          window.AICheckCloud.broadcastGlobalRealtime("EXAM_SUBMISSION_EVENT", normalizedResult);
+        }
+      } catch (e) {
+        console.warn("Lỗi broadcast EXAM_SUBMISSION_EVENT:", e);
+      }
+
       // Đồng bộ sang Bảng xếp hạng (BXH) và Supabase
       try {
         const scale100 = maxScore > 0 ? Math.min(100, Math.max(0, Math.round((earnedScore / maxScore) * 100))) : 0;
 
-        // 1. Gửi lên Supabase Leaderboard (activity: "exam") - mỗi lần nộp là 1 dòng riêng trong CSDL đám mây
+        // 1. Gửi lên Supabase Leaderboard (chọn activity: 'practice' vì check constraint Postgres giới hạn rubric/assessment/practice)
         if (window.AICheckCloud && window.AICheckCloud.saveScore) {
           window.AICheckCloud.saveScore({
             name: studentDisplayName,
-            activity: "exam",
+            activity: "practice",
             score: scale100
           });
         }
@@ -610,6 +675,10 @@
     // Kiểm tra xem đề thi đã bị Admin kết thúc / khóa chưa
     isExamEnded(examId) {
       if (!examId) return false;
+      let statuses = {};
+      try { statuses = JSON.parse(localStorage.getItem("aicheck:exam_statuses") || "{}"); } catch {}
+      if (statuses[examId] === "ended") return true;
+
       const exam = this.getExamById(examId);
       if (exam && (exam.status === "ended" || exam.isEnded === true)) return true;
       if (typeof window !== "undefined" && window.AICheckAnnouncement && typeof window.AICheckAnnouncement.isEventEnded === "function") {
@@ -618,19 +687,79 @@
       return false;
     },
 
-    // Admin cập nhật trạng thái đề thi (active | ended)
-    setExamStatus(examId, status) {
+    // Cập nhật trạng thái cục bộ
+    applyStatusLocally(examId, status) {
+      try {
+        let statuses = JSON.parse(localStorage.getItem("aicheck:exam_statuses") || "{}");
+        statuses[examId] = status;
+        localStorage.setItem("aicheck:exam_statuses", JSON.stringify(statuses));
+      } catch {}
+
       const exams = this.getExams();
       const exam = exams.find(e => e.id === examId);
       if (exam) {
         exam.status = status;
         exam.isEnded = (status === "ended");
-        this.saveExams(exams);
-        return true;
+        try { localStorage.setItem(EXAM_BANK_KEY, JSON.stringify(exams)); } catch {}
       }
-      return false;
+    },
+
+    // Admin cập nhật trạng thái đề thi (active | ended) và phát sóng đa thiết bị
+    setExamStatus(examId, status) {
+      this.applyStatusLocally(examId, status);
+
+      // Phát sóng qua Supabase Realtime toàn cầu
+      if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.broadcastGlobalRealtime === "function") {
+        window.AICheckCloud.broadcastGlobalRealtime("EXAM_STATUS_UPDATED", { examId, status });
+      }
+      return true;
     }
   };
+
+  // Khởi động đồng bộ đám mây và lắng nghe Realtime khi tải trang
+  if (typeof window !== "undefined") {
+    setTimeout(() => {
+      AICheckExamStore.fetchExamsFromCloud();
+    }, 150);
+
+    function setupExamRealtimeChannel() {
+      if (!window.AICheckCloud?.getRealtimeChannel) {
+        setTimeout(setupExamRealtimeChannel, 600);
+        return;
+      }
+      const ch = window.AICheckCloud.getRealtimeChannel();
+      if (ch && typeof ch.on === "function") {
+        ch.on("broadcast", { event: "EXAM_STATUS_UPDATED" }, ({ payload }) => {
+          if (payload && payload.examId && payload.status) {
+            console.log("⚡ [ExamStore Realtime] Đồng bộ trạng thái đề:", payload);
+            AICheckExamStore.applyStatusLocally(payload.examId, payload.status);
+            window.dispatchEvent(new CustomEvent("aicheck:exams-updated"));
+          }
+        });
+
+        ch.on("broadcast", { event: "EXAM_BANK_SYNC" }, ({ payload }) => {
+          if (payload && Array.isArray(payload.exams)) {
+            console.log("⚡ [ExamStore Realtime] Đồng bộ bộ đề thi từ Admin:", payload.exams.length);
+            AICheckExamStore.saveExams(payload.exams, false);
+            window.dispatchEvent(new CustomEvent("aicheck:exams-updated", { detail: payload.exams }));
+          }
+        });
+
+        ch.on("broadcast", { event: "EXAM_SUBMISSION_EVENT" }, ({ payload }) => {
+          if (payload && payload.id) {
+            console.log("⚡ [ExamStore Realtime] Nhận bài nộp mới:", payload.studentName, payload.examTitle);
+            const list = AICheckExamStore.getResults();
+            if (!list.some(r => r.id === payload.id)) {
+              list.unshift(payload);
+              AICheckExamStore.saveResults(list);
+            }
+            window.dispatchEvent(new CustomEvent("aicheck:exam-results-updated", { detail: payload }));
+          }
+        });
+      }
+    }
+    setTimeout(setupExamRealtimeChannel, 500);
+  }
 
   window.AICheckExamStore = AICheckExamStore;
 })();

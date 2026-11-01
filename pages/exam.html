@@ -1739,16 +1739,6 @@
     // Giám sát vi phạm
     let violationsCount = 0;
     let violationsList = [];
-
-      // Ghi nhận bắt đầu thi thời gian thực
-      if (window.AICheckTracker) {
-        currentExamSessionId = window.AICheckTracker.startSession({
-          activity: "exam",
-          title: `Phòng thi: ${currentExam?.title || "Đề thi trực tuyến"}`,
-          examId: currentExam?.id,
-          totalQuestions: currentExam?.questions?.length || 20
-        });
-      }
     let isHandlingViolation = false;
 
     // Bộ đếm thời gian
@@ -1844,6 +1834,11 @@
       if (lobbyStudent) lobbyStudent.textContent = studentName;
       if (sidebarStudent) sidebarStudent.textContent = studentName;
     }
+
+    // Tự động cập nhật danh sách đề thi khi có đồng bộ đa thiết bị từ Cloud / Admin
+    window.addEventListener("aicheck:exams-updated", () => {
+      loadCatalogExams();
+    });
 
     // =========================================================================
     // MÀN HÌNH 1: HIỂN THỊ DANH SÁCH CÁC BÀI THI (CATALOG)
@@ -2154,6 +2149,16 @@
       userAnswers = {};
       violationsCount = 0;
       violationsList = [];
+
+      // Ghi nhận bắt đầu phiên thi thời gian thực
+      if (window.AICheckTracker) {
+        currentExamSessionId = window.AICheckTracker.startSession({
+          activity: "exam",
+          title: `Phòng thi: ${currentExam?.title || "Đề thi trực tuyến"}`,
+          examId: currentExam?.id,
+          totalQuestions: currentExam?.questions?.length || 20
+        });
+      }
 
       // Ẩn Header & Footer chuẩn web để tập trung làm bài
       document.getElementById("siteNormalHeader").style.display = "none";

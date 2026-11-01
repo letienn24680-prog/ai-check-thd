@@ -1716,7 +1716,8 @@
           <button class="button button-lime" onclick="openCreateExamModal()" style="font-size:12.5px;height:36px;padding:0 14px;border-radius:8px;display:inline-flex;align-items:center;gap:6px">
             + Upload / Tạo đề thi mới
           </button>
-          <button class="btn-small" onclick="loadAdminExams()">↻ Làm mới</button>
+          <button class="btn-small" onclick="syncAndReloadExams()" title="Tải lại và đồng bộ đề thi từ Cloud">🔄 Đồng bộ Cloud</button>
+          <button class="btn-small" onclick="exportExamsJson()" title="Xuất toàn bộ đề thi thành file JSON để lưu trữ">📥 Xuất JSON đề thi</button>
           <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('adminExamsBodySection', this)" title="Thu gọn khối này">
             <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
           </button>
@@ -2363,6 +2364,34 @@
               console.log("⚡ [Admin Realtime] Cập nhật phiên làm bài mới:", payload);
               await loadScores();
               renderLiveActivityTable();
+              loadExamStudentsSummaryTable();
+            });
+            rtChannel.on("broadcast", { event: "EXAM_SUBMISSION_EVENT" }, async ({ payload }) => {
+              console.log("⚡ [Admin Realtime] Nhận bài nộp đề thi mới:", payload);
+              if (payload && window.AICheckExamStore) {
+                const list = window.AICheckExamStore.getResults();
+                if (!list.some(r => r.id === payload.id)) {
+                  list.unshift(payload);
+                  window.AICheckExamStore.saveResults(list);
+                }
+              }
+              await loadScores();
+              loadExamStudentsSummaryTable();
+              renderLiveActivityTable();
+            });
+            rtChannel.on("broadcast", { event: "EXAM_BANK_SYNC" }, ({ payload }) => {
+              console.log("⚡ [Admin Realtime] Nhận cập nhật bộ đề thi từ Cloud:", payload);
+              if (payload && Array.isArray(payload.exams)) {
+                window.AICheckExamStore?.saveExams(payload.exams, false);
+                loadAdminExams();
+              }
+            });
+            rtChannel.on("broadcast", { event: "EXAM_STATUS_UPDATED" }, ({ payload }) => {
+              console.log("⚡ [Admin Realtime] Nhận cập nhật trạng thái đề thi:", payload);
+              if (payload && payload.examId && payload.status) {
+                window.AICheckExamStore?.applyStatusLocally(payload.examId, payload.status);
+                loadAdminExams();
+              }
             });
           }
         }
@@ -2828,7 +2857,8 @@
       await Promise.all([
         loadScores(),
         loadSupportRequests(),
-        loadUsersList()
+        loadUsersList(),
+        window.AICheckExamStore?.fetchExamsFromCloud ? window.AICheckExamStore.fetchExamsFromCloud() : Promise.resolve()
       ]);
       loadAdminExams();
       loadAdminCodesTable();
@@ -3265,6 +3295,48 @@
     }
 
 
+    function getAllExamResultsMerged() {
+      const localResults = window.AICheckExamStore ? window.AICheckExamStore.getResults() : [];
+      const unifiedSessions = typeof getUnifiedActivitySessions === "function" ? getUnifiedActivitySessions() : [];
+      const sessionResults = unifiedSessions
+        .filter(s => s && (s.activity === "exam" || (s.title && s.title.includes("Phòng thi")) || s.examId))
+        .map(s => {
+          const totalQ = s.totalQuestions || 20;
+          const pointsPerQ = 2;
+          const maxScore = totalQ * pointsPerQ;
+          const earnedScore = s.rawScore != null ? Number(s.rawScore) : Math.round(((Number(s.score) || 0) / 100) * maxScore);
+          const passingScore = Math.ceil(maxScore * 0.5);
+          const isPassed = s.passed !== undefined ? Boolean(s.passed) : (earnedScore >= passingScore);
+          return {
+            id: s.id || `ses_${s.studentName}_${s.startedAt}`,
+            studentName: s.studentName || "Thí sinh THĐ",
+            examId: s.examId || "exam_thd_20",
+            examTitle: s.title ? s.title.replace("Phòng thi: ", "").trim() : "Đề kiểm tra Chuẩn hóa",
+            score: earnedScore,
+            maxScore: maxScore,
+            pointsPerQuestion: pointsPerQ,
+            totalQuestions: totalQ,
+            correctCount: s.correctCount != null ? Number(s.correctCount) : Math.round(earnedScore / pointsPerQ),
+            passingScore: passingScore,
+            passed: isPassed,
+            violationsCount: s.violations || 0,
+            violations: s.violationList || [],
+            timeSpentFormatted: s.timeSpent || "—",
+            submittedAt: s.completedAt || s.startedAt || new Date().toISOString()
+          };
+        });
+
+      const mergedMap = new Map();
+      [...localResults, ...sessionResults].forEach(r => {
+        if (!r) return;
+        const key = r.id || `${(r.studentName || '').toLowerCase()}_${r.examId}_${Math.round(new Date(r.submittedAt || 0).getTime() / (5 * 60 * 1000))}`;
+        if (!mergedMap.has(key)) mergedMap.set(key, r);
+      });
+      const list = Array.from(mergedMap.values());
+      list.sort((a, b) => new Date(b.submittedAt || 0) - new Date(a.submittedAt || 0));
+      return list;
+    }
+
     async function loadScores() {
       const sdk = window.supabase;
       const config = window.AICHECK_CONFIG || {};
@@ -3287,11 +3359,11 @@
         }
       }
 
-      // 1. NẠP KẾT QUẢ TỪ PHÒNG THI TRỰC TUYẾN (AICheckExamStore)
+      // 1. NẠP KẾT QUẢ TỪ PHÒNG THI TRỰC TUYẾN (AICheckExamStore & CSDL Đa thiết bị)
       // Mỗi lần thí sinh thi xong là 1 bản ghi độc lập (Lần 1, Lần 2...) với đầy đủ điểm, đề, câu đúng, vi phạm
       let examScoreItems = [];
       try {
-        const examResults = window.AICheckExamStore ? window.AICheckExamStore.getResults() : [];
+        const examResults = getAllExamResultsMerged();
         examScoreItems = (examResults || []).map(r => {
           const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
           const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
@@ -5185,10 +5257,45 @@
       calculateStats();
     });
 
+    window.addEventListener("aicheck:exams-updated", () => {
+      loadAdminExams();
+    });
+
     // =========================================================================
     // QUẢN LÝ ĐỀ THI & PHÒNG LÀM BÀI TRỰC TUYẾN (EXAM MANAGEMENT)
     // =========================================================================
     let currentEditingQuestions = [];
+
+    async function syncAndReloadExams() {
+      try {
+        if (window.AICheckExamStore?.fetchExamsFromCloud) {
+          await window.AICheckExamStore.fetchExamsFromCloud();
+        }
+        await loadScores();
+        loadAdminExams();
+        loadExamResultsTable();
+        loadExamStudentsSummaryTable();
+        calculateStats();
+        alert("✓ Đã đồng bộ toàn bộ đề thi và kết quả làm bài từ Cloud!");
+      } catch (err) {
+        console.error("Lỗi đồng bộ đề thi:", err);
+        alert("Lỗi khi đồng bộ từ Cloud: " + (err.message || err));
+      }
+    }
+
+    function exportExamsJson() {
+      const exams = window.AICheckExamStore ? window.AICheckExamStore.getExams() : [];
+      const jsonStr = JSON.stringify(exams, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `exams-data-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
     function loadAdminExams() {
       const container = document.getElementById("adminExamsGrid");
@@ -5610,7 +5717,7 @@
       const container = document.getElementById("examResultsTableContainer");
       if (!container || !window.AICheckExamStore) return;
 
-      const results = window.AICheckExamStore.getResults();
+      const results = typeof getAllExamResultsMerged === "function" ? getAllExamResultsMerged() : (window.AICheckExamStore.getResults() || []);
       if (!results || results.length === 0) {
         container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có lượt thi nào được ghi nhận.</p>';
         return;
@@ -5749,7 +5856,7 @@
 
     function loadExamStudentsSummaryTable() {
       if (!window.AICheckExamStore) return;
-      allExamResultsCache = window.AICheckExamStore.getResults() || [];
+      allExamResultsCache = typeof getAllExamResultsMerged === "function" ? getAllExamResultsMerged() : (window.AICheckExamStore.getResults() || []);
 
       // Cập nhật dropdown các đề thi trong bộ lọc
       const titleSelect = document.getElementById("filterExamTitle");
