@@ -844,6 +844,9 @@
             <h2 class="panel-title" style="margin:0;color:#065f46;font-size:18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               NHẬT KÝ GIÁM SÁT
               <span class="live-static-badge"><span class="live-static-dot"></span>LIVE REALTIME</span>
+              <button type="button" id="btnToggleLiveActivityBody" class="btn-small" onclick="toggleLiveActivityBody()" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;background:#ecfdf5;border:1.5px solid #a7f3d0;color:#065f46;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 1px 4px rgba(6,95,70,0.06)" title="Bấm để ẩn hoặc hiện toàn bộ phần nhật ký này">
+                <span id="iconToggleLiveActivity">▲</span> <span id="textToggleLiveActivity">Thu gọn</span>
+              </button>
             </h2>
           </div>
         </div>
@@ -857,55 +860,74 @@
         </div>
       </div>
 
-      <!-- 4 THẺ THỐNG KÊ MINH CHỨNG PHỤC VỤ THUYẾT TRÌNH ĐỀ TÀI -->
-      <div class="stat-grid" style="margin-top:0;margin-bottom:14px">
-        <div class="stat-box" style="border-color:#bbf7d0;background:#f0fdf4">
-          <span style="color:#166534">TỔNG LƯỢT VÀO LÀM</span>
-          <strong id="sessionStatTotal" style="color:#15803d">0</strong>
-        </div>
-        <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
-          <span style="color:#9a3412">⏳ ĐANG LÀM BÀI TRỰC TIẾP</span>
-          <strong id="sessionStatInProgress" style="color:#c2410c">0</strong>
-        </div>
-        <div class="stat-box" style="border-color:#a7f3d0;background:#ecfdf5">
-          <span style="color:#047857">ĐÃ HOÀN THÀNH NỘP BÀI</span>
-          <strong id="sessionStatCompleted" style="color:#059669">0</strong>
-        </div>
-        <div class="stat-box" style="border-color:#bae6fd;background:#f0f9ff">
-          <span style="color:#0369a1">ĐIỂM TRUNG BÌNH THỰC NGHIỆM</span>
-          <strong id="sessionStatAvgScore" style="color:#0284c7">—</strong>
+      <!-- THÔNG BÁO TÓM TẮT KHI ĐANG THU GỌN ẨN BẢNG -->
+      <div id="liveActivityCollapsedBanner" style="display:none;background:#f0fdf4;border:1.5px dashed #86efac;border-radius:10px;padding:12px 18px;margin-top:10px;cursor:pointer;transition:all .2s ease" onclick="toggleLiveActivityBody()" title="Bấm vào để mở rộng lại bảng nhật ký">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div style="font-size:12.5px;color:#166534;display:flex;align-items:center;gap:8px">
+            <span style="font-size:18px">👁️</span>
+            <span><strong>Đang ẩn chi tiết nhật ký thời gian thực để màn hình gọn gàng.</strong> Bấm vào đây để mở rộng xem các lượt làm bài của học sinh.</span>
+          </div>
+          <span style="font-weight:700;color:#047857;font-size:12px;background:#ffffff;padding:5px 12px;border-radius:20px;border:1px solid #a7f3d0;display:inline-flex;align-items:center;gap:5px">▼ Mở rộng chi tiết</span>
         </div>
       </div>
 
-      <!-- BỘ LỌC VÀ TÌM KIẾM -->
-      <div class="filter-bar" style="margin-bottom:12px;background:#f8fafc;padding:10px 14px;border:1px solid #e2e8f0;border-radius:10px">
-        <div class="filter-group">
-          <select id="filterSessionActivity" class="filter-input" onchange="renderLiveActivityTable()">
-            <option value="all">Tất cả nội dung làm bài</option>
-            <option value="practice">Thực hành tình huống</option>
-            <option value="assessment">Đánh giá năng lực (Cả 2 đợt)</option>
-            <option value="assessment_pre">Đánh giá: Đợt 01 (Trước can thiệp)</option>
-            <option value="assessment_post">Đánh giá: Đợt 02 (Sau can thiệp)</option>
-            <option value="exam">Phòng thi trực tuyến</option>
-            <option value="rubric">Thử thách Rubric</option>
-          </select>
-          <select id="filterSessionStatus" class="filter-input" onchange="renderLiveActivityTable()">
-            <option value="all">Tất cả trạng thái</option>
-            <option value="completed">Đã hoàn thành (Có kết quả)</option>
-            <option value="in_progress">⏳ Đang làm bài trực tiếp</option>
-          </select>
-          <input type="text" id="searchSessionStudent" class="filter-input" placeholder="Tìm theo học sinh, lớp, email..." oninput="renderLiveActivityTable()" style="width:230px">
+      <div id="liveActivitySectionBody">
+        <!-- 4 THẺ THỐNG KÊ MINH CHỨNG PHỤC VỤ THUYẾT TRÌNH ĐỀ TÀI -->
+        <div class="stat-grid" style="margin-top:0;margin-bottom:14px">
+          <div class="stat-box" style="border-color:#bbf7d0;background:#f0fdf4">
+            <span style="color:#166534">TỔNG LƯỢT VÀO LÀM</span>
+            <strong id="sessionStatTotal" style="color:#15803d">0</strong>
+          </div>
+          <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
+            <span style="color:#9a3412">⏳ ĐANG LÀM BÀI TRỰC TIẾP</span>
+            <strong id="sessionStatInProgress" style="color:#c2410c">0</strong>
+          </div>
+          <div class="stat-box" style="border-color:#a7f3d0;background:#ecfdf5">
+            <span style="color:#047857">ĐÃ HOÀN THÀNH NỘP BÀI</span>
+            <strong id="sessionStatCompleted" style="color:#059669">0</strong>
+          </div>
+          <div class="stat-box" style="border-color:#bae6fd;background:#f0f9ff">
+            <span style="color:#0369a1">ĐIỂM TRUNG BÌNH THỰC NGHIỆM</span>
+            <strong id="sessionStatAvgScore" style="color:#0284c7">—</strong>
+          </div>
         </div>
-        <div style="font-size:11px;color:#64748b;display:flex;align-items:center;gap:6px">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981"></span>
-          Tự động đồng bộ thời gian thực mỗi 10 giây
-        </div>
-      </div>
 
-      <!-- BẢNG DANH SÁCH PHIÊN CHI TIẾT -->
-      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thời điểm bắt đầu, thời gian nộp bài và kết quả chi tiết</p>
-      <div class="table-responsive" id="liveActivitySessionsContainer">
-        <p class="panel-copy" style="text-align:center;padding:16px">Đang tải nhật ký thời gian thực...</p>
+        <!-- BỘ LỌC VÀ TÌM KIẾM -->
+        <div class="filter-bar" style="margin-bottom:12px;background:#f8fafc;padding:10px 14px;border:1px solid #e2e8f0;border-radius:10px">
+          <div class="filter-group">
+            <select id="filterSessionActivity" class="filter-input" onchange="renderLiveActivityTable()">
+              <option value="all">Tất cả nội dung làm bài</option>
+              <option value="practice">Thực hành tình huống</option>
+              <option value="assessment">Đánh giá năng lực (Cả 2 đợt)</option>
+              <option value="assessment_pre">Đánh giá: Đợt 01 (Trước can thiệp)</option>
+              <option value="assessment_post">Đánh giá: Đợt 02 (Sau can thiệp)</option>
+              <option value="exam">Phòng thi trực tuyến</option>
+              <option value="rubric">Thử thách Rubric</option>
+            </select>
+            <select id="filterSessionStatus" class="filter-input" onchange="renderLiveActivityTable()">
+              <option value="all">Tất cả trạng thái</option>
+              <option value="completed">Đã hoàn thành (Có kết quả)</option>
+              <option value="in_progress">⏳ Đang làm bài trực tiếp</option>
+            </select>
+            <select id="filterSessionLimit" class="filter-input" onchange="setLiveSessionsLimit(Number(this.value))" title="Chọn số lượng dòng hiển thị">
+              <option value="5">👁️ Hiện 5 dòng (Gọn gàng)</option>
+              <option value="10">Hiện 10 dòng</option>
+              <option value="20">Hiện 20 dòng</option>
+              <option value="-1">Hiện tất cả</option>
+            </select>
+            <input type="text" id="searchSessionStudent" class="filter-input" placeholder="Tìm theo học sinh, lớp, email..." oninput="renderLiveActivityTable()" style="width:230px">
+          </div>
+          <div style="font-size:11px;color:#64748b;display:flex;align-items:center;gap:6px">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981"></span>
+            Tự động đồng bộ thời gian thực mỗi 10 giây
+          </div>
+        </div>
+
+        <!-- BẢNG DANH SÁCH PHIÊN CHI TIẾT -->
+        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thời điểm bắt đầu, thời gian nộp bài và kết quả chi tiết</p>
+        <div class="table-responsive" id="liveActivitySessionsContainer">
+          <p class="panel-copy" style="text-align:center;padding:16px">Đang tải nhật ký thời gian thực...</p>
+        </div>
       </div>
     </section>
 
@@ -1859,9 +1881,61 @@
       return merged;
     }
 
+    let liveSessionsLimit = parseInt(localStorage.getItem("aicheck:admin_live_limit") || "5");
+    let liveSessionsSectionCollapsed = localStorage.getItem("aicheck:admin_live_collapsed") === "true";
+
+    function setLiveSessionsLimit(limit) {
+      liveSessionsLimit = limit;
+      localStorage.setItem("aicheck:admin_live_limit", limit);
+      const sel = document.getElementById("filterSessionLimit");
+      if (sel) sel.value = String(limit);
+      renderLiveActivityTable();
+    }
+
+    function toggleLiveSessionsLimit() {
+      if (liveSessionsLimit === -1) {
+        setLiveSessionsLimit(5);
+      } else {
+        setLiveSessionsLimit(-1);
+      }
+    }
+
+    function toggleLiveActivityBody() {
+      liveSessionsSectionCollapsed = !liveSessionsSectionCollapsed;
+      localStorage.setItem("aicheck:admin_live_collapsed", liveSessionsSectionCollapsed ? "true" : "false");
+      applyLiveActivityCollapsedState();
+    }
+
+    function applyLiveActivityCollapsedState() {
+      const body = document.getElementById("liveActivitySectionBody");
+      const banner = document.getElementById("liveActivityCollapsedBanner");
+      const icon = document.getElementById("iconToggleLiveActivity");
+      const text = document.getElementById("textToggleLiveActivity");
+      if (!body) return;
+
+      if (liveSessionsSectionCollapsed) {
+        body.style.display = "none";
+        if (banner) banner.style.display = "block";
+        if (icon) icon.textContent = "▼";
+        if (text) text.textContent = "Hiện bảng";
+      } else {
+        body.style.display = "block";
+        if (banner) banner.style.display = "none";
+        if (icon) icon.textContent = "▲";
+        if (text) text.textContent = "Thu gọn";
+      }
+    }
+
     function renderLiveActivityTable() {
       const container = document.getElementById("liveActivitySessionsContainer");
       if (!container || !window.AICheckTracker) return;
+
+      // Đồng bộ giá trị dropdown giới hạn dòng
+      const selLimit = document.getElementById("filterSessionLimit");
+      if (selLimit && selLimit.value !== String(liveSessionsLimit)) {
+        selLimit.value = String(liveSessionsLimit);
+      }
+      applyLiveActivityCollapsedState();
 
       const activityFilter = document.getElementById("filterSessionActivity")?.value || "all";
       const statusFilter = document.getElementById("filterSessionStatus")?.value || "all";
@@ -1918,6 +1992,32 @@
         return;
       }
 
+      const totalFiltered = sessions.length;
+      let displaySessions = sessions;
+      if (liveSessionsLimit > 0 && totalFiltered > liveSessionsLimit) {
+        displaySessions = sessions.slice(0, liveSessionsLimit);
+      }
+
+      const paginationFooter = totalFiltered > 5 ? `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:10px">
+          <div style="font-size:12px;color:#64748b;display:flex;align-items:center;gap:6px">
+            <span>📊</span>
+            <span>Đang hiển thị <strong>${displaySessions.length}</strong> / <strong>${totalFiltered}</strong> lượt làm bài${totalFiltered > displaySessions.length ? ` (Đã ẩn bớt ${totalFiltered - displaySessions.length} lượt cũ hơn)` : ''}</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            ${liveSessionsLimit > 0 && totalFiltered > liveSessionsLimit ? `
+              <button type="button" class="btn-small" onclick="setLiveSessionsLimit(-1)" style="font-size:12px;font-weight:700;color:#047857;background:#ecfdf5;border-color:#a7f3d0;padding:6px 14px;border-radius:20px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Bấm để xem tất cả">
+                <span>👁️</span> Xem thêm ${totalFiltered - displaySessions.length} lượt khác (Hiện tất cả ${totalFiltered}) ▾
+              </button>
+            ` : `
+              <button type="button" class="btn-small" onclick="setLiveSessionsLimit(5)" style="font-size:12px;font-weight:700;color:#475569;background:#f1f5f9;border-color:#cbd5e1;padding:6px 14px;border-radius:20px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Bấm để thu gọn danh sách">
+                <span>▲</span> Thu gọn ẩn bớt (Chỉ hiện 5 lượt mới nhất)
+              </button>
+            `}
+          </div>
+        </div>
+      ` : '';
+
       container.innerHTML = `<table>
         <thead>
           <tr>
@@ -1933,7 +2033,7 @@
           </tr>
         </thead>
         <tbody>
-          ${sessions.map((s, idx) => {
+          ${displaySessions.map((s, idx) => {
             const isCompleted = s.status === "completed";
             const actBadge = s.activity === "practice"
               ? '<span class="tag" style="background:#fef3c7;color:#b45309;font-weight:700">⚡ Thực hành</span>'
@@ -1983,7 +2083,8 @@
             </tr>`;
           }).join("")}
         </tbody>
-      </table>`;
+      </table>
+      ${paginationFooter}`;
     }
 
     function exportLiveSessionsExcel() {
