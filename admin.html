@@ -10,37 +10,119 @@
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="site-nav.css">
   <style>
+    /* ==========================================================================
+       AI CHECK THĐ - ADMIN PORTAL 2026: SYMMETRICAL & EXECUTIVE DESIGN SYSTEM
+       Thiết kế cân xứng, chuẩn hóa lưới Grid, Flexbox, Typography & Color Harmony
+       ========================================================================== */
+
+    :root {
+      --admin-bg: #f1f5f2;
+      --admin-card-bg: #ffffff;
+      --admin-border: #dbe6dc;
+      --admin-border-focus: #1b5438;
+      --admin-text: #1e293b;
+      --admin-muted: #64748b;
+      --admin-header-bg: #f8fbf9;
+      --admin-th-bg: #eef5f0;
+      --admin-radius: 12px;
+      --admin-radius-sm: 8px;
+      --admin-shadow: 0 4px 16px rgba(18, 59, 50, 0.05);
+      --admin-shadow-hover: 0 6px 20px rgba(18, 59, 50, 0.08);
+      --admin-control-h: 38px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      padding: 20px;
-      background: #f0f4f1;
-      font-family: "Be Vietnam Pro", sans-serif;
-      color: var(--ink);
+      padding: 24px 20px 60px;
+      background: var(--admin-bg);
+      font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--admin-text);
       margin: 0;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
+
+    /* Container trung tâm cân đối tuyệt đối */
     .admin-container {
-      max-width: 1280px;
-      font-size: 15px;
-      margin: auto;
+      max-width: 1320px;
+      font-size: 14.5px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
     }
+
+    /* ==========================================================================
+       HEADER THANH ĐIỀU HƯỚNG QUẢN TRỊ (CÂN XỨNG 2 ĐẦU)
+       ========================================================================== */
     .admin-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid #dbe6dc;
     }
+
+    .admin-header-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
     .admin-header h1 {
       margin: 0;
-      font: 700 28px "Space Grotesk", sans-serif;
+      font: 800 26px "Space Grotesk", sans-serif;
       color: var(--forest);
       line-height: 1.25;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
+
+    .admin-cloud-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: #047857;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 4px 12px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.3px;
+    }
+
     .admin-nav-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
+
+    .admin-nav-actions .button,
+    .admin-nav-actions a.button {
+      height: 36px;
+      padding: 0 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      box-sizing: border-box;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
     .admin-nav-actions .nav-notif-btn {
       flex: none !important;
       width: 36px !important;
@@ -51,49 +133,312 @@
       padding: 0 !important;
       aspect-ratio: 1 / 1 !important;
       box-sizing: border-box !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
+
+    /* BỘ ĐIỀU CHỈNH CỠ CHỮ TO / NHỎ */
+    .font-zoom-ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #ffffff;
+      padding: 2px 8px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 12.5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      box-sizing: border-box;
+    }
+
+    .btn-zoom {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: var(--forest);
+      font-weight: 800;
+      font-size: 12.5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-zoom:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+
+    .btn-zoom-reset {
+      padding: 0 8px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn-zoom-reset:hover {
+      background: #e2e8f0;
+    }
+
+    /* ==========================================================================
+       THIẾT KẾ CARD & PANEL CHUẨN HÓA (ĐỒNG BỘ 100% CÁC KHỐI)
+       ========================================================================== */
     .card {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      border: 1px solid var(--line);
-      box-shadow: 0 4px 14px rgba(16, 45, 40, .05);
+      background: var(--admin-card-bg);
+      padding: 22px 24px;
+      border-radius: var(--admin-radius);
+      border: 1px solid var(--admin-border);
+      box-shadow: var(--admin-shadow);
+      margin: 0;
       overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
     }
+
+    .card:hover {
+      box-shadow: var(--admin-shadow-hover);
+    }
+
+    /* Điểm nhấn viền màu nhẹ cho các thẻ đặc thù */
+    .card-accent-green {
+      border-left: 4px solid #10b981 !important;
+    }
+    .card-accent-orange {
+      border-left: 4px solid #f97316 !important;
+    }
+    .card-accent-blue {
+      border-left: 4px solid #0284c7 !important;
+    }
+    .card-accent-sky {
+      border-left: 4px solid #38bdf8 !important;
+    }
+
+    /* TIÊU ĐỀ KHỐI PANEL (CÂN ĐỐI 2 BÊN) */
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #edf4ef;
+    }
+
+    .panel-title {
+      font: 700 17.5px "Space Grotesk", sans-serif;
+      color: var(--forest);
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      line-height: 1.3;
+    }
+
+    .panel-copy {
+      font-size: 13px;
+      color: var(--admin-muted);
+      margin: 4px 0 0;
+      line-height: 1.5;
+    }
+
+    .panel-head-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* NÚT THU GỌN / MỞ RỘNG CARD CHUẨN */
+    .btn-card-toggle {
+      height: 30px;
+      padding: 0 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 20px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
+
+    .btn-card-toggle:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+      color: #1e293b;
+    }
+
+    /* ==========================================================================
+       LƯỚI CHỈ SỐ THỐNG KÊ (STAT GRID & STAT BOXES) CÂN ĐỐI ĐỀU ĐẶN
+       ========================================================================== */
     .stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
       margin-top: 14px;
+      margin-bottom: 16px;
     }
+
     .stat-box {
-      padding: 14px;
-      background: #f7faf6;
-      border-radius: 8px;
+      padding: 16px 18px;
+      background: #f8faf8;
+      border-radius: 10px;
       border: 1px solid #dce8db;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 86px;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
     }
+
+    .stat-box:hover {
+      border-color: #a8c4ab;
+      box-shadow: 0 4px 12px rgba(18, 59, 50, 0.05);
+      transform: translateY(-1px);
+    }
+
     .stat-box span {
       display: block;
-      font-size: 12.5px;
-      color: var(--muted);
-      font-weight: 700;
+      font-size: 11.5px;
+      color: #64748b;
+      font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
     }
+
     .stat-box strong {
       display: block;
-      font: 700 30px "Space Grotesk", sans-serif;
+      font: 800 28px "Space Grotesk", sans-serif;
       color: var(--forest);
-      margin-top: 4px;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
     }
+
+    /* ==========================================================================
+       THANH LỌC DỮ LIỆU & BỘ ĐIỀU KHIỂN (FILTER BAR) - CÙNG CHIỀU CAO 38PX
+       ========================================================================== */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      padding: 10px 14px;
+      background: #f8faf9;
+      border: 1px solid #e2ece5;
+      border-radius: 10px;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-input,
+    .filter-bar select,
+    .filter-bar input[type="text"],
+    .filter-bar input[type="search"] {
+      height: 38px;
+      padding: 0 14px;
+      font-size: 13.5px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #1e293b;
+      box-sizing: border-box;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .filter-input:focus,
+    .filter-bar select:focus,
+    .filter-bar input:focus {
+      border-color: var(--forest);
+      box-shadow: 0 0 0 3px rgba(18, 59, 50, 0.12);
+    }
+
+    /* NÚT THAO TÁC TRÊN BẢNG VÀ FILTER */
+    .btn-small {
+      height: 38px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-sizing: border-box;
+    }
+
+    .btn-small:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .btn-small-primary {
+      background: var(--forest);
+      color: #bef264;
+      border-color: var(--forest);
+    }
+
+    .btn-small-primary:hover {
+      background: #19463b;
+      color: #ffffff;
+    }
+
+    .btn-small-danger {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    .btn-small-danger:hover {
+      background: #fecaca;
+      border-color: #f87171;
+    }
+
+    /* ==========================================================================
+       BẢNG DỮ LIỆU CÂN ĐỐI, CĂN LỀ CHUẨN XÁC (TABLES & RESPONSIVE)
+       ========================================================================== */
     .table-responsive {
       overflow-x: auto;
       overflow-y: auto;
-      max-height: 395px;
+      max-height: 480px;
       -webkit-overflow-scrolling: touch;
       margin-top: 12px;
-      border: 1px solid #eef2ed;
-      border-radius: 8px;
+      border: 1px solid #dce8db;
+      border-radius: 10px;
       background: #ffffff;
       width: 100%;
       box-sizing: border-box;
@@ -101,268 +446,186 @@
       scroll-behavior: smooth;
       scrollbar-width: thin;
       scrollbar-color: #cbd5e1 transparent;
-      -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 48px), transparent 100%);
-      mask-image: linear-gradient(to bottom, black calc(100% - 48px), transparent 100%);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 44px), transparent 100%);
+      mask-image: linear-gradient(to bottom, black calc(100% - 44px), transparent 100%);
       transition: -webkit-mask-image 0.25s ease, mask-image 0.25s ease;
     }
+
     .table-responsive.is-scrolled-bottom {
       -webkit-mask-image: none !important;
       mask-image: none !important;
     }
+
     .table-responsive::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
+
     .table-responsive::-webkit-scrollbar-thumb {
       background: #cbd5e1;
       border-radius: 4px;
     }
-    .table-responsive table thead th {
+
+    table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    th {
       position: sticky;
       top: 0;
       z-index: 10;
-      background: #f4f8f3;
-      box-shadow: 0 1px 0 #cbd5e1;
-    }
-    table {
-      width: 100%;
-      min-width: 840px;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 13px 16px;
-      text-align: left;
-      border-bottom: 1px solid #eef2ed;
-      font-size: 14.5px;
-      line-height: 1.5;
-      white-space: nowrap;
-    }
-    th {
-      background: #f4f8f3;
+      background: var(--admin-th-bg);
       color: var(--forest);
       font-weight: 800;
-      font-size: 13.5px;
-      letter-spacing: 0.2px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 13px 16px;
+      border-bottom: 2px solid #d0e2d4;
+      white-space: nowrap;
+      text-align: left;
+      vertical-align: middle;
+      box-shadow: 0 1px 0 #cbd5e1;
     }
+
+    td {
+      padding: 13px 16px;
+      text-align: left;
+      border-bottom: 1px solid #edf4ef;
+      font-size: 13.5px;
+      line-height: 1.5;
+      white-space: nowrap;
+      vertical-align: middle;
+      color: #1e293b;
+    }
+
+    tbody tr:hover td {
+      background: #f8faf8;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Các cột căn giữa chuẩn đẹp */
+    th.col-stt, td.col-stt,
+    th:first-child, td:first-child {
+      text-align: center;
+      width: 55px;
+    }
+
+    th.col-center, td.col-center {
+      text-align: center;
+    }
+
+    th.col-right, td.col-right {
+      text-align: right;
+    }
+
     .status-pending { color: #c84f36; font-weight: 700; }
     .status-resolved { color: #28744f; font-weight: 700; }
-    .btn-small {
-      padding: 7px 14px;
-      font-size: 13px;
-      font-weight: 700;
-      border-radius: 6px;
-      border: 1px solid var(--line);
-      background: white;
-      cursor: pointer;
-      transition: background .2s, border-color .2s;
-      white-space: nowrap;
-    }
-    .btn-small:hover { background: #eaf2e8; border-color: #a8c4ab; }
-    .filter-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-    .filter-group {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .filter-input {
-      padding: 9px 14px;
-      font-size: 14px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-family: inherit;
-    }
+
     .auth-banner {
-      padding: 18px;
+      padding: 18px 20px;
       background: #fff8e8;
       border-left: 4px solid var(--orange);
-      border-radius: 8px;
+      border-radius: 10px;
       margin-bottom: 20px;
       font-size: 14px;
     }
+
     .admin-pass-form {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       margin-top: 10px;
       flex-wrap: wrap;
       align-items: center;
     }
+
     .table-scroll-hint {
       display: none;
-      font-size: 13px;
+      font-size: 12.5px;
       color: #64748b;
       margin: 8px 0 0;
       font-style: italic;
     }
 
-    /* RESPONSIVE DESIGN CHO THIẾT BỊ DI ĐỘNG (MOBILE & TABLET) */
-    @media (max-width: 768px) {
-      body {
-        padding: 12px 10px;
-      }
-      .admin-header {
-        margin-bottom: 16px;
-        gap: 10px;
-      }
-      .admin-header h1 {
-        font-size: 20px;
-      }
-      .admin-nav-actions {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-      .admin-nav-actions a,
-      .admin-nav-actions button:not(.nav-notif-btn) {
-        flex: 1;
-        text-align: center;
-        justify-content: center;
-        padding: 8px 6px;
-        box-sizing: border-box;
-        font-size: 11px;
-      }
-      .admin-nav-actions .nav-notif-btn {
-        flex: none !important;
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        max-width: 36px !important;
-        border-radius: 50% !important;
-        padding: 0 !important;
-        aspect-ratio: 1 / 1 !important;
-        box-sizing: border-box !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-      .card {
-        padding: 16px 12px;
-        margin-bottom: 14px;
-        border-radius: 10px;
-      }
-      .stat-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-      .stat-box {
-        padding: 10px;
-      }
-      .stat-box span {
-        font-size: 9px;
-      }
-      .stat-box strong {
-        font-size: 20px;
-      }
-      .filter-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-      }
-      .filter-group {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-      }
-      .filter-group select,
-      .filter-group input,
-      .filter-group button {
-        width: 100% !important;
-        box-sizing: border-box;
-        font-size: 13px;
-        padding: 9px 12px;
-      }
-      .admin-pass-form {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-      }
-      .admin-pass-form input,
-      .admin-pass-form button,
-      .admin-pass-form a {
-        width: 100% !important;
-        box-sizing: border-box;
-        text-align: center;
-        justify-content: center;
-      }
-      .table-scroll-hint {
-        display: block;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .stat-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ========================================================= */
-    /* STYLES CHO QUẢN LÝ ĐỀ THI & MODAL SETUP PHÒNG THI         */
-    /* ========================================================= */
+    /* ==========================================================================
+       QUẢN LÝ ĐỀ THI: LƯỚI CARD CÂN XỨNG & ĐỀU NHAU (EXAM CARDS GRID)
+       ========================================================================== */
     .exam-cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 18px;
       margin-top: 14px;
     }
+
     .exam-admin-card {
       border: 1px solid #dce8db;
-      border-radius: 10px;
-      padding: 16px;
-      background: #fbfdfb;
+      border-radius: 12px;
+      padding: 18px;
+      background: #ffffff;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 0.2s;
+      min-height: 250px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+      box-sizing: border-box;
     }
+
     .exam-admin-card:hover {
-      border-color: var(--forest);
-      box-shadow: 0 4px 14px rgba(16,45,40,0.08);
+      border-color: #a8c4ab;
+      box-shadow: 0 6px 18px rgba(16,45,40,0.08);
       transform: translateY(-2px);
     }
+
     .exam-card-title {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 15.5px;
       color: var(--forest);
       margin: 0 0 6px;
+      line-height: 1.35;
     }
+
     .exam-card-meta {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       font-size: 11px;
       color: #64748b;
       margin-bottom: 12px;
       flex-wrap: wrap;
     }
+
     .exam-card-meta span {
       background: #edf4ed;
       padding: 3px 8px;
       border-radius: 6px;
-      font-weight: 600;
+      font-weight: 700;
       color: #1b5438;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
+
     .exam-card-actions {
       display: flex;
-      gap: 6px;
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid #eef2ed;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #eef4f0;
       flex-wrap: wrap;
+      align-items: center;
     }
+
     .btn-action-exam {
-      padding: 6px 10px;
-      font-size: 11px;
+      padding: 6px 12px;
+      font-size: 11.5px;
       font-weight: 700;
       border-radius: 6px;
       border: 1px solid var(--line);
@@ -373,76 +636,90 @@
       gap: 4px;
       text-decoration: none;
       color: var(--ink);
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
+
     .btn-action-exam:hover {
       background: #eaf2e8;
       border-color: var(--forest);
     }
+
     .btn-action-primary {
       background: var(--forest);
       color: var(--lime);
       border-color: var(--forest);
     }
+
     .btn-action-primary:hover {
       background: #19463b;
       color: #ffffff;
     }
+
     .btn-action-danger {
       color: #b91c1c;
       border-color: #fecaca;
     }
+
     .btn-action-danger:hover {
       background: #fee2e2;
       border-color: #ef4444;
     }
 
-    /* MODAL SETUP ĐỀ THI */
+    /* ==========================================================================
+       MODAL SETUP ĐỀ THI & THÔNG BÁO QUẢN TRỊ (CÂN XỨNG & TẬP TRUNG)
+       ========================================================================== */
     .admin-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(15, 30, 25, 0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(15, 30, 25, 0.72);
+      backdrop-filter: blur(5px);
       z-index: 10000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 18px;
       box-sizing: border-box;
     }
+
     .admin-modal-content {
       background: #ffffff;
       border-radius: 14px;
       width: 100%;
-      max-width: 880px;
-      max-height: 92vh;
+      max-width: 900px;
+      max-height: 90vh;
       display: flex;
       flex-direction: column;
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       border: 1px solid #dce8db;
+      overflow: hidden;
     }
+
     .admin-modal-header {
-      padding: 16px 20px;
+      padding: 18px 24px;
       border-bottom: 1px solid #eef2ed;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: #fafcfa;
     }
+
     .admin-modal-title {
       margin: 0;
       font: 700 18px "Space Grotesk", sans-serif;
       color: var(--forest);
     }
+
     .admin-modal-body {
-      padding: 20px;
+      padding: 22px 24px;
       overflow-y: auto;
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
+
     .admin-modal-footer {
-      padding: 14px 20px;
+      padding: 16px 24px;
       border-top: 1px solid #eef2ed;
       display: flex;
       justify-content: flex-end;
@@ -462,12 +739,14 @@
       position: relative;
       box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
+
     .q-setup-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
     }
+
     .q-setup-num {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 800;
@@ -477,6 +756,7 @@
       padding: 4px 10px;
       border-radius: 6px;
     }
+
     .q-textarea {
       width: 100%;
       min-height: 60px;
@@ -484,21 +764,18 @@
       border: 1px solid #dce8db;
       border-radius: 6px;
       font-family: inherit;
-      font-size: 12.5px;
+      font-size: 13px;
       box-sizing: border-box;
       resize: vertical;
     }
+
     .q-options-setup-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin: 12px 0;
     }
-    @media (max-width: 640px) {
-      .q-options-setup-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+
     .opt-setup-field {
       display: flex;
       align-items: center;
@@ -508,6 +785,7 @@
       border-radius: 6px;
       padding: 6px 10px;
     }
+
     .opt-setup-badge {
       font-family: "Space Grotesk", sans-serif;
       font-weight: 800;
@@ -515,103 +793,111 @@
       color: var(--forest);
       width: 22px;
     }
+
     .opt-setup-input {
       border: none;
       background: transparent;
       outline: none;
-      font-size: 12px;
+      font-size: 12.5px;
       font-family: inherit;
       flex: 1;
       color: #172b26;
     }
 
-    /* Ô VUÔNG DƯỚI GÓC BÊN PHẢI ĐIỀU CHỈNH ĐÁP ÁN ĐÚNG/SAI */
     .q-correct-selector-bar {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       gap: 12px;
-      padding-top: 10px;
-      border-top: 1px dashed #e2ece1;
+      padding: 8px 12px;
+      background: #f4f8f4;
+      border-radius: 8px;
       margin-top: 10px;
       flex-wrap: wrap;
     }
-    .correct-label-note {
-      font-size: 11px;
+
+    .q-correct-label {
+      font-size: 11.5px;
       font-weight: 700;
-      color: #475569;
+      color: var(--forest);
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
-    .square-picker-group {
+
+    .opt-square-group {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
-    .square-picker-item {
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      user-select: none;
-    }
-    .square-picker-item input[type="radio"] {
-      display: none;
-    }
-    .square-picker-box {
+
+    .opt-square-btn {
       width: 32px;
       height: 32px;
-      border: 2px solid #cbd5e1;
       border-radius: 6px;
+      border: 1.5px solid #cbd5e1;
       background: #ffffff;
-      color: #475569;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: #334155;
       font-family: "Space Grotesk", sans-serif;
       font-weight: 800;
       font-size: 13px;
-      transition: all 0.15s ease-out;
-    }
-    .square-picker-item input[type="radio"]:checked + .square-picker-box {
-      background: #10b981;
-      border-color: #059669;
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
-      transform: scale(1.06);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
     }
 
-    /* Hệ thống Tabs phân chia Hoạt động cho Bảng điểm chi tiết */
+    .opt-square-btn:hover {
+      border-color: #166534;
+      background: #f0fdf4;
+      color: #166534;
+    }
+
+    .opt-square-btn.active {
+      background: #16a34a;
+      border-color: #15803d;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.35);
+    }
+
+    /* ==========================================================================
+       THANH TAB HOẠT ĐỘNG VÀ SUB-TABS (SCORE TABS SYSTEM)
+       ========================================================================== */
     .score-activity-tabs {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 14px;
+      align-items: center;
     }
+
     .score-act-tab {
+      height: 40px;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 10px 18px;
+      gap: 8px;
+      padding: 0 16px;
       border-radius: 8px;
       border: 1px solid #cbd5e1;
       background: #f8fafc;
       color: #334155;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.16s ease-out;
     }
+
     .score-act-tab:hover {
       background: #f1f5f9;
       border-color: #94a3b8;
     }
+
     .score-act-tab.active {
       background: var(--forest);
       color: #ffffff;
       border-color: var(--forest);
-      box-shadow: 0 2px 6px rgba(18, 59, 50, 0.2);
+      box-shadow: 0 2px 8px rgba(18, 59, 50, 0.22);
     }
+
     .tab-count-badge {
       display: inline-block;
       padding: 2px 8px;
@@ -622,41 +908,46 @@
       background: rgba(0, 0, 0, 0.08);
       color: inherit;
     }
+
     .score-act-tab.active .tab-count-badge {
       background: rgba(255, 255, 255, 0.25);
       color: #ffffff;
     }
-    
-    /* Sub-tabs và badge tăng trưởng cho Đánh giá 20 câu */
+
     .score-act-subtab {
+      height: 36px;
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 9px 16px;
-      border-radius: 6px;
+      padding: 0 14px;
+      border-radius: 8px;
       border: 1px solid #cbd5e1;
       background: #ffffff;
       color: #334155;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.16s ease;
     }
+
     .score-act-subtab:hover {
       background: #f1f5f9;
       border-color: #94a3b8;
     }
+
     .score-act-subtab.active {
       background: #047857;
       color: #ffffff;
       border-color: #047857;
-      box-shadow: 0 1px 4px rgba(4, 120, 87, 0.25);
+      box-shadow: 0 2px 6px rgba(4, 120, 87, 0.22);
     }
+
     .score-act-subtab.active .tag {
       background: rgba(255, 255, 255, 0.2) !important;
       color: #ffffff !important;
       border-color: transparent !important;
     }
+
     .growth-pill {
       display: inline-flex;
       align-items: center;
@@ -665,77 +956,32 @@
       border-radius: 6px;
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
-      font-size: 13.5px;
+      font-size: 13px;
     }
+
     .growth-positive {
       background: #ecfdf5;
       color: #047857;
       border: 1px solid #a7f3d0;
     }
+
     .growth-neutral {
       background: #f1f5f9;
       color: #475569;
       border: 1px solid #cbd5e1;
     }
+
     .growth-negative {
       background: #fef2f2;
       color: #b91c1c;
       border: 1px solid #fecaca;
     }
 
-    
-    /* Nút phóng to / thu nhỏ cỡ chữ trực quan */
-    .font-zoom-ctrl {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: #ffffff;
-      padding: 4px 10px;
-      border-radius: 8px;
-      border: 1.5px solid #cbd5e1;
-      font-size: 13px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-    }
-    .btn-zoom {
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      color: var(--forest);
-      font-weight: 800;
-      font-size: 13.5px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .btn-zoom:hover {
-      background: #e2e8f0;
-      border-color: #94a3b8;
-      transform: translateY(-1px);
-    }
-    .btn-zoom-reset {
-      padding: 0 9px;
-      height: 32px;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      background: #f8fafc;
-      color: #475569;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn-zoom-reset:hover {
-      background: #e2e8f0;
-    }
-
     .score-tab-header-box {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 12px 16px;
+      border-radius: 10px;
+      padding: 12px 18px;
       margin-bottom: 14px;
       display: flex;
       justify-content: space-between;
@@ -743,15 +989,18 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+
     .score-tab-header-box p {
       margin: 0;
-      font-size: 14px;
+      font-size: 13.5px;
       color: #334155;
       line-height: 1.6;
     }
+
     .score-tab-header-box strong {
       color: var(--forest);
     }
+
     .live-static-badge {
       display: inline-flex;
       align-items: center;
@@ -763,12 +1012,14 @@
       font: 800 10px "Space Grotesk", sans-serif;
       letter-spacing: 0.5px;
     }
+
     .live-static-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: #ffffff;
     }
+
     .in-page-admin-toast {
       position: fixed;
       bottom: 24px;
@@ -790,10 +1041,89 @@
       gap: 8px;
       border: 1px solid rgba(255, 255, 255, 0.15);
     }
+
     .in-page-admin-toast.show {
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN (CÂN ĐỐI CHO ĐIỆN THOẠI & MÁY TÍNH BẢNG)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      body {
+        padding: 14px 12px;
+      }
+      .admin-container {
+        gap: 16px;
+      }
+      .admin-header {
+        margin-bottom: 14px;
+        gap: 12px;
+      }
+      .admin-header h1 {
+        font-size: 20px;
+      }
+      .admin-nav-actions {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .admin-nav-actions .button,
+      .admin-nav-actions a.button {
+        flex: 1;
+        font-size: 11.5px;
+        padding: 0 8px;
+      }
+      .card {
+        padding: 16px 14px;
+        border-radius: 10px;
+      }
+      .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .stat-box {
+        padding: 12px;
+      }
+      .stat-box span {
+        font-size: 10px;
+      }
+      .stat-box strong {
+        font-size: 22px;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .filter-group {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .filter-group select,
+      .filter-group input,
+      .filter-group button {
+        width: 100% !important;
+      }
+      .table-scroll-hint {
+        display: block;
+      }
+      .q-options-setup-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -842,12 +1172,12 @@
     <div id="adminMainContent" style="display:none">
     <!-- THỐNG KÊ NHANH -->
     <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #edf4ef">
         <div>
           <h2 class="panel-title" style="margin:0">Thống kê dữ liệu nghiên cứu</h2>
           <p class="panel-copy" style="margin:4px 0 0">Số liệu thời gian thực từ các bài đo năng lực và khảo sát.</p>
         </div>
-        <button class="btn-small" onclick="loadAllData()">↻ Làm mới dữ liệu</button>
+        <button class="btn-small" onclick="loadAllData()" style="height:34px;padding:0 14px;font-size:12px">↻ Làm mới dữ liệu</button>
       </div>
       <div class="stat-grid" id="statsGrid">
         <div class="stat-box"><span>Tổng lượt nộp bài</span><strong id="statTotalSubmissions">—</strong></div>
@@ -1007,7 +1337,7 @@
 
     
     <!-- 📢 QUẢN LÝ THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TOÀN HỆ THỐNG -->
-    <section class="card" id="adminAnnouncementsSection" style="border:2px solid #38bdf8;background:linear-gradient(180deg,#f0f9ff 0%,#ffffff 100%);box-shadow:0 4px 20px rgba(2,132,199,0.08);margin-bottom:20px">
+    <section class="card" id="adminAnnouncementsSection" class="card card-accent-sky">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px">
         <div style="display:flex;align-items:center;gap:10px">
           <div style="width:42px;height:42px;border-radius:10px;background:#e0f2fe;border:1px solid #7dd3fc;display:flex;align-items:center;justify-content:center;font-size:22px">
@@ -1109,15 +1439,15 @@
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            Danh sách Tài khoản & Địa chỉ IP
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('userListBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
-          </h2>
+          <h2 class="panel-title" style="margin:0">Danh sách Tài khoản & Địa chỉ IP</h2>
           <p class="panel-copy" style="margin:4px 0 0">Quản lý toàn bộ tài khoản học sinh đã đăng ký trên hệ thống.</p>
         </div>
-        <button class="btn-small" onclick="loadUsersList()">↻ Tải lại danh sách</button>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="btn-small" onclick="loadUsersList()">↻ Tải lại danh sách</button>
+          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('userListBodySection', this)" title="Thu gọn khối này">
+            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+          </button>
+        </div>
       </div>
       <div id="userListBodySection">
         <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
@@ -1147,17 +1477,15 @@
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            Yêu cầu hỗ trợ & Quên mật khẩu
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('supportBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
-          </h2>
+          <h2 class="panel-title" style="margin:0">Yêu cầu hỗ trợ & Quên mật khẩu</h2>
           <p class="panel-copy" style="margin:4px 0 0">Các yêu cầu gửi từ học sinh trong quá trình tham gia trạm.</p>
         </div>
-        <div style="display:flex;align-items:center;gap:8px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           <button type="button" class="btn-small" onclick="openManualResetCodeModal()" style="font-weight:700;background:#0284c7;color:#fff;border:none">Cấp mã đổi MK thủ công</button>
           <span id="supportSourceBadge" class="tag">Đang tải...</span>
+          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('supportBodySection', this)" title="Thu gọn khối này">
+            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+          </button>
         </div>
       </div>
       <div id="supportBodySection">
@@ -1172,17 +1500,17 @@
     <section class="card" id="adminCodesSection">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            Cấp mã Admin & Quản lý Quyền truy cập
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('adminCodesBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
-          </h2>
+          <h2 class="panel-title" style="margin:0">Cấp mã Admin & Quản lý Quyền truy cập</h2>
           <p class="panel-copy" style="margin:4px 0 0">
             Cấp mã PIN / mật mã truy cập riêng cho Giáo viên hướng dẫn hoặc Quản trị viên để mở khóa bảng điều khiển Admin.
           </p>
         </div>
-        <button class="btn-small" onclick="loadAdminCodesTable()">↻ Làm mới danh sách</button>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="btn-small" onclick="loadAdminCodesTable()">↻ Làm mới danh sách</button>
+          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('adminCodesBodySection', this)" title="Thu gọn khối này">
+            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+          </button>
+        </div>
       </div>
 
       <div id="adminCodesBodySection">
@@ -1263,19 +1591,17 @@
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            Quản lý Đề thi & Phòng làm bài tập trực tuyến
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('adminExamsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
-          </h2>
+          <h2 class="panel-title" style="margin:0">Quản lý Đề thi & Phòng làm bài tập trực tuyến</h2>
           <p class="panel-copy" style="margin:4px 0 0">Tạo, tải lên đề thi không giới hạn số câu (10, 20, 30...), cài đặt thời gian và setup đáp án đúng/sai.</p>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="button button-lime" onclick="openCreateExamModal()" style="font-size:11px;display:inline-flex;align-items:center;gap:6px">
-            Upload / Tạo đề thi mới
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="button button-lime" onclick="openCreateExamModal()" style="font-size:12.5px;height:36px;padding:0 14px;border-radius:8px;display:inline-flex;align-items:center;gap:6px">
+            + Upload / Tạo đề thi mới
           </button>
           <button class="btn-small" onclick="loadAdminExams()">↻ Làm mới</button>
+          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('adminExamsBodySection', this)" title="Thu gọn khối này">
+            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+          </button>
         </div>
       </div>
 
@@ -1316,21 +1642,19 @@
     <section class="card" id="examStudentsSummarySection">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            Danh sách Thí sinh đã làm bài thi (Cả Đạt & Chưa đạt yêu cầu)
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('examStudentsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
-          </h2>
+          <h2 class="panel-title" style="margin:0">Danh sách Thí sinh đã làm bài thi (Cả Đạt & Chưa đạt yêu cầu)</h2>
           <p class="panel-copy" style="margin:4px 0 0">
             Lưu trữ danh sách toàn bộ thí sinh đã tham gia phòng thi trực tuyến, đối chiếu điểm đạt được với ngưỡng điểm chuẩn của từng đề.
           </p>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <button class="button button-lime" onclick="exportExamStudentsCsv()" style="font-size:11px;display:inline-flex;align-items:center;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button class="button button-lime" onclick="exportExamStudentsCsv()" style="font-size:12.5px;height:36px;padding:0 14px;border-radius:8px;display:inline-flex;align-items:center;gap:6px">
             Xuất Excel / CSV thí sinh ↓
           </button>
           <button class="btn-small" onclick="loadExamStudentsSummaryTable()">↻ Làm mới</button>
+          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('examStudentsBodySection', this)" title="Thu gọn khối này">
+            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+          </button>
         </div>
       </div>
 
@@ -1381,18 +1705,16 @@
     <section class="card" id="sectionScoreDetails">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            Bảng kết quả & Điểm chi tiết
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('scoreDetailsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn bảng điểm chi tiết">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
-          </h2>
+          <h2 class="panel-title" style="margin:0">Bảng kết quả & Điểm chi tiết</h2>
           <p class="panel-copy" style="margin:4px 0 0">Dữ liệu phân loại theo từng ô hoạt động riêng biệt, sẵn sàng xuất Excel chuẩn phục vụ đề tài nghiên cứu khoa học.</p>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <input type="text" id="searchStudent" placeholder="Tìm theo họ và tên..." class="filter-input" style="width:190px">
-          <button type="button" class="button button-lime" id="btnExportActiveTab" style="font-size:11px;padding:7px 14px;border-radius:6px;font-weight:700">
+          <input type="text" id="searchStudent" placeholder="Tìm theo họ và tên..." class="filter-input" style="width:190px;height:36px">
+          <button type="button" class="button button-lime" id="btnExportActiveTab" style="font-size:12.5px;height:36px;padding:0 14px;border-radius:8px;font-weight:700">
             Xuất Excel hoạt động này ↓
+          </button>
+          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('scoreDetailsBodySection', this)" title="Thu gọn bảng điểm chi tiết">
+            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
           </button>
         </div>
       </div>
@@ -1432,20 +1754,20 @@
     <!-- ========================================================================= -->
     <!-- SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN DIỆN (24/7 FULL BACKUP & RESTORE) -->
     <!-- ========================================================================= -->
-    <section class="card" id="backupRestoreSection" style="border: 2px solid rgba(2, 132, 199, 0.35); background: linear-gradient(180deg, rgba(2, 132, 199, 0.03) 0%, rgba(255, 255, 255, 0.95) 100%);">
+    <section class="card" id="backupRestoreSection" class="card card-accent-blue">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;color:#0284c7;flex-wrap:wrap">
+          <h2 class="panel-title" style="margin:0;color:#0284c7">
             <span>Sao lưu & Phục hồi dữ liệu hệ thống (24/7)</span>
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('backupRestoreBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd" title="Thu gọn khối này">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
           </h2>
           <p class="panel-copy" style="margin:4px 0 0">Tự động sao lưu định kỳ liên tục 24/7 tránh mất mát dữ liệu khi gặp sự cố, sập nguồn hoặc chuyển máy chủ.</p>
         </div>
-        <div style="display:flex;align-items:center;gap:8px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">Auto-Backup 24/7 Hoạt động</span>
           <button type="button" class="btn-small" onclick="loadBackupArchiveList()" style="font-weight:700">Làm mới</button>
+          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('backupRestoreBodySection', this)" title="Thu gọn khối này">
+            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+          </button>
         </div>
       </div>
 
