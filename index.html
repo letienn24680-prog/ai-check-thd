@@ -113,41 +113,6 @@
       contain: paint;
     }
 
-    .sliding-fixed-badge {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      z-index: 12;
-      background: linear-gradient(90deg, #051e17 80%, rgba(5, 30, 23, 0.95) 90%, transparent 100%);
-      padding: 0 20px 0 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      pointer-events: none;
-      font-size: 11px;
-      font-weight: 800;
-      color: #bef264;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .sliding-pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #bef264;
-      box-shadow: 0 0 10px #bef264;
-      display: inline-block;
-      animation: slidingPulseAnim 1.4s ease-in-out infinite;
-    }
-
-    @keyframes slidingPulseAnim {
-      0%, 100% { transform: scale(0.9); opacity: 0.7; }
-      50% { transform: scale(1.3); opacity: 1; }
-    }
-
     .sliding-track-wrapper {
       position: absolute;
       left: 0;
@@ -157,8 +122,8 @@
       overflow: hidden;
       display: flex;
       align-items: center;
-      mask-image: linear-gradient(to right, transparent, black 160px, black calc(100% - 60px), transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 160px, black calc(100% - 60px), transparent 100%);
+      mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 48px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 48px), transparent 100%);
     }
 
     .sliding-track {
@@ -290,12 +255,9 @@
     }
 
     @media (max-width: 640px) {
-      .sliding-fixed-badge {
-        display: none;
-      }
       .sliding-track-wrapper {
-        mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 40px), transparent 100%);
-        -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 40px), transparent 100%);
+        mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 36px), transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 36px), transparent 100%);
       }
       .sliding-group {
         gap: 16px;
@@ -321,12 +283,6 @@
   </style>
 
   <div class="sliding-announcement-bar" id="topPreInterventionBar" role="region" aria-label="Thông báo sự kiện trực tuyến">
-    <!-- Huy hiệu cố định bên trái kiểu bản tin truyền hình -->
-    <div class="sliding-fixed-badge">
-      <span class="sliding-pulse-dot" aria-hidden="true"></span>
-      <span class="sliding-badge-text" id="slidingBadgeTitle">BẢN TIN BẮT BUỘC</span>
-    </div>
-
     <!-- Vùng trượt lướt tự động mượt mà từ trái qua phải liên tục (Dual-group seamless loop) -->
     <div class="sliding-track-wrapper">
       <div class="sliding-track" id="slidingAnnouncementTrack" ontouchstart="this.style.animationPlayState='paused'" ontouchend="this.style.animationPlayState='running'">
@@ -697,11 +653,9 @@
       const tags = bar.querySelectorAll(".topPreBarTag");
       const texts = bar.querySelectorAll(".topPreBarText");
       const btns = bar.querySelectorAll(".topPreBarBtn");
-      const badgeTitle = document.getElementById("slidingBadgeTitle");
       if (!tags.length || !texts.length || !btns.length) return;
 
-      function applyBarContent(tagHtml, textHtml, btnText, btnHref, badgeText, tagStyle) {
-        if (badgeTitle && badgeText) badgeTitle.textContent = badgeText;
+      function applyBarContent(tagHtml, textHtml, btnText, btnHref, tagStyle) {
         tags.forEach(t => {
           t.innerHTML = tagHtml;
           if (tagStyle) Object.assign(t.style, tagStyle);
@@ -739,7 +693,6 @@
       }
 
       if (activeAnn && activeAnn.status === "active") {
-        const badgeTitleText = "BẢN TIN TRỰC TUYẾN";
         const tagText = activeAnn.badge || activeAnn.tag || "THÔNG BÁO BẮT BUỘC";
         const msgText = activeAnn.text || activeAnn.message || (activeAnn.title ? `<strong>${activeAnn.title}:</strong> ` : "");
         const btnText = activeAnn.btnText || activeAnn.actionText || "Xem ngay →";
@@ -750,7 +703,6 @@
           msgText,
           btnText,
           btnUrl,
-          badgeTitleText,
           { background: "rgba(190,242,100,0.22)", color: "#bef264" }
         );
         return;
@@ -768,7 +720,6 @@
           'Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!',
           'Làm bài ngay →',
           'pages/assessment.html?phase=pre',
-          'BẢN TIN BẮT BUỘC',
           { background: "rgba(190,242,100,0.18)", color: "#bef264" }
         );
       } else if (postScore !== null) {
@@ -777,7 +728,6 @@
           `Bạn đã hoàn thành trọn vẹn 2 đợt đo: Đợt 1 (<strong>${preScore} đ</strong>) ➔ Đợt 2 (<strong>${postScore} đ</strong>)!`,
           'Xem báo cáo KHKT →',
           'pages/research.html',
-          'BẢN TIN BẮT BUỘC',
           { background: "rgba(190,242,100,0.25)", color: "#bef264" }
         );
       } else {
@@ -804,7 +754,6 @@
             `Bạn đã đủ điều kiện! Hãy tiến hành làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong> ngay.`,
             'Đo Sau can thiệp →',
             'pages/assessment.html?phase=post',
-            'BẢN TIN BẮT BUỘC',
             { background: "rgba(250,204,21,0.22)", color: "#facc15" }
           );
         } else {
@@ -813,7 +762,6 @@
             `Đã ghi nhận Đợt 01 (<strong>${preScore} đ</strong>). Hãy hoàn thành <strong>60 câu thực hành</strong> (đã làm: ${count}/60) hoặc sau <strong>3 ngày</strong> để mở Đợt 02!`,
             'Vào Thực hành →',
             'pages/practice.html?from=assessment_pre',
-            'BẢN TIN BẮT BUỘC',
             { background: "rgba(147,197,253,0.22)", color: "#93c5fd" }
           );
         }
