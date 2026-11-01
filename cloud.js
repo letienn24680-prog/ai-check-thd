@@ -1123,6 +1123,16 @@
         addToSyncQueue({ participant_id: getParticipantId(), display_name: displayName, activity, phase, score });
         return { synced: false, reason: "request-failed", offline: true };
       }
+      // Phát sóng realtime thông báo có bài nộp mới đến Admin
+      try {
+        broadcastGlobalRealtime("NEW_SCORE_SUBMITTED", {
+          name: displayName,
+          activity,
+          phase,
+          score,
+          time: new Date().toISOString()
+        });
+      } catch (e) {}
       return { synced: true };
     } catch (error) {
       addToSyncQueue({ participant_id: getParticipantId(), display_name: displayName, activity, phase, score });

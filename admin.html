@@ -1705,7 +1705,32 @@
               console.log("⚡ [Admin Realtime] Phát hiện tài khoản bị khóa tranh chấp!");
               loadSupportRequests();
             });
+            // LẮNG NGHE ĐIỂM SỐ VÀ PHIÊN LÀM BÀI MỚI NỘP TỪ HỌC SINH (THỜI GIAN THỰC <100ms)
+            rtChannel.on("broadcast", { event: "NEW_SCORE_SUBMITTED" }, async ({ payload }) => {
+              console.log("⚡ [Admin Realtime] Nhận bài nộp mới từ học sinh:", payload);
+              await loadScores();
+              renderLiveActivityTable();
+            });
+            rtChannel.on("broadcast", { event: "ACTIVITY_SESSION_EVENT" }, async ({ payload }) => {
+              console.log("⚡ [Admin Realtime] Cập nhật phiên làm bài mới:", payload);
+              await loadScores();
+              renderLiveActivityTable();
+            });
           }
+        }
+
+        // Lắng nghe thay đổi dữ liệu bảng leaderboard_scores trực tiếp từ Supabase
+        if (window.AICheckCloud?.client) {
+          try {
+            window.AICheckCloud.client
+              .channel("admin-live-scores-feed")
+              .on("postgres_changes", { event: "*", schema: "public", table: "leaderboard_scores" }, async () => {
+                console.log("⚡ [Admin Realtime] Thay đổi dữ liệu bảng leaderboard_scores");
+                await loadScores();
+                renderLiveActivityTable();
+              })
+              .subscribe();
+          } catch (errDb) {}
         }
       } catch (e) {
         console.warn("Lỗi đăng ký Realtime listener cho Admin:", e);
@@ -1716,8 +1741,122 @@
     // =========================================================================
     // QUẢN LÝ NHẬT KÝ THỜI GIAN THỰC & MINH CHỨNG HỌC SINH LÀM BÀI (KHKT)
     // =========================================================================
-    function loadLiveActivitySessions() {
+    async function loadLiveActivitySessions() {
+      if (!allScores || allScores.length === 0) {
+        await loadScores();
+      }
       renderLiveActivityTable();
+    }
+
+    function getUnifiedActivitySessions() {
+      if (!window.AICheckTracker) return [];
+      let localSessions = window.AICheckTracker.getSessions() || [];
+
+      // Lọc các bản ghi đã bị admin xóa
+      const deletedSet = new Set(deletedScoreIds || []);
+      localSessions = localSessions.filter(s => !deletedSet.has(s.id));
+
+      // Tập hợp các khóa định danh để deduplicate
+      const existingKeys = new Set();
+      localSessions.forEach(s => {
+        const sName = (s.studentName || '').trim().toLowerCase();
+        const sAct = s.activity || '';
+        const sPhase = s.phase || '';
+        const sScore = s.score != null ? Number(s.score) : '';
+        const sTime = new Date(s.completedAt || s.startedAt || 0).getTime();
+        const timeBucket = Math.round(sTime / (15 * 60 * 1000));
+        existingKeys.add(`${sName}_${sAct}_${sPhase}_${sScore}_${timeBucket}`);
+        if (s.id) existingKeys.add(`id_${s.id}`);
+      });
+
+      // Chuyển đổi toàn bộ allScores từ Supabase Cloud thành các phiên làm bài
+      const cloudSessionItems = [];
+      (allScores || []).forEach(cs => {
+        if (!cs || deletedSet.has(cs.id)) return;
+
+        const cName = (cs.display_name || '').trim();
+        const cAct = cs.activity || (cs.phase ? 'assessment' : 'exam');
+        const cPhase = cs.phase || null;
+        const cScore = Number(cs.score) || 0;
+        const cTime = new Date(cs.created_at || cs.submitted_at || Date.now()).getTime();
+        const timeBucket = Math.round(cTime / (15 * 60 * 1000));
+
+        // Kiểm tra xem session này đã có trong local chưa
+        const key = `${cName.toLowerCase()}_${cAct}_${cPhase || ''}_${cScore}_${timeBucket}`;
+        if (existingKeys.has(key) || (cs.id && existingKeys.has(`id_${cs.id}`))) {
+          return;
+        }
+
+        // Tra cứu thông tin hồ sơ
+        const profile = (cachedUserProfiles || []).find(u => 
+          (u.display_name && u.display_name.trim().toLowerCase() === cName.toLowerCase()) ||
+          (u.email && cs.email && u.email.trim().toLowerCase() === cs.email.trim().toLowerCase())
+        );
+
+        const sEmail = cs.email || profile?.email || "—";
+        const sClass = cs.class || profile?.class || (cName.match(/1[0-2][A-Za-z0-9]+/)?.[0]) || "12A5";
+        const totalQ = cs.total_questions || (cAct === "rubric" ? 5 : cAct === "practice" ? 10 : 20);
+        const correctQ = cs.correct_count != null ? Number(cs.correct_count) : Math.round(cScore * totalQ / 100);
+
+        let durationSec = cs.duration_seconds || (cs.time_spent && !isNaN(parseInt(cs.time_spent)) ? parseInt(cs.time_spent) : (cAct === "rubric" ? 45 : cAct === "practice" ? 180 : 720));
+        const completedIso = new Date(cTime).toISOString();
+        const startedIso = new Date(cTime - durationSec * 1000).toISOString();
+
+        let levelStr = cScore > 75 ? "Giỏi" : cScore > 50 ? "Khá" : cScore > 25 ? "Trung bình" : "Yếu";
+
+        const titleStr = cs.exam_title || (window.AICheckTracker?.getDefaultTitle ? window.AICheckTracker.getDefaultTitle(cAct, cPhase) : (
+          cAct === "assessment" ? (cPhase === "post" ? "Đo Sau can thiệp (Đợt 02 - 20 câu)" : "Đo Trước can thiệp (Đợt 01 - 20 câu)") :
+          cAct === "practice" ? "Luyện 10 tình huống kiểm chứng thực tế" :
+          cAct === "rubric" ? "Thử thách Rubric (5 câu)" : "Phòng thi trực tuyến"
+        ));
+
+        cloudSessionItems.push({
+          id: cs.id || `cloud_${cName}_${cTime}`,
+          studentName: cName,
+          studentClass: sClass,
+          studentEmail: sEmail,
+          studentSchool: "THPT Trần Hưng Đạo",
+          activity: cAct,
+          phase: cPhase,
+          title: titleStr,
+          totalQuestions: totalQ,
+          startedAt: startedIso,
+          startedTimestamp: cTime - durationSec * 1000,
+          completedAt: completedIso,
+          completedTimestamp: cTime,
+          durationSeconds: durationSec,
+          durationFormatted: window.AICheckTracker.formatDuration(durationSec),
+          status: "completed",
+          score: cScore,
+          rawScore: cs.raw_score != null ? cs.raw_score : cScore,
+          correctCount: correctQ,
+          level: levelStr,
+          violations: cs.violations_count || 0,
+          passed: cScore >= 50,
+          resultSummary: `${cScore}/100 điểm · ${levelStr} · ${correctQ}/${totalQ} câu đúng`,
+          isCloud: true
+        });
+      });
+
+      // Lọc thông minh: Loại bỏ các phiên dở dang (in_progress) bị trùng lặp của cùng thí sinh
+      const activeUserTracker = new Set();
+      localSessions = localSessions.filter(s => {
+        if (s.status === "in_progress") {
+          const key = `${s.studentName || ''}_${s.activity || ''}`;
+          if (activeUserTracker.has(key)) return false;
+          activeUserTracker.add(key);
+        }
+        return true;
+      });
+
+      const merged = [...localSessions, ...cloudSessionItems];
+      merged.sort((a, b) => {
+        const timeA = new Date(a.completedAt || a.startedAt || 0).getTime();
+        const timeB = new Date(b.completedAt || b.startedAt || 0).getTime();
+        return timeB - timeA;
+      });
+
+      return merged;
     }
 
     function renderLiveActivityTable() {
@@ -1728,19 +1867,7 @@
       const statusFilter = document.getElementById("filterSessionStatus")?.value || "all";
       const search = (document.getElementById("searchSessionStudent")?.value || "").trim().toLowerCase();
 
-      let sessions = window.AICheckTracker.getSessions();
-
-      // Lọc thông minh: Loại bỏ các phiên dở dang (in_progress) bị trùng lặp của cùng thí sinh
-      // Chỉ giữ lại 1 phiên đang làm mới nhất để tránh rác bảng dữ liệu
-      const activeUserTracker = new Set();
-      sessions = sessions.filter(s => {
-        if (s.status === "in_progress") {
-          const key = `${s.studentName || ''}_${s.activity || ''}`;
-          if (activeUserTracker.has(key)) return false;
-          activeUserTracker.add(key);
-        }
-        return true;
-      });
+      let sessions = getUnifiedActivitySessions();
 
       // Cập nhật 4 thẻ thống kê
       const total = sessions.length;
@@ -1865,7 +1992,7 @@
       const statusFilter = document.getElementById("filterSessionStatus")?.value || "all";
       const search = (document.getElementById("searchSessionStudent")?.value || "").trim().toLowerCase();
 
-      let sessions = window.AICheckTracker.getSessions();
+      let sessions = getUnifiedActivitySessions();
       if (activityFilter === "assessment_pre") {
         sessions = sessions.filter(s => s.activity === "assessment" && s.phase === "pre");
       } else if (activityFilter === "assessment_post") {
@@ -1942,12 +2069,29 @@
       }
     }
 
-    function deleteLiveSessionItem(sessionId) {
+    async function deleteLiveSessionItem(sessionId) {
+      if (!confirm("Bạn có chắc chắn muốn xóa phiên làm bài này?")) return;
       if (window.AICheckTracker) {
         window.AICheckTracker.deleteSession(sessionId);
-        renderLiveActivityTable();
-        showInPageToast("Đã xóa bản ghi phiên làm bài thành công.");
       }
+      if (sessionId && !deletedScoreIds.includes(sessionId)) {
+        deletedScoreIds.push(sessionId);
+        try {
+          localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+        } catch (e) {}
+        allScores = allScores.filter(s => s.id !== sessionId);
+        const sdk = window.supabase;
+        const config = window.AICHECK_CONFIG || {};
+        const client = window.AICheckCloud?.client || (config.supabaseUrl && config.supabaseAnonKey && sdk?.createClient ? sdk.createClient(config.supabaseUrl, config.supabaseAnonKey) : null);
+        if (client && !sessionId.startsWith("sess_")) {
+          try {
+            await client.from("leaderboard_scores").delete().eq("id", sessionId);
+          } catch (e) {}
+        }
+      }
+      renderLiveActivityTable();
+      renderScoreTable();
+      showInPageToast("Đã xóa bản ghi phiên làm bài thành công.");
     }
 
     async function loadAllData() {
@@ -3658,6 +3802,16 @@
         </tbody>
       </table>`;
     }
+
+    // Tự động đồng bộ thời gian thực mỗi 10 giây (Cloud DB Sync Heartbeat)
+    setInterval(async () => {
+      if (currentAdminUnlocked) {
+        try {
+          await loadScores();
+          renderLiveActivityTable();
+        } catch (e) {}
+      }
+    }, 10000);
 
     // Tự động sao lưu nền (Heartbeat 24/7) mỗi 30 phút
     setInterval(() => {

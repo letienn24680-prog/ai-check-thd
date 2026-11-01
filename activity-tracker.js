@@ -379,6 +379,9 @@
       try {
         window.dispatchEvent(new CustomEvent("aicheck:session-updated", { detail: { type, data } }));
         localStorage.setItem(SYNC_EVENT_KEY, JSON.stringify({ type, id: data?.id, time: Date.now() }));
+        if (window.AICheckCloud?.broadcastGlobalRealtime) {
+          window.AICheckCloud.broadcastGlobalRealtime("ACTIVITY_SESSION_EVENT", { type, data });
+        }
       } catch (e) {}
     },
 
