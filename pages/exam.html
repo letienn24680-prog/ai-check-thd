@@ -39,16 +39,17 @@
     /* MÀN HÌNH DANH SÁCH CHỌN BÀI THI (TINH GỌN) */
     .exam-catalog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 12px;
-      margin-top: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+      align-items: stretch;
     }
 
     .exam-select-card {
       background: #ffffff;
       border: 1px solid rgba(18, 59, 50, 0.12);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -56,6 +57,9 @@
       transition: transform .2s, border-color .2s, box-shadow .2s;
       box-shadow: 0 4px 16px rgba(18, 59, 50, 0.06);
       position: relative;
+      min-height: 250px;
+      height: 100%;
+      box-sizing: border-box;
     }
 
     .exam-select-card:hover {
@@ -68,13 +72,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: nowrap;
     }
 
     .exam-select-card h3 {
       margin: 0 0 6px;
-      font: 700 15px/1.3 "Space Grotesk", sans-serif;
+      font: 700 15px/1.35 "Space Grotesk", sans-serif;
       color: #132a24;
+      min-height: 42px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .exam-select-card p {
@@ -118,6 +129,33 @@
       background: #eaf2e8;
       color: #286947;
       font-weight: 800;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(40, 105, 71, 0.2);
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      letter-spacing: 0.3px;
+    }
+
+    .exam-card-id-badge {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 600;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      vertical-align: middle;
+      text-align: right;
     }
 
     /* MÀN HÌNH CHUẨN BỊ (LOBBY - TINH GỌN) */
@@ -1451,6 +1489,14 @@
           </ul>
         </div>
 
+        <div id="lobbyEndedWarning" style="display:none;background:#fef2f2;border:1.5px solid #f87171;color:#991b1b;padding:14px 18px;border-radius:12px;margin-bottom:16px;font-weight:600;font-size:13.5px;align-items:center;gap:12px;box-shadow:0 4px 12px rgba(239,68,68,0.12)">
+          <span style="font-size:24px">🔒</span>
+          <div>
+            <div style="font-size:14.5px;font-weight:800;margin-bottom:2px">SỰ KIỆN / ĐỢT THI NÀY ĐÃ KẾT THÚC</div>
+            <div>Ban tổ chức / Admin đã khóa cổng làm bài. Bạn chỉ có thể xem lại câu hỏi hoặc lịch sử điểm số, hệ thống không nhận bài nộp mới.</div>
+          </div>
+        </div>
+
         <div style="text-align:center">
           <button type="button" class="button button-lime" id="btnStartExam" onclick="startExamSession()" style="min-height:44px;padding:10px 28px;font-size:13.5px;border-radius:24px;font-weight:700">
             🚀 BẬT TOÀN MÀN HÌNH & BẮT ĐẦU LÀM BÀI
@@ -1825,13 +1871,17 @@
         const pointsPerQ = Number(exam.pointsPerQuestion) > 0 ? Number(exam.pointsPerQuestion) : 2;
         const maxScore = qCount * pointsPerQ;
         const passingScore = exam.passingScore != null ? Number(exam.passingScore) : Math.ceil(maxScore * 0.5);
+        const isEnded = (window.AICheckExamStore?.isExamEnded ? window.AICheckExamStore.isExamEnded(exam.id) : (exam.status === "ended")) ||
+                        (window.AICheckAnnouncement?.isEventEnded ? window.AICheckAnnouncement.isEventEnded(exam.id) : false);
 
         return `
           <div class="exam-select-card" onclick="selectExam('${exam.id}')">
             <div>
               <div class="exam-select-card-header">
-                <span class="tag tag-exam-category">${tagText}</span>
-                <span style="font-size:11px;color:#64748b;font-weight:600">ID: ${escapeHtml(exam.id)}</span>
+                ${isEnded 
+                  ? '<span class="tag tag-exam-category" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5">🔒 ĐÃ KẾT THÚC</span>'
+                  : `<span class="tag tag-exam-category">${tagText}</span>`}
+                <span class="exam-card-id-badge" title="Mã định danh đề thi: ${escapeHtml(exam.id)}">ID: ${escapeHtml(exam.id)}</span>
               </div>
               <h3>${escapeHtml(exam.title)}</h3>
               <p>${escapeHtml(exam.description || "Bài thi trắc nghiệm trực tuyến chuẩn hóa năng lực kiểm chứng AI.")}</p>
@@ -1842,9 +1892,9 @@
                 <span class="exam-card-badge-item badge-pass-score">🏆 Đạt: ≥ ${passingScore}/${maxScore}đ</span>
               </div>
             </div>
-            <button type="button" class="button button-lime" style="width:100%">
-              Chọn đề này & Chuẩn bị thi →
-            </button>
+            ${isEnded 
+              ? '<button type="button" class="button" style="width:100%;background:#e2e8f0;color:#64748b;border-color:#cbd5e1;cursor:pointer">🔒 Đã kết thúc · Xem câu hỏi</button>'
+              : '<button type="button" class="button button-lime" style="width:100%">Chọn đề này & Chuẩn bị thi →</button>'}
           </div>
         `;
       }).join("");
@@ -1872,6 +1922,29 @@
       const pointsPerQ = Number(currentExam.pointsPerQuestion) > 0 ? Number(currentExam.pointsPerQuestion) : 2;
       const maxScore = questions.length * pointsPerQ;
       const passingScore = currentExam.passingScore != null ? Number(currentExam.passingScore) : Math.ceil(maxScore * 0.5);
+
+      // Check if currentExam is ended
+      const isEnded = (window.AICheckExamStore?.isExamEnded ? window.AICheckExamStore.isExamEnded(currentExam.id) : (currentExam.status === "ended")) ||
+                      (window.AICheckAnnouncement?.isEventEnded ? window.AICheckAnnouncement.isEventEnded(currentExam.id) : false);
+
+      const warnEl = document.getElementById("lobbyEndedWarning");
+      const btnStartEl = document.getElementById("btnStartExam");
+      if (warnEl) warnEl.style.display = isEnded ? "flex" : "none";
+      if (btnStartEl) {
+        if (isEnded) {
+          btnStartEl.disabled = true;
+          btnStartEl.style.opacity = "0.5";
+          btnStartEl.style.cursor = "not-allowed";
+          btnStartEl.style.background = "#94a3b8";
+          btnStartEl.innerHTML = "🔒 ĐỢT THI ĐÃ KHÓA (KHÔNG THỂ BẮT ĐẦU)";
+        } else {
+          btnStartEl.disabled = false;
+          btnStartEl.style.opacity = "1";
+          btnStartEl.style.cursor = "pointer";
+          btnStartEl.style.background = "";
+          btnStartEl.innerHTML = "🚀 BẬT TOÀN MÀN HÌNH & BẮT ĐẦU LÀM BÀI";
+        }
+      }
 
       // Cập nhật giao diện Lobby
       document.getElementById("lobbyExamTitle").textContent = currentExam.title;
@@ -2065,6 +2138,12 @@
     // BẮT ĐẦU VÀ QUẢN LÝ BÀI THI (CHUẨN ẢNH 5)
     // =========================================================================
     async function startExamSession() {
+      const isExamEndedGuard = (window.AICheckExamStore?.isExamEnded ? window.AICheckExamStore.isExamEnded(currentExam?.id) : (currentExam?.status === "ended")) ||
+                               (window.AICheckAnnouncement?.isEventEnded ? window.AICheckAnnouncement.isEventEnded(currentExam?.id) : false);
+      if (isExamEndedGuard) {
+        alert("⚠️ Đợt thi này đã được Admin kết thúc! Hệ thống đã khóa không nhận bài làm mới.");
+        return;
+      }
       await requestFullScreen();
 
       isExamActive = true;

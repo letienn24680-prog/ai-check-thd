@@ -88,24 +88,187 @@
     </div>
   </header>
 
-  <!-- THANH THÔNG BÁO TIẾN TRÌNH THỰC NGHIỆM KHKT HIỆN ĐẠI & TINH TẾ -->
-  <div class="pre-intervention-top-bar" id="topPreInterventionBar" style="background:linear-gradient(90deg, rgba(10, 35, 29, 0.97) 0%, rgba(18, 59, 49, 0.97) 100%);color:#ffffff;padding:8px 20px;border-bottom:1px solid rgba(190, 242, 100, 0.28);box-shadow:0 2px 12px rgba(0,0,0,0.18);backdrop-filter:blur(6px);transition:all 0.3s ease">
-    <div style="max-width:1240px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span class="tag" id="topPreBarTag" style="background:rgba(190,242,100,0.16);color:#bef264;border:1px solid rgba(190,242,100,0.35);font-weight:700;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px">
-          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#bef264;box-shadow:0 0 6px #bef264"></span>
+  <!-- THANH THÔNG BÁO BẮT BUỘC & SỰ KIỆN LƯỚT TỰ ĐỘNG (CHU KỲ NGHỈ 1 PHÚT) -->
+  <style id="slidingAnnouncementStyles">
+    .sliding-announcement-bar {
+      position: relative;
+      width: 100%;
+      height: 48px;
+      background: linear-gradient(90deg, #051e17 0%, #0a2d23 50%, #051e17 100%);
+      border-bottom: 1px solid rgba(190, 242, 100, 0.35);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+    }
+    .sliding-fixed-badge {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 12;
+      background: linear-gradient(90deg, #051e17 80%, rgba(5, 30, 23, 0.95) 90%, transparent 100%);
+      padding: 0 20px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      font-size: 11px;
+      font-weight: 800;
+      color: #bef264;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .sliding-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #bef264;
+      box-shadow: 0 0 10px #bef264;
+      display: inline-block;
+      animation: slidingPulseAnim 1.4s ease-in-out infinite;
+    }
+    @keyframes slidingPulseAnim {
+      0%, 100% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+    .sliding-track {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      will-change: transform;
+      transform: translateX(-100%);
+      padding-left: 170px;
+      user-select: none;
+    }
+    .sliding-track.is-gliding {
+      animation: glideAcrossScreen 18s linear forwards;
+    }
+    .sliding-announcement-bar:hover .sliding-track.is-gliding {
+      animation-play-state: paused !important;
+    }
+    @keyframes glideAcrossScreen {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100vw);
+      }
+    }
+    .sliding-content-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 5px 16px 5px 12px;
+      border-radius: 24px;
+      border: 1px solid rgba(190, 242, 100, 0.28);
+      backdrop-filter: blur(4px);
+      transition: all 0.25s ease;
+    }
+    .sliding-content-box:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(190, 242, 100, 0.6);
+      box-shadow: 0 0 12px rgba(190, 242, 100, 0.2);
+    }
+    .sliding-timer-hint {
+      font-size: 11px;
+      color: #94a3b8;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sliding-controls {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 12;
+      background: linear-gradient(270deg, #051e17 80%, rgba(5, 30, 23, 0.95) 90%, transparent 100%);
+      padding: 0 12px 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-sliding-ctrl {
+      background: rgba(190, 242, 100, 0.15);
+      color: #bef264;
+      border: 1px solid rgba(190, 242, 100, 0.3);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-sliding-ctrl:hover {
+      background: #bef264;
+      color: #06281e;
+    }
+    .btn-sliding-close {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 4px 6px;
+      line-height: 1;
+      border-radius: 4px;
+      transition: color 0.2s ease;
+    }
+    .btn-sliding-close:hover {
+      color: #ffffff;
+    }
+    @media (max-width: 640px) {
+      .sliding-fixed-badge {
+        display: none;
+      }
+      .sliding-track {
+        padding-left: 10px;
+      }
+      .sliding-timer-hint {
+        display: none;
+      }
+    }
+  </style>
+
+  <div class="sliding-announcement-bar" id="topPreInterventionBar" role="region" aria-label="Thông báo sự kiện trực tuyến">
+    <!-- Huy hiệu cố định bên trái kiểu bản tin truyền hình -->
+    <div class="sliding-fixed-badge">
+      <span class="sliding-pulse-dot" aria-hidden="true"></span>
+      <span class="sliding-badge-text" id="slidingBadgeTitle">BẢN TIN BẮT BUỘC</span>
+    </div>
+
+    <!-- Vùng trượt lướt từ trái qua phải -->
+    <div class="sliding-track" id="slidingAnnouncementTrack">
+      <div class="sliding-content-box" id="slidingAnnouncementContent">
+        <span class="tag" id="topPreBarTag" style="background:rgba(190,242,100,0.18);color:#bef264;border:1px solid rgba(190,242,100,0.4);font-weight:800;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px">
           ĐỢT 1 · KHẢO SÁT BAN ĐẦU
         </span>
         <span style="font-size:13px;color:#f0fdf4;font-weight:500" id="topPreBarText">
           Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!
         </span>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <a href="pages/assessment.html?phase=pre" id="topPreBarBtn" class="button button-lime" style="min-height:30px;padding:4px 14px;font-weight:700;font-size:12px;border-radius:20px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.2);display:inline-flex;align-items:center;gap:4px">
+        <a href="pages/assessment.html?phase=pre" id="topPreBarBtn" class="button button-lime" style="min-height:28px;padding:3px 14px;font-weight:700;font-size:12px;border-radius:20px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:inline-flex;align-items:center;gap:4px">
           Làm bài ngay →
         </a>
-        <button type="button" id="topPreBarClose" onclick="document.getElementById('topPreInterventionBar').style.display='none'" style="background:transparent;border:none;color:#94a3b8;font-size:16px;cursor:pointer;padding:2px 6px;line-height:1;border-radius:4px" title="Đóng thông báo">✕</button>
+        <span class="sliding-timer-hint" id="slidingTimerHint" title="Rê chuột để dừng lại đọc hoặc nhấn vào nút để xem">
+          ⏸️ Rê chuột để giữ lại · ⏳ Tự lặp sau 1 phút
+        </span>
       </div>
+    </div>
+
+    <!-- Phím điều khiển cố định bên phải -->
+    <div class="sliding-controls">
+      <button type="button" class="btn-sliding-ctrl" id="btnReplaySlide" onclick="triggerManualGlide()" title="Phát lại chuyển động ngay lập tức">▶ Lướt lại</button>
+      <button type="button" class="btn-sliding-close" onclick="document.getElementById('topPreInterventionBar').style.display='none'" title="Ẩn thanh thông báo">✕</button>
     </div>
   </div>
 
@@ -403,6 +566,54 @@
       // Xoay đổi thông điệp sau dấu chấm chậm lại mỗi 5s (5000ms)
       startStatsRotation(stats, isEn, localProf);
       updateTopPreBarState();
+      setupSlidingAnnouncement();
+    }
+
+    let glideTimer = null;
+    let isGlidingActive = false;
+    const ONE_MINUTE_MS = 60000; // Nghỉ đúng 1 phút (60 giây) trước khi lướt lại
+
+    function triggerGlide() {
+      const bar = document.getElementById("topPreInterventionBar");
+      const track = document.getElementById("slidingAnnouncementTrack");
+      if (!bar || !track) return;
+      if (bar.style.display === "none") return;
+
+      // Cập nhật nội dung mới nhất
+      updateTopPreBarState();
+
+      // Kích hoạt chu trình lướt từ trái qua phải
+      track.classList.remove("is-gliding");
+      void track.offsetWidth; // Force reflow
+      track.classList.add("is-gliding");
+      isGlidingActive = true;
+    }
+
+    function triggerManualGlide() {
+      if (glideTimer) clearTimeout(glideTimer);
+      triggerGlide();
+    }
+
+    function setupSlidingAnnouncement() {
+      const track = document.getElementById("slidingAnnouncementTrack");
+      if (!track) return;
+
+      // Lắng nghe khi lượt lướt vừa chạm đích cạnh phải màn hình
+      track.addEventListener("animationend", () => {
+        track.classList.remove("is-gliding");
+        isGlidingActive = false;
+
+        // Đợi chính xác 1 phút (60s) rồi mới kích hoạt lượt lướt kế tiếp
+        if (glideTimer) clearTimeout(glideTimer);
+        glideTimer = setTimeout(() => {
+          triggerGlide();
+        }, ONE_MINUTE_MS);
+      });
+
+      // Bắt đầu lướt lần đầu tiên sau 1.2 giây
+      setTimeout(() => {
+        triggerGlide();
+      }, 1200);
     }
 
     function updateTopPreBarState() {
@@ -410,7 +621,27 @@
       const tag = document.getElementById("topPreBarTag");
       const text = document.getElementById("topPreBarText");
       const btn = document.getElementById("topPreBarBtn");
+      const badgeTitle = document.getElementById("slidingBadgeTitle");
       if (!bar || !text || !btn) return;
+
+      // 1. Kiểm tra thông báo Admin tùy chỉnh đang phát (Active Broadcast)
+      if (window.AICheckAnnouncement && typeof window.AICheckAnnouncement.getActiveAnnouncement === "function") {
+        const activeAnn = window.AICheckAnnouncement.getActiveAnnouncement();
+        if (activeAnn && activeAnn.status === "active") {
+          if (badgeTitle) badgeTitle.textContent = "BẢN TIN TRỰC TUYẾN";
+          if (tag) {
+            tag.textContent = activeAnn.tag || "THÔNG BÁO BẮT BUỘC";
+            tag.style.background = "rgba(190,242,100,0.22)";
+            tag.style.color = "#bef264";
+          }
+          text.innerHTML = `<strong>${activeAnn.title ? activeAnn.title + ': ' : ''}</strong>${activeAnn.message || ''}`;
+          btn.textContent = activeAnn.actionText || "Xem ngay →";
+          btn.href = activeAnn.actionUrl || "pages/assessment.html";
+          return;
+        }
+      }
+
+      // 2. Mặc định: Hiển thị tiến trình khoa học KHKT của học sinh
 
       let preScore = null;
       let postScore = null;

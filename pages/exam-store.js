@@ -605,6 +605,30 @@
 
     clearAllResults() {
       localStorage.removeItem(EXAM_RESULTS_KEY);
+    },
+
+    // Kiểm tra xem đề thi đã bị Admin kết thúc / khóa chưa
+    isExamEnded(examId) {
+      if (!examId) return false;
+      const exam = this.getExamById(examId);
+      if (exam && (exam.status === "ended" || exam.isEnded === true)) return true;
+      if (typeof window !== "undefined" && window.AICheckAnnouncement && typeof window.AICheckAnnouncement.isEventEnded === "function") {
+        if (window.AICheckAnnouncement.isEventEnded(examId)) return true;
+      }
+      return false;
+    },
+
+    // Admin cập nhật trạng thái đề thi (active | ended)
+    setExamStatus(examId, status) {
+      const exams = this.getExams();
+      const exam = exams.find(e => e.id === examId);
+      if (exam) {
+        exam.status = status;
+        exam.isEnded = (status === "ended");
+        this.saveExams(exams);
+        return true;
+      }
+      return false;
     }
   };
 

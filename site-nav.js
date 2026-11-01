@@ -3754,6 +3754,51 @@
     } catch {}
   }
 
+  
+  // ==========================================================================
+  // AI CHECK THĐ - ANNOUNCEMENT & LIVE EVENT BROADCAST ENGINE (LƯỚT TRÁI QUA PHẢI)
+  // Quản lý thông báo bắt buộc, sự kiện trực tiếp & khóa sự kiện đã kết thúc
+  // ==========================================================================
+  const ANNOUNCEMENTS_KEY = "aicheck:admin_announcements";
+
+  const AICheckAnnouncement = {
+    getAnnouncements() {
+      try {
+        const raw = localStorage.getItem(ANNOUNCEMENTS_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch {}
+      return [];
+    },
+    getActiveAnnouncement() {
+      const list = this.getAnnouncements();
+      return list.find(a => a.status === "active") || null;
+    },
+    isEventEnded(targetIdOrUrl) {
+      if (!targetIdOrUrl) return false;
+      const list = this.getAnnouncements();
+      const str = String(targetIdOrUrl).toLowerCase();
+      return list.some(a => {
+        if (a.status !== "ended") return false;
+        if (a.targetExamId && str.includes(String(a.targetExamId).toLowerCase())) return true;
+        if (a.actionUrl && str.includes(String(a.actionUrl).toLowerCase())) return true;
+        if (a.id && str === String(a.id).toLowerCase()) return true;
+        return false;
+      });
+    },
+    saveAnnouncements(list) {
+      try {
+        localStorage.setItem(ANNOUNCEMENTS_KEY, JSON.stringify(list));
+        if (window.AICheckCloud && typeof window.AICheckCloud.saveCustomData === "function") {
+          window.AICheckCloud.saveCustomData("admin_announcements", list);
+        }
+      } catch {}
+    }
+  };
+  window.AICheckAnnouncement = AICheckAnnouncement;
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initAll);
   } else {

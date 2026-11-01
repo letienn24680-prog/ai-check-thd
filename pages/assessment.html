@@ -612,6 +612,12 @@
     }
 
     function startAssessmentWithPhase(phase) {
+      if (typeof window !== "undefined" && window.AICheckAnnouncement && typeof window.AICheckAnnouncement.isEventEnded === "function") {
+        if (window.AICheckAnnouncement.isEventEnded("assessment") || window.AICheckAnnouncement.isEventEnded("assessment.html") || window.AICheckAnnouncement.isEventEnded(phase)) {
+          alert("⚠️ Đợt đánh giá này đã được Ban tổ chức / Admin kết thúc! Hệ thống đã khóa không nhận bài làm hoặc điểm số mới.");
+          return;
+        }
+      }
       mode = "assessment";
       assessmentPhase = phase;
       startQuiz();
