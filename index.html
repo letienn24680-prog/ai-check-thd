@@ -35,6 +35,33 @@
     @media(max-width:340px){
       .metrics-strip{grid-template-columns:1fr;gap:8px}
     }
+  
+    .bento-fade-wrapper {
+      position: relative;
+      max-height: 405px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 6px 4px 18px 4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(20, 83, 45, 0.25) transparent;
+      scroll-behavior: smooth;
+      -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 46px), transparent 100%);
+      mask-image: linear-gradient(to bottom, black calc(100% - 46px), transparent 100%);
+      transition: -webkit-mask-image 0.25s ease, mask-image 0.25s ease;
+      border-radius: 14px;
+    }
+    .bento-fade-wrapper.is-scrolled-bottom {
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+    }
+    .bento-fade-wrapper::-webkit-scrollbar {
+      width: 6px;
+    }
+    .bento-fade-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(20, 83, 45, 0.25);
+      border-radius: 4px;
+    }
+
   </style>
 </head>
 <body>
@@ -147,6 +174,7 @@
       </header>
 
       <!-- 🍱 BENTO PORTAL GRID 2026 -->
+      <div class="bento-fade-wrapper" id="homeBentoWrapper">
       <nav class="bento-portal-grid" id="homeBentoGrid" aria-label="Các trạm chức năng">
         <a class="bento-card" href="pages/knowledge.html">
           <div>
@@ -184,7 +212,7 @@
           <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">LÀM BÀI KHẢO SÁT →</span>
         </a>
 
-        <a class="bento-card bento-card-extra" href="pages/exam.html">
+        <a class="bento-card" href="pages/exam.html">
           <div>
             <div class="bento-card-header">
               <span class="bento-card-step">03B / PHÒNG THI ONLINE</span>
@@ -196,7 +224,7 @@
           <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">VÀO PHÒNG THI →</span>
         </a>
 
-        <a class="bento-card bento-card-extra" href="pages/leaderboard.html">
+        <a class="bento-card" href="pages/leaderboard.html">
           <div>
             <div class="bento-card-header">
               <span class="bento-card-step">04 / VINH DANH</span>
@@ -208,7 +236,7 @@
           <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">XEM BẢNG VÀNG →</span>
         </a>
 
-        <a class="bento-card bento-card-extra" href="pages/research.html">
+        <a class="bento-card" href="pages/research.html">
           <div>
             <div class="bento-card-header">
               <span class="bento-card-step">05 / NGHIÊN CỨU</span>
@@ -220,7 +248,7 @@
           <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">XEM BÁO CÁO →</span>
         </a>
 
-        <a class="bento-card bento-card-extra" href="pages/resources.html">
+        <a class="bento-card" href="pages/resources.html">
           <div>
             <div class="bento-card-header">
               <span class="bento-card-step">06 / TÀI NGUYÊN</span>
@@ -232,13 +260,9 @@
           <span style="font-size:10px;font-weight:800;color:var(--color-leaf);margin-top:14px">XEM TÀI NGUYÊN →</span>
         </a>
 
-        <!-- NÚT ẨN BỚT / XEM THÊM CÁC TRẠM CHỨC NĂNG -->
-        <div style="grid-column:1/-1;text-align:center;margin:10px 0 16px">
-          <button type="button" id="btnToggleBentoCards" onclick="toggleBentoCards()" class="button button-outline" style="border-radius:24px;padding:8px 24px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:rgba(255,255,255,0.88);backdrop-filter:blur(6px);border:1.5px solid var(--line);color:var(--forest);box-shadow:var(--shadow-sm)" title="Bấm để ẩn hoặc hiện thêm các trạm chức năng">
-            <span id="iconToggleBento">▾</span> <span id="textToggleBento">Xem thêm 4 trạm chức năng (Phòng thi, BXH, Báo cáo, Tài nguyên)</span>
-          </button>
-        </div>
+
       </nav>
+      </div>
 
       <section class="home-about" aria-labelledby="aboutTitle" id="sectionHomeAbout">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
@@ -491,26 +515,36 @@
       document.querySelector(".home-content").append(home);
     }
 
-    // Thu gọn / Mở rộng các trạm chức năng trên trang chủ (Bento cards)
-    let homeBentoExpanded = localStorage.getItem("aicheck:home_bento_expanded") === "true";
+    // Khởi tạo hiệu ứng cuộn mượt và mờ đáy cho Bento trạm chức năng
+    window.addEventListener("DOMContentLoaded", () => {
+      initScrollFade(document.getElementById("homeBentoWrapper"));
+    });
+    setTimeout(() => {
+      initScrollFade(document.getElementById("homeBentoWrapper"));
+    }, 200);
 
-    function applyBentoVisibility() {
-      const extraCards = document.querySelectorAll(".bento-card-extra");
-      const icon = document.getElementById("iconToggleBento");
-      const text = document.getElementById("textToggleBento");
-      extraCards.forEach(card => {
-        card.style.display = homeBentoExpanded ? "flex" : "none";
-      });
-      if (icon) icon.textContent = homeBentoExpanded ? "▲" : "▾";
-      if (text) text.textContent = homeBentoExpanded 
-        ? "Thu gọn bớt các trạm mở rộng" 
-        : "Xem thêm 4 trạm chức năng (Phòng thi, BXH, Báo cáo, Tài nguyên)";
-    }
-
-    function toggleBentoCards() {
-      homeBentoExpanded = !homeBentoExpanded;
-      localStorage.setItem("aicheck:home_bento_expanded", homeBentoExpanded ? "true" : "false");
-      applyBentoVisibility();
+    
+    // Quản lý hiệu ứng mờ viền dưới (Fade Mask) và tự động mở rõ khi cuộn đến đáy
+    function initScrollFade(el) {
+      if (!el) return;
+      function checkFade() {
+        if (el.scrollHeight <= el.clientHeight + 10) {
+          el.classList.add("is-scrolled-bottom");
+        } else {
+          const isAtBottom = (el.scrollHeight - el.scrollTop - el.clientHeight <= 18);
+          if (isAtBottom) {
+            el.classList.add("is-scrolled-bottom");
+          } else {
+            el.classList.remove("is-scrolled-bottom");
+          }
+        }
+      }
+      if (!el._hasFadeListener) {
+        el._hasFadeListener = true;
+        el.addEventListener("scroll", checkFade, { passive: true });
+        window.addEventListener("resize", checkFade, { passive: true });
+      }
+      setTimeout(checkFade, 50);
     }
 
     // Thu gọn / Mở rộng các section khác (Về dự án, Câu hỏi thường gặp)

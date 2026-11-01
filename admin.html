@@ -88,6 +88,8 @@
     }
     .table-responsive {
       overflow-x: auto;
+      overflow-y: auto;
+      max-height: 395px;
       -webkit-overflow-scrolling: touch;
       margin-top: 12px;
       border: 1px solid #eef2ed;
@@ -95,6 +97,32 @@
       background: #ffffff;
       width: 100%;
       box-sizing: border-box;
+      position: relative;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+      -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 48px), transparent 100%);
+      mask-image: linear-gradient(to bottom, black calc(100% - 48px), transparent 100%);
+      transition: -webkit-mask-image 0.25s ease, mask-image 0.25s ease;
+    }
+    .table-responsive.is-scrolled-bottom {
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+    }
+    .table-responsive::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .table-responsive::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .table-responsive table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #f4f8f3;
+      box-shadow: 0 1px 0 #cbd5e1;
     }
     table {
       width: 100%;
@@ -909,12 +937,6 @@
               <option value="completed">Đã hoàn thành (Có kết quả)</option>
               <option value="in_progress">⏳ Đang làm bài trực tiếp</option>
             </select>
-            <select id="filterSessionLimit" class="filter-input" onchange="setLiveSessionsLimit(Number(this.value))" title="Chọn số lượng dòng hiển thị">
-              <option value="5">👁️ Hiện 5 dòng (Gọn gàng)</option>
-              <option value="10">Hiện 10 dòng</option>
-              <option value="20">Hiện 20 dòng</option>
-              <option value="-1">Hiện tất cả</option>
-            </select>
             <input type="text" id="searchSessionStudent" class="filter-input" placeholder="Tìm theo học sinh, lớp, email..." oninput="renderLiveActivityTable()" style="width:230px">
           </div>
           <div style="font-size:11px;color:#64748b;display:flex;align-items:center;gap:6px">
@@ -1017,7 +1039,7 @@
             </tbody>
           </table>
         </div>
-        <div id="userListFooter"></div>
+        
       </div>
     </section>
 
@@ -1939,24 +1961,7 @@
       return merged;
     }
 
-    let liveSessionsLimit = parseInt(localStorage.getItem("aicheck:admin_live_limit") || "5");
     let liveSessionsSectionCollapsed = localStorage.getItem("aicheck:admin_live_collapsed") === "true";
-
-    function setLiveSessionsLimit(limit) {
-      liveSessionsLimit = limit;
-      localStorage.setItem("aicheck:admin_live_limit", limit);
-      const sel = document.getElementById("filterSessionLimit");
-      if (sel) sel.value = String(limit);
-      renderLiveActivityTable();
-    }
-
-    function toggleLiveSessionsLimit() {
-      if (liveSessionsLimit === -1) {
-        setLiveSessionsLimit(5);
-      } else {
-        setLiveSessionsLimit(-1);
-      }
-    }
 
     function toggleLiveActivityBody() {
       liveSessionsSectionCollapsed = !liveSessionsSectionCollapsed;
@@ -1966,6 +1971,34 @@
 
     
     // Helper thu gọn / mở rộng các khối thẻ card quản trị
+    
+    // Quản lý hiệu ứng mờ viền dưới (Fade Mask) và tự động mở rõ khi cuộn đến đáy
+    function initScrollFade(el) {
+      if (!el) return;
+      function checkFade() {
+        if (el.scrollHeight <= el.clientHeight + 10) {
+          el.classList.add("is-scrolled-bottom");
+        } else {
+          const isAtBottom = (el.scrollHeight - el.scrollTop - el.clientHeight <= 18);
+          if (isAtBottom) {
+            el.classList.add("is-scrolled-bottom");
+          } else {
+            el.classList.remove("is-scrolled-bottom");
+          }
+        }
+      }
+      if (!el._hasFadeListener) {
+        el._hasFadeListener = true;
+        el.addEventListener("scroll", checkFade, { passive: true });
+        window.addEventListener("resize", checkFade, { passive: true });
+      }
+      setTimeout(checkFade, 50);
+    }
+
+    function refreshAllTableFades() {
+      document.querySelectorAll(".table-responsive").forEach(initScrollFade);
+    }
+
     function toggleGenericCardSection(bodyId, btn) {
       const body = document.getElementById(bodyId);
       if (!body) return;
@@ -2004,11 +2037,6 @@
       const container = document.getElementById("liveActivitySessionsContainer");
       if (!container || !window.AICheckTracker) return;
 
-      // Đồng bộ giá trị dropdown giới hạn dòng
-      const selLimit = document.getElementById("filterSessionLimit");
-      if (selLimit && selLimit.value !== String(liveSessionsLimit)) {
-        selLimit.value = String(liveSessionsLimit);
-      }
       applyLiveActivityCollapsedState();
 
       const activityFilter = document.getElementById("filterSessionActivity")?.value || "all";
@@ -2068,29 +2096,6 @@
 
       const totalFiltered = sessions.length;
       let displaySessions = sessions;
-      if (liveSessionsLimit > 0 && totalFiltered > liveSessionsLimit) {
-        displaySessions = sessions.slice(0, liveSessionsLimit);
-      }
-
-      const paginationFooter = totalFiltered > 5 ? `
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:10px">
-          <div style="font-size:12px;color:#64748b;display:flex;align-items:center;gap:6px">
-            <span>📊</span>
-            <span>Đang hiển thị <strong>${displaySessions.length}</strong> / <strong>${totalFiltered}</strong> lượt làm bài${totalFiltered > displaySessions.length ? ` (Đã ẩn bớt ${totalFiltered - displaySessions.length} lượt cũ hơn)` : ''}</span>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center">
-            ${liveSessionsLimit > 0 && totalFiltered > liveSessionsLimit ? `
-              <button type="button" class="btn-small" onclick="setLiveSessionsLimit(-1)" style="font-size:12px;font-weight:700;color:#047857;background:#ecfdf5;border-color:#a7f3d0;padding:6px 14px;border-radius:20px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Bấm để xem tất cả">
-                <span>👁️</span> Xem thêm ${totalFiltered - displaySessions.length} lượt khác (Hiện tất cả ${totalFiltered}) ▾
-              </button>
-            ` : `
-              <button type="button" class="btn-small" onclick="setLiveSessionsLimit(5)" style="font-size:12px;font-weight:700;color:#475569;background:#f1f5f9;border-color:#cbd5e1;padding:6px 14px;border-radius:20px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Bấm để thu gọn danh sách">
-                <span>▲</span> Thu gọn ẩn bớt (Chỉ hiện 5 lượt mới nhất)
-              </button>
-            `}
-          </div>
-        </div>
-      ` : '';
 
       container.innerHTML = `<table>
         <thead>
@@ -2157,8 +2162,8 @@
             </tr>`;
           }).join("")}
         </tbody>
-      </table>
-      ${paginationFooter}`;
+      </table>`;
+      initScrollFade(container);
     }
 
     function exportLiveSessionsExcel() {
@@ -2289,11 +2294,7 @@
     }
     
     
-    let userListLimit = 5;
-    function toggleUserListLimit() {
-      userListLimit = (userListLimit === -1) ? 5 : -1;
-      renderUserProfilesTable();
-    }
+
 
     function renderUserProfilesTable() {
       const userTableBody = document.getElementById("user-list-body");
@@ -2305,8 +2306,7 @@
         if (footer) footer.innerHTML = "";
         return;
       }
-      const displayList = (userListLimit > 0 && users.length > userListLimit) ? users.slice(0, userListLimit) : users;
-      userTableBody.innerHTML = displayList.map(user => `
+      userTableBody.innerHTML = users.map(user => `
         <tr>
           <td><strong>${escapeHtml(user.display_name || "—")}</strong></td>
           <td>${escapeHtml(user.email || "—")}</td>
@@ -2315,23 +2315,8 @@
           <td><span class="tag">${escapeHtml(user.role || "student")}</span></td>
         </tr>
       `).join("");
-
-      if (footer) {
-        if (users.length > 5) {
-          footer.innerHTML = `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-              <div style="font-size:12px;color:#64748b">
-                Đang hiển thị <strong>${displayList.length}</strong> / <strong>${users.length}</strong> tài khoản
-              </div>
-              <button type="button" class="btn-small" onclick="toggleUserListLimit()" style="font-weight:700">
-                ${userListLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${users.length - userListLimit} tài khoản khác ▾`}
-              </button>
-            </div>
-          `;
-        } else {
-          footer.innerHTML = "";
-        }
-      }
+      const container = userTableBody.closest(".table-responsive");
+      if (container) initScrollFade(container);
     }
 
     async function loadUsersList() {
@@ -2686,19 +2671,7 @@
     }
 
     
-    let scoreTableLimit = parseInt(localStorage.getItem("aicheck:admin_score_limit") || "5");
-    function setScoreTableLimit(limit) {
-      scoreTableLimit = limit;
-      localStorage.setItem("aicheck:admin_score_limit", limit);
-      renderScoreTable();
-    }
-    function toggleScoreTableLimit() {
-      if (scoreTableLimit === -1) {
-        setScoreTableLimit(5);
-      } else {
-        setScoreTableLimit(-1);
-      }
-    }
+
 
     function renderScoreTable() {
       const container = document.getElementById("scoreTableContainer");
@@ -2831,7 +2804,6 @@
       }
 
       if (currentScoreTab === "exam") {
-        const displayScores = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
         container.innerHTML = `<table>
           <thead>
             <tr>
@@ -2850,7 +2822,7 @@
             </tr>
           </thead>
           <tbody>
-            ${displayScores.map((s, idx) => {
+            ${tabScores.map((s, idx) => {
               const attemptNum = s.attempt_number || 1;
               const statusBadge = s.passed
                 ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">ĐẠT</span>`
@@ -2888,17 +2860,8 @@
               </tr>`;
             }).join("")}
           </tbody>
-        </table>
-        ${tabScores.length > 5 ? `
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-            <div style="font-size:12px;color:#64748b">
-              Đang hiển thị <strong>${displayScores.length}</strong> / <strong>${tabScores.length}</strong> lượt thi
-            </div>
-            <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
-              ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${tabScores.length - scoreTableLimit} lượt khác ▾`}
-            </button>
-          </div>
-        ` : ''}`;
+        </table>`;
+        initScrollFade(container);
       } else if (currentScoreTab === "assessment") {
         if (assessmentSubTab === "comparison") {
           // BẢNG ĐỐI SÁNH TRƯỚC VS SAU THEO TỪNG THÍ SINH (CHUẨN BÁO CÁO KHKT)
@@ -2916,8 +2879,6 @@
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có dữ liệu thí sinh nào trong đợt đánh giá này.</p>';
             return;
           }
-          const displayList = (scoreTableLimit > 0 && list.length > scoreTableLimit) ? list.slice(0, scoreTableLimit) : list;
-
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -2934,7 +2895,7 @@
               </tr>
             </thead>
             <tbody>
-              ${displayList.map((st, idx) => {
+              ${list.map((st, idx) => {
                 const pre = st.pre;
                 const post = st.post;
                 const times = getAssessmentTimestamps(st.name, pre, post);
@@ -3012,17 +2973,8 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>
-          ${list.length > 5 ? `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-              <div style="font-size:12px;color:#64748b">
-                Đang hiển thị <strong>${displayList.length}</strong> / <strong>${list.length}</strong> thí sinh đối sánh
-              </div>
-              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
-                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${list.length - scoreTableLimit} thí sinh khác ▾`}
-              </button>
-            </div>
-          ` : ''}`;
+          </table>`;
+          initScrollFade(container);
         } else if (assessmentSubTab === "pre") {
           // BẢNG ĐỢT 01: TRƯỚC CAN THIỆP
           const preList = tabScores.filter(s => s.phase === "pre");
@@ -3030,7 +2982,6 @@
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 01 (Trước can thiệp).</p>';
             return;
           }
-          const displayPre = (scoreTableLimit > 0 && preList.length > scoreTableLimit) ? preList.slice(0, scoreTableLimit) : preList;
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -3044,7 +2995,7 @@
               </tr>
             </thead>
             <tbody>
-              ${displayPre.map((s, idx) => {
+              ${preList.map((s, idx) => {
                 const score = Number(s.score || 0);
                 const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
                 const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3066,17 +3017,8 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>
-          ${preList.length > 5 ? `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-              <div style="font-size:12px;color:#64748b">
-                Đang hiển thị <strong>${displayPre.length}</strong> / <strong>${preList.length}</strong> bản ghi Trước CT
-              </div>
-              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
-                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${preList.length - scoreTableLimit} bản ghi khác ▾`}
-              </button>
-            </div>
-          ` : ''}`;
+          </table>`;
+          initScrollFade(container);
         } else if (assessmentSubTab === "post") {
           // BẢNG ĐỢT 02: SAU CAN THIỆP
           const postList = tabScores.filter(s => s.phase === "post");
@@ -3084,7 +3026,6 @@
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 02 (Sau can thiệp).</p>';
             return;
           }
-          const displayPost = (scoreTableLimit > 0 && postList.length > scoreTableLimit) ? postList.slice(0, scoreTableLimit) : postList;
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -3098,7 +3039,7 @@
               </tr>
             </thead>
             <tbody>
-              ${displayPost.map((s, idx) => {
+              ${postList.map((s, idx) => {
                 const score = Number(s.score || 0);
                 const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
                 const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3120,20 +3061,10 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>
-          ${postList.length > 5 ? `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-              <div style="font-size:12px;color:#64748b">
-                Đang hiển thị <strong>${displayPost.length}</strong> / <strong>${postList.length}</strong> bản ghi Sau CT
-              </div>
-              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
-                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${postList.length - scoreTableLimit} bản ghi khác ▾`}
-              </button>
-            </div>
-          ` : ''}`;
+          </table>`;
+          initScrollFade(container);
         } else {
           // TẤT CẢ LƯỢT ĐO
-          const displayAllAssess = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -3147,7 +3078,7 @@
               </tr>
             </thead>
             <tbody>
-              ${displayAllAssess.map((s, idx) => {
+              ${tabScores.map((s, idx) => {
                 const score = Number(s.score || 0);
                 const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
                 const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3174,21 +3105,11 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>
-          ${tabScores.length > 5 ? `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-              <div style="font-size:12px;color:#64748b">
-                Đang hiển thị <strong>${displayAllAssess.length}</strong> / <strong>${tabScores.length}</strong> lượt đo
-              </div>
-              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
-                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${tabScores.length - scoreTableLimit} lượt khác ▾`}
-              </button>
-            </div>
-          ` : ''}`;
+          </table>`;
+          initScrollFade(container);
         }
       } else if (currentScoreTab === "rubric" || currentScoreTab === "practice") {
         const actLabel = currentScoreTab === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
-        const displayTab = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
         container.innerHTML = `<table>
           <thead>
             <tr>
@@ -3201,7 +3122,7 @@
             </tr>
           </thead>
           <tbody>
-            ${displayTab.map((s, idx) => {
+            ${tabScores.map((s, idx) => {
               const score = Number(s.score || 0);
               const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
               const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3220,7 +3141,6 @@
         </table>`;
       } else {
         // Tab "all" (Tất cả hoạt động)
-        const displayAll = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
         container.innerHTML = `<table>
           <thead>
             <tr>
@@ -3234,7 +3154,7 @@
             </tr>
           </thead>
           <tbody>
-            ${displayAll.map((s, idx) => {
+            ${tabScores.map((s, idx) => {
               const score = Number(s.score || 0);
               const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
               const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3652,17 +3572,8 @@
             `;
           }).join("")}
         </tbody>
-      </table>
-      ${archive.length > 5 ? `
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-          <div style="font-size:12px;color:#64748b">
-            Đang hiển thị <strong>${displayArchive.length}</strong> / <strong>${archive.length}</strong> bản sao lưu
-          </div>
-          <button type="button" class="btn-small" onclick="toggleBackupArchiveLimit()" style="font-weight:700">
-            ${backupArchiveLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${archive.length - backupArchiveLimit} bản lưu khác ▾`}
-          </button>
-        </div>
-      ` : ''}`;
+      </table>`;
+      initScrollFade(container);
     }
 
     async function loadSupportRequests() {
@@ -4061,11 +3972,7 @@
     }
 
     
-    let backupArchiveLimit = 5;
-    function toggleBackupArchiveLimit() {
-      backupArchiveLimit = (backupArchiveLimit === -1) ? 5 : -1;
-      loadBackupArchiveList();
-    }
+
 
     function loadBackupArchiveList() {
       const container = document.getElementById("backupArchiveContainer");
@@ -4077,7 +3984,6 @@
         return;
       }
 
-      const displayArchive = (backupArchiveLimit > 0 && archive.length > backupArchiveLimit) ? archive.slice(0, backupArchiveLimit) : archive;
       container.innerHTML = `<table>
         <thead>
           <tr>
@@ -4089,7 +3995,7 @@
           </tr>
         </thead>
         <tbody>
-          ${displayArchive.map(b => {
+          ${archive.map(b => {
             const timeStr = b.created_at ? new Date(b.created_at).toLocaleString("vi-VN") : "—";
             const kbSize = b.size_bytes ? (b.size_bytes / 1024).toFixed(1) + " KB" : "—";
             return `
@@ -4897,11 +4803,7 @@
 
     // --- BẢNG LỊCH SỬ THI & GIÁM SÁT VI PHẠM ---
     
-    let examResultsLimit = 5;
-    function toggleExamResultsLimit() {
-      examResultsLimit = (examResultsLimit === -1) ? 5 : -1;
-      loadExamResultsTable();
-    }
+
 
     function loadExamResultsTable() {
       const container = document.getElementById("examResultsTableContainer");
@@ -4913,7 +4815,6 @@
         return;
       }
 
-      const displayResults = (examResultsLimit > 0 && results.length > examResultsLimit) ? results.slice(0, examResultsLimit) : results;
       container.innerHTML = `
         <table>
           <thead>
@@ -4931,7 +4832,7 @@
             </tr>
           </thead>
           <tbody>
-            ${displayResults.map((r, idx) => {
+            ${results.map((r, idx) => {
               const violCount = r.violationsCount || 0;
               const violBadge = violCount === 0
                 ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
@@ -4974,17 +4875,8 @@
             }).join("")}
           </tbody>
         </table>
-        ${results.length > 5 ? `
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-            <div style="font-size:12px;color:#64748b">
-              Đang hiển thị <strong>${displayResults.length}</strong> / <strong>${results.length}</strong> lượt thi
-            </div>
-            <button type="button" class="btn-small" onclick="toggleExamResultsLimit()" style="font-weight:700">
-              ${examResultsLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${results.length - examResultsLimit} lượt khác ▾`}
-            </button>
-          </div>
-        ` : ''}
       `;
+      initScrollFade(container);
     }
 
     function viewViolationDetail(resultId) {
@@ -5111,11 +5003,7 @@
     }
 
     
-    let examStudentsLimit = 5;
-    function toggleExamStudentsLimit() {
-      examStudentsLimit = (examStudentsLimit === -1) ? 5 : -1;
-      renderExamStudentsTable();
-    }
+
 
     function renderExamStudentsTable() {
       const container = document.getElementById("examStudentsTableContainer");
@@ -5152,7 +5040,6 @@
         return;
       }
 
-      const displayFiltered = (examStudentsLimit > 0 && filtered.length > examStudentsLimit) ? filtered.slice(0, examStudentsLimit) : filtered;
       container.innerHTML = `
         <table>
           <thead>
@@ -5170,7 +5057,7 @@
             </tr>
           </thead>
           <tbody>
-            ${displayFiltered.map((r, idx) => {
+            ${filtered.map((r, idx) => {
               const attemptNum = r.attemptNumber || 1;
               const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
               const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
@@ -5219,17 +5106,8 @@
             }).join("")}
           </tbody>
         </table>
-        ${filtered.length > 5 ? `
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-            <div style="font-size:12px;color:#64748b">
-              Đang hiển thị <strong>${displayFiltered.length}</strong> / <strong>${filtered.length}</strong> thí sinh
-            </div>
-            <button type="button" class="btn-small" onclick="toggleExamStudentsLimit()" style="font-weight:700">
-              ${examStudentsLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${filtered.length - examStudentsLimit} thí sinh khác ▾`}
-            </button>
-          </div>
-        ` : ''}
       `;
+      initScrollFade(container);
     }
 
     function deleteExamSummaryStudent(resultId) {
@@ -5339,11 +5217,7 @@
     }
 
     
-    let adminCodesLimit = 5;
-    function toggleAdminCodesLimit() {
-      adminCodesLimit = (adminCodesLimit === -1) ? 5 : -1;
-      loadAdminCodesTable();
-    }
+
 
     function loadAdminCodesTable() {
       const container = document.getElementById("adminCodesTableContainer");
@@ -5355,7 +5229,6 @@
         return;
       }
 
-      const displayCodes = (adminCodesLimit > 0 && codes.length > adminCodesLimit) ? codes.slice(0, adminCodesLimit) : codes;
       container.innerHTML = `
         <table>
           <thead>
@@ -5370,7 +5243,7 @@
             </tr>
           </thead>
           <tbody>
-            ${displayCodes.map((c, idx) => {
+            ${codes.map((c, idx) => {
               const codeMaskId = `mask-code-${c.id}`;
               const isProt = (c.id === "code_master_thd");
               const recipientDisplay = c.recipient || (c.id === "code_adminthd" ? "adminthd" : "Tất cả / Hệ thống");
@@ -5412,17 +5285,8 @@
             }).join("")}
           </tbody>
         </table>
-        ${codes.length > 5 ? `
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
-            <div style="font-size:12px;color:#64748b">
-              Đang hiển thị <strong>${displayCodes.length}</strong> / <strong>${codes.length}</strong> mã admin
-            </div>
-            <button type="button" class="btn-small" onclick="toggleAdminCodesLimit()" style="font-weight:700">
-              ${adminCodesLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${codes.length - adminCodesLimit} mã khác ▾`}
-            </button>
-          </div>
-        ` : ''}
       `;
+      initScrollFade(container);
     }
 
     function toggleMaskAdminCode(id, plainCode) {
