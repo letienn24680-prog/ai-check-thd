@@ -339,6 +339,34 @@
       setTimeout(() => pill.remove(), 1200);
     }
 
+    function updateInterventionNotice() {
+      const notice = document.getElementById("interventionNotice");
+      if (!notice) return;
+      const preScore = read("assessment_pre_score", null);
+      if (preScore !== null) {
+        let totalQuestions = 0;
+        try { totalQuestions = parseInt(localStorage.getItem("aicheck:practice_total_questions") || "0", 10); } catch {}
+        let usedCount = 0;
+        try { usedCount = (JSON.parse(localStorage.getItem("aicheck:used:practice")) || []).length; } catch {}
+        let sessionCount = 0;
+        try {
+          const sessions = JSON.parse(localStorage.getItem("aicheck:activity_sessions")) || [];
+          sessionCount = sessions.filter(s => s.activity === "practice" && s.status === "completed").length * 10;
+        } catch {}
+        const count = Math.max(totalQuestions, usedCount, sessionCount);
+
+        notice.style.display = "flex";
+        notice.innerHTML = `
+          <div style="font-size:12px;color:var(--forest);line-height:1.5">
+            🎯 <strong>Giai đoạn Can thiệp Sư phạm:</strong> Bạn đã có điểm đo Trước can thiệp (<strong>${preScore} đ</strong>). <strong>Điều kiện mở khóa Đợt 02:</strong> Hoàn thành tối thiểu <strong>60 câu thực hành</strong> (Tiến trình: <strong>${count}/60 câu</strong>) HOẶC trải qua <strong>3 ngày rèn luyện</strong>.
+          </div>
+          <span style="font-size:10.5px;font-weight:800;background:var(--forest);color:var(--lime);padding:3px 10px;border-radius:20px;white-space:nowrap">${count >= 60 ? 'ĐÃ ĐẠT 60 CÂU ✅' : `${count}/60 CÂU`}</span>
+        `;
+      } else {
+        notice.style.display = "none";
+      }
+    }
+
     const ROUND_SIZE = 10;
     function startRound() { 
       let used = read("used:practice", []); 
@@ -361,6 +389,7 @@
       renderQuestion(); 
       updateGamifyHud();
       updateLibraryLockState();
+      updateInterventionNotice();
       const libEl = document.getElementById("scenarioLibrary");
       if (libEl) libEl.open = false;
       currentPracticeSessionId = window.AICheckTracker?.startSession({
@@ -567,6 +596,14 @@
       complete = true;
       updateLibraryLockState();
 
+      // Cập nhật số câu thực hành tích lũy
+      let totalQuestions = parseInt(localStorage.getItem("aicheck:practice_total_questions") || "0", 10);
+      totalQuestions += set.length;
+      let usedCount = 0;
+      try { usedCount = (JSON.parse(localStorage.getItem("aicheck:used:practice")) || []).length; } catch {}
+      totalQuestions = Math.max(totalQuestions, usedCount);
+      localStorage.setItem("aicheck:practice_total_questions", String(totalQuestions));
+
       // Đánh dấu hoàn thành giai đoạn can thiệp thực hành tình huống khi đạt >= 60%
       const isPassed = score >= 60;
       if (isPassed) {
@@ -591,32 +628,40 @@
       document.getElementById("methodChoices").replaceChildren(); 
       const preScoreForUnlock = read("assessment_pre_score", null);
       if (preScoreForUnlock !== null) {
-        if (!isPassed) {
+        if (totalQuestions >= 60) {
           document.getElementById("practiceFeedback").innerHTML = `
-            <div style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:10px;padding:12px 14px;margin-top:10px;text-align:left">
-              <strong style="color:#c2410c;font-size:12.5px;display:block;margin-bottom:4px">
-                ⚠️ Kết quả lượt này: ${score}/100 điểm (${correct}/${set.length} câu đúng)
+            <div style="background:rgba(217,242,108,0.22);border:1.5px solid #286947;border-radius:10px;padding:14px 16px;margin-top:10px;text-align:left">
+              <strong style="color:var(--forest);font-size:13px;display:block;margin-bottom:4px">
+                🎉 XUẤT SẮC! BẠN ĐÃ HOÀN THÀNH ĐỦ ${totalQuestions}/60 CÂU THỰC HÀNH!
               </strong>
-              <span style="font-size:11.5px;color:#9a3412;line-height:1.5;display:block">
-                Để đủ điều kiện mở khóa bài <strong>Đo Sau can thiệp (Đợt 02)</strong>, bạn cần đạt từ <strong>60% trở lên (≥ 6/10 câu đúng)</strong>. Hãy bấm <strong>"Lượt mới ↻"</strong> bên dưới để thử sức với đề mới nhé!
+              <span style="font-size:12px;color:#1e4d35;line-height:1.5;display:block">
+                Bạn đã đạt tiêu chuẩn <strong>tối thiểu 60 câu thực hành</strong> (hoặc sau 3 ngày rèn luyện). Bài <strong>Đo Sau can thiệp (Đợt 02)</strong> đã chính thức được <strong>MỞ KHÓA</strong> để ghi nhận sự tiến bộ vượt bậc của bạn!
               </span>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap">
+                <a href="assessment.html?phase=post" class="button button-lime" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:800;text-decoration:none">
+                  🚀 Tiến hành Đo Sau can thiệp (Đợt 02) ngay →
+                </a>
+                <a href="javascript:void(0)" onclick="startRound()" class="button button-outline" style="padding:7px 14px;font-size:11.5px;font-weight:700">
+                  Luyện thêm đề mới ↻
+                </a>
+              </div>
             </div>
           `;
         } else {
           document.getElementById("practiceFeedback").innerHTML = `
             <div style="background:rgba(217,242,108,0.18);border:1.5px solid #286947;border-radius:10px;padding:12px 14px;margin-top:10px;text-align:left">
               <strong style="color:var(--forest);font-size:12.5px;display:block;margin-bottom:4px">
-                🎉 Chúc mừng! Bạn đã hoàn thành lượt Thực hành đạt chuẩn (${score}/100 đ)!
+                🎯 Tiến trình rèn luyện: Đã hoàn thành ${totalQuestions} / 60 câu (${score}/100 đ lượt này)!
               </strong>
               <span style="font-size:11.5px;color:#1e4d35;line-height:1.5;display:block">
-                Kỹ năng kiểm chứng đã được rèn luyện. Theo quy trình nghiên cứu Sư phạm KHKT, bạn cần thời gian rèn luyện thực tế ít nhất <strong>1 ngày (24 giờ)</strong> để kỹ năng thẩm thấu trước khi mở bài <strong>Đo Sau can thiệp (Đợt 02)</strong>.
+                Theo quy trình nghiên cứu KHKT, bài <strong>Đo Sau can thiệp (Đợt 02)</strong> sẽ tự động mở khóa khi bạn <strong>hoàn thành đủ 60 câu thực hành</strong> (còn <strong>${Math.max(0, 60 - totalQuestions)} câu nữa</strong>) HOẶC <strong>sau 3 ngày rèn luyện sư phạm</strong>.
               </span>
               <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap">
-                <a href="assessment.html" class="button button-lime" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:11.5px;font-weight:800;text-decoration:none">
-                  ⏱️ Xem tiến trình mở khóa Đợt 02 →
+                <a href="javascript:void(0)" onclick="startRound()" class="button button-lime" style="padding:7px 14px;font-size:11.5px;font-weight:800;text-decoration:none">
+                  ⚡ Luyện tiếp lượt mới (+10 câu) ↻
                 </a>
-                <a href="javascript:void(0)" onclick="startRound()" class="button button-outline" style="padding:7px 14px;font-size:11.5px;font-weight:700">
-                  Luyện thêm lượt nữa ↻
+                <a href="assessment.html" class="button button-outline" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:11.5px;font-weight:700;text-decoration:none">
+                  ⏱️ Xem tiến trình mở khóa Đợt 02 →
                 </a>
               </div>
             </div>

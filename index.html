@@ -380,16 +380,35 @@
         text.innerHTML = `Bạn đã hoàn thành trọn vẹn 2 đợt đo: Đợt 1 (<strong>${preScore} đ</strong>) ➔ Đợt 2 (<strong>${postScore} đ</strong>)!`;
         btn.textContent = 'Xem báo cáo KHKT →';
         btn.href = 'pages/research.html';
-      } else if (!practiceCompleted) {
-        if (tag) tag.innerHTML = '⚡ BƯỚC 2: CAN THIỆP THỰC HÀNH';
-        text.innerHTML = `Đã ghi nhận Đợt 01 (<strong>${preScore} đ</strong>). Hãy hoàn thành 1 lượt Thực hành tình huống để mở Đợt 02!`;
-        btn.textContent = 'Vào Thực hành →';
-        btn.href = 'pages/practice.html?from=assessment_pre';
       } else {
-        if (tag) tag.innerHTML = '🎯 BƯỚC 3: ĐO SAU CAN THIỆP';
-        text.innerHTML = `Đã hoàn thành thực hành tốt! Hãy xem tiến trình và chuẩn bị làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong>.`;
-        btn.textContent = 'Đo Sau can thiệp →';
-        btn.href = 'pages/assessment.html?phase=post';
+        // Kiểm tra điều kiện mở khóa đợt 2: sau 3 ngày hoặc hoàn thành 60 câu thực hành
+        let totalQuestions = 0;
+        try { totalQuestions = parseInt(localStorage.getItem("aicheck:practice_total_questions") || "0", 10); } catch {}
+        let usedCount = 0;
+        try { usedCount = (JSON.parse(localStorage.getItem("aicheck:used:practice")) || []).length; } catch {}
+        let sessionCount = 0;
+        try {
+          const sessions = JSON.parse(localStorage.getItem("aicheck:activity_sessions")) || [];
+          sessionCount = sessions.filter(s => s.activity === "practice" && s.status === "completed").length * 10;
+        } catch {}
+        const count = Math.max(totalQuestions, usedCount, sessionCount);
+
+        let preDateStr = null;
+        try { preDateStr = JSON.parse(localStorage.getItem("aicheck:assessment_pre_date")); } catch {}
+        const hoursPassed = preDateStr ? (Date.now() - new Date(preDateStr).getTime()) / (1000 * 60 * 60) : 0;
+        const isUnlocked = count >= 60 || hoursPassed >= 72 || localStorage.getItem("aicheck:bypass_post_interval") === "true";
+
+        if (isUnlocked) {
+          if (tag) tag.innerHTML = '🎯 ĐÃ MỞ KHÓA ĐỢT 2';
+          text.innerHTML = `Bạn đã đủ điều kiện! Hãy tiến hành làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong> ngay.`;
+          btn.textContent = 'Đo Sau can thiệp →';
+          btn.href = 'pages/assessment.html?phase=post';
+        } else {
+          if (tag) tag.innerHTML = '⏱️ BƯỚC 2: RÈN LUYỆN SƯ PHẠM';
+          text.innerHTML = `Đã ghi nhận Đợt 01 (<strong>${preScore} đ</strong>). Hãy hoàn thành <strong>60 câu thực hành</strong> (đã làm: ${count}/60) hoặc sau <strong>3 ngày</strong> để mở Đợt 02!`;
+          btn.textContent = 'Vào Thực hành →';
+          btn.href = 'pages/practice.html?from=assessment_pre';
+        }
       }
     }
 
