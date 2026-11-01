@@ -939,9 +939,12 @@
             🛡️
           </div>
           <div>
-            <h2 class="panel-title" style="margin:0;color:#9a3412;font-size:17px;display:flex;align-items:center;gap:8px">
+            <h2 class="panel-title" style="margin:0;color:#9a3412;font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               QUẢN LÝ & DUYỆT MỞ KHÓA TÀI KHOẢN TRANH CHẤP THIẾT BỊ
               <span id="unlockTotalBadge" class="tag" style="background:#ea580c;color:#fff;font-weight:800">0 yêu cầu</span>
+              <button type="button" class="btn-small" onclick="toggleGenericCardSection('unlockApprovalBody', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
+                <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+              </button>
             </h2>
             <p class="panel-copy" style="margin:2px 0 0;font-size:12px;color:#7c2d12">
               Duyệt danh tính tài khoản bị tạm khóa do đăng nhập đồng thời / đổi thiết bị liên tục. Kiểm tra thông tin biểu mẫu và bấm duyệt gửi mã mở khóa về email của tài khoản.
@@ -954,6 +957,7 @@
         </div>
       </div>
 
+      <div id="unlockApprovalBody">
       <!-- Tab lọc & Tìm kiếm -->
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:12px 0 14px;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px">
         <div style="display:flex;gap:6px;flex-wrap:wrap">
@@ -976,35 +980,44 @@
       <div class="table-responsive" id="unlockApprovalContainer">
         <p class="panel-copy" style="text-align:center;padding:16px">Đang tải danh sách tài khoản chờ duyệt mở khóa...</p>
       </div>
+      </div>
     </section>
 
     <!-- QUẢN LÝ TÀI KHOẢN NGƯỜI DÙNG -->
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0">Danh sách Tài khoản & Địa chỉ IP</h2>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            Danh sách Tài khoản & Địa chỉ IP
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('userListBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
+          </h2>
           <p class="panel-copy" style="margin:4px 0 0">Quản lý toàn bộ tài khoản học sinh đã đăng ký trên hệ thống.</p>
         </div>
         <button class="btn-small" onclick="loadUsersList()">↻ Tải lại danh sách</button>
       </div>
-      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Họ và tên</th>
-              <th>Email</th>
-              <th>Địa chỉ IP</th>
-              <th>Ngày tạo</th>
-              <th>Vai trò</th>
-            </tr>
-          </thead>
-          <tbody id="user-list-body">
-            <tr>
-              <td colspan="5" style="text-align:center;color:var(--muted)">Đang tải danh sách tài khoản...</td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="userListBodySection">
+        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Địa chỉ IP</th>
+                <th>Ngày tạo</th>
+                <th>Vai trò</th>
+              </tr>
+            </thead>
+            <tbody id="user-list-body">
+              <tr>
+                <td colspan="5" style="text-align:center;color:var(--muted)">Đang tải danh sách tài khoản...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="userListFooter"></div>
       </div>
     </section>
 
@@ -1012,7 +1025,12 @@
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0">Yêu cầu hỗ trợ & Quên mật khẩu</h2>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            Yêu cầu hỗ trợ & Quên mật khẩu
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('supportBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
+          </h2>
           <p class="panel-copy" style="margin:4px 0 0">Các yêu cầu gửi từ học sinh trong quá trình tham gia trạm.</p>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
@@ -1020,9 +1038,11 @@
           <span id="supportSourceBadge" class="tag">Đang tải...</span>
         </div>
       </div>
-      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
-      <div class="table-responsive" id="supportContainer">
-        <p class="panel-copy">Đang tải danh sách yêu cầu...</p>
+      <div id="supportBodySection">
+        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+        <div class="table-responsive" id="supportContainer">
+          <p class="panel-copy">Đang tải danh sách yêu cầu...</p>
+        </div>
       </div>
     </section>
 
@@ -1030,7 +1050,12 @@
     <section class="card" id="adminCodesSection">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
         <div>
-          <h2 class="panel-title" style="margin:0">Cấp mã Admin & Quản lý Quyền truy cập</h2>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            Cấp mã Admin & Quản lý Quyền truy cập
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('adminCodesBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
+          </h2>
           <p class="panel-copy" style="margin:4px 0 0">
             Cấp mã PIN / mật mã truy cập riêng cho Giáo viên hướng dẫn hoặc Quản trị viên để mở khóa bảng điều khiển Admin.
           </p>
@@ -1038,6 +1063,7 @@
         <button class="btn-small" onclick="loadAdminCodesTable()">↻ Làm mới danh sách</button>
       </div>
 
+      <div id="adminCodesBodySection">
       <!-- FORM CẤP MÃ MỚI & GỬI THÔNG BÁO TỚI TÀI KHOẢN -->
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,0.02)">
         <div style="font-weight:800;font-size:13px;color:var(--forest);margin-bottom:12px;display:flex;align-items:center;gap:6px">
@@ -1108,13 +1134,19 @@
       <div class="table-responsive" id="adminCodesTableContainer">
         <p class="panel-copy">Đang tải danh sách mã Admin...</p>
       </div>
+      </div>
     </section>
 
     <!-- QUẢN LÝ ĐỀ THI & PHÒNG LÀM BÀI TRỰC TUYẾN -->
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0">Quản lý Đề thi & Phòng làm bài tập trực tuyến</h2>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            Quản lý Đề thi & Phòng làm bài tập trực tuyến
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('adminExamsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
+          </h2>
           <p class="panel-copy" style="margin:4px 0 0">Tạo, tải lên đề thi không giới hạn số câu (10, 20, 30...), cài đặt thời gian và setup đáp án đúng/sai.</p>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -1125,9 +1157,11 @@
         </div>
       </div>
 
+      <div id="adminExamsBodySection">
       <!-- DANH SÁCH CÁC LOẠI ĐỀ THI ĐÃ UP LÊN -->
       <div class="exam-cards-grid" id="adminExamsGrid">
         <p class="panel-copy" style="grid-column:1/-1;text-align:center;padding:20px">Đang tải danh sách đề thi...</p>
+      </div>
       </div>
     </section>
 
@@ -1135,7 +1169,12 @@
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0">Lịch sử Thi & Giám sát Vi phạm Toàn màn hình</h2>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            Lịch sử Thi & Giám sát Vi phạm Toàn màn hình
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('examResultsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
+          </h2>
           <p class="panel-copy" style="margin:4px 0 0">Ghi nhận chi tiết số lần thí sinh thoát toàn màn hình, bấm F11, Esc hoặc chuyển tab khi làm bài.</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
@@ -1143,9 +1182,11 @@
           <button class="btn-small" onclick="clearAllExamResults()" style="color:#b91c1c">Xóa lịch sử thi</button>
         </div>
       </div>
-      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
-      <div class="table-responsive" id="examResultsTableContainer">
-        <p class="panel-copy">Đang tải lịch sử bài thi...</p>
+      <div id="examResultsBodySection">
+        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+        <div class="table-responsive" id="examResultsTableContainer">
+          <p class="panel-copy">Đang tải lịch sử bài thi...</p>
+        </div>
       </div>
     </section>
 
@@ -1153,7 +1194,12 @@
     <section class="card" id="examStudentsSummarySection">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <div>
-          <h2 class="panel-title" style="margin:0">Danh sách Thí sinh đã làm bài thi (Cả Đạt & Chưa đạt yêu cầu)</h2>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            Danh sách Thí sinh đã làm bài thi (Cả Đạt & Chưa đạt yêu cầu)
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('examStudentsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
+          </h2>
           <p class="panel-copy" style="margin:4px 0 0">
             Lưu trữ danh sách toàn bộ thí sinh đã tham gia phòng thi trực tuyến, đối chiếu điểm đạt được với ngưỡng điểm chuẩn của từng đề.
           </p>
@@ -1166,6 +1212,7 @@
         </div>
       </div>
 
+      <div id="examStudentsBodySection">
       <!-- 4 THẺ THỐNG KÊ TỔNG QUAN -->
       <div class="stat-grid" id="examStudentsStatsOverview" style="margin-top:0;margin-bottom:14px">
         <div class="stat-box">
@@ -1205,14 +1252,18 @@
       <div class="table-responsive" id="examStudentsTableContainer">
         <p class="panel-copy">Đang tải danh sách thí sinh...</p>
       </div>
+      </div>
     </section>
 
     <!-- BẢNG KẾT QUẢ & ĐIỂM CHI TIẾT (CHIA THÀNH CÁC Ô / TAB HOẠT ĐỘNG RIÊNG BIỆT) -->
     <section class="card" id="sectionScoreDetails">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px">
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             Bảng kết quả & Điểm chi tiết
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('scoreDetailsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn bảng điểm chi tiết">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
           </h2>
           <p class="panel-copy" style="margin:4px 0 0">Dữ liệu phân loại theo từng ô hoạt động riêng biệt, sẵn sàng xuất Excel chuẩn phục vụ đề tài nghiên cứu khoa học.</p>
         </div>
@@ -1224,6 +1275,7 @@
         </div>
       </div>
 
+      <div id="scoreDetailsBodySection">
       <!-- THANH TAB PHÂN CHIA HOẠT ĐỘNG RIÊNG BIỆT -->
       <div class="score-activity-tabs" id="scoreActivityTabs">
         <button type="button" class="score-act-tab active" data-tab="exam" onclick="switchScoreActivityTab('exam')">
@@ -1252,6 +1304,7 @@
       <div class="table-responsive" id="scoreTableContainer">
         <p class="panel-copy">Đang tải dữ liệu điểm...</p>
       </div>
+      </div>
     </section>
 
     <!-- ========================================================================= -->
@@ -1260,8 +1313,11 @@
     <section class="card" id="backupRestoreSection" style="border: 2px solid rgba(2, 132, 199, 0.35); background: linear-gradient(180deg, rgba(2, 132, 199, 0.03) 0%, rgba(255, 255, 255, 0.95) 100%);">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;color:#0284c7">
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;color:#0284c7;flex-wrap:wrap">
             <span>Sao lưu & Phục hồi dữ liệu hệ thống (24/7)</span>
+            <button type="button" class="btn-small" onclick="toggleGenericCardSection('backupRestoreBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd" title="Thu gọn khối này">
+              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
+            </button>
           </h2>
           <p class="panel-copy" style="margin:4px 0 0">Tự động sao lưu định kỳ liên tục 24/7 tránh mất mát dữ liệu khi gặp sự cố, sập nguồn hoặc chuyển máy chủ.</p>
         </div>
@@ -1271,6 +1327,7 @@
         </div>
       </div>
 
+      <div id="backupRestoreBodySection">
       <!-- KHỐI THAO TÁC NHANH: SAO LƯU NGAY & PHỤC HỒI -->
       <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;margin-bottom:20px">
         <!-- Card 1: Tải file sao lưu JSON -->
@@ -1313,6 +1370,7 @@
       </h3>
       <div class="table-responsive" id="backupArchiveContainer">
         <p class="panel-copy">Đang tải lịch sử sao lưu...</p>
+      </div>
       </div>
     </section>
     </div>
@@ -1906,6 +1964,22 @@
       applyLiveActivityCollapsedState();
     }
 
+    
+    // Helper thu gọn / mở rộng các khối thẻ card quản trị
+    function toggleGenericCardSection(bodyId, btn) {
+      const body = document.getElementById(bodyId);
+      if (!body) return;
+      const isHidden = body.style.display === "none";
+      body.style.display = isHidden ? "" : "none";
+      if (btn) {
+        const icon = btn.querySelector(".card-toggle-icon");
+        const text = btn.querySelector(".card-toggle-text");
+        if (icon) icon.textContent = isHidden ? "▲" : "▼";
+        if (text) text.textContent = isHidden ? "Thu gọn" : "Mở rộng";
+        btn.setAttribute("title", isHidden ? "Thu gọn nội dung" : "Mở rộng xem chi tiết");
+      }
+    }
+
     function applyLiveActivityCollapsedState() {
       const body = document.getElementById("liveActivitySectionBody");
       const banner = document.getElementById("liveActivityCollapsedBanner");
@@ -2214,6 +2288,52 @@
       loadBackupArchiveList();
     }
     
+    
+    let userListLimit = 5;
+    function toggleUserListLimit() {
+      userListLimit = (userListLimit === -1) ? 5 : -1;
+      renderUserProfilesTable();
+    }
+
+    function renderUserProfilesTable() {
+      const userTableBody = document.getElementById("user-list-body");
+      const footer = document.getElementById("userListFooter");
+      if (!userTableBody) return;
+      const users = cachedUserProfiles || [];
+      if (!users.length) {
+        userTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa có tài khoản nào đăng ký.</td></tr>';
+        if (footer) footer.innerHTML = "";
+        return;
+      }
+      const displayList = (userListLimit > 0 && users.length > userListLimit) ? users.slice(0, userListLimit) : users;
+      userTableBody.innerHTML = displayList.map(user => `
+        <tr>
+          <td><strong>${escapeHtml(user.display_name || "—")}</strong></td>
+          <td>${escapeHtml(user.email || "—")}</td>
+          <td><code style="background:#eef2ed;padding:2px 6px;border-radius:4px;font-size:11px">${escapeHtml(user.register_ip || "Không xác định")}</code></td>
+          <td style="color:var(--muted)">${user.created_at ? new Date(user.created_at).toLocaleString("vi-VN") : "—"}</td>
+          <td><span class="tag">${escapeHtml(user.role || "student")}</span></td>
+        </tr>
+      `).join("");
+
+      if (footer) {
+        if (users.length > 5) {
+          footer.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+              <div style="font-size:12px;color:#64748b">
+                Đang hiển thị <strong>${displayList.length}</strong> / <strong>${users.length}</strong> tài khoản
+              </div>
+              <button type="button" class="btn-small" onclick="toggleUserListLimit()" style="font-weight:700">
+                ${userListLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${users.length - userListLimit} tài khoản khác ▾`}
+              </button>
+            </div>
+          `;
+        } else {
+          footer.innerHTML = "";
+        }
+      }
+    }
+
     async function loadUsersList() {
       const userTableBody = document.getElementById("user-list-body");
       if (!userTableBody) return;
@@ -2239,17 +2359,9 @@
             return;
           }
 
-          userTableBody.innerHTML = users.map(user => `
-            <tr>
-              <td><strong>${escapeHtml(user.display_name || "—")}</strong></td>
-              <td>${escapeHtml(user.email || "—")}</td>
-              <td><code style="background:#eef2ed;padding:2px 6px;border-radius:4px;font-size:11px">${escapeHtml(user.register_ip || "Không xác định")}</code></td>
-              <td style="color:var(--muted)">${user.created_at ? new Date(user.created_at).toLocaleString("vi-VN") : "—"}</td>
-              <td><span class="tag">${escapeHtml(user.role || "student")}</span></td>
-            </tr>
-          `).join("");
           cachedUserProfiles = users;
           updateRecipientDatalist(users);
+          renderUserProfilesTable();
           return;
         } catch (e) {
           console.warn("Lỗi khi kết nối lấy user_profiles:", e);
@@ -2573,6 +2685,21 @@
       renderScoreTable();
     }
 
+    
+    let scoreTableLimit = parseInt(localStorage.getItem("aicheck:admin_score_limit") || "5");
+    function setScoreTableLimit(limit) {
+      scoreTableLimit = limit;
+      localStorage.setItem("aicheck:admin_score_limit", limit);
+      renderScoreTable();
+    }
+    function toggleScoreTableLimit() {
+      if (scoreTableLimit === -1) {
+        setScoreTableLimit(5);
+      } else {
+        setScoreTableLimit(-1);
+      }
+    }
+
     function renderScoreTable() {
       const container = document.getElementById("scoreTableContainer");
       const headerBox = document.getElementById("scoreTabHeaderBox");
@@ -2704,6 +2831,7 @@
       }
 
       if (currentScoreTab === "exam") {
+        const displayScores = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
         container.innerHTML = `<table>
           <thead>
             <tr>
@@ -2722,7 +2850,7 @@
             </tr>
           </thead>
           <tbody>
-            ${tabScores.map((s, idx) => {
+            ${displayScores.map((s, idx) => {
               const attemptNum = s.attempt_number || 1;
               const statusBadge = s.passed
                 ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">ĐẠT</span>`
@@ -2760,7 +2888,17 @@
               </tr>`;
             }).join("")}
           </tbody>
-        </table>`;
+        </table>
+        ${tabScores.length > 5 ? `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+            <div style="font-size:12px;color:#64748b">
+              Đang hiển thị <strong>${displayScores.length}</strong> / <strong>${tabScores.length}</strong> lượt thi
+            </div>
+            <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
+              ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${tabScores.length - scoreTableLimit} lượt khác ▾`}
+            </button>
+          </div>
+        ` : ''}`;
       } else if (currentScoreTab === "assessment") {
         if (assessmentSubTab === "comparison") {
           // BẢNG ĐỐI SÁNH TRƯỚC VS SAU THEO TỪNG THÍ SINH (CHUẨN BÁO CÁO KHKT)
@@ -2778,6 +2916,7 @@
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có dữ liệu thí sinh nào trong đợt đánh giá này.</p>';
             return;
           }
+          const displayList = (scoreTableLimit > 0 && list.length > scoreTableLimit) ? list.slice(0, scoreTableLimit) : list;
 
           container.innerHTML = `<table>
             <thead>
@@ -2795,7 +2934,7 @@
               </tr>
             </thead>
             <tbody>
-              ${list.map((st, idx) => {
+              ${displayList.map((st, idx) => {
                 const pre = st.pre;
                 const post = st.post;
                 const times = getAssessmentTimestamps(st.name, pre, post);
@@ -2873,7 +3012,17 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>`;
+          </table>
+          ${list.length > 5 ? `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+              <div style="font-size:12px;color:#64748b">
+                Đang hiển thị <strong>${displayList.length}</strong> / <strong>${list.length}</strong> thí sinh đối sánh
+              </div>
+              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
+                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${list.length - scoreTableLimit} thí sinh khác ▾`}
+              </button>
+            </div>
+          ` : ''}`;
         } else if (assessmentSubTab === "pre") {
           // BẢNG ĐỢT 01: TRƯỚC CAN THIỆP
           const preList = tabScores.filter(s => s.phase === "pre");
@@ -2881,6 +3030,7 @@
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 01 (Trước can thiệp).</p>';
             return;
           }
+          const displayPre = (scoreTableLimit > 0 && preList.length > scoreTableLimit) ? preList.slice(0, scoreTableLimit) : preList;
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -2894,7 +3044,7 @@
               </tr>
             </thead>
             <tbody>
-              ${preList.map((s, idx) => {
+              ${displayPre.map((s, idx) => {
                 const score = Number(s.score || 0);
                 const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
                 const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -2916,7 +3066,17 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>`;
+          </table>
+          ${preList.length > 5 ? `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+              <div style="font-size:12px;color:#64748b">
+                Đang hiển thị <strong>${displayPre.length}</strong> / <strong>${preList.length}</strong> bản ghi Trước CT
+              </div>
+              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
+                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${preList.length - scoreTableLimit} bản ghi khác ▾`}
+              </button>
+            </div>
+          ` : ''}`;
         } else if (assessmentSubTab === "post") {
           // BẢNG ĐỢT 02: SAU CAN THIỆP
           const postList = tabScores.filter(s => s.phase === "post");
@@ -2924,6 +3084,7 @@
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 02 (Sau can thiệp).</p>';
             return;
           }
+          const displayPost = (scoreTableLimit > 0 && postList.length > scoreTableLimit) ? postList.slice(0, scoreTableLimit) : postList;
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -2937,7 +3098,7 @@
               </tr>
             </thead>
             <tbody>
-              ${postList.map((s, idx) => {
+              ${displayPost.map((s, idx) => {
                 const score = Number(s.score || 0);
                 const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
                 const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -2959,9 +3120,20 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>`;
+          </table>
+          ${postList.length > 5 ? `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+              <div style="font-size:12px;color:#64748b">
+                Đang hiển thị <strong>${displayPost.length}</strong> / <strong>${postList.length}</strong> bản ghi Sau CT
+              </div>
+              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
+                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${postList.length - scoreTableLimit} bản ghi khác ▾`}
+              </button>
+            </div>
+          ` : ''}`;
         } else {
           // TẤT CẢ LƯỢT ĐO
+          const displayAllAssess = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -2975,7 +3147,7 @@
               </tr>
             </thead>
             <tbody>
-              ${tabScores.map((s, idx) => {
+              ${displayAllAssess.map((s, idx) => {
                 const score = Number(s.score || 0);
                 const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
                 const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3002,10 +3174,21 @@
                 </tr>`;
               }).join("")}
             </tbody>
-          </table>`;
+          </table>
+          ${tabScores.length > 5 ? `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+              <div style="font-size:12px;color:#64748b">
+                Đang hiển thị <strong>${displayAllAssess.length}</strong> / <strong>${tabScores.length}</strong> lượt đo
+              </div>
+              <button type="button" class="btn-small" onclick="toggleScoreTableLimit()" style="font-weight:700">
+                ${scoreTableLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${tabScores.length - scoreTableLimit} lượt khác ▾`}
+              </button>
+            </div>
+          ` : ''}`;
         }
       } else if (currentScoreTab === "rubric" || currentScoreTab === "practice") {
         const actLabel = currentScoreTab === "rubric" ? "Thử thách Rubric" : "Luyện tình huống";
+        const displayTab = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
         container.innerHTML = `<table>
           <thead>
             <tr>
@@ -3018,7 +3201,7 @@
             </tr>
           </thead>
           <tbody>
-            ${tabScores.map((s, idx) => {
+            ${displayTab.map((s, idx) => {
               const score = Number(s.score || 0);
               const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
               const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3037,6 +3220,7 @@
         </table>`;
       } else {
         // Tab "all" (Tất cả hoạt động)
+        const displayAll = (scoreTableLimit > 0 && tabScores.length > scoreTableLimit) ? tabScores.slice(0, scoreTableLimit) : tabScores;
         container.innerHTML = `<table>
           <thead>
             <tr>
@@ -3050,7 +3234,7 @@
             </tr>
           </thead>
           <tbody>
-            ${tabScores.map((s, idx) => {
+            ${displayAll.map((s, idx) => {
               const score = Number(s.score || 0);
               const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
               const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -3468,7 +3652,17 @@
             `;
           }).join("")}
         </tbody>
-      </table>`;
+      </table>
+      ${archive.length > 5 ? `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+          <div style="font-size:12px;color:#64748b">
+            Đang hiển thị <strong>${displayArchive.length}</strong> / <strong>${archive.length}</strong> bản sao lưu
+          </div>
+          <button type="button" class="btn-small" onclick="toggleBackupArchiveLimit()" style="font-weight:700">
+            ${backupArchiveLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${archive.length - backupArchiveLimit} bản lưu khác ▾`}
+          </button>
+        </div>
+      ` : ''}`;
     }
 
     async function loadSupportRequests() {
@@ -3866,6 +4060,13 @@
       }
     }
 
+    
+    let backupArchiveLimit = 5;
+    function toggleBackupArchiveLimit() {
+      backupArchiveLimit = (backupArchiveLimit === -1) ? 5 : -1;
+      loadBackupArchiveList();
+    }
+
     function loadBackupArchiveList() {
       const container = document.getElementById("backupArchiveContainer");
       if (!container) return;
@@ -3876,6 +4077,7 @@
         return;
       }
 
+      const displayArchive = (backupArchiveLimit > 0 && archive.length > backupArchiveLimit) ? archive.slice(0, backupArchiveLimit) : archive;
       container.innerHTML = `<table>
         <thead>
           <tr>
@@ -3887,7 +4089,7 @@
           </tr>
         </thead>
         <tbody>
-          ${archive.map(b => {
+          ${displayArchive.map(b => {
             const timeStr = b.created_at ? new Date(b.created_at).toLocaleString("vi-VN") : "—";
             const kbSize = b.size_bytes ? (b.size_bytes / 1024).toFixed(1) + " KB" : "—";
             return `
@@ -4694,6 +4896,13 @@
     }
 
     // --- BẢNG LỊCH SỬ THI & GIÁM SÁT VI PHẠM ---
+    
+    let examResultsLimit = 5;
+    function toggleExamResultsLimit() {
+      examResultsLimit = (examResultsLimit === -1) ? 5 : -1;
+      loadExamResultsTable();
+    }
+
     function loadExamResultsTable() {
       const container = document.getElementById("examResultsTableContainer");
       if (!container || !window.AICheckExamStore) return;
@@ -4704,6 +4913,7 @@
         return;
       }
 
+      const displayResults = (examResultsLimit > 0 && results.length > examResultsLimit) ? results.slice(0, examResultsLimit) : results;
       container.innerHTML = `
         <table>
           <thead>
@@ -4721,7 +4931,7 @@
             </tr>
           </thead>
           <tbody>
-            ${results.map((r, idx) => {
+            ${displayResults.map((r, idx) => {
               const violCount = r.violationsCount || 0;
               const violBadge = violCount === 0
                 ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
@@ -4764,6 +4974,16 @@
             }).join("")}
           </tbody>
         </table>
+        ${results.length > 5 ? `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+            <div style="font-size:12px;color:#64748b">
+              Đang hiển thị <strong>${displayResults.length}</strong> / <strong>${results.length}</strong> lượt thi
+            </div>
+            <button type="button" class="btn-small" onclick="toggleExamResultsLimit()" style="font-weight:700">
+              ${examResultsLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${results.length - examResultsLimit} lượt khác ▾`}
+            </button>
+          </div>
+        ` : ''}
       `;
     }
 
@@ -4890,6 +5110,13 @@
       if (elRate) elRate.textContent = `${rate}%`;
     }
 
+    
+    let examStudentsLimit = 5;
+    function toggleExamStudentsLimit() {
+      examStudentsLimit = (examStudentsLimit === -1) ? 5 : -1;
+      renderExamStudentsTable();
+    }
+
     function renderExamStudentsTable() {
       const container = document.getElementById("examStudentsTableContainer");
       if (!container) return;
@@ -4925,6 +5152,7 @@
         return;
       }
 
+      const displayFiltered = (examStudentsLimit > 0 && filtered.length > examStudentsLimit) ? filtered.slice(0, examStudentsLimit) : filtered;
       container.innerHTML = `
         <table>
           <thead>
@@ -4942,7 +5170,7 @@
             </tr>
           </thead>
           <tbody>
-            ${filtered.map((r, idx) => {
+            ${displayFiltered.map((r, idx) => {
               const attemptNum = r.attemptNumber || 1;
               const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
               const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
@@ -4991,6 +5219,16 @@
             }).join("")}
           </tbody>
         </table>
+        ${filtered.length > 5 ? `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+            <div style="font-size:12px;color:#64748b">
+              Đang hiển thị <strong>${displayFiltered.length}</strong> / <strong>${filtered.length}</strong> thí sinh
+            </div>
+            <button type="button" class="btn-small" onclick="toggleExamStudentsLimit()" style="font-weight:700">
+              ${examStudentsLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${filtered.length - examStudentsLimit} thí sinh khác ▾`}
+            </button>
+          </div>
+        ` : ''}
       `;
     }
 
@@ -5100,6 +5338,13 @@
       }
     }
 
+    
+    let adminCodesLimit = 5;
+    function toggleAdminCodesLimit() {
+      adminCodesLimit = (adminCodesLimit === -1) ? 5 : -1;
+      loadAdminCodesTable();
+    }
+
     function loadAdminCodesTable() {
       const container = document.getElementById("adminCodesTableContainer");
       if (!container) return;
@@ -5110,6 +5355,7 @@
         return;
       }
 
+      const displayCodes = (adminCodesLimit > 0 && codes.length > adminCodesLimit) ? codes.slice(0, adminCodesLimit) : codes;
       container.innerHTML = `
         <table>
           <thead>
@@ -5124,7 +5370,7 @@
             </tr>
           </thead>
           <tbody>
-            ${codes.map((c, idx) => {
+            ${displayCodes.map((c, idx) => {
               const codeMaskId = `mask-code-${c.id}`;
               const isProt = (c.id === "code_master_thd");
               const recipientDisplay = c.recipient || (c.id === "code_adminthd" ? "adminthd" : "Tất cả / Hệ thống");
@@ -5166,6 +5412,16 @@
             }).join("")}
           </tbody>
         </table>
+        ${codes.length > 5 ? `
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#f8fafc;border-top:1px solid #e2e8f0;border-radius:0 0 8px 8px;flex-wrap:wrap;gap:8px">
+            <div style="font-size:12px;color:#64748b">
+              Đang hiển thị <strong>${displayCodes.length}</strong> / <strong>${codes.length}</strong> mã admin
+            </div>
+            <button type="button" class="btn-small" onclick="toggleAdminCodesLimit()" style="font-weight:700">
+              ${adminCodesLimit === -1 ? '▲ Thu gọn lại (Chỉ hiện 5)' : `👁️ Xem thêm ${codes.length - adminCodesLimit} mã khác ▾`}
+            </button>
+          </div>
+        ` : ''}
       `;
     }
 
