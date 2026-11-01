@@ -2775,6 +2775,7 @@
     function saveAdminAnnouncementsList(list) {
       try {
         localStorage.setItem(ANNOUNCEMENTS_STORAGE_KEY, JSON.stringify(list));
+        localStorage.setItem("aicheck:admin_announcements", JSON.stringify(list));
         if (window.AICheckCloud?.updateCloudSharedData) {
           window.AICheckCloud.updateCloudSharedData(d => {
             d.announcements = list;

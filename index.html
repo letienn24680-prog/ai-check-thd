@@ -88,14 +88,14 @@
     </div>
   </header>
 
-  <!-- THANH THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TỰ ĐỘNG TỪ TRÁI SANG PHẢI (CHUẨN 60 FPS) -->
+  <!-- THANH THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TỰ ĐỘNG TỪ TRÁI SANG PHẢI (MƯỢT MÀ 60 FPS, KHÔNG CHỚP, KHÔNG RỖNG) -->
   <style id="slidingAnnouncementStyles">
     @keyframes smoothSlideLeftToRight {
       0% {
-        transform: translateX(-100%);
+        transform: translate3d(-50%, 0, 0);
       }
       100% {
-        transform: translateX(100vw);
+        transform: translate3d(0%, 0, 0);
       }
     }
 
@@ -110,6 +110,7 @@
       z-index: 100;
       display: flex;
       align-items: center;
+      contain: paint;
     }
 
     .sliding-fixed-badge {
@@ -147,28 +148,45 @@
       50% { transform: scale(1.3); opacity: 1; }
     }
 
-    .sliding-track {
+    .sliding-track-wrapper {
       position: absolute;
+      left: 0;
+      right: 0;
       top: 0;
       bottom: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      mask-image: linear-gradient(to right, transparent, black 160px, black calc(100% - 60px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 160px, black calc(100% - 60px), transparent 100%);
+    }
+
+    .sliding-track {
       display: flex;
       align-items: center;
       white-space: nowrap;
+      width: max-content;
       will-change: transform;
       user-select: none;
-      /* TRƯỢT TỪ TỪ, ÊM Ả TỪ TRÁI QUA PHẢI (TỐC ĐỘ ĐỌC TỰ NHIÊN, DỄ CHỊU) */
-      animation: smoothSlideLeftToRight 40s linear infinite;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform: translate3d(-50%, 0, 0);
+      /* TRƯỢT TỪ TỪ, ÊM Ả TỪ TRÁI QUA PHẢI (35 GIÂY CHO 1 VÒNG MƯỢT MÀ) */
+      animation: smoothSlideLeftToRight 35s linear infinite;
     }
 
-    @media (max-width: 768px) {
-      .sliding-track {
-        animation-duration: 25s;
-      }
+    .sliding-group {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding-right: 24px;
+      flex-shrink: 0;
     }
 
     /* RÊ CHUỘT HOẶC CHẠM VÀO LÀ DỪNG LẠI NGAY ĐỂ ĐỌC VÀ BẤM */
     .sliding-announcement-bar:hover .sliding-track,
-    .sliding-track:hover {
+    .sliding-track:hover,
+    .sliding-track:active {
       animation-play-state: paused !important;
     }
 
@@ -177,7 +195,7 @@
       align-items: center;
       gap: 12px;
       background: rgba(255, 255, 255, 0.08);
-      padding: 5px 18px 5px 14px;
+      padding: 5px 16px;
       border-radius: 24px;
       border: 1px solid rgba(190, 242, 100, 0.35);
       backdrop-filter: blur(4px);
@@ -185,20 +203,61 @@
     }
 
     .sliding-content-box:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(190, 242, 100, 0.7);
-      box-shadow: 0 0 14px rgba(190, 242, 100, 0.25);
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(190, 242, 100, 0.8);
+      box-shadow: 0 0 14px rgba(190, 242, 100, 0.3);
     }
 
-    .sliding-timer-hint {
+    .topPreBarTag {
+      background: rgba(190, 242, 100, 0.18);
+      color: #bef264;
+      border: 1px solid rgba(190, 242, 100, 0.4);
+      font-weight: 800;
       font-size: 11px;
-      color: #94a3b8;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 2px 8px;
-      border-radius: 12px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .tag-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #bef264;
+      box-shadow: 0 0 6px #bef264;
+    }
+
+    .topPreBarText {
+      font-size: 13px;
+      color: #f0fdf4;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .topPreBarBtn {
+      min-height: 28px;
+      padding: 3px 14px;
+      font-weight: 700;
+      font-size: 12px;
+      border-radius: 20px;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .sliding-separator {
+      color: rgba(190, 242, 100, 0.55);
+      font-size: 11px;
+      user-select: none;
     }
 
     .sliding-controls {
@@ -234,8 +293,29 @@
       .sliding-fixed-badge {
         display: none;
       }
-      .sliding-timer-hint {
-        display: none;
+      .sliding-track-wrapper {
+        mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 40px), transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 40px), transparent 100%);
+      }
+      .sliding-group {
+        gap: 16px;
+        padding-right: 16px;
+      }
+      .sliding-content-box {
+        padding: 4px 10px;
+        gap: 8px;
+      }
+      .topPreBarTag {
+        font-size: 10px;
+        padding: 2px 8px;
+      }
+      .topPreBarText {
+        font-size: 12px;
+      }
+      .topPreBarBtn {
+        font-size: 11px;
+        padding: 2px 10px;
+        min-height: 24px;
       }
     }
   </style>
@@ -247,21 +327,64 @@
       <span class="sliding-badge-text" id="slidingBadgeTitle">BẢN TIN BẮT BUỘC</span>
     </div>
 
-    <!-- Vùng trượt lướt tự động mượt mà từ trái qua phải liên tục -->
-    <div class="sliding-track" id="slidingAnnouncementTrack" ontouchstart="this.style.animationPlayState='paused'" ontouchend="this.style.animationPlayState='running'">
-      <div class="sliding-content-box" id="slidingAnnouncementContent">
-        <span class="tag" id="topPreBarTag" style="background:rgba(190,242,100,0.18);color:#bef264;border:1px solid rgba(190,242,100,0.4);font-weight:800;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px">
-          ĐỢT 1 · KHẢO SÁT BAN ĐẦU
-        </span>
-        <span style="font-size:13px;color:#f0fdf4;font-weight:500" id="topPreBarText">
-          Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!
-        </span>
-        <a href="pages/assessment.html?phase=pre" id="topPreBarBtn" class="button button-lime" style="min-height:28px;padding:3px 14px;font-weight:700;font-size:12px;border-radius:20px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:inline-flex;align-items:center;gap:4px">
-          Làm bài ngay →
-        </a>
-        <span class="sliding-timer-hint" id="slidingTimerHint" title="Rê chuột để dừng lại đọc hoặc nhấn vào nút để xem">
-          ⏸️ Rê chuột để giữ lại
-        </span>
+    <!-- Vùng trượt lướt tự động mượt mà từ trái qua phải liên tục (Dual-group seamless loop) -->
+    <div class="sliding-track-wrapper">
+      <div class="sliding-track" id="slidingAnnouncementTrack" ontouchstart="this.style.animationPlayState='paused'" ontouchend="this.style.animationPlayState='running'">
+        <!-- Nhóm 1: Chu kỳ chính -->
+        <div class="sliding-group">
+          <div class="sliding-content-box">
+            <span class="tag topPreBarTag" id="topPreBarTag">
+              <span class="tag-dot"></span> ĐỢT 1 · KHẢO SÁT BAN ĐẦU
+            </span>
+            <span class="topPreBarText" id="topPreBarText">
+              Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!
+            </span>
+            <a href="pages/assessment.html?phase=pre" id="topPreBarBtn" class="button button-lime topPreBarBtn">
+              Làm bài ngay →
+            </a>
+          </div>
+          <span class="sliding-separator" aria-hidden="true">✦</span>
+          <div class="sliding-content-box">
+            <span class="tag topPreBarTag">
+              <span class="tag-dot"></span> ĐỢT 1 · KHẢO SÁT BAN ĐẦU
+            </span>
+            <span class="topPreBarText">
+              Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!
+            </span>
+            <a href="pages/assessment.html?phase=pre" class="button button-lime topPreBarBtn">
+              Làm bài ngay →
+            </a>
+          </div>
+          <span class="sliding-separator" aria-hidden="true">✦</span>
+        </div>
+
+        <!-- Nhóm 2: Clone giống hệt 100% để đảm bảo chuyển tiếp không giật, không chớp, không rỗng -->
+        <div class="sliding-group" aria-hidden="true">
+          <div class="sliding-content-box">
+            <span class="tag topPreBarTag">
+              <span class="tag-dot"></span> ĐỢT 1 · KHẢO SÁT BAN ĐẦU
+            </span>
+            <span class="topPreBarText">
+              Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!
+            </span>
+            <a href="pages/assessment.html?phase=pre" class="button button-lime topPreBarBtn">
+              Làm bài ngay →
+            </a>
+          </div>
+          <span class="sliding-separator" aria-hidden="true">✦</span>
+          <div class="sliding-content-box">
+            <span class="tag topPreBarTag">
+              <span class="tag-dot"></span> ĐỢT 1 · KHẢO SÁT BAN ĐẦU
+            </span>
+            <span class="topPreBarText">
+              Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!
+            </span>
+            <a href="pages/assessment.html?phase=pre" class="button button-lime topPreBarBtn">
+              Làm bài ngay →
+            </a>
+          </div>
+          <span class="sliding-separator" aria-hidden="true">✦</span>
+        </div>
       </div>
     </div>
 
@@ -567,50 +690,96 @@
       updateTopPreBarState();
     }
 
-    // Tự động đồng bộ nội dung thông báo trên thanh trượt
+    // Tự động đồng bộ nội dung thông báo trên toàn bộ các nhóm trượt
     function updateTopPreBarState() {
       const bar = document.getElementById("topPreInterventionBar");
-      const tag = document.getElementById("topPreBarTag");
-      const text = document.getElementById("topPreBarText");
-      const btn = document.getElementById("topPreBarBtn");
+      if (!bar) return;
+      const tags = bar.querySelectorAll(".topPreBarTag");
+      const texts = bar.querySelectorAll(".topPreBarText");
+      const btns = bar.querySelectorAll(".topPreBarBtn");
       const badgeTitle = document.getElementById("slidingBadgeTitle");
-      if (!bar || !text || !btn) return;
+      if (!tags.length || !texts.length || !btns.length) return;
+
+      function applyBarContent(tagHtml, textHtml, btnText, btnHref, badgeText, tagStyle) {
+        if (badgeTitle && badgeText) badgeTitle.textContent = badgeText;
+        tags.forEach(t => {
+          t.innerHTML = tagHtml;
+          if (tagStyle) Object.assign(t.style, tagStyle);
+        });
+        texts.forEach(t => {
+          t.innerHTML = textHtml;
+        });
+        btns.forEach(b => {
+          b.textContent = btnText;
+          b.href = btnHref;
+        });
+      }
 
       // 1. Kiểm tra thông báo Admin tùy chỉnh đang phát (Active Broadcast)
+      let activeAnn = null;
       if (window.AICheckAnnouncement && typeof window.AICheckAnnouncement.getActiveAnnouncement === "function") {
-        const activeAnn = window.AICheckAnnouncement.getActiveAnnouncement();
-        if (activeAnn && activeAnn.status === "active") {
-          if (badgeTitle) badgeTitle.textContent = "BẢN TIN TRỰC TUYẾN";
-          if (tag) {
-            tag.textContent = activeAnn.tag || "THÔNG BÁO BẮT BUỘC";
-            tag.style.background = "rgba(190,242,100,0.22)";
-            tag.style.color = "#bef264";
+        activeAnn = window.AICheckAnnouncement.getActiveAnnouncement();
+      }
+      if (!activeAnn) {
+        try {
+          const raw = localStorage.getItem("aicheck:system_announcements") || localStorage.getItem("aicheck:admin_announcements");
+          if (raw) {
+            const list = JSON.parse(raw);
+            if (Array.isArray(list)) activeAnn = list.find(a => a.status === "active") || null;
           }
-          text.innerHTML = `<strong>${activeAnn.title ? activeAnn.title + ': ' : ''}</strong>${activeAnn.message || ''}`;
-          btn.textContent = activeAnn.actionText || "Xem ngay →";
-          btn.href = activeAnn.actionUrl || "pages/assessment.html";
-          return;
-        }
+        } catch {}
+      }
+      if (!activeAnn && window.AICheckCloud && typeof window.AICheckCloud.getSharedData === "function") {
+        try {
+          const cData = window.AICheckCloud.getSharedData();
+          if (Array.isArray(cData?.announcements)) {
+            activeAnn = cData.announcements.find(a => a.status === "active") || null;
+          }
+        } catch {}
+      }
+
+      if (activeAnn && activeAnn.status === "active") {
+        const badgeTitleText = "BẢN TIN TRỰC TUYẾN";
+        const tagText = activeAnn.badge || activeAnn.tag || "THÔNG BÁO BẮT BUỘC";
+        const msgText = activeAnn.text || activeAnn.message || (activeAnn.title ? `<strong>${activeAnn.title}:</strong> ` : "");
+        const btnText = activeAnn.btnText || activeAnn.actionText || "Xem ngay →";
+        const btnUrl = activeAnn.btnUrl || activeAnn.actionUrl || "pages/assessment.html";
+
+        applyBarContent(
+          `<span class="tag-dot"></span> ${tagText}`,
+          msgText,
+          btnText,
+          btnUrl,
+          badgeTitleText,
+          { background: "rgba(190,242,100,0.22)", color: "#bef264" }
+        );
+        return;
       }
 
       // 2. Mặc định: Hiển thị tiến trình khoa học KHKT của học sinh
-
       let preScore = null;
       let postScore = null;
       try { preScore = JSON.parse(localStorage.getItem("aicheck:assessment_pre_score")); } catch {}
       try { postScore = JSON.parse(localStorage.getItem("aicheck:assessment_post_score")); } catch {}
-      let practiceCompleted = localStorage.getItem("aicheck:practice_completed") === "true";
 
       if (preScore === null) {
-        if (tag) tag.innerHTML = '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#bef264;box-shadow:0 0 6px #bef264"></span> ĐỢT 1 · KHẢO SÁT BAN ĐẦU';
-        text.innerHTML = 'Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!';
-        btn.textContent = 'Làm bài ngay →';
-        btn.href = 'pages/assessment.html?phase=pre';
+        applyBarContent(
+          '<span class="tag-dot"></span> ĐỢT 1 · KHẢO SÁT BAN ĐẦU',
+          'Hoàn thành bài đo <strong>Trước can thiệp</strong> để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!',
+          'Làm bài ngay →',
+          'pages/assessment.html?phase=pre',
+          'BẢN TIN BẮT BUỘC',
+          { background: "rgba(190,242,100,0.18)", color: "#bef264" }
+        );
       } else if (postScore !== null) {
-        if (tag) tag.innerHTML = '🎉 ĐÃ HOÀN THÀNH 2 ĐỢT';
-        text.innerHTML = `Bạn đã hoàn thành trọn vẹn 2 đợt đo: Đợt 1 (<strong>${preScore} đ</strong>) ➔ Đợt 2 (<strong>${postScore} đ</strong>)!`;
-        btn.textContent = 'Xem báo cáo KHKT →';
-        btn.href = 'pages/research.html';
+        applyBarContent(
+          '🎉 ĐÃ HOÀN THÀNH 2 ĐỢT',
+          `Bạn đã hoàn thành trọn vẹn 2 đợt đo: Đợt 1 (<strong>${preScore} đ</strong>) ➔ Đợt 2 (<strong>${postScore} đ</strong>)!`,
+          'Xem báo cáo KHKT →',
+          'pages/research.html',
+          'BẢN TIN BẮT BUỘC',
+          { background: "rgba(190,242,100,0.25)", color: "#bef264" }
+        );
       } else {
         // Kiểm tra điều kiện mở khóa đợt 2: sau 3 ngày hoặc hoàn thành 60 câu thực hành
         let totalQuestions = 0;
@@ -630,15 +799,23 @@
         const isUnlocked = count >= 60 || hoursPassed >= 72 || localStorage.getItem("aicheck:bypass_post_interval") === "true";
 
         if (isUnlocked) {
-          if (tag) tag.innerHTML = '🎯 ĐÃ MỞ KHÓA ĐỢT 2';
-          text.innerHTML = `Bạn đã đủ điều kiện! Hãy tiến hành làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong> ngay.`;
-          btn.textContent = 'Đo Sau can thiệp →';
-          btn.href = 'pages/assessment.html?phase=post';
+          applyBarContent(
+            '🎯 ĐÃ MỞ KHÓA ĐỢT 2',
+            `Bạn đã đủ điều kiện! Hãy tiến hành làm bài <strong>Đo Sau can thiệp (Đợt 02)</strong> ngay.`,
+            'Đo Sau can thiệp →',
+            'pages/assessment.html?phase=post',
+            'BẢN TIN BẮT BUỘC',
+            { background: "rgba(250,204,21,0.22)", color: "#facc15" }
+          );
         } else {
-          if (tag) tag.innerHTML = '⏱️ BƯỚC 2: RÈN LUYỆN SƯ PHẠM';
-          text.innerHTML = `Đã ghi nhận Đợt 01 (<strong>${preScore} đ</strong>). Hãy hoàn thành <strong>60 câu thực hành</strong> (đã làm: ${count}/60) hoặc sau <strong>3 ngày</strong> để mở Đợt 02!`;
-          btn.textContent = 'Vào Thực hành →';
-          btn.href = 'pages/practice.html?from=assessment_pre';
+          applyBarContent(
+            '⏱️ BƯỚC 2: RÈN LUYỆN SƯ PHẠM',
+            `Đã ghi nhận Đợt 01 (<strong>${preScore} đ</strong>). Hãy hoàn thành <strong>60 câu thực hành</strong> (đã làm: ${count}/60) hoặc sau <strong>3 ngày</strong> để mở Đợt 02!`,
+            'Vào Thực hành →',
+            'pages/practice.html?from=assessment_pre',
+            'BẢN TIN BẮT BUỘC',
+            { background: "rgba(147,197,253,0.22)", color: "#93c5fd" }
+          );
         }
       }
     }
