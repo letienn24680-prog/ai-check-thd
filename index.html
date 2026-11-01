@@ -156,8 +156,14 @@
       white-space: nowrap;
       will-change: transform;
       user-select: none;
-      /* TRƯỢT TỰ ĐỘNG TỪ TRÁI QUA PHẢI TRONG VÒNG 7 GIÂY (CHUẨN 60 FPS) */
-      animation: smoothSlideLeftToRight 7s linear infinite;
+      /* TRƯỢT TỪ TỪ, ÊM Ả TỪ TRÁI QUA PHẢI (TỐC ĐỘ ĐỌC TỰ NHIÊN, DỄ CHỊU) */
+      animation: smoothSlideLeftToRight 40s linear infinite;
+    }
+
+    @media (max-width: 768px) {
+      .sliding-track {
+        animation-duration: 25s;
+      }
     }
 
     /* RÊ CHUỘT HOẶC CHẠM VÀO LÀ DỪNG LẠI NGAY ĐỂ ĐỌC VÀ BẤM */
