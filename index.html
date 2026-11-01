@@ -88,29 +88,14 @@
     </div>
   </header>
 
-  <!-- THANH THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TỰ ĐỘNG (LƯỚT TRÁI QUA PHẢI + NGHỈ 1 PHÚT) -->
+  <!-- THANH THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TỰ ĐỘNG TỪ TRÁI SANG PHẢI (CHUẨN 60 FPS) -->
   <style id="slidingAnnouncementStyles">
-    @keyframes autoGlideAcross {
+    @keyframes smoothSlideLeftToRight {
       0% {
         transform: translateX(-100%);
-        opacity: 0.9;
       }
-      0.5% {
-        opacity: 1;
-      }
-      /* Lướt mượt mà từ trái qua phải trong 18 giây (23% của 78s) */
-      23% {
-        transform: translateX(100vw);
-        opacity: 1;
-      }
-      23.01% {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-      /* Nghỉ đúng 60 giây (1 phút) trước khi tự động lướt lại */
       100% {
-        transform: translateX(-100%);
-        opacity: 0;
+        transform: translateX(100vw);
       }
     }
 
@@ -170,13 +155,12 @@
       align-items: center;
       white-space: nowrap;
       will-change: transform;
-      padding-left: 170px;
       user-select: none;
-      /* TỰ ĐỘNG CHẠY NGAY LẬP TỨC 100% BẰNG CSS, KHÔNG CẦN BẤM */
-      animation: autoGlideAcross 78s linear infinite;
+      /* TRƯỢT TỰ ĐỘNG TỪ TRÁI QUA PHẢI MƯỢT MÀ, KHÔNG BỊ CHỚP, KHÔNG BỊ BIẾN MẤT */
+      animation: smoothSlideLeftToRight 22s linear infinite;
     }
 
-    /* RÊ CHUỘT VÀO LÀ DỪNG LẠI NGAY ĐỂ ĐỌC VÀ BẤM */
+    /* RÊ CHUỘT HOẶC CHẠM VÀO LÀ DỪNG LẠI NGAY ĐỂ ĐỌC VÀ BẤM */
     .sliding-announcement-bar:hover .sliding-track,
     .sliding-track:hover {
       animation-play-state: paused !important;
@@ -186,18 +170,18 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.06);
-      padding: 5px 16px 5px 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 5px 18px 5px 14px;
       border-radius: 24px;
-      border: 1px solid rgba(190, 242, 100, 0.28);
+      border: 1px solid rgba(190, 242, 100, 0.35);
       backdrop-filter: blur(4px);
       transition: all 0.25s ease;
     }
 
     .sliding-content-box:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(190, 242, 100, 0.6);
-      box-shadow: 0 0 12px rgba(190, 242, 100, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(190, 242, 100, 0.7);
+      box-shadow: 0 0 14px rgba(190, 242, 100, 0.25);
     }
 
     .sliding-timer-hint {
@@ -244,9 +228,6 @@
       .sliding-fixed-badge {
         display: none;
       }
-      .sliding-track {
-        padding-left: 10px;
-      }
       .sliding-timer-hint {
         display: none;
       }
@@ -260,7 +241,7 @@
       <span class="sliding-badge-text" id="slidingBadgeTitle">BẢN TIN BẮT BUỘC</span>
     </div>
 
-    <!-- Vùng trượt lướt tự động từ trái qua phải -->
+    <!-- Vùng trượt lướt tự động mượt mà từ trái qua phải liên tục -->
     <div class="sliding-track" id="slidingAnnouncementTrack" ontouchstart="this.style.animationPlayState='paused'" ontouchend="this.style.animationPlayState='running'">
       <div class="sliding-content-box" id="slidingAnnouncementContent">
         <span class="tag" id="topPreBarTag" style="background:rgba(190,242,100,0.18);color:#bef264;border:1px solid rgba(190,242,100,0.4);font-weight:800;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px">
@@ -273,12 +254,12 @@
           Làm bài ngay →
         </a>
         <span class="sliding-timer-hint" id="slidingTimerHint" title="Rê chuột để dừng lại đọc hoặc nhấn vào nút để xem">
-          ⏸️ Rê chuột để giữ lại · ⏳ Tự lặp sau 1 phút
+          ⏸️ Rê chuột để giữ lại
         </span>
       </div>
     </div>
 
-    <!-- Phím điều khiển cố định bên phải (chỉ còn nút đóng ✕, không còn nút lướt lại) -->
+    <!-- Phím điều khiển cố định bên phải -->
     <div class="sliding-controls">
       <button type="button" class="btn-sliding-close" onclick="document.getElementById('topPreInterventionBar').style.display='none'" title="Ẩn thanh thông báo">✕</button>
     </div>
