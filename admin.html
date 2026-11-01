@@ -1671,24 +1671,18 @@
             <label style="display:block;font-size:11px;font-weight:700;color:var(--forest);margin-bottom:4px">
               3. GMAIL / TÀI KHOẢN NHẬN MÃ (TRÊN WEB):
             </label>
-            <input type="text" id="newAdminCodeRecipient" list="adminRecipientDatalist" class="filter-input" placeholder="Chọn hoặc nhập Gmail (VD: vuongquan24680@gmail.com, giaovien1)..." style="width:100%">
-            <datalist id="adminRecipientDatalist">
-              <option value="giaovien1">Tài khoản Giáo viên (giaovien1)</option>
-              <option value="adminthd">Tài khoản Quản trị THĐ (adminthd)</option>
-              <option value="all">Tất cả tài khoản hệ thống (all)</option>
-            </datalist>
+            <div id="recipientInputWrapper" style="position:relative">
+              <input type="text" id="newAdminCodeRecipient" list="adminRecipientDatalist" class="filter-input" placeholder="Nhập Gmail hoặc tài khoản (tự đề xuất khi gõ)..." style="width:100%" autocomplete="off" oninput="handleRecipientInput(this.value)" onfocus="handleRecipientInput(this.value)">
+              <datalist id="adminRecipientDatalist">
+                <option value="giaovien1">Tài khoản Giáo viên (giaovien1)</option>
+                <option value="adminthd">Tài khoản Quản trị THĐ (adminthd)</option>
+                <option value="all">Tất cả tài khoản hệ thống (all)</option>
+              </datalist>
+              <!-- Dropdown gợi ý tự động khi gõ trùng ký tự -->
+              <div id="recipientSuggestionsDropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:1000;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;box-shadow:0 10px 25px rgba(0,0,0,0.15);max-height:220px;overflow-y:auto"></div>
+            </div>
             <small style="display:block;color:#64748b;font-size:10px;margin-top:3px">Hệ thống sẽ gửi thông báo kèm liên kết vào hòm thư của Gmail này</small>
           </div>
-        </div>
-
-        <!-- DANH SÁCH GMAIL CHỌN NHANH (QUICK CHIPS - CHỈ HIỆN GMAIL) -->
-        <div style="margin-bottom:12px;background:#ffffff;border:1px dashed #cbd5e1;border-radius:6px;padding:8px 10px;font-size:11px">
-          <span style="font-weight:700;color:var(--forest);margin-right:6px">Chọn nhanh tài khoản:</span>
-          <span id="adminRecipientQuickChips" style="display:inline-flex;flex-wrap:wrap;gap:6px;margin-top:4px;vertical-align:middle">
-            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('giaovien1')">giaovien1</button>
-            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('adminthd')">adminthd</button>
-            <button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" onclick="selectRecipientChip('all')">Tất cả (all)</button>
-          </span>
         </div>
 
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:6px">
@@ -5959,12 +5953,12 @@
     // QUẢN LÝ CẤP MÃ ADMIN & QUYỀN TRUY CẬP QUẢN TRỊ
     // =========================================================================
     let userEmailToNameMap = {};
+    let allRecipientEmailsList = ["giaovien1", "adminthd", "all"];
 
     function selectRecipientChip(acc) {
       const input = document.getElementById("newAdminCodeRecipient");
       if (input) {
         input.value = acc;
-        input.focus();
       }
       // Tự động điền họ tên học sinh vào ô Ghi chú (nếu ô ghi chú còn trống)
       const labelInput = document.getElementById("newAdminCodeLabel");
@@ -5972,14 +5966,80 @@
       if (labelInput && !labelInput.value.trim() && knownName) {
         labelInput.value = knownName;
       }
+      hideRecipientSuggestions();
     }
+
+    function hideRecipientSuggestions() {
+      const dd = document.getElementById("recipientSuggestionsDropdown");
+      if (dd) dd.style.display = "none";
+    }
+
+    function handleRecipientInput(query) {
+      const dd = document.getElementById("recipientSuggestionsDropdown");
+      if (!dd) return;
+      const q = String(query || "").trim().toLowerCase();
+      if (!q) {
+        dd.style.display = "none";
+        dd.innerHTML = "";
+        return;
+      }
+
+      // Lọc các email / tài khoản có ký tự trùng khớp
+      const matches = allRecipientEmailsList.filter(item => {
+        const itemLow = item.toLowerCase();
+        const nameLow = (userEmailToNameMap[itemLow] || "").toLowerCase();
+        return itemLow.includes(q) || nameLow.includes(q);
+      });
+
+      if (!matches.length) {
+        dd.style.display = "none";
+        dd.innerHTML = "";
+        return;
+      }
+
+      // Render danh sách gợi ý tự động (tối đa 8 kết quả phù hợp nhất)
+      dd.innerHTML = matches.slice(0, 8).map(item => {
+        const isEmail = item.includes("@");
+        const icon = item === "adminthd" ? "🛡️" : item === "all" ? "📢" : isEmail ? "📧" : "👨‍🏫";
+        const knownName = userEmailToNameMap[item.toLowerCase()];
+
+        // Highlight ký tự trùng khớp
+        const idx = item.toLowerCase().indexOf(q);
+        let highlightedItem = escapeHtml(item);
+        if (idx !== -1) {
+          const before = escapeHtml(item.slice(0, idx));
+          const match = escapeHtml(item.slice(idx, idx + q.length));
+          const after = escapeHtml(item.slice(idx + q.length));
+          highlightedItem = `${before}<span style="color:#047857;background:#dcfce7;font-weight:800;border-radius:2px;padding:0 2px">${match}</span>${after}`;
+        }
+
+        return `
+          <div class="recipient-suggestion-item" onmousedown="selectRecipientChip('${escapeHtml(item)}')" onclick="selectRecipientChip('${escapeHtml(item)}')" style="padding:8px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;transition:background 0.15s" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='#ffffff'">
+            <div style="display:flex;align-items:center;gap:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+              <span>${icon}</span>
+              <span style="font-family:monospace;color:#1e293b;font-weight:600">${highlightedItem}</span>
+            </div>
+            ${knownName ? `<span style="font-size:11px;color:#047857;background:#f0fdf4;border:1px solid #bbf7d0;padding:2px 8px;border-radius:12px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;font-weight:600">${escapeHtml(knownName)}</span>` : ""}
+          </div>
+        `;
+      }).join("");
+
+      dd.style.display = "block";
+    }
+
+    // Đóng dropdown khi click ra ngoài input
+    document.addEventListener("click", function(e) {
+      const wrapper = document.getElementById("recipientInputWrapper");
+      if (wrapper && !wrapper.contains(e.target)) {
+        hideRecipientSuggestions();
+      }
+    });
 
     function updateRecipientDatalist(users = []) {
       const datalist = document.getElementById("adminRecipientDatalist");
-      const chipsContainer = document.getElementById("adminRecipientQuickChips");
       
       // Tập hợp CHỈ chứa Gmail / Email (hoặc các tài khoản hệ thống đặc biệt), TUYỆT ĐỐI KHÔNG chứa họ tên
-      const emailSet = new Set(["all", "adminthd", "giaovien1"]);
+      const emailSet = new Set(["giaovien1", "adminthd", "all"]);
 
       if (Array.isArray(users)) {
         users.forEach(u => {
@@ -6006,20 +6066,10 @@
         }
       });
 
-      if (datalist) {
-        datalist.innerHTML = Array.from(emailSet).map(item => `<option value="${escapeHtml(item)}"></option>`).join("");
-      }
+      allRecipientEmailsList = Array.from(emailSet);
 
-      if (chipsContainer) {
-        // Chỉ hiển thị danh sách Gmail / Email dạng nút chọn nhanh
-        const chipList = Array.from(emailSet);
-        chipsContainer.innerHTML = chipList.map(item => {
-          const isEmail = item.includes("@");
-          const icon = item === "adminthd" ? "🛡️" : item === "all" ? "📢" : isEmail ? "📧" : "👨‍🏫";
-          const knownName = userEmailToNameMap[item.toLowerCase()];
-          const tip = knownName ? `Tài khoản: ${escapeHtml(knownName)} (${escapeHtml(item)})` : `Gmail: ${escapeHtml(item)}`;
-          return `<button type="button" class="btn-small" style="padding:2px 8px;font-size:10.5px" title="${tip}" onclick="selectRecipientChip('${escapeHtml(item)}')">${icon} ${escapeHtml(item)}</button>`;
-        }).join("");
+      if (datalist) {
+        datalist.innerHTML = allRecipientEmailsList.map(item => `<option value="${escapeHtml(item)}"></option>`).join("");
       }
     }
 
