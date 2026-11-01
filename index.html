@@ -88,8 +88,32 @@
     </div>
   </header>
 
-  <!-- THANH THÔNG BÁO BẮT BUỘC & SỰ KIỆN LƯỚT TỰ ĐỘNG (CHU KỲ NGHỈ 1 PHÚT) -->
+  <!-- THANH THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TỰ ĐỘNG (LƯỚT TRÁI QUA PHẢI + NGHỈ 1 PHÚT) -->
   <style id="slidingAnnouncementStyles">
+    @keyframes autoGlideAcross {
+      0% {
+        transform: translateX(-100%);
+        opacity: 0.9;
+      }
+      0.5% {
+        opacity: 1;
+      }
+      /* Lướt mượt mà từ trái qua phải trong 18 giây (23% của 78s) */
+      23% {
+        transform: translateX(100vw);
+        opacity: 1;
+      }
+      23.01% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      /* Nghỉ đúng 60 giây (1 phút) trước khi tự động lướt lại */
+      100% {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+    }
+
     .sliding-announcement-bar {
       position: relative;
       width: 100%;
@@ -102,6 +126,7 @@
       display: flex;
       align-items: center;
     }
+
     .sliding-fixed-badge {
       position: absolute;
       left: 0;
@@ -121,6 +146,7 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
+
     .sliding-pulse-dot {
       width: 8px;
       height: 8px;
@@ -130,10 +156,12 @@
       display: inline-block;
       animation: slidingPulseAnim 1.4s ease-in-out infinite;
     }
+
     @keyframes slidingPulseAnim {
       0%, 100% { transform: scale(0.9); opacity: 0.7; }
       50% { transform: scale(1.3); opacity: 1; }
     }
+
     .sliding-track {
       position: absolute;
       top: 0;
@@ -142,24 +170,18 @@
       align-items: center;
       white-space: nowrap;
       will-change: transform;
-      transform: translateX(-100%);
       padding-left: 170px;
       user-select: none;
+      /* TỰ ĐỘNG CHẠY NGAY LẬP TỨC 100% BẰNG CSS, KHÔNG CẦN BẤM */
+      animation: autoGlideAcross 78s linear infinite;
     }
-    .sliding-track.is-gliding {
-      animation: glideAcrossScreen 18s linear forwards;
-    }
-    .sliding-announcement-bar:hover .sliding-track.is-gliding {
+
+    /* RÊ CHUỘT VÀO LÀ DỪNG LẠI NGAY ĐỂ ĐỌC VÀ BẤM */
+    .sliding-announcement-bar:hover .sliding-track,
+    .sliding-track:hover {
       animation-play-state: paused !important;
     }
-    @keyframes glideAcrossScreen {
-      0% {
-        transform: translateX(-100%);
-      }
-      100% {
-        transform: translateX(100vw);
-      }
-    }
+
     .sliding-content-box {
       display: inline-flex;
       align-items: center;
@@ -171,11 +193,13 @@
       backdrop-filter: blur(4px);
       transition: all 0.25s ease;
     }
+
     .sliding-content-box:hover {
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(190, 242, 100, 0.6);
       box-shadow: 0 0 12px rgba(190, 242, 100, 0.2);
     }
+
     .sliding-timer-hint {
       font-size: 11px;
       color: #94a3b8;
@@ -186,6 +210,7 @@
       align-items: center;
       gap: 4px;
     }
+
     .sliding-controls {
       position: absolute;
       right: 0;
@@ -198,21 +223,7 @@
       align-items: center;
       gap: 8px;
     }
-    .btn-sliding-ctrl {
-      background: rgba(190, 242, 100, 0.15);
-      color: #bef264;
-      border: 1px solid rgba(190, 242, 100, 0.3);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .btn-sliding-ctrl:hover {
-      background: #bef264;
-      color: #06281e;
-    }
+
     .btn-sliding-close {
       background: transparent;
       border: none;
@@ -224,9 +235,11 @@
       border-radius: 4px;
       transition: color 0.2s ease;
     }
+
     .btn-sliding-close:hover {
       color: #ffffff;
     }
+
     @media (max-width: 640px) {
       .sliding-fixed-badge {
         display: none;
@@ -247,8 +260,8 @@
       <span class="sliding-badge-text" id="slidingBadgeTitle">BẢN TIN BẮT BUỘC</span>
     </div>
 
-    <!-- Vùng trượt lướt từ trái qua phải -->
-    <div class="sliding-track" id="slidingAnnouncementTrack">
+    <!-- Vùng trượt lướt tự động từ trái qua phải -->
+    <div class="sliding-track" id="slidingAnnouncementTrack" ontouchstart="this.style.animationPlayState='paused'" ontouchend="this.style.animationPlayState='running'">
       <div class="sliding-content-box" id="slidingAnnouncementContent">
         <span class="tag" id="topPreBarTag" style="background:rgba(190,242,100,0.18);color:#bef264;border:1px solid rgba(190,242,100,0.4);font-weight:800;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px">
           ĐỢT 1 · KHẢO SÁT BAN ĐẦU
@@ -265,9 +278,8 @@
       </div>
     </div>
 
-    <!-- Phím điều khiển cố định bên phải -->
+    <!-- Phím điều khiển cố định bên phải (chỉ còn nút đóng ✕, không còn nút lướt lại) -->
     <div class="sliding-controls">
-      <button type="button" class="btn-sliding-ctrl" id="btnReplaySlide" onclick="triggerManualGlide()" title="Phát lại chuyển động ngay lập tức">▶ Lướt lại</button>
       <button type="button" class="btn-sliding-close" onclick="document.getElementById('topPreInterventionBar').style.display='none'" title="Ẩn thanh thông báo">✕</button>
     </div>
   </div>
@@ -566,56 +578,9 @@
       // Xoay đổi thông điệp sau dấu chấm chậm lại mỗi 5s (5000ms)
       startStatsRotation(stats, isEn, localProf);
       updateTopPreBarState();
-      setupSlidingAnnouncement();
     }
 
-    let glideTimer = null;
-    let isGlidingActive = false;
-    const ONE_MINUTE_MS = 60000; // Nghỉ đúng 1 phút (60 giây) trước khi lướt lại
-
-    function triggerGlide() {
-      const bar = document.getElementById("topPreInterventionBar");
-      const track = document.getElementById("slidingAnnouncementTrack");
-      if (!bar || !track) return;
-      if (bar.style.display === "none") return;
-
-      // Cập nhật nội dung mới nhất
-      updateTopPreBarState();
-
-      // Kích hoạt chu trình lướt từ trái qua phải
-      track.classList.remove("is-gliding");
-      void track.offsetWidth; // Force reflow
-      track.classList.add("is-gliding");
-      isGlidingActive = true;
-    }
-
-    function triggerManualGlide() {
-      if (glideTimer) clearTimeout(glideTimer);
-      triggerGlide();
-    }
-
-    function setupSlidingAnnouncement() {
-      const track = document.getElementById("slidingAnnouncementTrack");
-      if (!track) return;
-
-      // Lắng nghe khi lượt lướt vừa chạm đích cạnh phải màn hình
-      track.addEventListener("animationend", () => {
-        track.classList.remove("is-gliding");
-        isGlidingActive = false;
-
-        // Đợi chính xác 1 phút (60s) rồi mới kích hoạt lượt lướt kế tiếp
-        if (glideTimer) clearTimeout(glideTimer);
-        glideTimer = setTimeout(() => {
-          triggerGlide();
-        }, ONE_MINUTE_MS);
-      });
-
-      // Bắt đầu lướt lần đầu tiên sau 1.2 giây
-      setTimeout(() => {
-        triggerGlide();
-      }, 1200);
-    }
-
+    // Tự động đồng bộ nội dung thông báo trên thanh trượt
     function updateTopPreBarState() {
       const bar = document.getElementById("topPreInterventionBar");
       const tag = document.getElementById("topPreBarTag");
@@ -794,6 +759,15 @@
 
     applyBentoVisibility();
     syncHomeProfile();
+    // Auto-execute updateTopPreBarState on load
+    updateTopPreBarState();
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", updateTopPreBarState);
+    }
+    window.addEventListener("load", updateTopPreBarState);
+    window.addEventListener("storage", (e) => {
+      if (e.key && e.key.includes("announcement")) updateTopPreBarState();
+    });
     window.addEventListener("aicheck:gamify-change", syncHomeProfile);
     window.addEventListener("aicheck:profile-updated", syncHomeProfile);
     window.addEventListener("aicheck:lang-change", syncHomeProfile);
