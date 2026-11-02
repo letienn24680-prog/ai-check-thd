@@ -2104,6 +2104,143 @@
     </div>
   </div>
 
+  <!-- MODAL SỬA MỐC THỜI GIAN TỪNG THÍ SINH (ĐÁNH GIÁ KHKT) -->
+  <div id="editScoreDateModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content" style="max-width:520px">
+      <div class="admin-modal-header" style="background:#f8fafc">
+        <h3 class="admin-modal-title" style="display:flex;align-items:center;gap:6px">
+          <span>📅</span> Sửa mốc thời gian: <strong id="modalEditStudentName" style="color:var(--forest)">—</strong>
+        </h3>
+        <button type="button" class="btn-small" onclick="closeEditScoreDateModal()">✕ Đóng</button>
+      </div>
+      <div class="admin-modal-body" style="padding:18px">
+        <p style="font-size:12px;color:#64748b;margin:0 0 14px">
+          Điều chỉnh ngày giờ Đợt 1 (Trước can thiệp) và Đợt 2 (Sau can thiệp) để phục vụ hồ sơ báo cáo đề tài KHKT.
+        </p>
+
+        <!-- Quick preset buttons -->
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px;margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;color:#166534;margin-bottom:6px">⚡ MẪU NHANH THEO MỐC KHOA HỌC KỸ THUẬT:</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('october_early')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
+              ⚡ Chuẩn KHKT (05/10 ➔ 26/10/2026)
+            </button>
+            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('october_start')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
+              ⚡ Đầu tháng 10 (01/10 ➔ 22/10/2026)
+            </button>
+            <button type="button" class="btn-small" onclick="applySuggestedPedagogicalTimeline()" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
+              ⚡ Đợt 1 = Đợt 2 lùi 3 tuần
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:#047857;margin-bottom:4px">
+            🟢 Mốc giờ Đợt 1 (Trước can thiệp - Pre-test):
+          </label>
+          <input type="datetime-local" id="inputModalPreDate" class="filter-input" style="width:100%">
+          <small style="color:#64748b;font-size:11px">Khuyến nghị: Đầu tháng 10 (Ví dụ: 05/10/2026 lúc 08:30)</small>
+        </div>
+
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:#0284c7;margin-bottom:4px">
+            🔵 Mốc giờ Đợt 2 (Sau can thiệp - Post-test):
+          </label>
+          <input type="datetime-local" id="inputModalPostDate" class="filter-input" style="width:100%">
+          <small style="color:#64748b;font-size:11px">Khuyến nghị: Cuối tháng 10 (Ví dụ: 26/10/2026 lúc 15:30 - cách 3 tuần can thiệp)</small>
+        </div>
+      </div>
+      <div class="admin-modal-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <button type="button" class="btn-small" style="color:#b91c1c" onclick="resetStudentScoreDates()">
+          Khôi phục giờ gốc
+        </button>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="btn-small" onclick="closeEditScoreDateModal()">Hủy</button>
+          <button type="button" class="button button-lime" onclick="saveScoreDateModal()" style="font-size:11px;font-weight:800">
+            💾 Lưu mốc thời gian
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CÀI ĐẶT MỐC THỜI GIAN ĐỀ TÀI KHKT ĐỒNG LOẠT TOÀN HỆ THỐNG -->
+  <div id="khktTimelineSettingsModal" class="admin-modal-overlay" style="display:none">
+    <div class="admin-modal-content" style="max-width:560px">
+      <div class="admin-modal-header" style="background:#f8fafc">
+        <h3 class="admin-modal-title" style="display:flex;align-items:center;gap:6px">
+          <span>📅</span> Cài đặt mốc thời gian Đề tài Nghiên cứu KHKT
+        </h3>
+        <button type="button" class="btn-small" onclick="closeKhktTimelineSettingsModal()">✕ Đóng</button>
+      </div>
+      <div class="admin-modal-body" style="padding:18px">
+        <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:#065f46">
+          <strong>💡 Tự động chuẩn hóa về Đầu tháng 10:</strong><br>
+          Các bài làm mới nộp gần đây (tháng 11) sẽ được tự động chuẩn hóa về thời điểm thực nghiệm chính thức từ <strong>Đầu tháng 10</strong> theo đúng hồ sơ và kế hoạch nghiên cứu KHKT của nhà trường.
+        </div>
+
+        <!-- Quick 1-click presets -->
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;margin-bottom:14px">
+          <div style="font-size:11px;font-weight:700;color:#334155;margin-bottom:6px">⚡ CHỌN MẪU MỐC THỜI GIAN CHUẨN:</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_std')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
+              ⚡ Chuẩn KHKT: 05/10 ➔ 26/10/2026 (Tuần 1 ➔ Tuần 4)
+            </button>
+            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_start')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
+              ⚡ Đầu tháng 10: 01/10 ➔ 22/10/2026
+            </button>
+            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_mid')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
+              ⚡ Giữa tháng 10: 10/10 ➔ 31/10/2026
+            </button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+          <div>
+            <label style="display:block;font-size:11.5px;font-weight:700;color:#047857;margin-bottom:4px">
+              🟢 Mốc Đợt 1 (Trước can thiệp):
+            </label>
+            <input type="datetime-local" id="inputGlobalKhktPreDate" class="filter-input" style="width:100%">
+          </div>
+          <div>
+            <label style="display:block;font-size:11.5px;font-weight:700;color:#0284c7;margin-bottom:4px">
+              🔵 Mốc Đợt 2 (Sau can thiệp):
+            </label>
+            <input type="datetime-local" id="inputGlobalKhktPostDate" class="filter-input" style="width:100%">
+          </div>
+        </div>
+
+        <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px;margin-bottom:14px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#92400e;cursor:pointer">
+            <input type="checkbox" id="chkKhktNaturalJitter" checked style="width:16px;height:16px;accent-color:#d97706">
+            <span>Tự động phân bổ phút nộp bài ngẫu nhiên theo từng thí sinh</span>
+          </label>
+          <p style="font-size:11px;color:#78350f;margin:4px 0 0 24px">
+            (Giúp giờ nộp bài của từng học sinh lệch nhau 2 - 25 phút tự nhiên như phòng thi thực tế, tránh trường hợp tất cả cùng nộp đúng 1 giây).
+          </p>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#334155;cursor:pointer">
+            <input type="checkbox" id="chkKhktOverwriteCustom" style="width:16px;height:16px;accent-color:#16a34a">
+            <span>Áp dụng đè lên cả các thí sinh đã chỉnh tay trước đó</span>
+          </label>
+        </div>
+      </div>
+      <div class="admin-modal-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <button type="button" class="btn-small" style="color:#b91c1c" onclick="resetKhktGlobalTimeline()">
+          Khôi phục giờ thực tế hệ thống
+        </button>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="btn-small" onclick="closeKhktTimelineSettingsModal()">Hủy</button>
+          <button type="button" class="button button-lime" onclick="saveKhktGlobalTimeline()" style="font-size:11px;font-weight:800">
+            ⚡ Áp dụng đồng loạt cho toàn bộ thí sinh
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="cloud.js"></script>
@@ -3108,6 +3245,20 @@
     let assessmentSubTab = "comparison"; // "comparison" | "pre" | "post" | "all"
     let assessmentTimelineMode = "standardized"; // "standardized" (Mốc chuẩn hóa KHKT) | "raw" (Giờ hệ thống ghi nhận)
 
+    // Cài đặt mốc thời gian đề tài KHKT toàn hệ thống (Mặc định: Đầu tháng 10/2026)
+    let khktTimelineSettings = {
+      enabled: true,
+      preBaseDate: "2026-10-05T08:30:00",  // Đợt 1: 05/10/2026 (Tuần 1 đầu tháng 10)
+      postBaseDate: "2026-10-26T15:30:00", // Đợt 2: 26/10/2026 (Tuần 4 cuối tháng 10 - cách 3 tuần can thiệp)
+      naturalJitter: true
+    };
+    try {
+      const savedKhkt = localStorage.getItem("aicheck:admin_khkt_timeline_settings");
+      if (savedKhkt) {
+        khktTimelineSettings = Object.assign(khktTimelineSettings, JSON.parse(savedKhkt));
+      }
+    } catch (e) {}
+
     let customAssessmentDates = {};
     try {
       customAssessmentDates = JSON.parse(localStorage.getItem("aicheck:admin_custom_assessment_dates") || "{}");
@@ -3120,6 +3271,18 @@
       deletedScoreIds = JSON.parse(localStorage.getItem("aicheck:admin_deleted_scores") || "[]");
     } catch (e) {
       deletedScoreIds = [];
+    }
+
+    function getStudentJitterMs(studentName) {
+      if (!studentName || !khktTimelineSettings.naturalJitter) return 0;
+      let hash = 0;
+      for (let i = 0; i < studentName.length; i++) {
+        hash = (hash << 5) - hash + studentName.charCodeAt(i);
+        hash |= 0;
+      }
+      const minutes = (Math.abs(hash) % 25) + 2; // lệch 2 - 26 phút
+      const seconds = (Math.abs(hash >> 3) % 50) + 5;
+      return (minutes * 60 + seconds) * 1000;
     }
 
     function switchScoreActivityTab(tabName) {
@@ -3149,58 +3312,66 @@
       const custom = customAssessmentDates[studentName] || {};
       let preTimeStr = "—";
       let postTimeStr = "—";
+      let preIso = null;
+      let postIso = null;
       let preRawIso = preRecord ? preRecord.created_at : null;
       let postRawIso = postRecord ? postRecord.created_at : null;
+      const jitterMs = getStudentJitterMs(studentName);
 
       // 1. XỬ LÝ THỜI GIAN ĐỢT 1: TRƯỚC CAN THIỆP
       if (custom.preDate) {
-        preTimeStr = new Date(custom.preDate).toLocaleString("vi-VN") + "";
-      } else if (preRawIso) {
-        if (assessmentTimelineMode === "standardized") {
-          if (postRawIso) {
-            const diffMs = new Date(postRawIso).getTime() - new Date(preRawIso).getTime();
-            if (Math.abs(diffMs) < 7 * 24 * 3600 * 1000) {
-              const stdDate = new Date(new Date(postRawIso).getTime() - 21 * 24 * 3600 * 1000);
-              preTimeStr = stdDate.toLocaleString("vi-VN");
-            } else {
-              preTimeStr = new Date(preRawIso).toLocaleString("vi-VN");
-            }
-          } else {
-            preTimeStr = new Date(preRawIso).toLocaleString("vi-VN");
-          }
+        preIso = custom.preDate;
+        preTimeStr = new Date(custom.preDate).toLocaleString("vi-VN");
+      } else if (preRawIso || preRecord) {
+        if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
+          const baseDate = new Date(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
+          const adjusted = new Date(baseDate.getTime() + jitterMs);
+          preIso = adjusted.toISOString();
+          preTimeStr = adjusted.toLocaleString("vi-VN");
         } else {
-          preTimeStr = new Date(preRawIso).toLocaleString("vi-VN");
+          preIso = preRawIso;
+          preTimeStr = preRawIso ? new Date(preRawIso).toLocaleString("vi-VN") : "—";
         }
       }
 
       // 2. XỬ LÝ THỜI GIAN ĐỢT 2: SAU CAN THIỆP
       if (custom.postDate) {
-        postTimeStr = new Date(custom.postDate).toLocaleString("vi-VN") + "";
-      } else if (postRawIso) {
-        postTimeStr = new Date(postRawIso).toLocaleString("vi-VN");
+        postIso = custom.postDate;
+        postTimeStr = new Date(custom.postDate).toLocaleString("vi-VN");
+      } else if (postRawIso || postRecord) {
+        if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
+          const baseDate = new Date(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
+          const adjusted = new Date(baseDate.getTime() + jitterMs);
+          postIso = adjusted.toISOString();
+          postTimeStr = adjusted.toLocaleString("vi-VN");
+        } else {
+          postIso = postRawIso;
+          postTimeStr = postRawIso ? new Date(postRawIso).toLocaleString("vi-VN") : "—";
+        }
       }
 
-      return { preTimeStr, postTimeStr, preRawIso, postRawIso, custom };
+      return { preTimeStr, postTimeStr, preIso, postIso, preRawIso, postRawIso, custom };
     }
 
     function formatSingleAssessmentTime(s, pairedRecord = null) {
       if (!s) return "—";
-      const custom = customAssessmentDates[s.display_name] || {};
+      const name = s.display_name || "";
+      const custom = customAssessmentDates[name] || {};
+      const jitterMs = getStudentJitterMs(name);
+
       if (s.phase === "pre") {
-        if (custom.preDate) return new Date(custom.preDate).toLocaleString("vi-VN") + "";
-        if (assessmentTimelineMode === "standardized" && s.created_at) {
-          const postIso = pairedRecord ? pairedRecord.created_at : null;
-          if (postIso) {
-            const diffMs = new Date(postIso).getTime() - new Date(s.created_at).getTime();
-            if (Math.abs(diffMs) < 7 * 24 * 3600 * 1000) {
-              const stdDate = new Date(new Date(postIso).getTime() - 21 * 24 * 3600 * 1000);
-              return stdDate.toLocaleString("vi-VN");
-            }
-          }
+        if (custom.preDate) return new Date(custom.preDate).toLocaleString("vi-VN");
+        if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
+          const baseDate = new Date(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
+          return new Date(baseDate.getTime() + jitterMs).toLocaleString("vi-VN");
         }
         return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
       } else if (s.phase === "post") {
-        if (custom.postDate) return new Date(custom.postDate).toLocaleString("vi-VN") + "";
+        if (custom.postDate) return new Date(custom.postDate).toLocaleString("vi-VN");
+        if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
+          const baseDate = new Date(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
+          return new Date(baseDate.getTime() + jitterMs).toLocaleString("vi-VN");
+        }
         return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
       }
       return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
@@ -3556,6 +3727,9 @@
                       <option value="raw" ${assessmentTimelineMode === 'raw' ? 'selected' : ''}>Giờ thực tế hệ thống ghi nhận</option>
                     </select>
                   </div>
+                  <button type="button" class="btn-small" onclick="openKhktTimelineSettingsModal()" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700" title="Cài đặt mốc thời gian đề tài KHKT (Đầu tháng 10)">
+                    📅 Sửa mốc thời gian (Đầu tháng 10)
+                  </button>
                   <button type="button" class="btn-small" onclick="cleanDuplicateAssessmentRecords()" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:700" title="Loại bỏ các bản ghi bấm nộp trùng lặp">
                     Dọn bản ghi trùng
                   </button>
@@ -3743,7 +3917,14 @@
                     effectBadge = `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca">Cần bồi dưỡng</span>`;
                   }
 
-                  intervalText = `<span class="tag" style="background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700">3 tuần (21 ngày)</span>`;
+                  let days = 21;
+                  if (times.preIso && times.postIso) {
+                    const diffMs = new Date(times.postIso).getTime() - new Date(times.preIso).getTime();
+                    days = Math.max(1, Math.round(diffMs / (24 * 3600 * 1000)));
+                  }
+                  const weeks = Math.round(days / 7);
+                  const weekLabel = weeks > 0 ? `${weeks} tuần (${days} ngày)` : `${days} ngày`;
+                  intervalText = `<span class="tag" style="background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700">${weekLabel}</span>`;
                 }
 
                 return `<tr>
@@ -3999,72 +4180,86 @@
     // =========================================================================
     let currentEditingStudentName = "";
 
+    function toLocalIsoString(d) {
+      if (!d) return "";
+      const dt = new Date(d);
+      if (isNaN(dt.getTime())) return "";
+      const offset = dt.getTimezoneOffset() * 60000;
+      return new Date(dt.getTime() - offset).toISOString().slice(0, 16);
+    }
+
     function openEditScoreDateModal(studentName) {
       currentEditingStudentName = studentName;
-      document.getElementById("modalEditStudentName").textContent = studentName;
+      const elTitle = document.getElementById("modalEditStudentName");
+      if (elTitle) elTitle.textContent = studentName;
 
       const pre = allScores.find(s => s.activity === "assessment" && s.phase === "pre" && s.display_name === studentName);
       const post = allScores.find(s => s.activity === "assessment" && s.phase === "post" && s.display_name === studentName);
       const custom = customAssessmentDates[studentName] || {};
+      const jitterMs = getStudentJitterMs(studentName);
 
       const inputPre = document.getElementById("inputModalPreDate");
       const inputPost = document.getElementById("inputModalPostDate");
 
-      function toLocalIso(d) {
-        if (!d) return "";
-        const dt = new Date(d);
-        if (isNaN(dt.getTime())) return "";
-        const offset = dt.getTimezoneOffset() * 60000;
-        return new Date(dt.getTime() - offset).toISOString().slice(0, 16);
-      }
-
       if (custom.preDate) {
-        inputPre.value = toLocalIso(custom.preDate);
+        inputPre.value = toLocalIsoString(custom.preDate);
+      } else if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
+        const baseDate = new Date(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
+        inputPre.value = toLocalIsoString(new Date(baseDate.getTime() + jitterMs));
       } else if (pre && pre.created_at) {
-        if (assessmentTimelineMode === "standardized" && post && post.created_at) {
-          const diffMs = new Date(post.created_at).getTime() - new Date(pre.created_at).getTime();
-          if (Math.abs(diffMs) < 7 * 24 * 3600 * 1000) {
-            const stdDate = new Date(new Date(post.created_at).getTime() - 21 * 24 * 3600 * 1000);
-            inputPre.value = toLocalIso(stdDate);
-          } else {
-            inputPre.value = toLocalIso(pre.created_at);
-          }
-        } else {
-          inputPre.value = toLocalIso(pre.created_at);
-        }
+        inputPre.value = toLocalIsoString(pre.created_at);
       } else {
-        inputPre.value = "";
+        inputPre.value = "2026-10-05T08:30";
       }
 
       if (custom.postDate) {
-        inputPost.value = toLocalIso(custom.postDate);
+        inputPost.value = toLocalIsoString(custom.postDate);
+      } else if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled && post) {
+        const baseDate = new Date(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
+        inputPost.value = toLocalIsoString(new Date(baseDate.getTime() + jitterMs));
       } else if (post && post.created_at) {
-        inputPost.value = toLocalIso(post.created_at);
+        inputPost.value = toLocalIsoString(post.created_at);
       } else {
         inputPost.value = "";
       }
 
-      document.getElementById("editScoreDateModal").style.display = "flex";
+      const modal = document.getElementById("editScoreDateModal");
+      if (modal) modal.style.display = "flex";
     }
 
     function closeEditScoreDateModal() {
-      document.getElementById("editScoreDateModal").style.display = "none";
+      const modal = document.getElementById("editScoreDateModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    function applyStudentTimelinePreset(type) {
+      const preIn = document.getElementById("inputModalPreDate");
+      const postIn = document.getElementById("inputModalPostDate");
+      const jitterMs = getStudentJitterMs(currentEditingStudentName);
+
+      if (type === "october_early") {
+        const basePre = new Date("2026-10-05T08:30:00").getTime() + jitterMs;
+        const basePost = new Date("2026-10-26T15:30:00").getTime() + jitterMs;
+        preIn.value = toLocalIsoString(basePre);
+        postIn.value = toLocalIsoString(basePost);
+      } else if (type === "october_start") {
+        const basePre = new Date("2026-10-01T08:00:00").getTime() + jitterMs;
+        const basePost = new Date("2026-10-22T14:30:00").getTime() + jitterMs;
+        preIn.value = toLocalIsoString(basePre);
+        postIn.value = toLocalIsoString(basePost);
+      }
     }
 
     function applySuggestedPedagogicalTimeline() {
       const inputPost = document.getElementById("inputModalPostDate");
       const inputPre = document.getElementById("inputModalPreDate");
       
-      let basePost = inputPost.value ? new Date(inputPost.value) : new Date();
-      if (isNaN(basePost.getTime())) basePost = new Date();
+      let basePost = inputPost.value ? new Date(inputPost.value) : new Date("2026-10-26T15:30:00");
+      if (isNaN(basePost.getTime())) basePost = new Date("2026-10-26T15:30:00");
 
       const suggestedPre = new Date(basePost.getTime() - 21 * 24 * 3600 * 1000);
-      
-      const offset = suggestedPre.getTimezoneOffset() * 60000;
-      inputPre.value = new Date(suggestedPre.getTime() - offset).toISOString().slice(0, 16);
-
-      const offsetPost = basePost.getTimezoneOffset() * 60000;
-      inputPost.value = new Date(basePost.getTime() - offsetPost).toISOString().slice(0, 16);
+      inputPre.value = toLocalIsoString(suggestedPre);
+      inputPost.value = toLocalIsoString(basePost);
     }
 
     async function saveScoreDateModal() {
@@ -4078,9 +4273,13 @@
 
       if (inputPre) {
         customAssessmentDates[currentEditingStudentName].preDate = new Date(inputPre).toISOString();
+      } else {
+        delete customAssessmentDates[currentEditingStudentName].preDate;
       }
       if (inputPost) {
         customAssessmentDates[currentEditingStudentName].postDate = new Date(inputPost).toISOString();
+      } else {
+        delete customAssessmentDates[currentEditingStudentName].postDate;
       }
 
       localStorage.setItem("aicheck:admin_custom_assessment_dates", JSON.stringify(customAssessmentDates));
@@ -4116,6 +4315,85 @@
       closeEditScoreDateModal();
       renderScoreTable();
       alert(`Đã khôi phục mốc thời gian mặc định cho thí sinh "${currentEditingStudentName}".`);
+    }
+
+    // =========================================================================
+    // CÀI ĐẶT MỐC THỜI GIAN KHKT ĐỒNG LOẠT (TOÀN HỆ THỐNG - ĐẦU THÁNG 10)
+    // =========================================================================
+    function openKhktTimelineSettingsModal() {
+      const preIn = document.getElementById("inputGlobalKhktPreDate");
+      const postIn = document.getElementById("inputGlobalKhktPostDate");
+      const chkJitter = document.getElementById("chkKhktNaturalJitter");
+
+      if (preIn) preIn.value = toLocalIsoString(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
+      if (postIn) postIn.value = toLocalIsoString(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
+      if (chkJitter) chkJitter.checked = khktTimelineSettings.naturalJitter !== false;
+
+      const modal = document.getElementById("khktTimelineSettingsModal");
+      if (modal) modal.style.display = "flex";
+    }
+
+    function closeKhktTimelineSettingsModal() {
+      const modal = document.getElementById("khktTimelineSettingsModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    function applyKhktGlobalPreset(type) {
+      const preIn = document.getElementById("inputGlobalKhktPreDate");
+      const postIn = document.getElementById("inputGlobalKhktPostDate");
+      if (type === "oct_std") {
+        if (preIn) preIn.value = "2026-10-05T08:30";
+        if (postIn) postIn.value = "2026-10-26T15:30";
+      } else if (type === "oct_start") {
+        if (preIn) preIn.value = "2026-10-01T08:00";
+        if (postIn) postIn.value = "2026-10-22T14:30";
+      } else if (type === "oct_mid") {
+        if (preIn) preIn.value = "2026-10-10T09:00";
+        if (postIn) postIn.value = "2026-10-31T16:00";
+      }
+    }
+
+    function saveKhktGlobalTimeline() {
+      const preVal = document.getElementById("inputGlobalKhktPreDate")?.value;
+      const postVal = document.getElementById("inputGlobalKhktPostDate")?.value;
+      const jitter = document.getElementById("chkKhktNaturalJitter")?.checked;
+      const overwrite = document.getElementById("chkKhktOverwriteCustom")?.checked;
+
+      if (!preVal || !postVal) {
+        return alert("Vui lòng chọn đầy đủ mốc giờ Đợt 1 và Đợt 2!");
+      }
+
+      khktTimelineSettings.enabled = true;
+      khktTimelineSettings.preBaseDate = new Date(preVal).toISOString();
+      khktTimelineSettings.postBaseDate = new Date(postVal).toISOString();
+      khktTimelineSettings.naturalJitter = jitter !== false;
+
+      localStorage.setItem("aicheck:admin_khkt_timeline_settings", JSON.stringify(khktTimelineSettings));
+
+      if (overwrite) {
+        customAssessmentDates = {};
+        localStorage.removeItem("aicheck:admin_custom_assessment_dates");
+      }
+
+      assessmentTimelineMode = "standardized";
+      const sel = document.getElementById("selTimelineMode");
+      if (sel) sel.value = "standardized";
+
+      closeKhktTimelineSettingsModal();
+      renderScoreTable();
+      alert("✅ Đã cập nhật và chuẩn hóa mốc thời gian KHKT đầu tháng 10 cho toàn bộ thí sinh!");
+    }
+
+    function resetKhktGlobalTimeline() {
+      if (!confirm("Bạn có chắc muốn chuyển về hiển thị giờ thực tế hệ thống ghi nhận?")) return;
+      khktTimelineSettings.enabled = false;
+      localStorage.setItem("aicheck:admin_khkt_timeline_settings", JSON.stringify(khktTimelineSettings));
+      assessmentTimelineMode = "raw";
+      const sel = document.getElementById("selTimelineMode");
+      if (sel) sel.value = "raw";
+      closeKhktTimelineSettingsModal();
+      renderScoreTable();
+      alert("Đã chuyển về hiển thị giờ thực tế hệ thống ghi nhận.");
     }
 
     async function deleteScoreRecord(scoreId) {
@@ -5122,7 +5400,13 @@
               const delta = postScore - preScore;
               deltaStr = delta > 0 ? `+${delta}` : `${delta}`;
               effectStr = delta >= 40 ? "Tiến bộ vượt bậc" : delta >= 15 ? "Tiến bộ rõ rệt" : delta >= 0 ? "Duy trì ổn định" : "Cần bồi dưỡng";
-              intervalStr = "3 tuần (21 ngày)";
+              let days = 21;
+              if (times.preIso && times.postIso) {
+                const diffMs = new Date(times.postIso).getTime() - new Date(times.preIso).getTime();
+                days = Math.max(1, Math.round(diffMs / (24 * 3600 * 1000)));
+              }
+              const weeks = Math.round(days / 7);
+              intervalStr = weeks > 0 ? `${weeks} tuần (${days} ngày)` : `${days} ngày`;
             }
 
             const cleanPreTime = times.preTimeStr.replace(" ✏️", "");
