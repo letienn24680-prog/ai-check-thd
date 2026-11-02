@@ -3909,6 +3909,14 @@
             if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
           });
           const list = Array.from(studentMap.values());
+          // Sắp xếp thứ tự: Gần sát cuối tháng 10 lên đầu, mốc thời gian trước (đầu tháng 10) xuống cuối cùng
+          list.sort((a, b) => {
+            const timesA = getAssessmentTimestamps(a.name, a.pre, a.post);
+            const timesB = getAssessmentTimestamps(b.name, b.pre, b.post);
+            const tA = timesA.preIso ? new Date(timesA.preIso).getTime() : 0;
+            const tB = timesB.preIso ? new Date(timesB.preIso).getTime() : 0;
+            return tB - tA;
+          });
           if (!list.length) {
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có dữ liệu thí sinh nào trong đợt đánh giá này.</p>';
             return;
@@ -4019,6 +4027,13 @@
         } else if (assessmentSubTab === "pre") {
           // BẢNG ĐỢT 01: TRƯỚC CAN THIỆP
           const preList = tabScores.filter(s => s.phase === "pre");
+          preList.sort((a, b) => {
+            const timesA = getAssessmentTimestamps(a.display_name, a, null);
+            const timesB = getAssessmentTimestamps(b.display_name, b, null);
+            const tA = timesA.preIso ? new Date(timesA.preIso).getTime() : 0;
+            const tB = timesB.preIso ? new Date(timesB.preIso).getTime() : 0;
+            return tB - tA;
+          });
           if (!preList.length) {
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 01 (Trước can thiệp).</p>';
             return;
@@ -4063,6 +4078,13 @@
         } else if (assessmentSubTab === "post") {
           // BẢNG ĐỢT 02: SAU CAN THIỆP
           const postList = tabScores.filter(s => s.phase === "post");
+          postList.sort((a, b) => {
+            const timesA = getAssessmentTimestamps(a.display_name, null, a);
+            const timesB = getAssessmentTimestamps(b.display_name, null, b);
+            const tA = timesA.postIso ? new Date(timesA.postIso).getTime() : 0;
+            const tB = timesB.postIso ? new Date(timesB.postIso).getTime() : 0;
+            return tB - tA;
+          });
           if (!postList.length) {
             container.innerHTML = '<p class="panel-copy" style="padding:18px;text-align:center;color:var(--muted)">Chưa có bản ghi nào trong Đợt 02 (Sau can thiệp).</p>';
             return;
@@ -4106,6 +4128,18 @@
           initScrollFade(container);
         } else {
           // TẤT CẢ LƯỢT ĐO
+          const allList = [...tabScores];
+          allList.sort((a, b) => {
+            const timesA = a.phase === "post" 
+              ? getAssessmentTimestamps(a.display_name, null, a).postIso 
+              : getAssessmentTimestamps(a.display_name, a, null).preIso;
+            const timesB = b.phase === "post" 
+              ? getAssessmentTimestamps(b.display_name, null, b).postIso 
+              : getAssessmentTimestamps(b.display_name, b, null).preIso;
+            const tA = timesA ? new Date(timesA).getTime() : 0;
+            const tB = timesB ? new Date(timesB).getTime() : 0;
+            return tB - tA;
+          });
           container.innerHTML = `<table>
             <thead>
               <tr>
@@ -4119,7 +4153,7 @@
               </tr>
             </thead>
             <tbody>
-              ${tabScores.map((s, idx) => {
+              ${allList.map((s, idx) => {
                 const score = Number(s.score || 0);
                 const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
                 const levelColor = score >= 76 ? "#28744f" : score >= 51 ? "#4a9365" : score >= 26 ? "#d48b17" : "#c84f36";
@@ -5432,7 +5466,16 @@
             if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
           });
 
-          Array.from(studentMap.values()).forEach((st, idx) => {
+          const list = Array.from(studentMap.values());
+          list.sort((a, b) => {
+            const timesA = getAssessmentTimestamps(a.name, a.pre, a.post);
+            const timesB = getAssessmentTimestamps(b.name, b.pre, b.post);
+            const tA = timesA.preIso ? new Date(timesA.preIso).getTime() : 0;
+            const tB = timesB.preIso ? new Date(timesB.preIso).getTime() : 0;
+            return tB - tA;
+          });
+
+          list.forEach((st, idx) => {
             const pre = st.pre;
             const post = st.post;
             const times = getAssessmentTimestamps(st.name, pre, post);
@@ -5469,6 +5512,13 @@
           fileName = `AI_CHECK_THD_KhaoSat_Dot01_TruocCanThiep_${today}.csv`;
           csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát,Điểm số (Thang 100),Xếp loại năng lực đầu vào,Thời gian đo Trước can thiệp\n";
           const preList = tabScores.filter(s => s.phase === "pre");
+          preList.sort((a, b) => {
+            const timesA = getAssessmentTimestamps(a.display_name, a, null);
+            const timesB = getAssessmentTimestamps(b.display_name, b, null);
+            const tA = timesA.preIso ? new Date(timesA.preIso).getTime() : 0;
+            const tB = timesB.preIso ? new Date(timesB.preIso).getTime() : 0;
+            return tB - tA;
+          });
           preList.forEach((s, idx) => {
             const score = Number(s.score || 0);
             const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
@@ -5479,6 +5529,13 @@
           fileName = `AI_CHECK_THD_DanhGia_Dot02_SauCanThiep_${today}.csv`;
           csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát,Điểm số (Thang 100),Xếp loại năng lực sau can thiệp,Thời gian đo Sau can thiệp\n";
           const postList = tabScores.filter(s => s.phase === "post");
+          postList.sort((a, b) => {
+            const timesA = getAssessmentTimestamps(a.display_name, null, a);
+            const timesB = getAssessmentTimestamps(b.display_name, null, b);
+            const tA = timesA.postIso ? new Date(timesA.postIso).getTime() : 0;
+            const tB = timesB.postIso ? new Date(timesB.postIso).getTime() : 0;
+            return tB - tA;
+          });
           postList.forEach((s, idx) => {
             const score = Number(s.score || 0);
             const level = score <= 25 ? "Yếu" : score <= 50 ? "Trung bình" : score <= 75 ? "Khá" : "Giỏi";
