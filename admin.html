@@ -1732,38 +1732,13 @@
       </div>
     </section>
 
-    <!-- LỊCH SỬ THI & GIÁM SÁT VI PHẠM PHÒNG THI -->
-    <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
-        <div>
-          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            Lịch sử Thi & Giám sát Vi phạm Toàn màn hình
-            <button type="button" class="btn-small" onclick="toggleGenericCardSection('examResultsBodySection', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
-              <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-            </button>
-          </h2>
-          <p class="panel-copy" style="margin:4px 0 0">Ghi nhận chi tiết số lần thí sinh thoát toàn màn hình, bấm F11, Esc hoặc chuyển tab khi làm bài.</p>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button class="btn-small" onclick="loadExamResultsTable()">↻ Làm mới lịch sử</button>
-          <button class="btn-small" onclick="clearAllExamResults()" style="color:#b91c1c">Xóa lịch sử thi</button>
-        </div>
-      </div>
-      <div id="examResultsBodySection">
-        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
-        <div class="table-responsive" id="examResultsTableContainer">
-          <p class="panel-copy">Đang tải lịch sử bài thi...</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- DANH SÁCH THÍ SINH ĐÃ LÀM BÀI THI (ĐẠT & CHƯA ĐẠT YÊU CẦU) -->
+    <!-- KẾT QUẢ THI TRỰC TUYẾN & GIÁM SÁT VI PHẠM TOÀN MÀN HÌNH (GỘP THỐNG KÊ & GIÁM SÁT) -->
     <section class="card" id="examStudentsSummarySection">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <div>
-          <h2 class="panel-title" style="margin:0">Danh sách Thí sinh đã làm bài thi (Cả Đạt & Chưa đạt yêu cầu)</h2>
+          <h2 class="panel-title" style="margin:0">Kết quả Thi Trực tuyến & Giám sát Vi phạm Toàn màn hình</h2>
           <p class="panel-copy" style="margin:4px 0 0">
-            Lưu trữ danh sách toàn bộ thí sinh đã tham gia phòng thi trực tuyến, đối chiếu điểm đạt được với ngưỡng điểm chuẩn của từng đề.
+            Lưu trữ danh sách toàn bộ thí sinh làm bài thi, đối chiếu điểm đạt được với ngưỡng chuẩn và giám sát chi tiết hành vi thoát toàn màn hình, chuyển tab khi làm bài.
           </p>
         </div>
         <div class="admin-btn-row">
@@ -1771,6 +1746,7 @@
             Xuất Excel / CSV thí sinh ↓
           </button>
           <button class="btn-small" onclick="loadExamStudentsSummaryTable()">↻ Làm mới</button>
+          <button class="btn-small" onclick="clearAllExamResults()" style="color:#b91c1c" title="Xóa toàn bộ lịch sử bài thi">Xóa lịch sử thi</button>
           <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('examStudentsBodySection', this)" title="Thu gọn khối này">
             <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
           </button>
@@ -1805,11 +1781,12 @@
             <option value="all">Tất cả (Cả đạt & chưa đạt)</option>
             <option value="passed">Đã đạt yêu cầu</option>
             <option value="failed">Chưa đạt yêu cầu</option>
+            <option value="violation">Có vi phạm toàn màn hình</option>
           </select>
           <select id="filterExamTitle" class="filter-input" onchange="renderExamStudentsTable()">
             <option value="all">Tất cả đề thi</option>
           </select>
-          <input type="text" id="searchExamStudent" class="filter-input" placeholder="Tìm theo họ và tên thí sinh..." oninput="renderExamStudentsTable()">
+          <input type="text" id="searchExamStudent" class="filter-input" placeholder="Tìm theo họ tên, đề thi..." oninput="renderExamStudentsTable()">
         </div>
       </div>
 
@@ -5713,82 +5690,13 @@
     
 
 
+    // --- BẢNG THỐNG KÊ KẾT QUẢ THI & GIÁM SÁT VI PHẠM (ĐÃ GỘP) ---
     function loadExamResultsTable() {
-      const container = document.getElementById("examResultsTableContainer");
-      if (!container || !window.AICheckExamStore) return;
-
-      const results = typeof getAllExamResultsMerged === "function" ? getAllExamResultsMerged() : (window.AICheckExamStore.getResults() || []);
-      if (!results || results.length === 0) {
-        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có lượt thi nào được ghi nhận.</p>';
-        return;
-      }
-
-      container.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>Thí sinh</th>
-              <th>Đề thi</th>
-              <th>Số câu làm đúng</th>
-              <th>Điểm đạt được</th>
-              <th>Trạng thái</th>
-              <th>Vi phạm Toàn màn hình</th>
-              <th>Thời gian làm</th>
-              <th>Ngày nộp bài</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${results.map((r, idx) => {
-              const violCount = r.violationsCount || 0;
-              const violBadge = violCount === 0
-                ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
-                : `<button class="btn-small" style="color:#b91c1c;border-color:#fca5a5;background:#fef2f2" onclick="viewViolationDetail('${r.id}')">${violCount} lần vi phạm (Xem)</button>`;
-
-              const correctCount = r.correctCount != null ? r.correctCount : 0;
-              const totalQ = r.totalQuestions || 20;
-              const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
-              const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
-              const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
-              const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
-              const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
-
-              const statusBadge = isPassed
-                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ Hoàn thành (Đạt)</span>`
-                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">✕ Chưa đáp ứng (<${passingScore}đ)</span>`;
-
-              const attemptNum = r.attemptNumber || 1;
-              return `
-                <tr>
-                  <td>${idx + 1}</td>
-                  <td>
-                    <div style="display:flex;align-items:center;gap:6px">
-                      <strong>${escapeHtml(r.studentName || "—")}</strong>
-                      <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:10.5px;padding:1px 6px;font-weight:700">Lần ${attemptNum}</span>
-                    </div>
-                  </td>
-                  <td>${escapeHtml(r.examTitle || "Đề thi")}</td>
-                  <td><strong style="color:var(--forest);font-size:13px">${correctCount}</strong> / ${totalQ} câu</td>
-                  <td><span style="font-family:'Space Grotesk';font-weight:800;font-size:14px;color:var(--forest)">${score}</span> / ${maxScore} đ</td>
-                  <td>${statusBadge}</td>
-                  <td>${violBadge}</td>
-                  <td style="color:#64748b">${escapeHtml(r.timeSpentFormatted || "—")}</td>
-                  <td style="color:#64748b">${r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "—"}</td>
-                  <td>
-                    <button class="btn-small" style="color:#b91c1c" onclick="deleteExamResultItem('${r.id}')">Xóa</button>
-                  </td>
-                </tr>
-              `;
-            }).join("")}
-          </tbody>
-        </table>
-      `;
-      initScrollFade(container);
+      loadExamStudentsSummaryTable();
     }
 
     function viewViolationDetail(resultId) {
-      const results = window.AICheckExamStore.getResults();
+      const results = typeof getAllExamResultsMerged === "function" ? getAllExamResultsMerged() : (window.AICheckExamStore ? window.AICheckExamStore.getResults() : []);
       const r = results.find(item => item.id === resultId);
       if (!r) return;
 
@@ -5796,7 +5704,7 @@
       const list = r.violations || [];
 
       if (list.length === 0) {
-        modalBody.innerHTML = `<p style="font-size:13px;color:#10b981">Thí sinh ${escapeHtml(r.studentName)} không có vi phạm nào trong suốt quá trình làm bài.</p>`;
+        modalBody.innerHTML = `<p style="font-size:13px;color:#10b981">Thí sinh <strong>${escapeHtml(r.studentName)}</strong> không có vi phạm nào trong suốt quá trình làm bài.</p>`;
       } else {
         modalBody.innerHTML = `
           <div style="margin-bottom:14px;font-size:13px">
@@ -5833,18 +5741,16 @@
 
     function deleteExamResultItem(resultId) {
       if (!confirm("Bạn có chắc chắn muốn xóa kết quả thi này?")) return;
-      window.AICheckExamStore.deleteResult(resultId);
+      window.AICheckExamStore?.deleteResult(resultId);
       loadScores();
-      loadExamResultsTable();
       loadExamStudentsSummaryTable();
       calculateStats();
     }
 
     function clearAllExamResults() {
       if (!confirm("CẢNH BÁO: Thao tác này sẽ xóa toàn bộ lịch sử bài thi và dữ liệu giám sát vi phạm trên thiết bị này. Bạn có chắc chắn muốn tiếp tục?")) return;
-      window.AICheckExamStore.clearAllResults();
+      window.AICheckExamStore?.clearAllResults();
       loadScores();
-      loadExamResultsTable();
       loadExamStudentsSummaryTable();
       calculateStats();
     }
@@ -5929,16 +5835,22 @@
         const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
         const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
         const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
+        const violCount = r.violationsCount || (Array.isArray(r.violations) ? r.violations.length : 0);
 
-        // Lọc trạng thái Đạt / Chưa đạt
+        // Lọc trạng thái Đạt / Chưa đạt / Có vi phạm
         if (statusFilter === "passed" && !isPassed) return false;
         if (statusFilter === "failed" && isPassed) return false;
+        if (statusFilter === "violation" && violCount === 0) return false;
 
         // Lọc đề thi
         if (titleFilter !== "all" && r.examTitle !== titleFilter) return false;
 
-        // Tìm kiếm họ và tên
-        if (search && !(r.studentName && r.studentName.toLowerCase().includes(search))) return false;
+        // Tìm kiếm họ tên hoặc đề thi
+        if (search) {
+          const sName = (r.studentName || "").toLowerCase();
+          const sTitle = (r.examTitle || "").toLowerCase();
+          if (!sName.includes(search) && !sTitle.includes(search)) return false;
+        }
 
         return true;
       });
@@ -5953,12 +5865,13 @@
           <thead>
             <tr>
               <th>STT</th>
-              <th>Họ và tên thí sinh</th>
+              <th>Thí sinh</th>
               <th>Đề thi</th>
-              <th>Điểm đạt được</th>
-              <th>Ngưỡng đạt yêu cầu</th>
-              <th>Kết quả phân loại</th>
               <th>Số câu làm đúng</th>
+              <th>Điểm đạt được</th>
+              <th>Ngưỡng đạt</th>
+              <th>Kết quả phân loại</th>
+              <th>Vi phạm Toàn màn hình</th>
               <th>Thời gian làm</th>
               <th>Ngày nộp bài</th>
               <th>Thao tác</th>
@@ -5979,6 +5892,11 @@
                 ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐÃ ĐẠT YÊU CẦU</span>`
                 : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">CHƯA ĐẠT YÊU CẦU</span>`;
 
+              const violCount = r.violationsCount || (Array.isArray(r.violations) ? r.violations.length : 0);
+              const violBadge = violCount === 0
+                ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
+                : `<button class="btn-small" style="color:#b91c1c;border-color:#fca5a5;background:#fef2f2;font-weight:700;padding:2px 8px" onclick="viewViolationDetail('${r.id}')">${violCount} lần vi phạm (Xem)</button>`;
+
               const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
               const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "—";
 
@@ -5987,12 +5905,14 @@
                   <td>${idx + 1}</td>
                   <td>
                     <div style="display:flex;align-items:center;gap:6px">
-                      
                       <strong>${escapeHtml(r.studentName || "Thí sinh THĐ")}</strong>
                       <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:10.5px;padding:1px 6px;font-weight:700">Lần ${attemptNum}</span>
                     </div>
                   </td>
                   <td>${escapeHtml(r.examTitle || "Đề thi trực tuyến")}</td>
+                  <td>
+                    <strong style="color:var(--forest)">${correctCount}</strong> / ${totalQ} câu
+                  </td>
                   <td>
                     <span style="font-family:'Space Grotesk';font-weight:800;font-size:15px;color:var(--forest)">${score}</span> / ${maxScore} đ
                     <small style="color:#64748b;margin-left:4px">(${pct}%)</small>
@@ -6001,9 +5921,7 @@
                     <span style="font-size:11px;color:#475569">≥ <strong>${passingScore}</strong> / ${maxScore} đ</span>
                   </td>
                   <td>${statusBadge}</td>
-                  <td>
-                    <strong style="color:var(--forest)">${correctCount}</strong> / ${totalQ} câu
-                  </td>
+                  <td>${violBadge}</td>
                   <td style="color:#64748b">${escapeHtml(r.timeSpentFormatted || "—")}</td>
                   <td style="color:#64748b">${timeStr}</td>
                   <td>
@@ -6018,19 +5936,12 @@
       initScrollFade(container);
     }
 
-    function deleteExamSummaryStudent(resultId) {
-      if (!confirm("Bạn có chắc chắn muốn xóa bản ghi của thí sinh này?")) return;
-      window.AICheckExamStore.deleteResult(resultId);
-      loadScores();
-      loadExamResultsTable();
-      loadExamStudentsSummaryTable();
-      calculateStats();
-    }
+    const deleteExamSummaryStudent = deleteExamResultItem;
 
     function exportExamStudentsCsv() {
       if (!allExamResultsCache.length) return alert("Chưa có danh sách thí sinh để xuất file Excel/CSV.");
 
-      let csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Thời gian làm bài,Ngày giờ nộp bài\n";
+      let csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Vi phạm toàn màn hình,Thời gian làm bài,Ngày giờ nộp bài\n";
       allExamResultsCache.forEach((r, idx) => {
         const attemptNum = r.attemptNumber || 1;
         const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
@@ -6041,9 +5952,10 @@
         const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
         const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
         const statusText = isPassed ? "ĐÃ ĐẠT YÊU CẦU" : "CHƯA ĐẠT YÊU CẦU";
+        const violCount = r.violationsCount || (Array.isArray(r.violations) ? r.violations.length : 0);
         const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "";
 
-        csvContent += `"${idx + 1}","${(r.studentName || '').replace(/"/g, '""')}","${(r.examTitle || '').replace(/"/g, '""')}","Lần ${attemptNum}","${score}","${maxScore}","${passingScore}","${statusText}","${correctCount}","${totalQ}","${r.timeSpentFormatted || ''}","${timeStr}"\n`;
+        csvContent += `"${idx + 1}","${(r.studentName || '').replace(/"/g, '""')}","${(r.examTitle || '').replace(/"/g, '""')}","Lần ${attemptNum}","${score}","${maxScore}","${passingScore}","${statusText}","${correctCount}","${totalQ}","${violCount} lần","${r.timeSpentFormatted || ''}","${timeStr}"\n`;
       });
 
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
