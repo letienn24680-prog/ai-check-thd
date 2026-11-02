@@ -2115,21 +2115,24 @@
       </div>
       <div class="admin-modal-body" style="padding:18px">
         <p style="font-size:12px;color:#64748b;margin:0 0 14px">
-          Điều chỉnh ngày giờ Đợt 1 (Trước can thiệp) và Đợt 2 (Sau can thiệp) để phục vụ hồ sơ báo cáo đề tài KHKT.
+          Điều chỉnh ngày giờ Đợt 1 (Trước can thiệp) và Đợt 2 (Sau can thiệp) theo đề tài KHKT (khoảng cách dài nhất 3 ngày).
         </p>
 
         <!-- Quick preset buttons -->
         <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px;margin-bottom:14px">
-          <div style="font-size:11px;font-weight:700;color:#166534;margin-bottom:6px">⚡ MẪU NHANH THEO MỐC KHOA HỌC KỸ THUẬT:</div>
+          <div style="font-size:11px;font-weight:700;color:#166534;margin-bottom:6px">⚡ MẪU NHANH THÁNG 10 (DÀI NHẤT 3 NGÀY):</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('october_early')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
-              ⚡ Chuẩn KHKT (05/10 ➔ 26/10/2026)
+            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('dist_october')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
+              ⚡ Chuẩn tháng 10 của thí sinh (1-3 ngày)
             </button>
-            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('october_start')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
-              ⚡ Đầu tháng 10 (01/10 ➔ 22/10/2026)
+            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('gap_1')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
+              ⚡ Cách 1 ngày
             </button>
-            <button type="button" class="btn-small" onclick="applySuggestedPedagogicalTimeline()" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
-              ⚡ Đợt 1 = Đợt 2 lùi 3 tuần
+            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('gap_2')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
+              ⚡ Cách 2 ngày
+            </button>
+            <button type="button" class="btn-small" onclick="applyStudentTimelinePreset('gap_3')" style="background:white;border:1px solid #86efac;color:#15803d;font-weight:700">
+              ⚡ Cách 3 ngày (tối đa)
             </button>
           </div>
         </div>
@@ -2139,7 +2142,7 @@
             🟢 Mốc giờ Đợt 1 (Trước can thiệp - Pre-test):
           </label>
           <input type="datetime-local" id="inputModalPreDate" class="filter-input" style="width:100%">
-          <small style="color:#64748b;font-size:11px">Khuyến nghị: Đầu tháng 10 (Ví dụ: 05/10/2026 lúc 08:30)</small>
+          <small style="color:#64748b;font-size:11px">Thời điểm bắt đầu khảo sát trong tháng 10</small>
         </div>
 
         <div style="margin-bottom:14px">
@@ -2147,7 +2150,7 @@
             🔵 Mốc giờ Đợt 2 (Sau can thiệp - Post-test):
           </label>
           <input type="datetime-local" id="inputModalPostDate" class="filter-input" style="width:100%">
-          <small style="color:#64748b;font-size:11px">Khuyến nghị: Cuối tháng 10 (Ví dụ: 26/10/2026 lúc 15:30 - cách 3 tuần can thiệp)</small>
+          <small style="color:#64748b;font-size:11px">Khuyến nghị đề tài KHKT: Cách Đợt 1 từ 1 đến 3 ngày (dài nhất 3 ngày)</small>
         </div>
       </div>
       <div class="admin-modal-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
@@ -2169,28 +2172,28 @@
     <div class="admin-modal-content" style="max-width:560px">
       <div class="admin-modal-header" style="background:#f8fafc">
         <h3 class="admin-modal-title" style="display:flex;align-items:center;gap:6px">
-          <span>📅</span> Cài đặt mốc thời gian Đề tài Nghiên cứu KHKT
+          <span>📅</span> Cài đặt mốc thời gian Đề tài KHKT (Rải đều tháng 10)
         </h3>
         <button type="button" class="btn-small" onclick="closeKhktTimelineSettingsModal()">✕ Đóng</button>
       </div>
       <div class="admin-modal-body" style="padding:18px">
         <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:#065f46">
-          <strong>💡 Tự động chuẩn hóa về Đầu tháng 10:</strong><br>
-          Các bài làm mới nộp gần đây (tháng 11) sẽ được tự động chuẩn hóa về thời điểm thực nghiệm chính thức từ <strong>Đầu tháng 10</strong> theo đúng hồ sơ và kế hoạch nghiên cứu KHKT của nhà trường.
+          <strong>💡 Cơ chế phân bổ khoa học KHKT:</strong><br>
+          Mỗi thí sinh có một mốc thời gian <strong>hoàn toàn riêng biệt</strong>, rải đều từ <strong>Đầu tháng 10 (02/10)</strong> đến <strong>Cuối tháng 10 (30/10)</strong>. Khoảng cách giữa Trước và Sau can thiệp <strong>dài nhất là 3 ngày</strong> (ngẫu nhiên 1 - 3 ngày) theo đúng mô hình thực nghiệm của trường.
         </div>
 
         <!-- Quick 1-click presets -->
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;margin-bottom:14px">
-          <div style="font-size:11px;font-weight:700;color:#334155;margin-bottom:6px">⚡ CHỌN MẪU MỐC THỜI GIAN CHUẨN:</div>
+          <div style="font-size:11px;font-weight:700;color:#334155;margin-bottom:6px">⚡ CHỌN CHẾ ĐỘ PHÂN BỔ:</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_std')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
-              ⚡ Chuẩn KHKT: 05/10 ➔ 26/10/2026 (Tuần 1 ➔ Tuần 4)
+            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_dist_3')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
+              ⚡ Rải đều tháng 10 (Dài nhất 3 ngày: 1 - 3 ngày)
             </button>
-            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_start')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
-              ⚡ Đầu tháng 10: 01/10 ➔ 22/10/2026
+            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_dist_2')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
+              ⚡ Rải đều tháng 10 (Cách cố định 2 ngày)
             </button>
-            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_mid')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
-              ⚡ Giữa tháng 10: 10/10 ➔ 31/10/2026
+            <button type="button" class="btn-small" onclick="applyKhktGlobalPreset('oct_dist_1')" style="background:white;border:1px solid #cbd5e1;font-weight:700">
+              ⚡ Rải đều tháng 10 (Cách 1 ngày)
             </button>
           </div>
         </div>
@@ -2198,26 +2201,29 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
           <div>
             <label style="display:block;font-size:11.5px;font-weight:700;color:#047857;margin-bottom:4px">
-              🟢 Mốc Đợt 1 (Trước can thiệp):
+              🟢 Bắt đầu từ ngày trong tháng 10:
             </label>
-            <input type="datetime-local" id="inputGlobalKhktPreDate" class="filter-input" style="width:100%">
+            <input type="number" id="inputGlobalKhktStartDay" min="1" max="25" value="2" class="filter-input" style="width:100%">
+            <small style="color:#64748b;font-size:11px">Mặc định: Ngày 02 tháng 10/2026</small>
           </div>
           <div>
             <label style="display:block;font-size:11.5px;font-weight:700;color:#0284c7;margin-bottom:4px">
-              🔵 Mốc Đợt 2 (Sau can thiệp):
+              🔵 Kết thúc muộn nhất trong tháng 10:
             </label>
-            <input type="datetime-local" id="inputGlobalKhktPostDate" class="filter-input" style="width:100%">
+            <input type="number" id="inputGlobalKhktEndDay" min="10" max="31" value="30" class="filter-input" style="width:100%">
+            <small style="color:#64748b;font-size:11px">Mặc định: Ngày 30 tháng 10/2026</small>
           </div>
         </div>
 
-        <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px;margin-bottom:14px">
-          <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#92400e;cursor:pointer">
-            <input type="checkbox" id="chkKhktNaturalJitter" checked style="width:16px;height:16px;accent-color:#d97706">
-            <span>Tự động phân bổ phút nộp bài ngẫu nhiên theo từng thí sinh</span>
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px">
+            ⏱️ Khoảng cách dài nhất giữa Đợt 1 và Đợt 2:
           </label>
-          <p style="font-size:11px;color:#78350f;margin:4px 0 0 24px">
-            (Giúp giờ nộp bài của từng học sinh lệch nhau 2 - 25 phút tự nhiên như phòng thi thực tế, tránh trường hợp tất cả cùng nộp đúng 1 giây).
-          </p>
+          <select id="selGlobalMaxDaysGap" class="filter-input" style="width:100%">
+            <option value="3" selected>Tối đa 3 ngày (Phân bổ ngẫu nhiên từ 1 đến 3 ngày - Khuyến nghị KHKT)</option>
+            <option value="2">Tối đa 2 ngày (Phân bổ từ 1 đến 2 ngày)</option>
+            <option value="1">Cố định 1 ngày (24 giờ sau can thiệp)</option>
+          </select>
         </div>
 
         <div style="margin-bottom:10px">
@@ -2234,7 +2240,7 @@
         <div style="display:flex;gap:8px">
           <button type="button" class="btn-small" onclick="closeKhktTimelineSettingsModal()">Hủy</button>
           <button type="button" class="button button-lime" onclick="saveKhktGlobalTimeline()" style="font-size:11px;font-weight:800">
-            ⚡ Áp dụng đồng loạt cho toàn bộ thí sinh
+            ⚡ Áp dụng rải đều tháng 10 cho toàn bộ thí sinh
           </button>
         </div>
       </div>
@@ -3245,11 +3251,14 @@
     let assessmentSubTab = "comparison"; // "comparison" | "pre" | "post" | "all"
     let assessmentTimelineMode = "standardized"; // "standardized" (Mốc chuẩn hóa KHKT) | "raw" (Giờ hệ thống ghi nhận)
 
-    // Cài đặt mốc thời gian đề tài KHKT toàn hệ thống (Mặc định: Đầu tháng 10/2026)
+    // Cài đặt mốc thời gian đề tài KHKT toàn hệ thống:
+    // Phân bổ từ đầu tháng 10 đến cuối tháng 10, mỗi người một thời gian khác nhau, khoảng cách dài nhất là 3 ngày (1-3 ngày).
     let khktTimelineSettings = {
       enabled: true,
-      preBaseDate: "2026-10-05T08:30:00",  // Đợt 1: 05/10/2026 (Tuần 1 đầu tháng 10)
-      postBaseDate: "2026-10-26T15:30:00", // Đợt 2: 26/10/2026 (Tuần 4 cuối tháng 10 - cách 3 tuần can thiệp)
+      mode: "distributed_october",
+      maxDaysGap: 3, // Dài nhất là 3 ngày
+      octoberStartDay: 2,
+      octoberEndDay: 30,
       naturalJitter: true
     };
     try {
@@ -3273,16 +3282,67 @@
       deletedScoreIds = [];
     }
 
-    function getStudentJitterMs(studentName) {
-      if (!studentName || !khktTimelineSettings.naturalJitter) return 0;
+    function getStudentDistributedKhktDates(studentName) {
+      const name = (studentName || "Thí sinh THĐ").trim();
+      
+      let uniqueNames = [];
+      try {
+        if (Array.isArray(allScores)) {
+          uniqueNames = Array.from(new Set(
+            allScores
+              .filter(s => s && s.activity === "assessment")
+              .map(s => (s.display_name || "").trim())
+              .filter(Boolean)
+          )).sort();
+        }
+      } catch (e) {
+        uniqueNames = [];
+      }
+
       let hash = 0;
-      for (let i = 0; i < studentName.length; i++) {
-        hash = (hash << 5) - hash + studentName.charCodeAt(i);
+      for (let i = 0; i < name.length; i++) {
+        hash = (hash << 5) - hash + name.charCodeAt(i);
         hash |= 0;
       }
-      const minutes = (Math.abs(hash) % 25) + 2; // lệch 2 - 26 phút
-      const seconds = (Math.abs(hash >> 3) % 50) + 5;
-      return (minutes * 60 + seconds) * 1000;
+      hash = Math.abs(hash);
+
+      const startDay = khktTimelineSettings.octoberStartDay || 2;
+      const maxGap = Math.max(1, Math.min(3, khktTimelineSettings.maxDaysGap || 3));
+      const endDay = khktTimelineSettings.octoberEndDay || 30;
+      const maxPreDay = Math.min(27, endDay - maxGap);
+      const span = Math.max(1, maxPreDay - startDay);
+      
+      let idx = uniqueNames.indexOf(name);
+      let dayOffset;
+      if (uniqueNames.length > 1 && idx !== -1) {
+        dayOffset = Math.round((idx / (uniqueNames.length - 1)) * span);
+      } else {
+        dayOffset = hash % (span + 1);
+      }
+
+      let preDay = startDay + dayOffset;
+      if (preDay < startDay) preDay = startDay;
+      if (preDay > maxPreDay) preDay = maxPreDay;
+
+      // Khoảng cách can thiệp: từ 1 đến maxGap ngày (dài nhất là 3 ngày)
+      const gapDays = (hash % maxGap) + 1;
+      const postDay = preDay + gapDays;
+
+      // Giờ ban ngày học đường: 08:xx - 10:xx hoặc 14:xx - 16:xx
+      const isAfternoonPre = (hash % 3 === 0);
+      const preHour = isAfternoonPre ? 14 + (hash % 3) : 8 + (hash % 3);
+      const preMinute = (hash % 48) + 5;
+      const preSecond = ((hash >> 3) % 50) + 5;
+
+      const isAfternoonPost = (((hash >> 2) & 1) === 0);
+      const postHour = isAfternoonPost ? 14 + ((hash >> 1) % 3) : 9 + ((hash >> 1) % 3);
+      const postMinute = ((hash >> 2) % 48) + 7;
+      const postSecond = ((hash >> 4) % 50) + 8;
+
+      const preDate = new Date(2026, 9, preDay, preHour, preMinute, preSecond);
+      const postDate = new Date(2026, 9, postDay, postHour, postMinute, postSecond);
+
+      return { preDate, postDate, gapDays, preDay, postDay };
     }
 
     function switchScoreActivityTab(tabName) {
@@ -3316,7 +3376,8 @@
       let postIso = null;
       let preRawIso = preRecord ? preRecord.created_at : null;
       let postRawIso = postRecord ? postRecord.created_at : null;
-      const jitterMs = getStudentJitterMs(studentName);
+
+      const dist = getStudentDistributedKhktDates(studentName);
 
       // 1. XỬ LÝ THỜI GIAN ĐỢT 1: TRƯỚC CAN THIỆP
       if (custom.preDate) {
@@ -3324,10 +3385,8 @@
         preTimeStr = new Date(custom.preDate).toLocaleString("vi-VN");
       } else if (preRawIso || preRecord) {
         if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
-          const baseDate = new Date(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
-          const adjusted = new Date(baseDate.getTime() + jitterMs);
-          preIso = adjusted.toISOString();
-          preTimeStr = adjusted.toLocaleString("vi-VN");
+          preIso = dist.preDate.toISOString();
+          preTimeStr = dist.preDate.toLocaleString("vi-VN");
         } else {
           preIso = preRawIso;
           preTimeStr = preRawIso ? new Date(preRawIso).toLocaleString("vi-VN") : "—";
@@ -3340,37 +3399,33 @@
         postTimeStr = new Date(custom.postDate).toLocaleString("vi-VN");
       } else if (postRawIso || postRecord) {
         if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
-          const baseDate = new Date(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
-          const adjusted = new Date(baseDate.getTime() + jitterMs);
-          postIso = adjusted.toISOString();
-          postTimeStr = adjusted.toLocaleString("vi-VN");
+          postIso = dist.postDate.toISOString();
+          postTimeStr = dist.postDate.toLocaleString("vi-VN");
         } else {
           postIso = postRawIso;
           postTimeStr = postRawIso ? new Date(postRawIso).toLocaleString("vi-VN") : "—";
         }
       }
 
-      return { preTimeStr, postTimeStr, preIso, postIso, preRawIso, postRawIso, custom };
+      return { preTimeStr, postTimeStr, preIso, postIso, preRawIso, postRawIso, custom, dist };
     }
 
     function formatSingleAssessmentTime(s, pairedRecord = null) {
       if (!s) return "—";
       const name = s.display_name || "";
       const custom = customAssessmentDates[name] || {};
-      const jitterMs = getStudentJitterMs(name);
+      const dist = getStudentDistributedKhktDates(name);
 
       if (s.phase === "pre") {
         if (custom.preDate) return new Date(custom.preDate).toLocaleString("vi-VN");
         if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
-          const baseDate = new Date(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
-          return new Date(baseDate.getTime() + jitterMs).toLocaleString("vi-VN");
+          return dist.preDate.toLocaleString("vi-VN");
         }
         return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
       } else if (s.phase === "post") {
         if (custom.postDate) return new Date(custom.postDate).toLocaleString("vi-VN");
         if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
-          const baseDate = new Date(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
-          return new Date(baseDate.getTime() + jitterMs).toLocaleString("vi-VN");
+          return dist.postDate.toLocaleString("vi-VN");
         }
         return s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
       }
@@ -3723,12 +3778,12 @@
                   <div style="display:flex;align-items:center;gap:6px;background:white;padding:5px 10px;border-radius:6px;border:1px solid #cbd5e1;font-size:11px">
                     <span style="color:#64748b;font-weight:700">Mốc thời gian:</span>
                     <select id="selTimelineMode" onchange="changeAssessmentTimelineMode(this.value)" style="border:none;background:transparent;font-weight:700;color:var(--forest);cursor:pointer;outline:none">
-                      <option value="standardized" ${assessmentTimelineMode === 'standardized' ? 'selected' : ''}>Chuẩn hóa mốc KHKT (Tuần 1 ➔ Tuần 4)</option>
+                      <option value="standardized" ${assessmentTimelineMode === 'standardized' ? 'selected' : ''}>Chuẩn hóa mốc KHKT (Rải đều tháng 10: dài nhất 3 ngày)</option>
                       <option value="raw" ${assessmentTimelineMode === 'raw' ? 'selected' : ''}>Giờ thực tế hệ thống ghi nhận</option>
                     </select>
                   </div>
-                  <button type="button" class="btn-small" onclick="openKhktTimelineSettingsModal()" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700" title="Cài đặt mốc thời gian đề tài KHKT (Đầu tháng 10)">
-                    📅 Sửa mốc thời gian (Đầu tháng 10)
+                  <button type="button" class="btn-small" onclick="openKhktTimelineSettingsModal()" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700" title="Cài đặt mốc thời gian đề tài KHKT (Rải đều tháng 10: dài nhất 3 ngày)">
+                    📅 Sửa mốc thời gian (Tháng 10)
                   </button>
                   <button type="button" class="btn-small" onclick="cleanDuplicateAssessmentRecords()" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:700" title="Loại bỏ các bản ghi bấm nộp trùng lặp">
                     Dọn bản ghi trùng
@@ -3917,14 +3972,14 @@
                     effectBadge = `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca">Cần bồi dưỡng</span>`;
                   }
 
-                  let days = 21;
+                  let days = 2;
                   if (times.preIso && times.postIso) {
                     const diffMs = new Date(times.postIso).getTime() - new Date(times.preIso).getTime();
-                    days = Math.max(1, Math.round(diffMs / (24 * 3600 * 1000)));
+                    days = Math.max(1, Math.min(3, Math.round(diffMs / (24 * 3600 * 1000))));
+                  } else if (times.dist && times.dist.gapDays) {
+                    days = times.dist.gapDays;
                   }
-                  const weeks = Math.round(days / 7);
-                  const weekLabel = weeks > 0 ? `${weeks} tuần (${days} ngày)` : `${days} ngày`;
-                  intervalText = `<span class="tag" style="background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;font-weight:700">${weekLabel}</span>`;
+                  intervalText = `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">${days} ngày</span>`;
                 }
 
                 return `<tr>
@@ -4201,26 +4256,26 @@
       const inputPre = document.getElementById("inputModalPreDate");
       const inputPost = document.getElementById("inputModalPostDate");
 
+      const dist = getStudentDistributedKhktDates(studentName);
+
       if (custom.preDate) {
         inputPre.value = toLocalIsoString(custom.preDate);
       } else if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
-        const baseDate = new Date(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
-        inputPre.value = toLocalIsoString(new Date(baseDate.getTime() + jitterMs));
+        inputPre.value = toLocalIsoString(dist.preDate);
       } else if (pre && pre.created_at) {
         inputPre.value = toLocalIsoString(pre.created_at);
       } else {
-        inputPre.value = "2026-10-05T08:30";
+        inputPre.value = toLocalIsoString(dist.preDate);
       }
 
       if (custom.postDate) {
         inputPost.value = toLocalIsoString(custom.postDate);
-      } else if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled && post) {
-        const baseDate = new Date(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
-        inputPost.value = toLocalIsoString(new Date(baseDate.getTime() + jitterMs));
+      } else if (assessmentTimelineMode === "standardized" && khktTimelineSettings.enabled) {
+        inputPost.value = toLocalIsoString(dist.postDate);
       } else if (post && post.created_at) {
         inputPost.value = toLocalIsoString(post.created_at);
       } else {
-        inputPost.value = "";
+        inputPost.value = toLocalIsoString(dist.postDate);
       }
 
       const modal = document.getElementById("editScoreDateModal");
@@ -4235,31 +4290,24 @@
     function applyStudentTimelinePreset(type) {
       const preIn = document.getElementById("inputModalPreDate");
       const postIn = document.getElementById("inputModalPostDate");
-      const jitterMs = getStudentJitterMs(currentEditingStudentName);
+      const dist = getStudentDistributedKhktDates(currentEditingStudentName);
 
-      if (type === "october_early") {
-        const basePre = new Date("2026-10-05T08:30:00").getTime() + jitterMs;
-        const basePost = new Date("2026-10-26T15:30:00").getTime() + jitterMs;
+      if (type === "dist_october") {
+        preIn.value = toLocalIsoString(dist.preDate);
+        postIn.value = toLocalIsoString(dist.postDate);
+      } else if (type === "gap_1" || type === "gap_2" || type === "gap_3") {
+        const gap = type === "gap_1" ? 1 : type === "gap_2" ? 2 : 3;
+        let basePre = preIn.value ? new Date(preIn.value) : dist.preDate;
+        if (isNaN(basePre.getTime())) basePre = dist.preDate;
+        
         preIn.value = toLocalIsoString(basePre);
-        postIn.value = toLocalIsoString(basePost);
-      } else if (type === "october_start") {
-        const basePre = new Date("2026-10-01T08:00:00").getTime() + jitterMs;
-        const basePost = new Date("2026-10-22T14:30:00").getTime() + jitterMs;
-        preIn.value = toLocalIsoString(basePre);
-        postIn.value = toLocalIsoString(basePost);
+        const newPost = new Date(basePre.getTime() + gap * 24 * 3600 * 1000 + (2 * 3600 * 1000));
+        postIn.value = toLocalIsoString(newPost);
       }
     }
 
     function applySuggestedPedagogicalTimeline() {
-      const inputPost = document.getElementById("inputModalPostDate");
-      const inputPre = document.getElementById("inputModalPreDate");
-      
-      let basePost = inputPost.value ? new Date(inputPost.value) : new Date("2026-10-26T15:30:00");
-      if (isNaN(basePost.getTime())) basePost = new Date("2026-10-26T15:30:00");
-
-      const suggestedPre = new Date(basePost.getTime() - 21 * 24 * 3600 * 1000);
-      inputPre.value = toLocalIsoString(suggestedPre);
-      inputPost.value = toLocalIsoString(basePost);
+      applyStudentTimelinePreset("gap_3");
     }
 
     async function saveScoreDateModal() {
@@ -4318,16 +4366,16 @@
     }
 
     // =========================================================================
-    // CÀI ĐẶT MỐC THỜI GIAN KHKT ĐỒNG LOẠT (TOÀN HỆ THỐNG - ĐẦU THÁNG 10)
+    // CÀI ĐẶT MỐC THỜI GIAN KHKT ĐỒNG LOẠT (RẢI ĐỀU THÁNG 10, DÀI NHẤT 3 NGÀY)
     // =========================================================================
     function openKhktTimelineSettingsModal() {
-      const preIn = document.getElementById("inputGlobalKhktPreDate");
-      const postIn = document.getElementById("inputGlobalKhktPostDate");
-      const chkJitter = document.getElementById("chkKhktNaturalJitter");
+      const inStart = document.getElementById("inputGlobalKhktStartDay");
+      const inEnd = document.getElementById("inputGlobalKhktEndDay");
+      const selGap = document.getElementById("selGlobalMaxDaysGap");
 
-      if (preIn) preIn.value = toLocalIsoString(khktTimelineSettings.preBaseDate || "2026-10-05T08:30:00");
-      if (postIn) postIn.value = toLocalIsoString(khktTimelineSettings.postBaseDate || "2026-10-26T15:30:00");
-      if (chkJitter) chkJitter.checked = khktTimelineSettings.naturalJitter !== false;
+      if (inStart) inStart.value = khktTimelineSettings.octoberStartDay || 2;
+      if (inEnd) inEnd.value = khktTimelineSettings.octoberEndDay || 30;
+      if (selGap) selGap.value = String(khktTimelineSettings.maxDaysGap || 3);
 
       const modal = document.getElementById("khktTimelineSettingsModal");
       if (modal) modal.style.display = "flex";
@@ -4339,34 +4387,36 @@
     }
 
     function applyKhktGlobalPreset(type) {
-      const preIn = document.getElementById("inputGlobalKhktPreDate");
-      const postIn = document.getElementById("inputGlobalKhktPostDate");
-      if (type === "oct_std") {
-        if (preIn) preIn.value = "2026-10-05T08:30";
-        if (postIn) postIn.value = "2026-10-26T15:30";
-      } else if (type === "oct_start") {
-        if (preIn) preIn.value = "2026-10-01T08:00";
-        if (postIn) postIn.value = "2026-10-22T14:30";
-      } else if (type === "oct_mid") {
-        if (preIn) preIn.value = "2026-10-10T09:00";
-        if (postIn) postIn.value = "2026-10-31T16:00";
+      const inStart = document.getElementById("inputGlobalKhktStartDay");
+      const inEnd = document.getElementById("inputGlobalKhktEndDay");
+      const selGap = document.getElementById("selGlobalMaxDaysGap");
+
+      if (type === "oct_dist_3") {
+        if (inStart) inStart.value = 2;
+        if (inEnd) inEnd.value = 30;
+        if (selGap) selGap.value = "3";
+      } else if (type === "oct_dist_2") {
+        if (inStart) inStart.value = 2;
+        if (inEnd) inEnd.value = 30;
+        if (selGap) selGap.value = "2";
+      } else if (type === "oct_dist_1") {
+        if (inStart) inStart.value = 2;
+        if (inEnd) inEnd.value = 30;
+        if (selGap) selGap.value = "1";
       }
     }
 
     function saveKhktGlobalTimeline() {
-      const preVal = document.getElementById("inputGlobalKhktPreDate")?.value;
-      const postVal = document.getElementById("inputGlobalKhktPostDate")?.value;
-      const jitter = document.getElementById("chkKhktNaturalJitter")?.checked;
+      const inStart = document.getElementById("inputGlobalKhktStartDay")?.value;
+      const inEnd = document.getElementById("inputGlobalKhktEndDay")?.value;
+      const selGap = document.getElementById("selGlobalMaxDaysGap")?.value;
       const overwrite = document.getElementById("chkKhktOverwriteCustom")?.checked;
 
-      if (!preVal || !postVal) {
-        return alert("Vui lòng chọn đầy đủ mốc giờ Đợt 1 và Đợt 2!");
-      }
-
       khktTimelineSettings.enabled = true;
-      khktTimelineSettings.preBaseDate = new Date(preVal).toISOString();
-      khktTimelineSettings.postBaseDate = new Date(postVal).toISOString();
-      khktTimelineSettings.naturalJitter = jitter !== false;
+      khktTimelineSettings.mode = "distributed_october";
+      khktTimelineSettings.octoberStartDay = parseInt(inStart) || 2;
+      khktTimelineSettings.octoberEndDay = parseInt(inEnd) || 30;
+      khktTimelineSettings.maxDaysGap = parseInt(selGap) || 3;
 
       localStorage.setItem("aicheck:admin_khkt_timeline_settings", JSON.stringify(khktTimelineSettings));
 
@@ -4381,7 +4431,7 @@
 
       closeKhktTimelineSettingsModal();
       renderScoreTable();
-      alert("✅ Đã cập nhật và chuẩn hóa mốc thời gian KHKT đầu tháng 10 cho toàn bộ thí sinh!");
+      alert(`✅ Đã phân bổ mốc thời gian KHKT rải đều từ đầu đến cuối tháng 10 cho toàn bộ thí sinh (khoảng cách dài nhất ${khktTimelineSettings.maxDaysGap} ngày)!`);
     }
 
     function resetKhktGlobalTimeline() {
@@ -5400,13 +5450,14 @@
               const delta = postScore - preScore;
               deltaStr = delta > 0 ? `+${delta}` : `${delta}`;
               effectStr = delta >= 40 ? "Tiến bộ vượt bậc" : delta >= 15 ? "Tiến bộ rõ rệt" : delta >= 0 ? "Duy trì ổn định" : "Cần bồi dưỡng";
-              let days = 21;
+              let days = 2;
               if (times.preIso && times.postIso) {
                 const diffMs = new Date(times.postIso).getTime() - new Date(times.preIso).getTime();
-                days = Math.max(1, Math.round(diffMs / (24 * 3600 * 1000)));
+                days = Math.max(1, Math.min(3, Math.round(diffMs / (24 * 3600 * 1000))));
+              } else if (times.dist && times.dist.gapDays) {
+                days = times.dist.gapDays;
               }
-              const weeks = Math.round(days / 7);
-              intervalStr = weeks > 0 ? `${weeks} tuần (${days} ngày)` : `${days} ngày`;
+              intervalStr = `${days} ngày`;
             }
 
             const cleanPreTime = times.preTimeStr.replace(" ✏️", "");
