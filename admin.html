@@ -1732,71 +1732,6 @@
       </div>
     </section>
 
-    <!-- KẾT QUẢ THI TRỰC TUYẾN & GIÁM SÁT VI PHẠM TOÀN MÀN HÌNH (GỘP THỐNG KÊ & GIÁM SÁT) -->
-    <section class="card" id="examStudentsSummarySection">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-        <div>
-          <h2 class="panel-title" style="margin:0">Kết quả Thi Trực tuyến & Giám sát Vi phạm Toàn màn hình</h2>
-          <p class="panel-copy" style="margin:4px 0 0">
-            Lưu trữ danh sách toàn bộ thí sinh làm bài thi, đối chiếu điểm đạt được với ngưỡng chuẩn và giám sát chi tiết hành vi thoát toàn màn hình, chuyển tab khi làm bài.
-          </p>
-        </div>
-        <div class="admin-btn-row">
-          <button class="button button-lime" onclick="exportExamStudentsCsv()" style="font-size:12.5px;height:36px;padding:0 14px;border-radius:8px;display:inline-flex;align-items:center;gap:6px">
-            Xuất Excel / CSV thí sinh ↓
-          </button>
-          <button class="btn-small" onclick="loadExamStudentsSummaryTable()">↻ Làm mới</button>
-          <button class="btn-small" onclick="clearAllExamResults()" style="color:#b91c1c" title="Xóa toàn bộ lịch sử bài thi">Xóa lịch sử thi</button>
-          <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('examStudentsBodySection', this)" title="Thu gọn khối này">
-            <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
-          </button>
-        </div>
-      </div>
-
-      <div id="examStudentsBodySection">
-      <!-- 4 THẺ THỐNG KÊ TỔNG QUAN -->
-      <div class="stat-grid" id="examStudentsStatsOverview" style="margin-top:0;margin-bottom:14px">
-        <div class="stat-box">
-          <span>Tổng số lượt thi đã làm</span>
-          <strong id="examStatTotal">0</strong>
-        </div>
-        <div class="stat-box" style="border-color:#a7f3d0;background:#f0fdf4">
-          <span style="color:#047857">Đã đạt yêu cầu</span>
-          <strong id="examStatPassed" style="color:#047857">0</strong>
-        </div>
-        <div class="stat-box" style="border-color:#fecaca;background:#fef2f2">
-          <span style="color:#b91c1c">Chưa đạt yêu cầu</span>
-          <strong id="examStatFailed" style="color:#b91c1c">0</strong>
-        </div>
-        <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
-          <span style="color:#b45309">Tỷ lệ hoàn thành đạt</span>
-          <strong id="examStatRate" style="color:#b45309">0%</strong>
-        </div>
-      </div>
-
-      <!-- THANH LỌC VÀ TÌM KIẾM -->
-      <div class="filter-bar" style="margin-bottom:10px">
-        <div class="filter-group">
-          <select id="filterExamStatus" class="filter-input" onchange="renderExamStudentsTable()">
-            <option value="all">Tất cả (Cả đạt & chưa đạt)</option>
-            <option value="passed">Đã đạt yêu cầu</option>
-            <option value="failed">Chưa đạt yêu cầu</option>
-            <option value="violation">Có vi phạm toàn màn hình</option>
-          </select>
-          <select id="filterExamTitle" class="filter-input" onchange="renderExamStudentsTable()">
-            <option value="all">Tất cả đề thi</option>
-          </select>
-          <input type="text" id="searchExamStudent" class="filter-input" placeholder="Tìm theo họ tên, đề thi..." oninput="renderExamStudentsTable()">
-        </div>
-      </div>
-
-      <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
-      <div class="table-responsive" id="examStudentsTableContainer">
-        <p class="panel-copy">Đang tải danh sách thí sinh...</p>
-      </div>
-      </div>
-    </section>
-
     <!-- BẢNG KẾT QUẢ & ĐIỂM CHI TIẾT (CHIA THÀNH CÁC Ô / TAB HOẠT ĐỘNG RIÊNG BIỆT) -->
     <section class="card" id="sectionScoreDetails">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px">
@@ -3503,6 +3438,16 @@
         tabScores = allScores.filter(s => s.activity === currentScoreTab);
       }
 
+      // Lọc theo bộ lọc riêng của từng hoạt động
+      if (currentScoreTab === "exam") {
+        const statusF = window._scoreExamStatusFilter || "all";
+        const titleF = window._scoreExamTitleFilter || "all";
+        if (statusF === "passed") tabScores = tabScores.filter(s => s.passed);
+        if (statusF === "failed") tabScores = tabScores.filter(s => !s.passed);
+        if (statusF === "violation") tabScores = tabScores.filter(s => (s.violations_count || 0) > 0);
+        if (titleF !== "all") tabScores = tabScores.filter(s => s.exam_title === titleF);
+      }
+
       // Lọc theo từ khóa tìm kiếm (Họ và tên thí sinh hoặc Tên đề thi)
       if (search) {
         tabScores = tabScores.filter(s => {
@@ -3519,12 +3464,55 @@
           const passedCount = totalExams.filter(s => s.passed).length;
           const failedCount = totalExams.length - passedCount;
           const rate = totalExams.length > 0 ? Math.round((passedCount / totalExams.length) * 100) : 0;
+          const uniqueStudents = new Set(totalExams.map(s => (s.display_name || "").toLowerCase().trim()).filter(Boolean)).size;
+
+          const examTitles = Array.from(new Set(totalExams.map(s => s.exam_title).filter(Boolean)));
+          const currentTitleFilter = window._scoreExamTitleFilter || "all";
+          const currentStatusFilter = window._scoreExamStatusFilter || "all";
+
           headerBox.innerHTML = `
-            <div>
-              <p>Đang xem: <strong>Phòng thi trực tuyến chuẩn hóa</strong> · Tổng số: <strong>${totalExams.length} lượt thi</strong> (lưu độc lập từng lần thi) · Đạt: <strong style="color:#047857">${passedCount}</strong> · Chưa đạt: <strong style="color:#b91c1c">${failedCount}</strong> (Tỷ lệ đạt: <strong>${rate}%</strong>)</p>
-            </div>
-            <div style="font-size:11px;color:#64748b">
-              Thí sinh có thể thi 1 đề nhiều lần; mỗi lần thi được ghi nhận thành một kết quả độc lập (Lần 1, Lần 2...).
+            <div style="width:100%">
+              <!-- 4 THẺ THỐNG KÊ TỔNG QUAN PHÒNG THI -->
+              <div class="stat-grid" style="margin-top:0;margin-bottom:12px;width:100%">
+                <div class="stat-box">
+                  <span>Tổng số lượt thi đã làm</span>
+                  <strong>${totalExams.length} lượt (${uniqueStudents} thí sinh)</strong>
+                </div>
+                <div class="stat-box" style="border-color:#a7f3d0;background:#f0fdf4">
+                  <span style="color:#047857">Đã đạt yêu cầu</span>
+                  <strong style="color:#047857">${passedCount} lượt</strong>
+                </div>
+                <div class="stat-box" style="border-color:#fecaca;background:#fef2f2">
+                  <span style="color:#b91c1c">Chưa đạt yêu cầu</span>
+                  <strong style="color:#b91c1c">${failedCount} lượt</strong>
+                </div>
+                <div class="stat-box" style="border-color:#fed7aa;background:#fffbeb">
+                  <span style="color:#b45309">Tỷ lệ hoàn thành đạt</span>
+                  <strong style="color:#b45309">${rate}%</strong>
+                </div>
+              </div>
+
+              <!-- THANH BỘ LỌC VÀ THAO TÁC CỦA PHÒNG THI -->
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;width:100%;border-top:1px dashed #cbd5e1;padding-top:10px">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                  <span style="font-size:12px;font-weight:700;color:var(--forest)">Lọc kết quả:</span>
+                  <select class="filter-input" style="height:34px;font-size:12px;padding:4px 8px" onchange="window._scoreExamStatusFilter = this.value; renderScoreTable();">
+                    <option value="all" ${currentStatusFilter === "all" ? "selected" : ""}>Tất cả (Cả đạt & chưa đạt)</option>
+                    <option value="passed" ${currentStatusFilter === "passed" ? "selected" : ""}>Đã đạt yêu cầu</option>
+                    <option value="failed" ${currentStatusFilter === "failed" ? "selected" : ""}>Chưa đạt yêu cầu</option>
+                    <option value="violation" ${currentStatusFilter === "violation" ? "selected" : ""}>Có vi phạm toàn màn hình</option>
+                  </select>
+                  <select class="filter-input" style="height:34px;font-size:12px;padding:4px 8px" onchange="window._scoreExamTitleFilter = this.value; renderScoreTable();">
+                    <option value="all">Tất cả đề thi (${examTitles.length})</option>
+                    ${examTitles.map(t => `<option value="${escapeHtml(t)}" ${currentTitleFilter === t ? "selected" : ""}>${escapeHtml(t)}</option>`).join("")}
+                  </select>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <button type="button" class="btn-small" onclick="clearAllExamResults()" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:700" title="Xóa toàn bộ kết quả bài thi">
+                    Xóa lịch sử thi
+                  </button>
+                </div>
+              </div>
             </div>
           `;
         } else if (currentScoreTab === "assessment") {
@@ -3627,16 +3615,15 @@
           <thead>
             <tr>
               <th>STT</th>
-              <th>Họ và tên thí sinh</th>
+              <th>Thí sinh</th>
               <th>Đề thi</th>
-              <th>Lần thi</th>
+              <th>Số câu làm đúng</th>
               <th>Điểm đạt được</th>
               <th>Ngưỡng đạt</th>
-              <th>Kết quả</th>
-              <th>Số câu đúng</th>
-              <th>Vi phạm màn hình</th>
+              <th>Kết quả phân loại</th>
+              <th>Vi phạm Toàn màn hình</th>
               <th>Thời gian làm</th>
-              <th>Thời gian nộp</th>
+              <th>Ngày nộp bài</th>
               <th>Thao tác</th>
             </tr>
           </thead>
@@ -3644,32 +3631,31 @@
             ${tabScores.map((s, idx) => {
               const attemptNum = s.attempt_number || 1;
               const statusBadge = s.passed
-                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">ĐẠT</span>`
-                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">CHƯA ĐẠT</span>`;
-              const violBadge = (s.violations_count === 0)
-                ? `<span style="color:#10b981;font-weight:700">0 lần</span>`
-                : `<span style="color:#b91c1c;font-weight:700">${s.violations_count} lần</span>`;
+                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐÃ ĐẠT YÊU CẦU</span>`
+                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">CHƯA ĐẠT YÊU CẦU</span>`;
+              const violCount = s.violations_count || 0;
+              const violBadge = (violCount === 0)
+                ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
+                : `<button class="btn-small" style="color:#b91c1c;border-color:#fca5a5;background:#fef2f2;font-weight:700;padding:2px 8px" onclick="viewViolationDetail('${s.id}')">${violCount} lần vi phạm (Xem)</button>`;
               const timeStr = s.created_at ? new Date(s.created_at).toLocaleString("vi-VN") : "—";
+              const pct = s.max_score > 0 ? Math.round((s.raw_score / s.max_score) * 100) : 0;
 
               return `<tr>
                 <td>${idx + 1}</td>
                 <td>
                   <div style="display:flex;align-items:center;gap:6px">
-                    
                     <strong>${escapeHtml(s.display_name || "—")}</strong>
+                    <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-weight:800;font-size:10.5px;padding:1px 6px">Lần ${attemptNum}</span>
                   </div>
                 </td>
                 <td>${escapeHtml(s.exam_title || "Đề thi")}</td>
-                <td>
-                  <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-weight:800;font-size:11px">Lần ${attemptNum}</span>
-                </td>
-                <td>
-                  <strong style="font-family:'Space Grotesk';font-size:14px;color:var(--forest)">${s.raw_score}</strong> / ${s.max_score} đ
-                  <small style="color:#64748b;margin-left:2px">(${s.score}đ/100)</small>
-                </td>
-                <td><span style="font-size:11px;color:#475569">≥ <strong>${s.passing_score}</strong> đ</span></td>
-                <td>${statusBadge}</td>
                 <td><strong style="color:var(--forest)">${s.correct_count}</strong> / ${s.total_questions} câu</td>
+                <td>
+                  <strong style="font-family:'Space Grotesk';font-size:15px;color:var(--forest)">${s.raw_score}</strong> / ${s.max_score} đ
+                  <small style="color:#64748b;margin-left:4px">(${pct}%)</small>
+                </td>
+                <td><span style="font-size:11px;color:#475569">≥ <strong>${s.passing_score}</strong> / ${s.max_score} đ</span></td>
+                <td>${statusBadge}</td>
                 <td>${violBadge}</td>
                 <td style="color:#64748b">${escapeHtml(s.time_spent || "—")}</td>
                 <td style="color:#64748b">${timeStr}</td>
@@ -5069,6 +5055,14 @@
       if (currentScoreTab !== "all") {
         tabScores = allScores.filter(s => s.activity === currentScoreTab);
       }
+      if (currentScoreTab === "exam") {
+        const statusF = window._scoreExamStatusFilter || "all";
+        const titleF = window._scoreExamTitleFilter || "all";
+        if (statusF === "passed") tabScores = tabScores.filter(s => s.passed);
+        if (statusF === "failed") tabScores = tabScores.filter(s => !s.passed);
+        if (statusF === "violation") tabScores = tabScores.filter(s => (s.violations_count || 0) > 0);
+        if (titleF !== "all") tabScores = tabScores.filter(s => s.exam_title === titleF);
+      }
       const search = (document.getElementById("searchStudent")?.value || "").trim().toLowerCase();
       if (search) {
         tabScores = tabScores.filter(s => {
@@ -5756,217 +5750,14 @@
     }
 
     // =========================================================================
-    // QUẢN LÝ DANH SÁCH THÍ SINH ĐÃ LÀM BÀI (ĐẠT & CHƯA ĐẠT YÊU CẦU)
+    // TÍCH HỢP QUẢN LÝ KẾT QUẢ THI VÀO BẢNG ĐIỂM CHI TIẾT
     // =========================================================================
-    let allExamResultsCache = [];
-
     function loadExamStudentsSummaryTable() {
-      if (!window.AICheckExamStore) return;
-      allExamResultsCache = typeof getAllExamResultsMerged === "function" ? getAllExamResultsMerged() : (window.AICheckExamStore.getResults() || []);
-
-      // Cập nhật dropdown các đề thi trong bộ lọc
-      const titleSelect = document.getElementById("filterExamTitle");
-      if (titleSelect) {
-        const currentVal = titleSelect.value || "all";
-        const titles = Array.from(new Set(allExamResultsCache.map(r => r.examTitle).filter(Boolean)));
-        titleSelect.innerHTML = `<option value="all">Tất cả đề thi (${titles.length})</option>` +
-          titles.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
-        if (titles.includes(currentVal)) titleSelect.value = currentVal;
-      }
-
-      // Cập nhật thẻ thống kê nhanh
-      updateExamStudentsStats(allExamResultsCache);
-
-      // Render bảng danh sách chi tiết
-      renderExamStudentsTable();
+      renderScoreTable();
     }
-
-    function updateExamStudentsStats(results) {
-      const total = results.length;
-      let passedCount = 0;
-      let failedCount = 0;
-
-      results.forEach(r => {
-        const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
-        const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
-        const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
-        const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
-        const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
-        const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
-        const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
-
-        if (isPassed) {
-          passedCount++;
-        } else {
-          failedCount++;
-        }
-      });
-
-      const rate = total > 0 ? Math.round((passedCount / total) * 100) : 0;
-      const uniqueStudents = new Set(results.map(r => (r.studentName || "").toLowerCase().trim()).filter(Boolean)).size;
-
-      const elTotal = document.getElementById("examStatTotal");
-      const elPassed = document.getElementById("examStatPassed");
-      const elFailed = document.getElementById("examStatFailed");
-      const elRate = document.getElementById("examStatRate");
-
-      if (elTotal) elTotal.textContent = `${total} lượt (${uniqueStudents} thí sinh)`;
-      if (elPassed) elPassed.textContent = `${passedCount} lượt`;
-      if (elFailed) elFailed.textContent = `${failedCount} lượt`;
-      if (elRate) elRate.textContent = `${rate}%`;
-    }
-
-    
-
-
-    function renderExamStudentsTable() {
-      const container = document.getElementById("examStudentsTableContainer");
-      if (!container) return;
-
-      const statusFilter = document.getElementById("filterExamStatus") ? document.getElementById("filterExamStatus").value : "all";
-      const titleFilter = document.getElementById("filterExamTitle") ? document.getElementById("filterExamTitle").value : "all";
-      const search = document.getElementById("searchExamStudent") ? document.getElementById("searchExamStudent").value.trim().toLowerCase() : "";
-
-      let filtered = allExamResultsCache.filter(r => {
-        const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
-        const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
-        const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
-        const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
-        const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
-        const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
-        const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
-        const violCount = r.violationsCount || (Array.isArray(r.violations) ? r.violations.length : 0);
-
-        // Lọc trạng thái Đạt / Chưa đạt / Có vi phạm
-        if (statusFilter === "passed" && !isPassed) return false;
-        if (statusFilter === "failed" && isPassed) return false;
-        if (statusFilter === "violation" && violCount === 0) return false;
-
-        // Lọc đề thi
-        if (titleFilter !== "all" && r.examTitle !== titleFilter) return false;
-
-        // Tìm kiếm họ tên hoặc đề thi
-        if (search) {
-          const sName = (r.studentName || "").toLowerCase();
-          const sTitle = (r.examTitle || "").toLowerCase();
-          if (!sName.includes(search) && !sTitle.includes(search)) return false;
-        }
-
-        return true;
-      });
-
-      if (!filtered.length) {
-        container.innerHTML = '<p class="panel-copy" style="padding:15px;text-align:center">Chưa có thí sinh nào phù hợp với bộ lọc.</p>';
-        return;
-      }
-
-      container.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>Thí sinh</th>
-              <th>Đề thi</th>
-              <th>Số câu làm đúng</th>
-              <th>Điểm đạt được</th>
-              <th>Ngưỡng đạt</th>
-              <th>Kết quả phân loại</th>
-              <th>Vi phạm Toàn màn hình</th>
-              <th>Thời gian làm</th>
-              <th>Ngày nộp bài</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${filtered.map((r, idx) => {
-              const attemptNum = r.attemptNumber || 1;
-              const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
-              const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
-              const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
-              const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
-              const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
-              const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
-              const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
-
-              const statusBadge = isPassed
-                ? `<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">✓ ĐÃ ĐẠT YÊU CẦU</span>`
-                : `<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">CHƯA ĐẠT YÊU CẦU</span>`;
-
-              const violCount = r.violationsCount || (Array.isArray(r.violations) ? r.violations.length : 0);
-              const violBadge = violCount === 0
-                ? `<span style="color:#10b981;font-weight:700">✓ 0 lần (Nghiêm túc)</span>`
-                : `<button class="btn-small" style="color:#b91c1c;border-color:#fca5a5;background:#fef2f2;font-weight:700;padding:2px 8px" onclick="viewViolationDetail('${r.id}')">${violCount} lần vi phạm (Xem)</button>`;
-
-              const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
-              const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "—";
-
-              return `
-                <tr>
-                  <td>${idx + 1}</td>
-                  <td>
-                    <div style="display:flex;align-items:center;gap:6px">
-                      <strong>${escapeHtml(r.studentName || "Thí sinh THĐ")}</strong>
-                      <span class="tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-size:10.5px;padding:1px 6px;font-weight:700">Lần ${attemptNum}</span>
-                    </div>
-                  </td>
-                  <td>${escapeHtml(r.examTitle || "Đề thi trực tuyến")}</td>
-                  <td>
-                    <strong style="color:var(--forest)">${correctCount}</strong> / ${totalQ} câu
-                  </td>
-                  <td>
-                    <span style="font-family:'Space Grotesk';font-weight:800;font-size:15px;color:var(--forest)">${score}</span> / ${maxScore} đ
-                    <small style="color:#64748b;margin-left:4px">(${pct}%)</small>
-                  </td>
-                  <td>
-                    <span style="font-size:11px;color:#475569">≥ <strong>${passingScore}</strong> / ${maxScore} đ</span>
-                  </td>
-                  <td>${statusBadge}</td>
-                  <td>${violBadge}</td>
-                  <td style="color:#64748b">${escapeHtml(r.timeSpentFormatted || "—")}</td>
-                  <td style="color:#64748b">${timeStr}</td>
-                  <td>
-                    <button class="btn-small" style="color:#b91c1c" onclick="deleteExamSummaryStudent('${r.id}')">Xóa</button>
-                  </td>
-                </tr>
-              `;
-            }).join("")}
-          </tbody>
-        </table>
-      `;
-      initScrollFade(container);
-    }
-
+    const renderExamStudentsTable = renderScoreTable;
     const deleteExamSummaryStudent = deleteExamResultItem;
-
-    function exportExamStudentsCsv() {
-      if (!allExamResultsCache.length) return alert("Chưa có danh sách thí sinh để xuất file Excel/CSV.");
-
-      let csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đề thi,Lần thi,Điểm đạt được,Điểm tối đa,Điểm chuẩn đạt,Kết quả phân loại,Số câu đúng,Tổng số câu,Vi phạm toàn màn hình,Thời gian làm bài,Ngày giờ nộp bài\n";
-      allExamResultsCache.forEach((r, idx) => {
-        const attemptNum = r.attemptNumber || 1;
-        const correctCount = r.correctCount != null ? Number(r.correctCount) : 0;
-        const totalQ = Number(r.totalQuestions) > 0 ? Number(r.totalQuestions) : 20;
-        const pointsPerQ = Number(r.pointsPerQuestion) > 0 ? Number(r.pointsPerQuestion) : 2;
-        const maxScore = r.maxScore != null ? Number(r.maxScore) : (totalQ * pointsPerQ);
-        const score = r.score != null ? Number(r.score) : (correctCount * pointsPerQ);
-        const passingScore = r.passingScore != null ? Number(r.passingScore) : Math.ceil(maxScore * 0.5);
-        const isPassed = r.passed !== undefined ? Boolean(r.passed) : (score >= passingScore);
-        const statusText = isPassed ? "ĐÃ ĐẠT YÊU CẦU" : "CHƯA ĐẠT YÊU CẦU";
-        const violCount = r.violationsCount || (Array.isArray(r.violations) ? r.violations.length : 0);
-        const timeStr = r.submittedAt ? new Date(r.submittedAt).toLocaleString("vi-VN") : "";
-
-        csvContent += `"${idx + 1}","${(r.studentName || '').replace(/"/g, '""')}","${(r.examTitle || '').replace(/"/g, '""')}","Lần ${attemptNum}","${score}","${maxScore}","${passingScore}","${statusText}","${correctCount}","${totalQ}","${violCount} lần","${r.timeSpentFormatted || ''}","${timeStr}"\n`;
-      });
-
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", `AI_CHECK_THD_DanhSachThiSinh_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+    const exportExamStudentsCsv = exportActiveTabCsv;
 
     // =========================================================================
     // QUẢN LÝ CẤP MÃ ADMIN & QUYỀN TRUY CẬP QUẢN TRỊ
