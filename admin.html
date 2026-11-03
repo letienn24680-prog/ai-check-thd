@@ -1530,23 +1530,23 @@
     </section>
 
     
-    <!-- QUẢN LÝ THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TOÀN HỆ THỐNG -->
+    <!-- QUẢN LÝ & GỬI THÔNG BÁO TOÀN HỆ THỐNG (CHUÔNG THÔNG BÁO 🔔) -->
     <section class="card" id="adminAnnouncementsSection" class="card card-accent-sky">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px">
         <div style="display:flex;align-items:center;gap:10px">
           <div style="width:42px;height:42px;border-radius:10px;background:#e0f2fe;border:1px solid #7dd3fc;display:flex;align-items:center;justify-content:center;font-size:22px">
-            
+            🔔
           </div>
           <div>
             <h2 class="panel-title" style="margin:0;color:#0369a1;font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-              QUẢN LÝ THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT TOÀN HỆ THỐNG
-              <span id="announcementActiveBadge" class="tag" style="background:#0284c7;color:#fff;font-weight:800">Đang đồng bộ...</span>
+              QUẢN LÝ & GỬI THÔNG BÁO TOÀN HỆ THỐNG
+              <span id="announcementActiveBadge" class="tag" style="background:#0284c7;color:#fff;font-weight:800">Gửi vào Chuông (🔔) tất cả tài khoản</span>
               <button type="button" class="btn-small" onclick="toggleGenericCardSection('adminAnnouncementsBody', this)" style="font-weight:700;border-radius:20px;padding:3px 12px;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Thu gọn khối này">
                 <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
               </button>
             </h2>
             <p class="panel-copy" style="margin:2px 0 0;font-size:12px;color:#075985">
-              Cài đặt thông báo bắt buộc chạy trượt từ trái qua phải trên thanh tiêu đề của toàn bộ học sinh (tự động nghỉ 1 phút giữa mỗi lượt lướt). Khi sự kiện kết thúc, Admin có thể đóng sự kiện để ẩn trượt và khóa không cho học sinh nộp bài mới.
+              Soạn và gửi thông báo, lịch thi, hạn chót khảo sát KHKT trực tiếp vào biểu tượng chuông thông báo (🔔) của toàn bộ học sinh và giáo viên trên hệ thống. Học sinh chỉ cần bấm vào chuông để đọc và chuyển đến trạm tương ứng.
             </p>
           </div>
         </div>
@@ -1556,20 +1556,20 @@
       </div>
 
       <div id="adminAnnouncementsBody">
-        <!-- FORM TẠO / SỬA THÔNG BÁO -->
+        <!-- FORM SOẠN THÔNG BÁO VÀO CHUÔNG -->
         <div style="background:#ffffff;border:1px solid #bae6fd;border-radius:10px;padding:16px;margin:12px 0 16px;box-shadow:0 2px 8px rgba(2,132,199,0.05)">
           <input type="hidden" id="editAnnouncementId" value="">
           <div style="font-weight:800;font-size:13px;color:#0369a1;margin-bottom:12px;display:flex;align-items:center;gap:6px">
-            Soạn thông báo / Cài đặt sự kiện mới:
+            Soạn thông báo gửi vào Chuông thông báo (🔔) của toàn bộ tài khoản:
           </div>
 
           <div class="form-grid-2col" style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px">
             <div>
-              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">1. NỘI DUNG THÔNG BÁO BẮT BUỘC:</label>
+              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">1. NỘI DUNG THÔNG BÁO GỬI ĐẾN HỌC SINH:</label>
               <input type="text" id="announcementText" placeholder="Ví dụ: Đã mở đợt kiểm tra năng lực cuối kỳ! Hoàn thành bài trước ngày 15/11..." class="filter-input" style="width:100%;font-weight:600">
             </div>
             <div>
-              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">2. HUY HIỆU / NHÃN NỔI BẬT:</label>
+              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">2. HUY HIỆU / PHÂN LOẠI:</label>
               <select id="announcementBadge" class="filter-input" style="width:100%;font-weight:700">
                 <option value="BẮT BUỘC">BẮT BUỘC</option>
                 <option value="SỰ KIỆN KHKT">SỰ KIỆN KHKT</option>
@@ -1583,11 +1583,11 @@
 
           <div class="form-grid-3col" style="display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:12px;margin-bottom:14px">
             <div>
-              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">3. TÊN NÚT BẤM (ACTION):</label>
+              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">3. TÊN NÚT BẤM (ACTION TRONG CHUÔNG):</label>
               <input type="text" id="announcementBtnText" placeholder="VD: Làm bài ngay →, Xem chi tiết →..." value="Làm bài ngay →" class="filter-input" style="width:100%">
             </div>
             <div>
-              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">4. ĐƯỜNG DẪN / TRẠM ĐÍCH:</label>
+              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">4. ĐƯỜNG DẪN / TRẠM ĐÍCH (LIÊN KẾT NHANH):</label>
               <input type="text" id="announcementBtnUrl" list="announcementUrlDatalist" placeholder="Chọn hoặc nhập đường dẫn..." value="pages/assessment.html?phase=pre" class="filter-input" style="width:100%">
               <datalist id="announcementUrlDatalist">
                 <option value="pages/assessment.html?phase=pre">Đo Trước can thiệp (Đợt 1)</option>
@@ -1599,30 +1599,30 @@
               </datalist>
             </div>
             <div>
-              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">5. TRẠNG THÁI PHÁT SÓNG:</label>
-              <select id="announcementStatus" class="filter-input" style="width:100%;font-weight:700">
-                <option value="active">Đang phát (Hiển thị trên web)</option>
-                <option value="ended">Đã đóng / Hết sự kiện (Khóa làm bài)</option>
-                <option value="hidden">Tạm ẩn (Lưu nháp)</option>
+              <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">5. ĐỐI TƯỢNG NHẬN THÔNG BÁO:</label>
+              <select id="announcementRecipient" class="filter-input" style="width:100%;font-weight:700">
+                <option value="all">Tất cả tài khoản hệ thống (all)</option>
+                <option value="student">Tất cả Học sinh (student)</option>
+                <option value="adminthd">Quản trị & Giáo viên (adminthd)</option>
               </select>
             </div>
           </div>
 
           <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
             <div style="font-size:11.5px;color:#64748b">
-              <em>Thông báo đang phát sẽ trượt qua màn hình của học sinh từ trái sang phải, sau đó đợi 1 phút rồi mới lướt lại.</em>
+              <em>Thông báo sau khi gửi sẽ xuất hiện kèm chấm đỏ trên biểu tượng Chuông (🔔) của mọi tài khoản đăng nhập trên PC lẫn Điện thoại.</em>
             </div>
             <div style="display:flex;gap:8px">
               <button type="button" class="btn-small" onclick="resetAnnouncementForm()" style="font-weight:700">Nhập lại</button>
               <button type="button" class="button button-lime" onclick="saveAdminAnnouncement()" style="font-size:12px;font-weight:800;padding:8px 18px;display:inline-flex;align-items:center;gap:6px">
-                Lưu & Phát thông báo
+                🔔 Gửi thông báo đến toàn bộ tài khoản
               </button>
             </div>
           </div>
         </div>
 
-        <!-- BẢNG DANH SÁCH THÔNG BÁO -->
-        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+        <!-- BẢNG DANH SÁCH THÔNG BÁO ĐÃ GỬI VÀO CHUÔNG -->
+        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột)</p>
         <div class="table-responsive" id="announcementsTableContainer">
           <p class="panel-copy">Đang tải danh sách thông báo...</p>
         </div>
@@ -3172,6 +3172,9 @@
     // =========================================================================
     // QUẢN LÝ THÔNG BÁO BẮT BUỘC & SỰ KIỆN TRƯỢT HỆ THỐNG
     // =========================================================================
+    /* ==========================================================================
+       QUẢN LÝ & GỬI THÔNG BÁO TOÀN HỆ THỐNG (VÀO CHUÔNG THÔNG BÁO 🔔)
+       ========================================================================== */
     const ANNOUNCEMENTS_STORAGE_KEY = "aicheck:system_announcements";
 
     function getAdminAnnouncements() {
@@ -3179,7 +3182,6 @@
         const stored = localStorage.getItem(ANNOUNCEMENTS_STORAGE_KEY);
         if (stored) return JSON.parse(stored);
       } catch {}
-      // Mẫu mặc định ban đầu nếu chưa có
       return [
         {
           id: "ann_default_khkt",
@@ -3187,7 +3189,8 @@
           text: "Học sinh hoàn thành bài đo Trước can thiệp để xác lập mốc đối chứng năng lực ban đầu cho đề tài KHKT!",
           btnText: "Làm bài ngay →",
           btnUrl: "pages/assessment.html?phase=pre",
-          status: "active",
+          recipient: "all",
+          status: "sent",
           createdAt: new Date().toISOString()
         }
       ];
@@ -3217,14 +3220,12 @@
       if (!container) return;
 
       const list = getAdminAnnouncements();
-      const activeCount = list.filter(a => a.status === "active").length;
       if (activeBadge) {
-        activeBadge.textContent = activeCount > 0 ? `${activeCount} Đang phát trượt` : "Không có thông báo phát";
-        activeBadge.style.background = activeCount > 0 ? "#0284c7" : "#64748b";
+        activeBadge.textContent = `${list.length} thông báo trong hệ thống chuông 🔔`;
       }
 
       if (!list.length) {
-        container.innerHTML = '<p class="panel-copy" style="padding:16px;text-align:center">Chưa có thông báo nào được tạo.</p>';
+        container.innerHTML = '<p class="panel-copy" style="padding:16px;text-align:center">Chưa có thông báo nào được gửi.</p>';
         return;
       }
 
@@ -3233,46 +3234,33 @@
           <tr>
             <th>STT</th>
             <th>Huy hiệu</th>
-            <th>Nội dung thông báo trượt</th>
+            <th>Nội dung thông báo (Chuông 🔔)</th>
             <th>Nút bấm & Liên kết</th>
-            <th>Trạng thái</th>
-            <th>Ngày tạo</th>
+            <th>Người nhận</th>
+            <th>Thời gian gửi</th>
             <th>Thao tác</th>
           </tr>
         </thead>
         <tbody>
           ${list.map((a, idx) => {
-            const isAct = a.status === "active";
-            const isEnded = a.status === "ended";
-            const statusHtml = isAct
-              ? '<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">ĐANG PHÁT TRƯỢT</span>'
-              : isEnded
-              ? '<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">HẾT SỰ KIỆN (KHÓA)</span>'
-              : '<span class="tag" style="background:#f1f5f9;color:#64748b;font-weight:700">TẠM ẨN</span>';
-
             const timeStr = a.createdAt ? new Date(a.createdAt).toLocaleString("vi-VN") : "—";
+            const recLabel = (a.recipient === "student") ? "Học sinh (student)" : ((a.recipient === "adminthd") ? "Quản trị (adminthd)" : "Tất cả tài khoản (all)");
 
             return `<tr>
               <td>${idx + 1}</td>
               <td><span class="tag" style="background:#e0f2fe;color:#0369a1;font-weight:800">${escapeHtml(a.badge || "THÔNG BÁO")}</span></td>
               <td><strong>${escapeHtml(a.text || "—")}</strong></td>
               <td>
-                <span style="font-size:11.5px;color:var(--forest);font-weight:700">${escapeHtml(a.btnText || "Làm bài →")}</span>
+                <span style="font-size:11.5px;color:var(--forest);font-weight:700">${escapeHtml(a.btnText || "Xem ngay →")}</span>
                 <div style="font-size:10.5px;color:#64748b"><code style="background:#f1f5f9;padding:1px 4px;border-radius:3px">${escapeHtml(a.btnUrl || "—")}</code></div>
               </td>
-              <td>${statusHtml}</td>
+              <td><span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700">${recLabel}</span></td>
               <td style="color:#64748b">${timeStr}</td>
               <td>
                 <div style="display:flex;gap:6px;flex-wrap:wrap">
-                  ${isAct ? `
-                    <button type="button" class="btn-small" onclick="setAnnouncementStatus('${a.id}', 'ended')" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-weight:700" title="Đóng sự kiện khi hết hạn: Ẩn trượt và khóa không cho học sinh nộp bài mới">
-                      Đóng sự kiện (Khóa)
-                    </button>
-                  ` : `
-                    <button type="button" class="btn-small" onclick="setAnnouncementStatus('${a.id}', 'active')" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700" title="Bật phát trượt trên web cho học sinh">
-                      Bật phát thông báo
-                    </button>
-                  `}
+                  <button type="button" class="btn-small" onclick="resendAnnouncementToBell('${a.id}')" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700" title="Phát lại thông báo này vào chuông của tài khoản">
+                    🔔 Gửi lại
+                  </button>
                   <button type="button" class="btn-small" onclick="editAnnouncement('${a.id}')">Sửa</button>
                   <button type="button" class="btn-small" style="color:#b91c1c" onclick="deleteAnnouncement('${a.id}')">Xóa</button>
                 </div>
@@ -3290,7 +3278,8 @@
       document.getElementById("announcementBadge").value = "BẮT BUỘC";
       document.getElementById("announcementBtnText").value = "Làm bài ngay →";
       document.getElementById("announcementBtnUrl").value = "pages/assessment.html?phase=pre";
-      document.getElementById("announcementStatus").value = "active";
+      const rec = document.getElementById("announcementRecipient");
+      if (rec) rec.value = "all";
     }
 
     function saveAdminAnnouncement() {
@@ -3299,73 +3288,65 @@
       const badge = document.getElementById("announcementBadge").value;
       const btnText = document.getElementById("announcementBtnText").value.trim() || "Làm bài ngay →";
       const btnUrl = document.getElementById("announcementBtnUrl").value.trim() || "pages/assessment.html?phase=pre";
-      const status = document.getElementById("announcementStatus").value;
+      const recipient = document.getElementById("announcementRecipient")?.value || "all";
 
       if (!text) {
-        return alert("Vui lòng nhập Nội dung thông báo bắt buộc!");
+        return alert("Vui lòng nhập Nội dung thông báo!");
       }
 
       const list = getAdminAnnouncements();
 
-      // Nếu đang đặt là active, có thể cho phép chỉ 1 thông báo active duy nhất tại 1 thời điểm
-      if (status === "active") {
-        list.forEach(item => {
-          if (item.id !== editId && item.status === "active") {
-            item.status = "hidden";
-          }
-        });
-      }
+      const notifItem = {
+        id: editId || ("ann_" + Date.now()),
+        badge,
+        text,
+        btnText,
+        btnUrl,
+        recipient,
+        status: "sent",
+        createdAt: new Date().toISOString()
+      };
 
       if (editId) {
         const idx = list.findIndex(a => a.id === editId);
-        if (idx >= 0) {
-          list[idx] = {
-            ...list[idx],
-            badge,
-            text,
-            btnText,
-            btnUrl,
-            status,
-            updatedAt: new Date().toISOString()
-          };
-        }
+        if (idx >= 0) list[idx] = notifItem;
       } else {
-        list.unshift({
-          id: "ann_" + Date.now(),
-          badge,
-          text,
-          btnText,
-          btnUrl,
-          status,
-          createdAt: new Date().toISOString()
+        list.unshift(notifItem);
+      }
+
+      // GỬI TRỰC TIẾP VÀO ICON CHUÔNG THÔNG BÁO (🔔) CỦA CÁC TÀI KHOẢN
+      if (window.AICheckNotificationStore) {
+        window.AICheckNotificationStore.sendNotification({
+          recipient,
+          sender: "Ban Quản trị THĐ",
+          type: "system",
+          title: `[${badge}] ${btnText}`,
+          message: text,
+          link: btnUrl
         });
       }
 
       saveAdminAnnouncementsList(list);
       resetAnnouncementForm();
       loadAdminAnnouncements();
-      alert("Đã lưu và cập nhật phát sóng thông báo toàn hệ thống thành công!");
+      alert("Đã gửi thông báo thành công vào Chuông thông báo (🔔) của các tài khoản trên hệ thống!");
     }
 
-    function setAnnouncementStatus(id, newStatus) {
+    function resendAnnouncementToBell(id) {
       const list = getAdminAnnouncements();
       const item = list.find(a => a.id === id);
       if (!item) return;
-
-      if (newStatus === "active") {
-        // Tắt các thông báo active khác
-        list.forEach(a => { if (a.id !== id && a.status === "active") a.status = "hidden"; });
+      if (window.AICheckNotificationStore) {
+        window.AICheckNotificationStore.sendNotification({
+          recipient: item.recipient || "all",
+          sender: "Ban Quản trị THĐ",
+          type: "system",
+          title: `[${item.badge || "THÔNG BÁO"}] ${item.btnText || "Xem ngay →"}`,
+          message: item.text || "",
+          link: item.btnUrl || ""
+        });
       }
-
-      item.status = newStatus;
-      item.updatedAt = new Date().toISOString();
-      saveAdminAnnouncementsList(list);
-      loadAdminAnnouncements();
-      if (newStatus === "ended") {
-        alert("Đã đóng sự kiện! Thông báo đã được ẩn khỏi thanh trượt, và sự kiện đã được khóa không cho học sinh nộp bài mới.");
-      } else {
-        alert("Đã bật phát sóng thông báo trượt trên toàn bộ hệ thống!");
-      }
+      alert("Đã phát lại thông báo này vào Chuông thông báo của các tài khoản!");
     }
 
     function editAnnouncement(id) {
@@ -3378,7 +3359,8 @@
       document.getElementById("announcementBadge").value = item.badge || "BẮT BUỘC";
       document.getElementById("announcementBtnText").value = item.btnText || "Làm bài ngay →";
       document.getElementById("announcementBtnUrl").value = item.btnUrl || "pages/assessment.html?phase=pre";
-      document.getElementById("announcementStatus").value = item.status || "active";
+      const rec = document.getElementById("announcementRecipient");
+      if (rec) rec.value = item.recipient || "all";
 
       const section = document.getElementById("adminAnnouncementsSection");
       if (section) section.scrollIntoView({ behavior: "smooth" });
@@ -3387,9 +3369,16 @@
     function deleteAnnouncement(id) {
       if (!confirm("Bạn có chắc chắn muốn xóa thông báo này?")) return;
       let list = getAdminAnnouncements();
+      const item = list.find(a => a.id === id);
       list = list.filter(a => a.id !== id);
       saveAdminAnnouncementsList(list);
+      if (item && window.AICheckNotificationStore) {
+        const allNotifs = window.AICheckNotificationStore.getAll();
+        const filtered = allNotifs.filter(n => n.message !== item.text);
+        window.AICheckNotificationStore.saveAll(filtered);
+      }
       loadAdminAnnouncements();
+      alert("Đã xóa thông báo khỏi danh sách và chuông hệ thống!");
     }
 
     async function loadUsersList() {
