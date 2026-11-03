@@ -110,24 +110,24 @@
     </section>
 
     <div class="home-content">
-      <!-- 👤 BENTO USER PROGRESS STRIP -->
+      <!-- BENTO USER PROGRESS STRIP -->
       <div class="bento-profile-strip" id="homeUserStrip">
         <div class="bento-profile-left">
-          <div class="bento-avatar" id="homeUserAvatar">🎓</div>
+          <div class="bento-avatar" id="homeUserAvatar" style="font-weight:700;font-size:13px;background:var(--color-brand);color:#fff;display:flex;align-items:center;justify-content:center">THĐ</div>
           <div>
-            <div class="bento-user-name" id="homeUserName">Chào bạn, Chiến binh Kiểm Chứng THĐ!</div>
-            <div class="bento-user-sub" id="homeUserStats">Khởi động ngay để tích lũy điểm kinh nghiệm và thăng hạng.</div>
+            <div class="bento-user-name" id="homeUserName">Chào bạn, Thí sinh Kiểm Chứng THĐ!</div>
+            <div class="bento-user-sub" id="homeUserStats">Khởi động ngay để tích lũy điểm kinh nghiệm và hoàn thành các bài đo năng lực.</div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span class="gamify-badge gamify-badge-level" id="homeLevelBadge">🌱 Lv.1 Tập Sự</span>
-          <span class="gamify-badge gamify-badge-xp" id="homeXpBadge">⭐ 0 XP</span>
-          <span class="gamify-badge gamify-badge-streak" id="homeStreakBadge"><span class="flame-icon">🔥</span> 0 Ngày</span>
+          <span class="gamify-badge gamify-badge-level" id="homeLevelBadge">Cấp độ 1: Khởi động</span>
+          <span class="gamify-badge gamify-badge-xp" id="homeXpBadge">0 XP</span>
+          <span class="gamify-badge gamify-badge-streak" id="homeStreakBadge">Chuỗi 0 ngày</span>
           <a href="pages/practice.html" class="button button-dark" style="min-height:36px;padding:6px 14px;border-radius:20px;font-size:10.5px">Luyện ngay →</a>
         </div>
       </div>
 
-      <!-- 📊 METRICS COUNTER STRIP -->
+      <!-- METRICS COUNTER STRIP -->
       <div class="metrics-strip">
         <div class="metric-card">
           <div class="metric-num">1.060</div>
@@ -152,7 +152,7 @@
         <span class="page-count">HỌC · THỬ · ĐO · VINH DANH</span>
       </header>
 
-      <!-- 🍱 BENTO PORTAL GRID 2026 -->
+      <!-- BENTO PORTAL GRID 2026 -->
       <div class="bento-fade-wrapper" id="homeBentoWrapper">
       <nav class="bento-portal-grid" id="homeBentoGrid" aria-label="Các trạm chức năng">
         <a class="bento-card" href="pages/knowledge.html">
@@ -348,18 +348,20 @@
 
       let localProf = {};
       try { localProf = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
-      const userAvatar = localProf.avatar || localStorage.getItem("aicheck:avatar") || stats.levelIcon || "🎓";
+      const userAvatar = localProf.avatar || localStorage.getItem("aicheck:avatar") || "";
 
       if (avatarEl) {
         if (userAvatar.startsWith("http") || userAvatar.startsWith("data:image")) {
           avatarEl.innerHTML = `<img src="${userAvatar}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
-        } else {
+        } else if (userAvatar) {
           avatarEl.textContent = userAvatar;
+        } else {
+          avatarEl.textContent = "THĐ";
         }
       }
-      if (lvlEl) lvlEl.textContent = `${stats.levelIcon} Lv.${stats.level} ${stats.levelTitle}`;
-      if (xpEl) xpEl.textContent = `⭐ ${stats.xp} XP`;
-      if (streakEl) streakEl.innerHTML = `<span class="flame-icon">🔥</span> ${stats.streak} ${isEn ? (stats.streak > 1 ? "Days" : "Day") : "Ngày"}`;
+      if (lvlEl) lvlEl.textContent = `Cấp ${stats.level}: ${stats.levelTitle}`;
+      if (xpEl) xpEl.textContent = `${stats.xp} XP`;
+      if (streakEl) streakEl.innerHTML = `Chuỗi ${stats.streak} ${isEn ? (stats.streak > 1 ? "Days" : "Day") : "Ngày"}`;
 
       let playerName = localProf.display_name;
       if (!playerName) {
