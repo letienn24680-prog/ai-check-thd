@@ -353,10 +353,10 @@
       if (avatarEl) {
         if (userAvatar.startsWith("http") || userAvatar.startsWith("data:image")) {
           avatarEl.innerHTML = `<img src="${userAvatar}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
-        } else if (userAvatar && !/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(userAvatar)) {
+        } else if (userAvatar) {
           avatarEl.textContent = userAvatar;
         } else {
-          avatarEl.textContent = "THĐ";
+          avatarEl.textContent = "🎓";
         }
       }
       if (lvlEl) lvlEl.textContent = `Cấp ${stats.level}: ${stats.levelTitle}`;

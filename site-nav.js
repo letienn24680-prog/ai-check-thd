@@ -1887,8 +1887,8 @@
   // ==========================================================================
   // E. HỆ THỐNG TOAST & MODAL TÙY CHỈNH HỒ SƠ CÁ NHÂN (USER PROFILE SETTINGS)
   // ==========================================================================
-  const PRESET_EMOJIS = ["THĐ", "A1", "A2", "A3", "K10", "K11", "K12", "AI", "Q1", "Q2", "Q3", "THPT"];
-  let profileCurrentAvatar = "THĐ";
+  const PRESET_EMOJIS = ["🎓", "🧑‍🎓", "🚀", "🔬", "⚡", "🌟", "🦊", "🦁", "🦉", "🐬", "🎯", "💡", "🛡️", "📚"];
+  let profileCurrentAvatar = "🎓";
   let profileActiveTab = "info";
 
   function showProfileToast(message, type = "success") {
@@ -1919,7 +1919,7 @@
 
   function renderAvatarToElement(containerEl, avatarVal) {
     if (!containerEl) return;
-    const val = String(avatarVal || "THĐ").trim();
+    const val = String(avatarVal || "🎓").trim();
     if (val.startsWith("http") || val.startsWith("data:image")) {
       containerEl.innerHTML = `<img src="${escapeHtml(val)}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
     } else {
@@ -1998,7 +1998,7 @@
             <!-- TAB 1: THÔNG TIN CHUNG -->
             <div class="profile-tab-pane is-active" id="profileTabInfo">
               <div class="profile-avatar-section">
-                <div class="profile-avatar-preview" id="profileAvatarPreview">THĐ</div>
+                <div class="profile-avatar-preview" id="profileAvatarPreview">🎓</div>
                 <div class="profile-avatar-picker">
                   <div class="profile-avatar-picker-label">
                     <span>Chọn ảnh đại diện:</span>
@@ -2475,7 +2475,7 @@
       const cityVal = prof.city || user?.user_metadata?.city || "";
       const subjectVal = prof.favorite_subject || user?.user_metadata?.favorite_subject || "";
       const targetVal = prof.target_goal || user?.user_metadata?.target_goal || "";
-      profileCurrentAvatar = prof.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "THĐ";
+      profileCurrentAvatar = prof.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "🎓";
 
       const isNameLocked = Boolean(nameVal && String(nameVal).trim());
       const nameInput = document.getElementById("profileInputName");
@@ -2982,7 +2982,7 @@
       adminNotifBtn.className = "nav-notif-btn";
       adminNotifBtn.id = "btnNavNotifications";
       adminNotifBtn.title = `Thông báo & Tin nhắn hệ thống (${unreadCount} chưa đọc)`;
-      adminNotifBtn.innerHTML = `<span>TB</span><span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>`;
+      adminNotifBtn.innerHTML = `<span>🔔</span><span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>`;
       adminActions.prepend(adminNotifBtn);
 
       adminNotifBtn.addEventListener("click", (e) => {
@@ -3044,16 +3044,14 @@
       const unreadCount = window.AICheckNotificationStore ? window.AICheckNotificationStore.getUnreadCount(user) : 0;
       const notifBtnHtml = `
         <button type="button" class="nav-notif-btn" id="btnNavNotifications" aria-label="Thông báo hệ thống" title="Thông báo & Tin nhắn hệ thống (${unreadCount} chưa đọc)">
-          <span>TB</span>
+          <span>🔔</span>
           <span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>
         </button>
       `;
 
       let localProf = {};
       try { localProf = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
-      let rawAvatar = localProf.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "THĐ";
-      if (/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(rawAvatar)) rawAvatar = "THĐ";
-      const savedAvatar = rawAvatar;
+      const savedAvatar = localProf.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "🎓";
       const isImgAvatar = savedAvatar.startsWith("http") || savedAvatar.startsWith("data:image");
       const avatarHtml = isImgAvatar
         ? `<span class="nav-user-avatar"><img src="${escapeHtml(savedAvatar)}" alt="Avatar"></span>`
