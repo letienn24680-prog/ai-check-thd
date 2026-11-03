@@ -1563,10 +1563,16 @@
     <section class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px">
         <div>
-          <h2 class="panel-title" style="margin:0">Danh sách Tài khoản & Địa chỉ IP</h2>
+          <h2 class="panel-title" style="margin:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span>Danh sách Tài khoản & Địa chỉ IP</span>
+            <span class="tag" id="badgeTotalUsersCount" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800;font-size:12px">0 tài khoản</span>
+          </h2>
           <p class="panel-copy" style="margin:4px 0 0">Quản lý toàn bộ tài khoản học sinh đã đăng ký trên hệ thống.</p>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button type="button" class="button button-lime" onclick="exportUserProfilesCsv()" style="font-size:11.5px;font-weight:800;padding:7px 14px;display:inline-flex;align-items:center;gap:5px">
+            Xuất Excel/CSV ↓
+          </button>
           <button class="btn-small" onclick="loadUsersList()">↻ Tải lại danh sách</button>
           <button type="button" class="btn-card-toggle" onclick="toggleGenericCardSection('userListBodySection', this)" title="Thu gọn khối này">
             <span class="card-toggle-icon">▲</span> <span class="card-toggle-text">Thu gọn</span>
@@ -1574,11 +1580,38 @@
         </div>
       </div>
       <div id="userListBodySection">
-        <p class="table-scroll-hint">(Vuốt sang ngang để xem đầy đủ thông tin các cột</p>
+        <!-- 4 THẺ THỐNG KÊ TỔNG QUAN TÀI KHOẢN -->
+        <div class="stat-grid" style="margin-top:10px;margin-bottom:14px">
+          <div class="stat-box" style="border-color:#bbf7d0;background:#f0fdf4">
+            <span style="color:#166534">TỔNG TÀI KHOẢN ĐĂNG KÝ</span>
+            <strong id="statTotalUsersRegistered" style="color:#047857;font-size:24px">0</strong>
+          </div>
+          <div class="stat-box" style="border-color:#bae6fd;background:#f0f9ff">
+            <span style="color:#0369a1">HỌC SINH (STUDENT)</span>
+            <strong id="statStudentUsersCount" style="color:#0284c7;font-size:24px">0</strong>
+          </div>
+          <div class="stat-box" style="border-color:#fef08a;background:#fefce8">
+            <span style="color:#854d0e">QUẢN TRỊ / GIÁO VIÊN</span>
+            <strong id="statAdminTeacherUsersCount" style="color:#a16207;font-size:24px">0</strong>
+          </div>
+          <div class="stat-box" style="border-color:#e2e8f0;background:#f8fafc">
+            <span style="color:#475569">ĐỊA CHỈ IP DUY NHẤT</span>
+            <strong id="statUniqueIPsCount" style="color:#334155;font-size:24px">0</strong>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+          <p class="table-scroll-hint" style="margin:0">(Vuốt sang ngang để xem đầy đủ thông tin các cột)</p>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="text" id="userListSearchInput" placeholder="🔍 Tìm tên, email, IP..." oninput="filterUserProfilesTable()" style="padding:6px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:12.5px;min-width:220px;outline:none" />
+          </div>
+        </div>
+
         <div class="table-responsive">
           <table>
             <thead>
               <tr>
+                <th style="width:50px;text-align:center">STT</th>
                 <th>Họ và tên</th>
                 <th>Email</th>
                 <th>Địa chỉ IP</th>
@@ -1588,7 +1621,7 @@
             </thead>
             <tbody id="user-list-body">
               <tr>
-                <td colspan="5" style="text-align:center;color:var(--muted)">Đang tải danh sách tài khoản...</td>
+                <td colspan="6" style="text-align:center;color:var(--muted)">Đang tải danh sách tài khoản...</td>
               </tr>
             </tbody>
           </table>
@@ -2257,6 +2290,10 @@
     let allScores = [];
     let currentAdminUnlocked = sessionStorage.getItem("aicheck:admin_unlocked") === "true";
     let cachedUserProfiles = [];
+    try {
+      const _savedProfiles = localStorage.getItem("aicheck:cached_user_profiles");
+      if (_savedProfiles) cachedUserProfiles = JSON.parse(_savedProfiles);
+    } catch (e) {}
     let currentSupportRequestsList = [];
 
     // Danh sách mã PIN đã băm SHA-256 (Không lưu plaintext trong mã nguồn Frontend)
@@ -2355,6 +2392,9 @@
       if (isAuthorized) {
         if (gateNotice) gateNotice.style.display = "none";
         if (mainContent) mainContent.style.display = "block";
+        if (cachedUserProfiles && cachedUserProfiles.length > 0) {
+          renderUserProfilesTable();
+        }
         updateRecipientDatalist();
         loadAllData();
       } else {
@@ -2380,6 +2420,9 @@
           if (pinErrorMsg) pinErrorMsg.style.display = "none";
           if (gateNotice) gateNotice.style.display = "none";
           if (mainContent) mainContent.style.display = "block";
+          if (cachedUserProfiles && cachedUserProfiles.length > 0) {
+            renderUserProfilesTable();
+          }
           loadAllData();
         } else {
           if (pinErrorMsg) pinErrorMsg.style.display = "block";
@@ -2927,18 +2970,89 @@
     
 
 
+    let userListSearchTerm = "";
+
+    function filterUserProfilesTable() {
+      const input = document.getElementById("userListSearchInput");
+      userListSearchTerm = (input ? input.value : "").trim().toLowerCase();
+      renderUserProfilesTable();
+    }
+
+    function exportUserProfilesCsv() {
+      const users = cachedUserProfiles || [];
+      if (!users.length) {
+        alert("Chưa có dữ liệu tài khoản để xuất!");
+        return;
+      }
+      let csvContent = "\uFEFFSTT,Họ và tên,Email,Địa chỉ IP,Ngày tạo,Vai trò\n";
+      users.forEach((u, i) => {
+        const name = `"${(u.display_name || '').replace(/"/g, '""')}"`;
+        const email = `"${(u.email || '').replace(/"/g, '""')}"`;
+        const ip = `"${(u.register_ip || '').replace(/"/g, '""')}"`;
+        const created = `"${u.created_at ? new Date(u.created_at).toLocaleString('vi-VN') : ''}"`;
+        const role = `"${(u.role || 'student').replace(/"/g, '""')}"`;
+        csvContent += `${i + 1},${name},${email},${ip},${created},${role}\n`;
+      });
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `Danh_sach_tai_khoan_AICheck_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
     function renderUserProfilesTable() {
       const userTableBody = document.getElementById("user-list-body");
       const footer = document.getElementById("userListFooter");
       if (!userTableBody) return;
-      const users = cachedUserProfiles || [];
-      if (!users.length) {
-        userTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa có tài khoản nào đăng ký.</td></tr>';
+      const allUsers = cachedUserProfiles || [];
+
+      // Tính toán các chỉ số thống kê tài khoản
+      const totalCount = allUsers.length;
+      const studentCount = allUsers.filter(u => !u.role || u.role.toLowerCase() === 'student').length;
+      const staffCount = allUsers.filter(u => u.role && u.role.toLowerCase() !== 'student').length;
+      const uniqueIps = new Set(allUsers.map(u => (u.register_ip || '').trim()).filter(Boolean)).size;
+
+      // Cập nhật lên các ô thống kê trực quan
+      const badgeEl = document.getElementById("badgeTotalUsersCount");
+      const statTotalEl = document.getElementById("statTotalUsersRegistered");
+      const statStudentEl = document.getElementById("statStudentUsersCount");
+      const statStaffEl = document.getElementById("statAdminTeacherUsersCount");
+      const statUniqueIpsEl = document.getElementById("statUniqueIPsCount");
+
+      if (statTotalEl) statTotalEl.textContent = totalCount;
+      if (statStudentEl) statStudentEl.textContent = studentCount;
+      if (statStaffEl) statStaffEl.textContent = staffCount;
+      if (statUniqueIpsEl) statUniqueIpsEl.textContent = uniqueIps;
+
+      // Lọc danh sách theo ô tìm kiếm nếu có
+      let filteredUsers = allUsers;
+      if (userListSearchTerm) {
+        filteredUsers = allUsers.filter(u => {
+          const name = (u.display_name || '').toLowerCase();
+          const email = (u.email || '').toLowerCase();
+          const ip = (u.register_ip || '').toLowerCase();
+          const role = (u.role || '').toLowerCase();
+          return name.includes(userListSearchTerm) || email.includes(userListSearchTerm) || ip.includes(userListSearchTerm) || role.includes(userListSearchTerm);
+        });
+      }
+
+      if (badgeEl) {
+        badgeEl.textContent = userListSearchTerm ? `${filteredUsers.length}/${totalCount} tài khoản` : `${totalCount} tài khoản`;
+      }
+
+      if (!filteredUsers.length) {
+        userTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted)">${allUsers.length ? 'Không tìm thấy tài khoản phù hợp với từ khóa.' : 'Chưa có tài khoản nào đăng ký.'}</td></tr>`;
         if (footer) footer.innerHTML = "";
         return;
       }
-      userTableBody.innerHTML = users.map(user => `
+
+      userTableBody.innerHTML = filteredUsers.map((user, idx) => `
         <tr>
+          <td style="text-align:center;font-weight:700;color:var(--muted)">${idx + 1}</td>
           <td><strong>${escapeHtml(user.display_name || "—")}</strong></td>
           <td>${escapeHtml(user.email || "—")}</td>
           <td><code style="background:#eef2ed;padding:2px 6px;border-radius:4px;font-size:11px">${escapeHtml(user.register_ip || "Không xác định")}</code></td>
@@ -3190,16 +3304,20 @@
             .order("created_at", { ascending: false });
 
           if (error) {
-            userTableBody.innerHTML = `<tr><td colspan="5" style="color:red;text-align:center">Lỗi tải danh sách: ${error.message}</td></tr>`;
+            userTableBody.innerHTML = `<tr><td colspan="6" style="color:red;text-align:center">Lỗi tải danh sách: ${error.message}</td></tr>`;
             return;
           }
 
           if (!users || users.length === 0) {
-            userTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa có tài khoản nào đăng ký.</td></tr>`;
+            cachedUserProfiles = [];
+            renderUserProfilesTable();
             return;
           }
 
           cachedUserProfiles = users;
+          try {
+            localStorage.setItem("aicheck:cached_user_profiles", JSON.stringify(users));
+          } catch (e) {}
           updateRecipientDatalist(users);
           renderUserProfilesTable();
           return;
@@ -3208,7 +3326,11 @@
         }
       }
 
-      userTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">Chưa kết nối dữ liệu đám mây.</td></tr>`;
+      if (cachedUserProfiles && cachedUserProfiles.length > 0) {
+        renderUserProfilesTable();
+      } else {
+        userTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted)">Chưa kết nối dữ liệu đám mây.</td></tr>`;
+      }
     }
 
     
