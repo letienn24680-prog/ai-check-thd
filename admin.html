@@ -359,18 +359,13 @@
       display: flex;
       gap: 8px;
       align-items: center;
-      flex-wrap: nowrap;
-      overflow-x: auto;
+      flex-wrap: wrap;
+      overflow-x: visible;
       padding-bottom: 4px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .admin-btn-row::-webkit-scrollbar {
-      display: none;
     }
     .admin-btn-row button,
     .admin-btn-row a {
-      white-space: nowrap;
+      white-space: normal;
       flex-shrink: 0;
     }
 
@@ -905,23 +900,11 @@
     .score-activity-tabs {
       display: flex;
       gap: 8px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
+      flex-wrap: wrap;
+      overflow-x: visible;
       margin-bottom: 14px;
       align-items: center;
       padding-bottom: 6px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: #cbd5e1 transparent;
-    }
-
-    .score-activity-tabs::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .score-activity-tabs::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
     }
 
     .score-act-tab {
@@ -937,8 +920,7 @@
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
+      white-space: normal;
       transition: all 0.16s ease-out;
     }
 
@@ -983,8 +965,7 @@
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
+      white-space: normal;
       transition: all 0.16s ease;
     }
 
@@ -1171,32 +1152,72 @@
         font-size: 20px !important;
       }
       .admin-btn-row {
+        display: flex !important;
         flex-wrap: wrap !important;
         overflow-x: visible !important;
         gap: 6px !important;
-      }
-      .score-activity-tabs {
-        gap: 6px;
-        padding-bottom: 4px;
-      }
-      .score-act-tab {
-        height: 34px;
-        font-size: 12px;
-        padding: 0 10px;
-      }
-      .score-act-subtab {
-        height: 32px;
-        font-size: 11.5px;
-        padding: 0 10px;
-      }
-      .admin-btn-row {
-        gap: 6px;
-        padding-bottom: 2px;
+        width: 100% !important;
+        padding-bottom: 2px !important;
       }
       .admin-btn-row button,
       .admin-btn-row a {
         font-size: 11px !important;
-        padding: 5px 10px !important;
+        padding: 6px 10px !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+        flex: 1 1 auto !important;
+        text-align: center !important;
+        justify-content: center !important;
+      }
+      .admin-btn-row input {
+        max-width: 100% !important;
+        flex: 1 1 180px !important;
+      }
+      .score-activity-tabs {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        gap: 6px !important;
+        width: 100% !important;
+        padding-bottom: 0 !important;
+      }
+      .score-act-tab {
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 130px !important;
+        height: auto !important;
+        min-height: 38px !important;
+        font-size: 11.5px !important;
+        padding: 6px 10px !important;
+        justify-content: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+      }
+      .score-act-subtab {
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 130px !important;
+        height: auto !important;
+        min-height: 36px !important;
+        font-size: 11px !important;
+        padding: 6px 8px !important;
+        justify-content: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+      }
+      .score-act-subtab:first-child {
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+      }
+      .exam-cards-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .form-grid-2col,
+      .form-grid-3col {
+        grid-template-columns: 1fr !important;
       }
       .filter-bar {
         flex-direction: column;
@@ -1251,17 +1272,49 @@
         font-size: 18px !important;
       }
       .score-activity-tabs {
-        gap: 6px;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        gap: 6px !important;
+        width: 100% !important;
       }
       .score-act-tab {
-        height: 32px;
-        font-size: 11.5px;
-        padding: 0 8px;
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 120px !important;
+        height: auto !important;
+        min-height: 34px !important;
+        font-size: 11px !important;
+        padding: 6px 6px !important;
+        justify-content: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
       }
       .score-act-subtab {
-        height: 30px;
-        font-size: 11px;
-        padding: 0 8px;
+        flex: 1 1 calc(50% - 6px) !important;
+        min-width: 120px !important;
+        height: auto !important;
+        min-height: 32px !important;
+        font-size: 10.5px !important;
+        padding: 5px 6px !important;
+        justify-content: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
+      }
+      .score-act-subtab:first-child {
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+      }
+      .admin-btn-row button,
+      .admin-btn-row a {
+        font-size: 10.5px !important;
+        padding: 5px 8px !important;
+      }
+      .exam-cards-grid {
+        grid-template-columns: 1fr !important;
       }
     }
 
@@ -1510,7 +1563,7 @@
             Soạn thông báo / Cài đặt sự kiện mới:
           </div>
 
-          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px">
+          <div class="form-grid-2col" style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px">
             <div>
               <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">1. NỘI DUNG THÔNG BÁO BẮT BUỘC:</label>
               <input type="text" id="announcementText" placeholder="Ví dụ: Đã mở đợt kiểm tra năng lực cuối kỳ! Hoàn thành bài trước ngày 15/11..." class="filter-input" style="width:100%;font-weight:600">
@@ -1528,7 +1581,7 @@
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:12px;margin-bottom:14px">
+          <div class="form-grid-3col" style="display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:12px;margin-bottom:14px">
             <div>
               <label style="display:block;font-size:11px;font-weight:700;color:#0f172a;margin-bottom:4px">3. TÊN NÚT BẤM (ACTION):</label>
               <input type="text" id="announcementBtnText" placeholder="VD: Làm bài ngay →, Xem chi tiết →..." value="Làm bài ngay →" class="filter-input" style="width:100%">
@@ -1739,7 +1792,7 @@
           <div style="font-size:11px;color:#64748b">
             <em>Thông báo cấp mã và liên kết vào trang Admin sẽ được gửi đến tài khoản người nhận.</em>
           </div>
-          <button type="button" class="button button-lime" onclick="addNewAdminCode()" style="font-size:12px;font-weight:800;padding:9px 18px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px">
+          <button type="button" class="button button-lime" onclick="addNewAdminCode()" style="font-size:12px;font-weight:800;padding:9px 18px;white-space:normal;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center">
             Cấp mã & Gửi thông báo đến tài khoản
           </button>
         </div>
@@ -4003,25 +4056,25 @@
                     <span>Cặp đối sánh hoàn chỉnh: <strong style="color:#1b5438">${pairedCount}</strong> thí sinh (Tăng TB: <strong style="color:#10b981">+${growthAvg}đ</strong>)</span>
                   </div>
                 </div>
-                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                  <div style="display:flex;align-items:center;gap:6px;background:white;padding:5px 10px;border-radius:6px;border:1px solid #cbd5e1;font-size:11px">
-                    <span style="color:#64748b;font-weight:700">Mốc thời gian:</span>
-                    <select id="selTimelineMode" onchange="changeAssessmentTimelineMode(this.value)" style="border:none;background:transparent;font-weight:700;color:var(--forest);cursor:pointer;outline:none">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:100%">
+                  <div style="display:flex;align-items:center;gap:6px;background:white;padding:5px 10px;border-radius:6px;border:1px solid #cbd5e1;font-size:11px;max-width:100%;box-sizing:border-box">
+                    <span style="color:#64748b;font-weight:700;white-space:nowrap">Mốc thời gian:</span>
+                    <select id="selTimelineMode" onchange="changeAssessmentTimelineMode(this.value)" style="border:none;background:transparent;font-weight:700;color:var(--forest);cursor:pointer;outline:none;max-width:100%">
                       <option value="standardized" ${assessmentTimelineMode === 'standardized' ? 'selected' : ''}>Chuẩn hóa mốc KHKT (Rải đều tháng 10: dài nhất 3 ngày)</option>
                       <option value="raw" ${assessmentTimelineMode === 'raw' ? 'selected' : ''}>Giờ thực tế hệ thống ghi nhận</option>
                     </select>
                   </div>
-                  <button type="button" class="btn-small" onclick="openKhktTimelineSettingsModal()" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700" title="Cài đặt mốc thời gian đề tài KHKT (Rải đều tháng 10: dài nhất 3 ngày)">
+                  <button type="button" class="btn-small" onclick="openKhktTimelineSettingsModal()" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:700;white-space:normal" title="Cài đặt mốc thời gian đề tài KHKT (Rải đều tháng 10: dài nhất 3 ngày)">
                     Sửa mốc thời gian (Tháng 10)
                   </button>
-                  <button type="button" class="btn-small" onclick="cleanDuplicateAssessmentRecords()" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:700" title="Loại bỏ các bản ghi bấm nộp trùng lặp">
+                  <button type="button" class="btn-small" onclick="cleanDuplicateAssessmentRecords()" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:700;white-space:normal" title="Loại bỏ các bản ghi bấm nộp trùng lặp">
                     Dọn bản ghi trùng
                   </button>
                 </div>
               </div>
 
-              <!-- THANH SUB-TAB PHÂN TÁCH GIAI ĐOẠN ĐO LƯỜNG & ĐỐI SÁNH - TRÊN MỘT HÀNG THÔI -->
-              <div class="admin-btn-row" style="border-top:1px dashed #cbd5e1;padding-top:10px">
+              <!-- THANH SUB-TAB PHÂN TÁCH GIAI ĐOẠN ĐO LƯỜNG & ĐỐI SÁNH -->
+              <div class="admin-btn-row score-act-subtab-row" style="border-top:1px dashed #cbd5e1;padding-top:10px;width:100%;box-sizing:border-box">
                 <button type="button" class="score-act-subtab ${assessmentSubTab === 'comparison' ? 'active' : ''}" onclick="switchAssessmentSubTab('comparison')">
                   Bảng đối sánh Trước vs Sau theo từng thí sinh <span class="tag" style="background:#ecfdf5;color:#047857;font-weight:800;margin-left:4px">Chuẩn Báo Cáo KHKT</span>
                 </button>
