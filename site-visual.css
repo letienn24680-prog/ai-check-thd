@@ -220,6 +220,9 @@ body {
   box-shadow: 0 0 6px #10b981;
   animation: none !important;
 }
+.nav-user-pill:has(.nav-user-avatar)::before {
+  display: none !important;
+}
 .nav-user-pill:hover {
   background: #ffffff;
   border-color: var(--color-leaf);
@@ -1797,8 +1800,50 @@ body {
   .practice-layout {
     grid-template-columns: 1fr !important;
   }
+  /* Làm gọn giao diện câu hỏi trên mobile để người dùng nhìn thấy trọn vẹn cả Bước 1 và Bước 2 */
+  .quote {
+    padding: 11px 13px !important;
+    margin: 8px 0 12px !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    border-left-width: 3px !important;
+  }
+  .question-label {
+    margin: 12px 0 5px !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+  }
   #trustChoices {
+    display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    margin: 4px 0 12px !important;
+  }
+  #trustChoices .choice {
+    min-height: 40px !important;
+    padding: 7px 6px !important;
+    font-size: 11.5px !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  #trustChoices .choice small {
+    display: block !important;
+    font-size: 9.5px !important;
+    line-height: 1.2 !important;
+    margin-top: 1px !important;
+    opacity: 0.8 !important;
+  }
+  .practice-choice-list {
+    gap: 6px !important;
+    margin: 4px 0 12px !important;
+  }
+  .practice-choice-list .choice {
+    padding: 9px 12px !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
   }
   .back-to-top-btn {
     bottom: 18px;
@@ -1806,12 +1851,6 @@ body {
     width: 42px;
     height: 42px;
     font-size: 16px;
-  }
-}
-
-@media (max-width: 440px) {
-  #trustChoices {
-    grid-template-columns: 1fr !important;
   }
 }
 
@@ -3096,26 +3135,53 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
     grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
+  /* Hiển thị trọn vẹn toàn bộ 4 thẻ HUD trên mobile không cần kéo ngang */
   .gamify-hud {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    overflow-x: auto !important;
-    flex-wrap: nowrap !important;
-    -webkit-overflow-scrolling: touch !important;
-    padding: 8px 12px !important;
-    gap: 8px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    padding: 8px 10px !important;
+    overflow-x: visible !important;
+    width: 100% !important;
   }
-  .gamify-hud-left {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    gap: 6px !important;
-    flex-shrink: 0 !important;
-  }
+  .gamify-hud-left,
   .gamify-hud-right {
-    display: flex !important;
-    flex-shrink: 0 !important;
+    display: contents !important;
+  }
+  .gamify-hud .gamify-badge,
+  .gamify-hud .audio-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 7px 6px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+  .gamify-hud .audio-btn {
+    min-height: 32px !important;
+  }
+  .home-gamify-strip {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    width: 100% !important;
+  }
+  .home-gamify-strip .gamify-badge,
+  .home-gamify-strip .button {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 7px 6px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
   }
 }
 

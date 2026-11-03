@@ -624,24 +624,54 @@ html, body, button, a, input, select, textarea, label, [role="button"], [role="t
     transform: scale(0.44) !important;
     transform-origin: center center !important;
   }
-  /* Ẩn hoàn toàn gamify pill và nút login phụ trong user pill trên mobile để tránh tràn viền */
+  /* Tối ưu hiển thị User Pill và Avatar trên mobile: không tràn viền, chữ THĐ hiển thị trọn vẹn */
   .nav-gamify-pill,
   #navGamifyPill,
   .nav-user-pill .nav-auth-link {
     display: none !important;
   }
   .nav-user-pill {
-    padding: 3px 6px !important;
-    gap: 3px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 3px 8px !important;
+    border-radius: 20px !important;
+    max-width: 135px !important;
+    min-height: 28px !important;
+  }
+  .nav-user-pill::before {
+    display: none !important; /* Ẩn chấm xanh thừa khi đã có avatar tròn bên cạnh */
+  }
+  .nav-user-avatar {
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 9px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.2px !important;
+    margin-right: 0 !important;
+    flex: none !important;
+  }
+  #navUserNameText {
+    display: inline-block !important;
+    max-width: 60px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+  .nav-user-logout {
+    display: none !important;
   }
   .nav-auth-link {
     padding: 4px 8px !important;
     font-size: 10px !important;
     white-space: nowrap !important;
-  }
-  #navUserNameText,
-  .nav-user-logout {
-    display: none !important;
   }
   .nav-user-edit-icon {
     font-size: 11px !important;

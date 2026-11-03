@@ -1549,7 +1549,7 @@
       en: { title: "Knowledge", desc: "4 Topics" }
     },
     practice: {
-      icon: "",
+      icon: "03",
       colorClass: "icon-practice",
       vi: { title: "Thực hành", desc: "Tình huống AI" },
       en: { title: "Practice", desc: "AI Lab" }
