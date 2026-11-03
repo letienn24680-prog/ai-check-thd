@@ -58,7 +58,7 @@
     return false;
   }
 
-  // 🛑 NẾU VÀO TRANG CHỦ MÀ CHƯA CÓ TOKEN -> CHUYỂN HƯỚNG TỨC THÌ SANG LOGIN.HTML
+  // NẾU VÀO TRANG CHỦ MÀ CHƯA CÓ TOKEN -> CHUYỂN HƯỚNG TỨC THÌ SANG LOGIN.HTML
   if (isHomePage && !hasLocalAuthToken()) {
     try {
       localStorage.setItem("aicheck:redirectAfterLogin", "index.html");
@@ -306,8 +306,8 @@
     modal.style.cssText = "position:fixed;inset:0;background:rgba(15,23,42,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:999999;display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Be Vietnam Pro',sans-serif;";
     modal.innerHTML = `
       <div style="background:#ffffff;border-radius:18px;max-width:480px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.35);border:1px solid #e2e8f0;animation:fadeIn 0.25s ease-out">
-        <div style="width:64px;height:64px;background:#fef2f2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;border:2px solid #fee2e2">
-          ⚠️
+        <div style="width:64px;height:64px;background:#fef2f2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:13px;font-weight:800;color:#b91c1c;border:2px solid #fee2e2">
+          LƯU Ý
         </div>
         <span style="display:inline-block;padding:3px 10px;border-radius:20px;background:#fee2e2;color:#b91c1c;font-size:11px;font-weight:800;letter-spacing:0.5px;margin-bottom:8px">
           QUY TẮC 1 TÀI KHOẢN / 1 THIẾT BỊ
@@ -351,8 +351,8 @@
     modal.style.cssText = "position:fixed;inset:0;background:rgba(15,23,42,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:999999;display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Be Vietnam Pro',sans-serif;";
     modal.innerHTML = `
       <div style="background:#ffffff;border-radius:18px;max-width:520px;width:100%;padding:28px 24px;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.4);border:2px solid #fca5a5;animation:fadeIn 0.25s ease-out">
-        <div style="width:68px;height:68px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;border:2px solid #fecaca">
-          🚨
+        <div style="width:68px;height:68px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:12px;font-weight:800;color:#991b1b;border:2px solid #fecaca">
+          CẢNH BÁO
         </div>
         <span style="display:inline-block;padding:3px 10px;border-radius:20px;background:#fee2e2;color:#b91c1c;font-size:11px;font-weight:800;letter-spacing:0.5px;margin-bottom:8px">
           BẢO VỆ TÀI KHOẢN KHẨN CẤP
@@ -365,11 +365,11 @@
           <br><br>
           Để ngăn chặn hành vi sử dụng trái phép và bảo vệ kết quả học tập của bạn, tài khoản đã được <strong>tạm khóa an toàn</strong>.
           <br><br>
-          👉 Vui lòng điền <strong>Biểu mẫu hỗ trợ mở khóa tài khoản</strong> bên dưới để Ban Quản trị xác minh danh tính và cấp mã mở khóa.
+          Vui lòng điền <strong>Biểu mẫu hỗ trợ mở khóa tài khoản</strong> bên dưới để Ban Quản trị xác minh danh tính và cấp mã mở khóa.
         </p>
         <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
           <button type="button" id="btnOpenUnlockFormGuard" style="padding:11px 22px;background:#b91c1c;color:#ffffff;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 4px 14px rgba(185,28,28,0.3)">
-            📝 Điền Biểu mẫu Hỗ trợ Mở khóa
+            Điền Biểu mẫu Hỗ trợ Mở khóa
           </button>
           <a href="${loginUrl}" style="padding:11px 18px;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;border-radius:10px;font-weight:700;font-size:13px;text-decoration:none">
             Về trang Đăng nhập
@@ -395,13 +395,13 @@
         <div style="background:#ffffff;border-radius:18px;max-width:540px;width:100%;padding:26px 24px;box-shadow:0 25px 60px rgba(0,0,0,0.4);border:1px solid #e2e8f0;max-height:90vh;overflow-y:auto">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #e2e8f0">
             <h3 style="margin:0;font-size:17px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:6px">
-              <span>📋</span> Biểu mẫu Hỗ trợ Mở khóa Tài khoản
+              Biểu mẫu Hỗ trợ Mở khóa Tài khoản
             </h3>
             <button type="button" onclick="closeUnlockSupportModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#64748b;padding:2px 8px">✕</button>
           </div>
 
           <p style="font-size:12px;color:#64748b;margin:0 0 16px;line-height:1.5">
-            ⚠️ <em>Biểu mẫu này bắt buộc điền đầy đủ tất cả các trường. Ban Quản trị sẽ đối chiếu trực tiếp các trường thông tin này với hồ sơ đã lưu trong cơ sở dữ liệu để cấp mã mở khóa về email của bạn.</em>
+            <em>Biểu mẫu này bắt buộc điền đầy đủ tất cả các trường. Ban Quản trị sẽ đối chiếu trực tiếp các trường thông tin này với hồ sơ đã lưu trong cơ sở dữ liệu để cấp mã mở khóa về email của bạn.</em>
           </p>
 
           <form id="formUnlockSupportReq" onsubmit="submitUnlockSupportForm(event)">
@@ -453,7 +453,7 @@
                 Hủy bỏ
               </button>
               <button type="submit" id="btnSubmitUnlockForm" style="padding:9px 20px;background:#b91c1c;color:#ffffff;border:none;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 3px 10px rgba(185,28,28,0.25)">
-                🚀 Gửi biểu mẫu xác minh tới Admin
+                Gửi biểu mẫu xác minh tới Admin
               </button>
             </div>
           </form>
@@ -492,7 +492,7 @@
         msgBox.style.display = "block";
         msgBox.style.background = "#fee2e2";
         msgBox.style.color = "#b91c1c";
-        msgBox.textContent = "⚠️ Vui lòng điền đầy đủ tất cả 6 trường thông tin bắt buộc và xác nhận cam đoan!";
+        msgBox.textContent = "Vui lòng điền đầy đủ tất cả 6 trường thông tin bắt buộc và xác nhận cam đoan!";
       }
       return;
     }
@@ -531,7 +531,7 @@
         msgBox.style.display = "block";
         msgBox.style.background = "#ecfdf5";
         msgBox.style.color = "#047857";
-        msgBox.innerHTML = "✓ <strong>Đã gửi biểu mẫu thành công!</strong> Ban Quản trị sẽ đối chiếu thông tin và gửi mã mở khóa về email của bạn. Sau khi nhận được mã, vui lòng vào trang Đăng nhập để nhập mã và mở khóa.";
+        msgBox.innerHTML = "<strong>Đã gửi biểu mẫu thành công!</strong> Ban Quản trị sẽ đối chiếu thông tin và gửi mã mở khóa về email của bạn. Sau khi nhận được mã, vui lòng vào trang Đăng nhập để nhập mã và mở khóa.";
       }
 
       setTimeout(() => {
@@ -547,7 +547,7 @@
       }
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = "🚀 Gửi biểu mẫu xác minh tới Admin";
+        submitBtn.textContent = "Gửi biểu mẫu xác minh tới Admin";
       }
     }
   };

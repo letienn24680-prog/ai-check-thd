@@ -28,7 +28,7 @@
         const b = document.createElement("div");
         b.id = "antiDosBanner";
         b.style.cssText = "position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:999999;background:#c84f36;color:#ffffff;padding:12px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.35);font-family:'Be Vietnam Pro',sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;gap:12px;max-width:92vw;";
-        b.innerHTML = "<span style='font-size:22px'>🛡️</span><div><div style='font-weight:700;font-size:14px;margin-bottom:2px'>CẢNH BÁO BẢO VỆ MÁY CHỦ (ANTI-DoS)</div><div>Phát hiện thao tác làm mới F5 liên tục (" + f5History.length + " lần/10s). Vui lòng không spam để tránh nghẽn máy chủ!</div></div>";
+        b.innerHTML = "<div><div style='font-weight:700;font-size:14px;margin-bottom:2px'>CẢNH BÁO BẢO VỆ MÁY CHỦ (ANTI-DoS)</div><div>Phát hiện thao tác làm mới F5 liên tục (" + f5History.length + " lần/10s). Vui lòng không spam để tránh nghẽn máy chủ!</div></div>";
         document.body.appendChild(b);
         setTimeout(() => {
           b.style.transition = "opacity 0.5s ease";
@@ -182,11 +182,11 @@
   // ==========================================================================
   const AICheckGamification = {
     LEVELS: [
-      { level: 1, title: "Tập Sự Kiểm Chứng", titleEn: "Apprentice Fact-Checker", minXp: 0, icon: "🌱" },
-      { level: 2, title: "Trinh Thám Tin Tức", titleEn: "News Detective", minXp: 150, icon: "🔍" },
-      { level: 3, title: "Chuyên Viên Phản Biện", titleEn: "Critical Specialist", minXp: 400, icon: "⚡" },
-      { level: 4, title: "Thợ Săn Ảo Giác AI", titleEn: "AI Hallucination Hunter", minXp: 800, icon: "🛡️" },
-      { level: 5, title: "Bậc Thầy Sự Thật THĐ", titleEn: "THD Truth Master", minXp: 1500, icon: "👑" }
+      { level: 1, title: "Tập Sự Kiểm Chứng", titleEn: "Apprentice Fact-Checker", minXp: 0, icon: "" },
+      { level: 2, title: "Trinh Thám Tin Tức", titleEn: "News Detective", minXp: 150, icon: "" },
+      { level: 3, title: "Chuyên Viên Phản Biện", titleEn: "Critical Specialist", minXp: 400, icon: "" },
+      { level: 4, title: "Thợ Săn Ảo Giác AI", titleEn: "AI Hallucination Hunter", minXp: 800, icon: "" },
+      { level: 5, title: "Bậc Thầy Sự Thật THĐ", titleEn: "THD Truth Master", minXp: 1500, icon: "" }
     ],
     getData() {
       try {
@@ -313,13 +313,13 @@
       let title = "";
       let subtitle = "";
       if (type === "starter") {
-        title = isEn ? "🔥 Day 1 Login Streak!" : "🔥 Khởi Đầu Chuỗi Ngày Đăng Nhập!";
+        title = isEn ? "Day 1 Login Streak!" : "Khởi Đầu Chuỗi Ngày Đăng Nhập!";
         subtitle = isEn ? `Welcome! You earned +${xp} XP. Log in tomorrow to keep the flame burning!` : `Chào mừng bạn! Nhận +${xp} XP. Hãy đăng nhập mỗi ngày để giữ vững chuỗi nhé!`;
       } else if (type === "maintained") {
-        title = isEn ? `🔥 ${streak}-Day Login Streak!` : `🔥 Chuỗi ${streak} Ngày Liên Tiếp!`;
+        title = isEn ? `${streak}-Day Login Streak!` : `Chuỗi ${streak} Ngày Liên Tiếp!`;
         subtitle = isEn ? `Awesome persistence! You earned +${xp} XP today. (Record: ${bestStreak} days)` : `Rất xuất sắc! Bạn nhận được +${xp} XP hôm nay. (Kỷ lục: ${bestStreak} ngày)`;
       } else {
-        title = isEn ? "🔥 Login Streak Restarted!" : "🔥 Khởi Động Lại Chuỗi Ngày!";
+        title = isEn ? "Login Streak Restarted!" : "Khởi Động Lại Chuỗi Ngày!";
         subtitle = isEn ? `Streak reset to Day 1 (+${xp} XP). Remember to log in daily!` : `Chuỗi bắt đầu lại: 1 Ngày (+${xp} XP). Hãy nhớ đăng nhập mỗi ngày nhé!`;
       }
 
@@ -330,7 +330,7 @@
       toast.id = "dailyStreakToast";
       toast.className = "daily-streak-toast";
       toast.innerHTML = `
-        <div class="streak-toast-icon">🔥</div>
+        <div class="streak-toast-icon" style="font-weight:800;font-size:16px;background:var(--forest);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;width:38px;height:38px">THĐ</div>
         <div class="streak-toast-body">
           <div class="streak-toast-title">${title}</div>
           <div class="streak-toast-desc">${subtitle}</div>
@@ -580,7 +580,7 @@
       modal.className = "gamify-levelup-modal";
       modal.innerHTML = `
         <div class="gamify-levelup-card">
-          <div class="gamify-levelup-icon">${stats.levelIcon}</div>
+          <div class="gamify-levelup-icon" style="font-size:24px;font-weight:800">CẤP ${stats.level}</div>
           <h3>${isEn ? "CONGRATULATIONS ON LEVELING UP!" : "CHÚC MỪNG LÊN CẤP!"}</h3>
           <p class="gamify-levelup-title">${isEn ? `You have leveled up to <strong>Level ${stats.level}: ${stats.levelTitle}</strong>` : `Bạn đã xuất sắc thăng hạng lên <strong>Cấp ${stats.level}: ${stats.levelTitle}</strong>`}</p>
           <p class="gamify-levelup-xp">${isEn ? `Total accumulated experience points: <strong>${stats.xp} XP</strong>` : `Tổng điểm kinh nghiệm tích lũy: <strong>${stats.xp} XP</strong>`}</p>
@@ -772,9 +772,9 @@
       "Không gian học tập giúp học sinh dừng lại, tìm bằng chứng và dùng thông tin AI có trách nhiệm.": "A learning space helping students pause, seek evidence, and responsibly use AI-generated information.",
       "Không gian học tập giúp học sinh dừng lại, tìm bằng chứng và dùng thông tin do AI tạo có trách nhiệm.": "A learning space helping students pause, seek evidence, and responsibly use AI-generated information.",
       "AI có thể trả lời. Bạn cần biết cách kiểm chứng. Không gian học tập giúp học sinh dừng lại, tìm bằng chứng và dùng thông tin AI có trách nhiệm.": "AI can provide answers. You need to know how to fact-check. A learning space helping students pause, seek evidence, and responsibly use AI-generated information.",
-      "Vào Đấu trường 1.000+ Tình huống ⚡": "Enter 1,000+ Scenarios Arena ⚡",
+      "Vào Đấu trường 1.000+ Tình huống": "Enter 1,000+ Scenarios Arena",
       "Vào Đấu trường 1.000+ Tình huống →": "Enter 1,000+ Scenarios Arena →",
-      "Vào Đấu trường 60 Tình huống ⚡": "Enter 1,000+ Scenarios Arena ⚡",
+      "Vào Đấu trường 60 Tình huống": "Enter 1,000+ Scenarios Arena",
       "Vào Đấu trường 60 Tình huống →": "Enter 1,000+ Scenarios Arena →",
       "Quy trình 5 bước →": "5-Step Process →",
       "Đừng tin ngay – Hãy kiểm chứng trước khi sử dụng.": "Do not believe blindly – Always verify before using.",
@@ -784,7 +784,7 @@
       "Chào bạn, Chiến binh Kiểm Chứng THĐ!": "Hello, THD Fact-Checking Warrior!",
       "Khởi động ngay để tích lũy điểm kinh nghiệm và thăng hạng.": "Start now to earn XP and level up.",
       "Luyện ngay →": "Practice Now →",
-      "🌱 Lv.1 Tập Sự": "🌱 Lv.1 Apprentice",
+      "Lv.1 Tập Sự": "Lv.1 Apprentice",
       "0 Chuỗi": "0 Streak",
       "0 Ngày": "0 Days",
       "1 Ngày": "1 Day",
@@ -889,7 +889,7 @@
 
       // Home Footer & QR
       "AI CHECK THĐ · Sản phẩm phục vụ nghiên cứu khoa học · THPT Trần Hưng Đạo": "AI CHECK THD · Scientific Research Project · Tran Hung Dao High School",
-      "👤 Tài khoản": "👤 Account",
+      "Tài khoản": "Account",
       "QUÉT ĐỂ TRUY CẬP WEBSITE": "SCAN TO ACCESS WEBSITE",
       "Bản đồ tư duy kiểm chứng thông tin AI": "AI Fact-Checking Mindmap",
       "Quét mã để truy cập nhanh trên điện thoại": "Scan QR code for quick mobile access",
@@ -952,8 +952,8 @@
       "Mỗi thẻ đưa ra một phát biểu do AI cung cấp và nêu việc cần kiểm tra. Hãy đọc cả hai, chọn một kết luận cùng cách kiểm chứng phù hợp; hệ thống sẽ phân tích sư phạm và tính điểm kinh nghiệm ngay sau khi bạn trả lời.": "Each scenario presents an AI assertion and a verification task. Review both, select a conclusion with an appropriate method; pedagogical breakdown and XP are awarded instantly.",
       "1.060 TÌNH HUỐNG · 3 CHỦ ĐỀ": "1,060 SCENARIOS · 3 TOPICS",
       "60 TÌNH HUỐNG · 3 CHỦ ĐỀ": "1,060 SCENARIOS · 3 TOPICS",
-      "🔊 Âm thanh: Bật": "🔊 Sound: On",
-      "🔊 Âm thanh: Tắt": "🔊 Sound: Off",
+      "Âm thanh: Bật": "Sound: On",
+      "Âm thanh: Tắt": "Sound: Off",
       "Bật/Tắt âm thanh phản hồi": "Toggle feedback audio",
       "Tiến trình làm bài trong lượt": "Round progress",
       "CÂU 1 / 10": "QUESTION 1 / 10",
@@ -977,8 +977,8 @@
       "Bắt đầu lượt mới ↻": "Start New Round ↻",
       "Đóng góp tình huống / Báo lỗi ↗": "Contribute Scenarios / Report Issue ↗",
       "Mở Google Form ↗": "Open Google Form ↗",
-      "💡 Trợ giúp / Gợi ý": "💡 Help / Hint",
-      "💡 Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (1.060 tình huống)": "💡 Need help? Click to expand hints & lookup (1,060 scenarios)",
+      "Trợ giúp / Gợi ý": "Help / Hint",
+      "Cần trợ giúp? Bấm để mở rộng gợi ý & tra cứu (1.060 tình huống)": "Need help? Click to expand hints & lookup (1,060 scenarios)",
       "Gợi ý dành cho bạn: Bạn có thể tra cứu nhanh theo từ khóa, chủ đề hoặc xem các tình huống tương tự để tìm phương pháp kiểm chứng chuẩn xác.": "Tips for you: Quickly search by keyword, topic, or view similar sample scenarios for verification hints.",
       "Các tình huống là tư liệu mô phỏng cho hoạt động học tập, không phải trích dẫn nghiên cứu thật nếu chưa kèm nguồn.": "Scenarios are simulated for educational practice, not real citations unless accompanied by verified sources.",
       "Thư viện tình huống · 1.060 tình huống": "Scenario Library · 1,060 Scenarios",
@@ -1051,9 +1051,9 @@
       "Đánh giá năng lực": "Competency Assessment",
       "Tình huống": "Scenarios",
       "Cập nhật ↻": "Refresh ↻",
-      "🥇 NHẤT": "🥇 1ST PLACE",
-      "🥈 NHÌ": "🥈 2ND PLACE",
-      "🥉 BA": "🥉 3RD PLACE",
+      "Hạng Nhất": "1ST PLACE",
+      "Hạng Nhì": "2ND PLACE",
+      "Hạng Ba": "3RD PLACE",
       "HẠNG": "RANK",
       "TÊN HIỂN THỊ": "DISPLAY NAME",
       "NGÀY LÀM CAO NHẤT": "BEST RECORD DATE",
@@ -1147,8 +1147,8 @@
       "Đổi mật khẩu": "Change Password",
       "Chọn ảnh đại diện:": "Choose avatar:",
       "Emoji hoặc tải ảnh riêng": "Emoji or upload image",
-      "📁 Tải ảnh từ máy": "📁 Upload image",
-      "🔗 Dán link ảnh": "🔗 Paste image link",
+      "Tải ảnh từ máy": "Upload image",
+      "Dán link ảnh": "Paste image link",
       "Áp dụng": "Apply",
       "Họ và tên": "Full Name",
       "Email / Tài khoản": "Email / Account",
@@ -1531,55 +1531,55 @@
   // 3. ĐỊNH NGHĨA VÀ TRANG TRÍ CÁC MỤC ĐIỀU HƯỚNG TRONG MENU ☰ (BENTO GRID TINH GỌN PC & MOBILE)
   const NAV_DEFINITIONS = {
     login: {
-      icon: "👤",
+      icon: "TK",
       colorClass: "icon-login",
       vi: { title: "Tài khoản", desc: "Hồ sơ & Cài đặt" },
       en: { title: "Account", desc: "Profile & Settings" }
     },
     home: {
-      icon: "🏠",
+      icon: "01",
       colorClass: "icon-home",
       vi: { title: "Trang chủ", desc: "Tổng quan" },
       en: { title: "Home", desc: "Overview" }
     },
     knowledge: {
-      icon: "📖",
+      icon: "02",
       colorClass: "icon-knowledge",
       vi: { title: "Kiến thức", desc: "4 Chuyên đề" },
       en: { title: "Knowledge", desc: "4 Topics" }
     },
     practice: {
-      icon: "⚡",
+      icon: "",
       colorClass: "icon-practice",
       vi: { title: "Thực hành", desc: "Tình huống AI" },
       en: { title: "Practice", desc: "AI Lab" }
     },
     assessment: {
-      icon: "📐",
+      icon: "04",
       colorClass: "icon-assessment",
       vi: { title: "Đánh giá", desc: "Thi chứng chỉ" },
       en: { title: "Assessment", desc: "Certificates" }
     },
     exam: {
-      icon: "📝",
+      icon: "05",
       colorClass: "icon-exam",
       vi: { title: "Phòng thi", desc: "Làm bài thi" },
       en: { title: "Exam Room", desc: "Online Tests" }
     },
     leaderboard: {
-      icon: "🏆",
+      icon: "06",
       colorClass: "icon-leaderboard",
       vi: { title: "BXH", desc: "Bảng vàng XP" },
       en: { title: "Leaderboard", desc: "Ranking XP" }
     },
     research: {
-      icon: "📊",
+      icon: "07",
       colorClass: "icon-research",
       vi: { title: "Nghiên cứu", desc: "Báo cáo KHKT" },
       en: { title: "Research", desc: "Science Report" }
     },
     resources: {
-      icon: "📁",
+      icon: "08",
       colorClass: "icon-resources",
       vi: { title: "Tài nguyên", desc: "Cẩm nang & Tools" },
       en: { title: "Resources", desc: "Handbook & Tools" }
@@ -1645,7 +1645,7 @@
         <strong class="nav-item-title">${loginItem[lang].title}</strong>
         <small class="nav-item-desc">${loginItem[lang].desc}</small>
       </span>
-      <span class="nav-item-arrow" aria-hidden="true">⚙️</span>
+      <span class="nav-item-arrow" aria-hidden="true">→</span>
     `;
 
     // 2. CHUẨN HÓA DANH SÁCH 8 MỤC ĐIỀU HƯỚNG CHÍNH VÀ LOẠI BỎ TRIỆT ĐỂ MỤC TRÙNG LẶP (DEDUPLICATION)
@@ -1887,8 +1887,8 @@
   // ==========================================================================
   // E. HỆ THỐNG TOAST & MODAL TÙY CHỈNH HỒ SƠ CÁ NHÂN (USER PROFILE SETTINGS)
   // ==========================================================================
-  const PRESET_EMOJIS = ["🎓", "🧑‍🎓", "🚀", "🔬", "⚡", "🌟", "🦊", "🦁", "🦉", "🐬", "🎯", "💡", "🛡️", "📚"];
-  let profileCurrentAvatar = "🎓";
+  const PRESET_EMOJIS = ["THĐ", "A1", "A2", "A3", "K10", "K11", "K12", "AI", "Q1", "Q2", "Q3", "THPT"];
+  let profileCurrentAvatar = "THĐ";
   let profileActiveTab = "info";
 
   function showProfileToast(message, type = "success") {
@@ -1901,7 +1901,7 @@
     }
     const toast = document.createElement("div");
     toast.className = `profile-toast ${type === "error" ? "toast-error" : "toast-success"}`;
-    const icon = type === "error" ? "⚠️" : "✓";
+    const icon = type === "error" ? "Lỗi:" : "Thành công:";
     toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${escapeHtml(message)}</span>`;
     container.appendChild(toast);
 
@@ -1919,7 +1919,7 @@
 
   function renderAvatarToElement(containerEl, avatarVal) {
     if (!containerEl) return;
-    const val = String(avatarVal || "🎓").trim();
+    const val = String(avatarVal || "THĐ").trim();
     if (val.startsWith("http") || val.startsWith("data:image")) {
       containerEl.innerHTML = `<img src="${escapeHtml(val)}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
     } else {
@@ -1986,10 +1986,10 @@
           <!-- Tabs -->
           <div class="profile-tabs">
             <button type="button" class="profile-tab-btn is-active" data-profile-tab="info" id="tabBtnInfo">
-              <span>👤</span> Thông tin chung
+              Thông tin chung
             </button>
             <button type="button" class="profile-tab-btn" data-profile-tab="security" id="tabBtnSecurity">
-              <span>🔐</span> Đổi mật khẩu
+              Đổi mật khẩu
             </button>
           </div>
 
@@ -1998,7 +1998,7 @@
             <!-- TAB 1: THÔNG TIN CHUNG -->
             <div class="profile-tab-pane is-active" id="profileTabInfo">
               <div class="profile-avatar-section">
-                <div class="profile-avatar-preview" id="profileAvatarPreview">🎓</div>
+                <div class="profile-avatar-preview" id="profileAvatarPreview">THĐ</div>
                 <div class="profile-avatar-picker">
                   <div class="profile-avatar-picker-label">
                     <span>Chọn ảnh đại diện:</span>
@@ -2006,8 +2006,8 @@
                   </div>
                   <div class="profile-emoji-grid" id="profileEmojiGrid"></div>
                   <div style="display:flex;gap:12px;margin-top:8px;align-items:center;flex-wrap:wrap">
-                    <button type="button" class="profile-avatar-custom-link" id="btnTriggerUploadAvatar" style="background:none;border:none;padding:0">📁 Tải ảnh từ máy</button>
-                    <button type="button" class="profile-avatar-custom-link" id="btnToggleUrlAvatar" style="background:none;border:none;padding:0">🔗 Dán link ảnh</button>
+                    <button type="button" class="profile-avatar-custom-link" id="btnTriggerUploadAvatar" style="background:none;border:none;padding:0">Tải ảnh từ máy</button>
+                    <button type="button" class="profile-avatar-custom-link" id="btnToggleUrlAvatar" style="background:none;border:none;padding:0">Dán link ảnh</button>
                     <input type="file" id="profileAvatarFileInput" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none">
                   </div>
                   <div id="profileAvatarUrlRow" style="display:none;margin-top:8px">
@@ -2047,7 +2047,7 @@
                   </label>
                   <input type="text" id="profileInputName" class="profile-input" maxlength="32" placeholder="Ví dụ: Nguyễn Văn An" autocomplete="name">
                   <span id="profileNameLockedHint" class="profile-hint" style="display:none;color:#b45309;font-weight:600;margin-top:4px">
-                    🔒 Họ và tên đã được thiết lập cố định và không thể thay đổi.
+                    Họ và tên đã được thiết lập cố định và không thể thay đổi.
                   </span>
                 </div>
 
@@ -2146,7 +2146,7 @@
             <!-- TAB 2: ĐỔI MẬT KHẨU -->
             <div class="profile-tab-pane" id="profileTabSecurity">
               <div id="profileSecurityGuestNotice" style="display:none;margin-bottom:14px;padding:12px;background:rgba(233,120,80,0.1);border-left:3px solid #e97850;border-radius:6px;font-size:11px;line-height:1.5">
-                ℹ️ Bạn đang dùng chế độ <strong>Khách vãng lai</strong>. Hãy đăng nhập tài khoản Supabase Cloud để sử dụng tính năng Đổi mật khẩu.
+                Bạn đang dùng chế độ <strong>Khách vãng lai</strong>. Hãy đăng nhập tài khoản Supabase Cloud để sử dụng tính năng Đổi mật khẩu.
               </div>
               <div id="profileSecurityFormFields">
                 <div class="profile-form-group">
@@ -2174,7 +2174,7 @@
                 </div>
 
                 <div class="profile-hint" style="margin-top:10px;line-height:1.6">
-                  🔒 <strong>Bảo mật tài khoản:</strong> Cần xác nhận đúng mật khẩu hiện tại trước khi cập nhật mật khẩu mới.
+                  <strong>Bảo mật tài khoản:</strong> Cần xác nhận đúng mật khẩu hiện tại trước khi cập nhật mật khẩu mới.
                 </div>
               </div>
             </div>
@@ -2475,7 +2475,7 @@
       const cityVal = prof.city || user?.user_metadata?.city || "";
       const subjectVal = prof.favorite_subject || user?.user_metadata?.favorite_subject || "";
       const targetVal = prof.target_goal || user?.user_metadata?.target_goal || "";
-      profileCurrentAvatar = prof.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "🎓";
+      profileCurrentAvatar = prof.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "THĐ";
 
       const isNameLocked = Boolean(nameVal && String(nameVal).trim());
       const nameInput = document.getElementById("profileInputName");
@@ -2604,7 +2604,7 @@
           recipient: "all",
           sender: "Ban Quản trị THĐ",
           type: "system",
-          title: "🎉 Chào mừng bạn đến với AI CHECK THĐ!",
+          title: "Chào mừng bạn đến với AI CHECK THĐ!",
           message: "Hệ thống trạm kiểm chứng thông tin AI đã kích hoạt chuỗi tính năng mới: Phòng thi trắc nghiệm trực tuyến, Bảng xếp hạng XP và Thông báo tự động.",
           createdAt: new Date().toISOString(),
           readBy: []
@@ -2789,7 +2789,7 @@
     copyText(text) {
       if (!text) return;
       navigator.clipboard?.writeText(text).then(() => {
-        alert(`✓ Đã sao chép: "${text}" vào bộ nhớ tạm!`);
+        alert(`Đã sao chép: "${text}" vào bộ nhớ tạm!`);
       }).catch(() => {
         prompt("Sao chép nội dung:", text);
       });
@@ -2826,7 +2826,7 @@
       dd.style.display = "none";
       dd.innerHTML = `
         <div class="notif-header">
-          <h4><span>🔔</span> Thông báo hệ thống</h4>
+          <h4>Thông báo hệ thống</h4>
           <div style="display:flex;gap:6px;align-items:center">
             <button type="button" class="btn-small" id="btnMarkAllNotifsRead" style="font-size:10px;padding:3px 8px;cursor:pointer">Đã đọc tất cả</button>
             <button type="button" class="btn-small" id="btnCloseNotifDropdown" style="font-size:10px;padding:3px 8px;cursor:pointer">✕</button>
@@ -2879,7 +2879,7 @@
     if (!notifs.length) {
       body.innerHTML = `
         <div style="text-align:center;padding:32px 14px;color:var(--muted);font-size:12px">
-          <span style="font-size:28px;display:block;margin-bottom:8px">🔕</span>
+          
           Chưa có thông báo hoặc tin nhắn mới nào.
         </div>
       `;
@@ -2912,12 +2912,12 @@
                 <small style="color:#047857;display:block;font-size:9.5px;font-weight:700">MÃ PIN ADMIN CỦA BẠN:</small>
                 <span class="notif-code-text">${escapeHtml(n.adminPin)}</span>
               </div>
-              <button type="button" class="btn-small" onclick="window.AICheckNotificationStore.copyText('${escapeHtml(n.adminPin)}')">📋 Copy</button>
+              <button type="button" class="btn-small" onclick="window.AICheckNotificationStore.copyText('${escapeHtml(n.adminPin)}')">Sao chép</button>
             </div>
           ` : ''}
           ${targetLink ? `
             <a href="${targetLink}" class="notif-action-btn" data-notif-link-id="${n.id}">
-              👉 Mở Trang Quản trị Admin ngay
+              Mở Trang Quản trị Admin ngay
             </a>
           ` : ''}
         </div>
@@ -2982,7 +2982,7 @@
       adminNotifBtn.className = "nav-notif-btn";
       adminNotifBtn.id = "btnNavNotifications";
       adminNotifBtn.title = `Thông báo & Tin nhắn hệ thống (${unreadCount} chưa đọc)`;
-      adminNotifBtn.innerHTML = `<span>🔔</span><span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>`;
+      adminNotifBtn.innerHTML = `<span>TB</span><span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>`;
       adminActions.prepend(adminNotifBtn);
 
       adminNotifBtn.addEventListener("click", (e) => {
@@ -3028,15 +3028,15 @@
 
       const streakHtml = user
         ? (stats.streak > 0 
-            ? `<span style="opacity:0.4">|</span><span class="flame-icon" title="${isEn ? `Daily login streak: ${stats.streak} day(s) · Record: ${stats.bestStreak} days` : `Chuỗi đăng nhập: ${stats.streak} ngày liên tiếp · Kỷ lục: ${stats.bestStreak} ngày`}">🔥 ${stats.streak} ${isEn ? (stats.streak > 1 ? "Days" : "Day") : "Ngày"}</span>` 
-            : `<span style="opacity:0.4">|</span><span class="flame-icon" title="${isEn ? "Streak active today" : "Đã ghi nhận chuỗi hôm nay"}">🔥 1 ${isEn ? "Day" : "Ngày"}</span>`)
-        : `<span style="opacity:0.4">|</span><span class="flame-icon" style="opacity:0.5" title="${isEn ? "Log in to activate daily streak!" : "Đăng nhập tài khoản để tích lũy chuỗi ngày!"}">🔥 0 ${isEn ? "Days" : "Ngày"}</span>`;
+            ? `<span style="opacity:0.4">|</span><span class="flame-icon" title="${isEn ? `Daily login streak: ${stats.streak} day(s) · Record: ${stats.bestStreak} days` : `Chuỗi đăng nhập: ${stats.streak} ngày liên tiếp · Kỷ lục: ${stats.bestStreak} ngày`}">${stats.streak} ${isEn ? (stats.streak > 1 ? "Days" : "Day") : "Ngày liên tục"}</span>` 
+            : `<span style="opacity:0.4">|</span><span class="flame-icon" title="${isEn ? "Streak active today" : "Đã ghi nhận chuỗi hôm nay"}">1 ${isEn ? "Day" : "Ngày liên tục"}</span>`)
+        : `<span style="opacity:0.4">|</span><span class="flame-icon" style="opacity:0.5" title="${isEn ? "Log in to activate daily streak!" : "Đăng nhập tài khoản để tích lũy chuỗi ngày!"}">0 ${isEn ? "Days" : "Ngày"}</span>`;
 
       const gamifyPill = `
         <span class="nav-gamify-pill" title="Cấp ${stats.level}: ${stats.levelTitle} · ${stats.xp} XP">
-          <span>${stats.levelIcon} Lv.${stats.level}</span>
+          <span>Lv.${stats.level}</span>
           <span style="opacity:0.4">|</span>
-          <span>⭐ ${stats.xp} XP</span>
+          <span>${stats.xp} XP</span>
           ${streakHtml}
         </span>
       `;
@@ -3044,14 +3044,16 @@
       const unreadCount = window.AICheckNotificationStore ? window.AICheckNotificationStore.getUnreadCount(user) : 0;
       const notifBtnHtml = `
         <button type="button" class="nav-notif-btn" id="btnNavNotifications" aria-label="Thông báo hệ thống" title="Thông báo & Tin nhắn hệ thống (${unreadCount} chưa đọc)">
-          <span>🔔</span>
+          <span>TB</span>
           <span class="notif-badge" id="navNotifBadge" style="${unreadCount > 0 ? '' : 'display:none'}">${unreadCount > 9 ? '9+' : unreadCount}</span>
         </button>
       `;
 
       let localProf = {};
       try { localProf = JSON.parse(localStorage.getItem("aicheck:user_profile") || "{}"); } catch {}
-      const savedAvatar = localProf.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "🎓";
+      let rawAvatar = localProf.avatar || user?.user_metadata?.avatar || localStorage.getItem("aicheck:avatar") || "THĐ";
+      if (/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(rawAvatar)) rawAvatar = "THĐ";
+      const savedAvatar = rawAvatar;
       const isImgAvatar = savedAvatar.startsWith("http") || savedAvatar.startsWith("data:image");
       const avatarHtml = isImgAvatar
         ? `<span class="nav-user-avatar"><img src="${escapeHtml(savedAvatar)}" alt="Avatar"></span>`
@@ -3066,9 +3068,9 @@
           <span class="nav-user-pill" id="btnNavUserPill" title="${AICheckI18n.t('profileSettings')}">
             ${avatarHtml}
             <span id="navUserNameText">${escapeHtml(name.slice(0, 14))}</span>
-            <span class="nav-user-edit-icon" title="${AICheckI18n.t('settings')}">⚙️</span>
+            
             ${isAdmin ? `<a href="${adminHref}" style="color:var(--leaf);text-decoration:none;font-weight:800;margin-left:4px" title="${AICheckI18n.t('adminPanel')}">[Admin]</a>` : ""}
-            <span class="nav-user-logout" title="${AICheckI18n.t('logout')}" id="btnNavLogout">✕</span>
+            <span class="nav-user-logout" title="${AICheckI18n.t('logout')}" id="btnNavLogout">Đăng xuất</span>
           </span>
         `;
         document.getElementById("btnNavUserPill")?.addEventListener("click", (e) => {
@@ -3094,7 +3096,7 @@
             <span class="nav-user-pill" id="btnNavUserPill" title="${AICheckI18n.t('profileSettingsGuest')}">
               ${avatarHtml}
               <span id="navUserNameText">${escapeHtml(localName.slice(0, 12))}</span>
-              <span class="nav-user-edit-icon">⚙️</span>
+              
               <a href="${loginHref}" class="nav-auth-link" style="margin-left:6px;font-size:10px" title="${AICheckI18n.t('login')}">${AICheckI18n.t('login')}</a>
             </span>
           `;
@@ -3131,8 +3133,8 @@
           const arrowEl = loginTab.querySelector(".nav-item-arrow");
           if (titleEl) titleEl.textContent = `${isEn ? "Account: " : "Tài khoản: "}${name.slice(0, 14)}`;
           if (descEl) descEl.textContent = isEn ? "Profile & Settings" : "Hồ sơ & Cài đặt";
-          if (iconEl) iconEl.textContent = "👤";
-          if (arrowEl) arrowEl.textContent = "⚙️";
+          if (iconEl) iconEl.textContent = "TK";
+          if (arrowEl) arrowEl.textContent = "→";
           loginTab.onclick = (e) => {
             e.preventDefault();
             window.closeSiteNav?.();
@@ -3147,7 +3149,7 @@
           const arrowEl = loginTab.querySelector(".nav-item-arrow");
           if (titleEl) titleEl.textContent = isEn ? "Log in" : "Đăng nhập";
           if (descEl) descEl.textContent = isEn ? "Sign in & Sync XP" : "Đăng nhập & Lưu BXH";
-          if (iconEl) iconEl.textContent = "🔐";
+          if (iconEl) iconEl.textContent = "MK";
           if (arrowEl) arrowEl.textContent = "→";
           loginTab.onclick = null;
         }

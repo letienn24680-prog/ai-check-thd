@@ -559,7 +559,7 @@ body {
 /* --------------------------------------------------------------------------
    6. MỤC VỀ DỰ ÁN & FAQ (INDEX.HTML)
    -------------------------------------------------------------------------- */
-/* 🛠️ FIX UI: Khắc phục lỗi tương phản chữ đen trên nền tối và phục hồi lưới 2 cột cho .home-about */
+/*  FIX UI: Khắc phục lỗi tương phản chữ đen trên nền tối và phục hồi lưới 2 cột cho .home-about */
 .home-about {
   display: grid !important;
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr) !important;
@@ -935,7 +935,7 @@ body {
   color: #d9f26c !important;
 }
 
-/* 🛠️ FIX UI: Khôi phục nền tối forest gradient và tương phản chữ trắng cho .panel-dark (cột bên phải Practice) */
+/*  FIX UI: Khôi phục nền tối forest gradient và tương phản chữ trắng cho .panel-dark (cột bên phải Practice) */
 .panel-dark,
 .panel.panel-dark {
   background: linear-gradient(150deg, #0e2b23 0%, #164637 100%) !important;
@@ -1240,7 +1240,7 @@ body {
   color: var(--color-primary-dark);
 }
 
-/* 🛠️ FIX UI: Căn chỉnh 4 nút trắc nghiệm #trustChoices thành lưới 2x2 cân đối, căn giữa chữ, không bị kéo dãn 100% */
+/*  FIX UI: Căn chỉnh 4 nút trắc nghiệm #trustChoices thành lưới 2x2 cân đối, căn giữa chữ, không bị kéo dãn 100% */
 #trustChoices {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1292,7 +1292,7 @@ body {
   box-shadow: 0 0 16px rgba(224, 96, 65, 0.2) !important;
 }
 
-/* 🛠️ FIX UI: Định dạng danh sách lựa chọn phương pháp .practice-choice-list dạng hàng dọc chi tiết, chữ căn trái */
+/*  FIX UI: Định dạng danh sách lựa chọn phương pháp .practice-choice-list dạng hàng dọc chi tiết, chữ căn trái */
 .practice-choice-list {
   display: grid !important;
   grid-template-columns: 1fr !important;
@@ -1818,7 +1818,7 @@ body {
 /* --------------------------------------------------------------------------
    16. SCROLL REVEAL & MICRO-INTERACTIONS (60 FPS - GPU ACCELERATED)
    -------------------------------------------------------------------------- */
-/* 🚀 Scroll Reveal: Xuất hiện nhanh nhạy, mượt mà, triệt tiêu độ trễ hiển thị */
+/*  Scroll Reveal: Xuất hiện nhanh nhạy, mượt mà, triệt tiêu độ trễ hiển thị */
 .reveal-item {
   opacity: 0;
   transform: translateY(12px);
@@ -1832,14 +1832,14 @@ body {
   transform: translateY(0);
 }
 
-/* 🚀 Glass Elevation: Hiệu ứng nổi và bóng đổ thanh điều hướng khi cuộn */
+/*  Glass Elevation: Hiệu ứng nổi và bóng đổ thanh điều hướng khi cuộn */
 .site-header.is-scrolled {
   background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 8px 24px -4px rgba(18, 59, 50, 0.08), 0 2px 6px rgba(18, 59, 50, 0.03);
   border-bottom-color: rgba(18, 59, 50, 0.12);
 }
 
-/* 🚀 Micro-interaction: Vòng sáng phát quang khi focus vào ô nhập liệu */
+/*  Micro-interaction: Vòng sáng phát quang khi focus vào ô nhập liệu */
 input:focus, select:focus {
   outline: none;
   border-color: var(--color-leaf) !important;
@@ -2143,7 +2143,7 @@ body, .site-header, .panel, .choice, .portal-link, .filter, .scenario-button,
   background: rgba(19, 43, 68, 0.88) !important;
   border-color: rgba(0, 229, 255, 0.5) !important;
 }
-/* 🛠️ FIX UI: DARK MODE COMPREHENSIVE CONTRAST & CARD STYLING */
+/*  FIX UI: DARK MODE COMPREHENSIVE CONTRAST & CARD STYLING */
 
 /* 1. Bento Card Highlight (index.html) */
 .bento-card-highlight {
