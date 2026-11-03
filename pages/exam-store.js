@@ -454,18 +454,53 @@
     // Nạp toàn bộ ngân hàng đề thi từ cloud (exams-data.json) để đồng bộ mọi thiết bị
     async fetchExamsFromCloud() {
       try {
-        const isPagesDir = typeof window !== "undefined" && window.location.pathname.includes("/pages/");
-        const candidates = isPagesDir ? ["exams-data.json", "../pages/exams-data.json"] : ["pages/exams-data.json", "/pages/exams-data.json"];
         let cloudExams = null;
+        let cloudStatuses = null;
 
-        for (const url of candidates) {
+        // 1. Đọc từ Cloud Shared Store (ưu tiên cao nhất, đồng bộ realtime mọi thiết bị)
+        if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.fetchCloudSharedData === "function") {
           try {
-            const res = await fetch(url, { cache: "no-cache" });
-            if (res.ok) {
-              cloudExams = await res.json();
-              if (Array.isArray(cloudExams) && cloudExams.length > 0) break;
+            const shared = await window.AICheckCloud.fetchCloudSharedData();
+            if (shared) {
+              if (Array.isArray(shared.exam_bank) && shared.exam_bank.length > 0) {
+                cloudExams = shared.exam_bank;
+              }
+              if (shared.exam_statuses && typeof shared.exam_statuses === "object") {
+                cloudStatuses = shared.exam_statuses;
+                try {
+                  const localSt = JSON.parse(localStorage.getItem("aicheck:exam_statuses") || "{}");
+                  localStorage.setItem("aicheck:exam_statuses", JSON.stringify(Object.assign(localSt, cloudStatuses)));
+                } catch {}
+              }
+              if (Array.isArray(shared.exam_results) && shared.exam_results.length > 0) {
+                try {
+                  const localRes = this.getResults();
+                  const mergedMap = new Map();
+                  [...shared.exam_results, ...localRes].forEach(r => {
+                    if (r && r.id && !mergedMap.has(r.id)) mergedMap.set(r.id, r);
+                  });
+                  this.saveResults(Array.from(mergedMap.values()));
+                } catch {}
+              }
             }
-          } catch {}
+          } catch (cErr) {
+            console.warn("Lỗi đọc exam_bank từ Cloud Shared Store:", cErr);
+          }
+        }
+
+        // 2. Nếu Cloud Shared Store chưa có đề, nạp từ file static exams-data.json
+        if (!cloudExams) {
+          const isPagesDir = typeof window !== "undefined" && window.location.pathname.includes("/pages/");
+          const candidates = isPagesDir ? ["exams-data.json", "../pages/exams-data.json"] : ["pages/exams-data.json", "/pages/exams-data.json"];
+          for (const url of candidates) {
+            try {
+              const res = await fetch(url, { cache: "no-cache" });
+              if (res.ok) {
+                cloudExams = await res.json();
+                if (Array.isArray(cloudExams) && cloudExams.length > 0) break;
+              }
+            } catch {}
+          }
         }
 
         if (Array.isArray(cloudExams) && cloudExams.length > 0) {
@@ -475,6 +510,7 @@
 
           let statuses = {};
           try { statuses = JSON.parse(localStorage.getItem("aicheck:exam_statuses") || "{}"); } catch {}
+          if (cloudStatuses) statuses = Object.assign(statuses, cloudStatuses);
 
           const mergedExams = [...cloudExams, ...customCreated].map(ex => {
             if (statuses[ex.id]) {
@@ -491,7 +527,7 @@
           return mergedExams;
         }
       } catch (e) {
-        console.warn("Lỗi tải exams-data.json:", e);
+        console.warn("Lỗi tải exams từ cloud:", e);
       }
       return this.getExams();
     },
@@ -501,6 +537,13 @@
         localStorage.setItem(EXAM_BANK_KEY, JSON.stringify(exams));
       } catch (e) {
         console.error("Lỗi lưu exam_bank vào localStorage:", e);
+      }
+      // Đồng bộ lên Cloud Shared Store để học sinh/giám khảo trên mọi thiết bị đều thấy đề thi mới
+      if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.updateCloudSharedData === "function") {
+        window.AICheckCloud.updateCloudSharedData(d => {
+          d.exam_bank = exams;
+          return d;
+        }).catch(() => {});
       }
       if (broadcast && typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.broadcastGlobalRealtime === "function") {
         window.AICheckCloud.broadcastGlobalRealtime("EXAM_BANK_SYNC", { exams });
@@ -609,6 +652,17 @@
         }));
       } catch {}
 
+      // Đồng bộ bài thi lên Cloud Shared Store để Admin trên mọi máy đều đọc được
+      if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.updateCloudSharedData === "function") {
+        window.AICheckCloud.updateCloudSharedData(d => {
+          d.exam_results = d.exam_results || [];
+          d.exam_results = d.exam_results.filter(r => r.id !== normalizedResult.id);
+          d.exam_results.unshift(normalizedResult);
+          if (d.exam_results.length > 200) d.exam_results = d.exam_results.slice(0, 200);
+          return d;
+        }).catch(() => {});
+      }
+
       // Phát sóng Realtime qua Supabase đa thiết bị để máy Admin nhận bài nộp ngay lập tức
       try {
         if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.broadcastGlobalRealtime === "function") {
@@ -707,6 +761,15 @@
     // Admin cập nhật trạng thái đề thi (active | ended) và phát sóng đa thiết bị
     setExamStatus(examId, status) {
       this.applyStatusLocally(examId, status);
+
+      // Lưu trạng thái lên Cloud Shared Store
+      if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.updateCloudSharedData === "function") {
+        window.AICheckCloud.updateCloudSharedData(d => {
+          d.exam_statuses = d.exam_statuses || {};
+          d.exam_statuses[examId] = status;
+          return d;
+        }).catch(() => {});
+      }
 
       // Phát sóng qua Supabase Realtime toàn cầu
       if (typeof window !== "undefined" && window.AICheckCloud && typeof window.AICheckCloud.broadcastGlobalRealtime === "function") {

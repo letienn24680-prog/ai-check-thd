@@ -2250,7 +2250,7 @@
 
         <div style="margin-bottom:14px">
           <label style="display:block;font-size:11.5px;font-weight:700;color:#334155;margin-bottom:4px">
-            ⏱️ Khoảng cách dài nhất giữa Đợt 1 và Đợt 2:
+            Khoảng cách dài nhất giữa Đợt 1 và Đợt 2:
           </label>
           <select id="selGlobalMaxDaysGap" class="filter-input" style="width:100%">
             <option value="3" selected>Tối đa 3 ngày (Phân bổ ngẫu nhiên từ 1 đến 3 ngày - Khuyến nghị KHKT)</option>
@@ -2337,6 +2337,16 @@
     function saveCustomAdminCodes(list) {
       try {
         localStorage.setItem("aicheck:custom_admin_codes", JSON.stringify(list));
+        if (window.AICheckCloud?.updateCloudSharedData) {
+          window.AICheckCloud.updateCloudSharedData(d => {
+            d.custom_admin_codes = list;
+            return d;
+          }).then(() => {
+            if (window.AICheckCloud?.broadcastGlobalRealtime) {
+              window.AICheckCloud.broadcastGlobalRealtime("ADMIN_CODES_UPDATED", list);
+            }
+          }).catch(() => {});
+        }
       } catch (e) {
         console.error("Lỗi lưu custom admin codes:", e);
       }
@@ -2489,6 +2499,28 @@
               if (payload && payload.examId && payload.status) {
                 window.AICheckExamStore?.applyStatusLocally(payload.examId, payload.status);
                 loadAdminExams();
+              }
+            });
+            rtChannel.on("broadcast", { event: "ADMIN_SHARED_SETTINGS_UPDATED" }, async ({ payload }) => {
+              console.log("[Admin Realtime] Nhận cập nhật cài đặt chung từ thiết bị khác:", payload);
+              await fetchAdminSharedSettingsFromCloud();
+              renderScoreTable();
+            });
+            rtChannel.on("broadcast", { event: "ADMIN_CODES_UPDATED" }, ({ payload }) => {
+              console.log("[Admin Realtime] Nhận cập nhật mã admin tùy chỉnh:", payload);
+              if (Array.isArray(payload)) {
+                try { localStorage.setItem("aicheck:custom_admin_codes", JSON.stringify(payload)); } catch {}
+                loadAdminCodesTable();
+              }
+            });
+            rtChannel.on("broadcast", { event: "ANNOUNCEMENTS_UPDATED" }, ({ payload }) => {
+              console.log("[Admin Realtime] Nhận cập nhật thông báo:", payload);
+              if (Array.isArray(payload)) {
+                try {
+                  localStorage.setItem("aicheck:system_announcements", JSON.stringify(payload));
+                  localStorage.setItem("aicheck:admin_announcements", JSON.stringify(payload));
+                } catch {}
+                loadAdminAnnouncements();
               }
             });
           }
@@ -2830,7 +2862,7 @@
               </td>
               <td>${statusTag}</td>
               <td>
-                <button type="button" class="btn-small" onclick="deleteLiveSessionItem('${s.id}')" style="color:#b91c1c;padding:3px 8px;font-size:10px" title="Xóa phiên này">Xóa️</button>
+                <button type="button" class="btn-small" onclick="deleteLiveSessionItem('${s.id}')" style="color:#b91c1c;padding:3px 8px;font-size:10px" title="Xóa phiên này">Xóa</button>
               </td>
             </tr>`;
           }).join("")}
@@ -2956,7 +2988,9 @@
         loadScores(),
         loadSupportRequests(),
         loadUsersList(),
-        window.AICheckExamStore?.fetchExamsFromCloud ? window.AICheckExamStore.fetchExamsFromCloud() : Promise.resolve()
+        fetchAdminSharedSettingsFromCloud(),
+        window.AICheckExamStore?.fetchExamsFromCloud ? window.AICheckExamStore.fetchExamsFromCloud() : Promise.resolve(),
+        window.AICheckTracker?.fetchFromCloud ? window.AICheckTracker.fetchFromCloud() : Promise.resolve()
       ]);
       loadAdminExams();
       loadAdminCodesTable();
@@ -3144,7 +3178,7 @@
               ? '<span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800">ĐANG PHÁT TRƯỢT</span>'
               : isEnded
               ? '<span class="tag" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-weight:800">HẾT SỰ KIỆN (KHÓA)</span>'
-              : '<span class="tag" style="background:#f1f5f9;color:#64748b;font-weight:700">⏸️ TẠM ẨN</span>';
+              : '<span class="tag" style="background:#f1f5f9;color:#64748b;font-weight:700">TẠM ẨN</span>';
 
             const timeStr = a.createdAt ? new Date(a.createdAt).toLocaleString("vi-VN") : "—";
 
@@ -3402,6 +3436,62 @@
       deletedScoreIds = JSON.parse(localStorage.getItem("aicheck:admin_deleted_scores") || "[]");
     } catch (e) {
       deletedScoreIds = [];
+    }
+
+    // ĐỒNG BỘ CÀI ĐẶT CHUNG (MỐC THỜI GIAN, BẢN GHI ĐÃ XÓA, THÔNG BÁO) LÊN CLOUD SHARED STORE
+    async function syncAdminSharedSettingsToCloud() {
+      if (!window.AICheckCloud?.updateCloudSharedData) return;
+      try {
+        await window.AICheckCloud.updateCloudSharedData(d => {
+          d.custom_assessment_dates = customAssessmentDates;
+          d.khkt_timeline_settings = khktTimelineSettings;
+          d.deleted_scores = deletedScoreIds;
+          return d;
+        });
+        if (window.AICheckCloud?.broadcastGlobalRealtime) {
+          window.AICheckCloud.broadcastGlobalRealtime("ADMIN_SHARED_SETTINGS_UPDATED", {
+            timeline: khktTimelineSettings,
+            datesCount: Object.keys(customAssessmentDates).length,
+            deletedCount: deletedScoreIds.length
+          });
+        }
+      } catch (e) {
+        console.warn("Lỗi đẩy admin shared settings lên Cloud:", e);
+      }
+    }
+
+    async function fetchAdminSharedSettingsFromCloud() {
+      if (!window.AICheckCloud?.fetchCloudSharedData) return;
+      try {
+        const shared = await window.AICheckCloud.fetchCloudSharedData();
+        if (shared) {
+          if (shared.custom_assessment_dates && typeof shared.custom_assessment_dates === "object") {
+            customAssessmentDates = Object.assign(customAssessmentDates, shared.custom_assessment_dates);
+            try { localStorage.setItem("aicheck:admin_custom_assessment_dates", JSON.stringify(customAssessmentDates));
+      syncAdminSharedSettingsToCloud(); } catch {}
+          }
+          if (shared.khkt_timeline_settings && typeof shared.khkt_timeline_settings === "object") {
+            khktTimelineSettings = Object.assign(khktTimelineSettings, shared.khkt_timeline_settings);
+            try { localStorage.setItem("aicheck:admin_khkt_timeline_settings", JSON.stringify(khktTimelineSettings));
+      syncAdminSharedSettingsToCloud(); } catch {}
+          }
+          if (Array.isArray(shared.deleted_scores) && shared.deleted_scores.length > 0) {
+            deletedScoreIds = Array.from(new Set([...deletedScoreIds, ...shared.deleted_scores]));
+            try { localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds)); } catch {}
+          }
+          if (Array.isArray(shared.custom_admin_codes) && shared.custom_admin_codes.length > 0) {
+            try { localStorage.setItem("aicheck:custom_admin_codes", JSON.stringify(shared.custom_admin_codes)); } catch {}
+          }
+          if (Array.isArray(shared.announcements) && shared.announcements.length > 0) {
+            try {
+              localStorage.setItem("aicheck:system_announcements", JSON.stringify(shared.announcements));
+              localStorage.setItem("aicheck:admin_announcements", JSON.stringify(shared.announcements));
+            } catch {}
+          }
+        }
+      } catch (e) {
+        console.warn("Lỗi tải admin shared settings từ Cloud:", e);
+      }
     }
 
     function getStudentDistributedKhktDates(studentName) {
@@ -4606,6 +4696,7 @@
       if (!confirm("Bạn có chắc chắn muốn xóa bản ghi này?")) return;
       deletedScoreIds.push(scoreId);
       localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+      syncAdminSharedSettingsToCloud();
 
       allScores = allScores.filter(s => s.id !== scoreId);
 
@@ -4628,6 +4719,7 @@
         if (s.id) deletedScoreIds.push(s.id);
       });
       localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+      syncAdminSharedSettingsToCloud();
 
       allScores = allScores.filter(s => !(s.activity === "assessment" && s.display_name === studentName));
 
@@ -4684,6 +4776,7 @@
         if (!deletedScoreIds.includes(id)) deletedScoreIds.push(id);
       });
       localStorage.setItem("aicheck:admin_deleted_scores", JSON.stringify(deletedScoreIds));
+      syncAdminSharedSettingsToCloud();
 
       allScores = allScores.filter(s => !dupIds.includes(s.id));
 

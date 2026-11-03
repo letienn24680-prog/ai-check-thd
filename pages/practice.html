@@ -114,15 +114,15 @@
       </header>
     </section>
 
-    <!-- 🎮 GAMIFICATION HUD BAR -->
+    <!-- GAMIFICATION HUD BAR -->
     <div class="gamify-hud" id="practiceGamifyHud">
       <div class="gamify-hud-left">
-        <span class="gamify-badge gamify-badge-level" id="hudLevelBadge">🌱 Lv.1 Tập Sự</span>
-        <span class="gamify-badge gamify-badge-xp" id="hudXpBadge">⭐ 0 XP</span>
-        <span class="gamify-badge gamify-badge-streak" id="hudStreakBadge"><span class="flame-icon">🔥</span> Chuỗi: 0</span>
+        <span class="gamify-badge gamify-badge-level" id="hudLevelBadge">Lv.1 Tập Sự</span>
+        <span class="gamify-badge gamify-badge-xp" id="hudXpBadge">0 XP</span>
+        <span class="gamify-badge gamify-badge-streak" id="hudStreakBadge">Chuỗi: 0</span>
       </div>
       <div class="gamify-hud-right">
-        <button type="button" class="audio-btn" id="hudAudioToggle" title="Bật/Tắt âm thanh phản hồi">🔊 Âm thanh: Bật</button>
+        <button type="button" class="audio-btn" id="hudAudioToggle" title="Bật/Tắt âm thanh phản hồi">Âm thanh: Bật</button>
       </div>
     </div>
 
@@ -131,12 +131,12 @@
         <!-- BANNER HƯỚNG DẪN GIAI ĐOẠN CAN THIỆP -->
         <div id="interventionNotice" style="display:none;margin-bottom:14px;padding:12px 18px;background:rgba(217,242,108,0.14);border:1.5px solid rgba(40,105,71,0.3);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
           <div style="font-size:12px;color:var(--forest);line-height:1.5">
-            🎯 <strong>Giai đoạn Can thiệp Sư phạm:</strong> Bạn đã có điểm đo Trước can thiệp. <strong>Điều kiện mở khóa:</strong> Hoàn thành tối thiểu 1 lượt thực hành (10/10 câu) đạt từ <strong>60% trở lên (≥ 6/10 câu đúng)</strong> và trải qua ít nhất 1 ngày rèn luyện để mở khóa bài <strong>Đo Sau can thiệp (Đợt 02)</strong>!
+            <strong>Giai đoạn Can thiệp Sư phạm:</strong> Bạn đã có điểm đo Trước can thiệp. <strong>Điều kiện mở khóa:</strong> Hoàn thành tối thiểu 1 lượt thực hành (10/10 câu) đạt từ <strong>60% trở lên (≥ 6/10 câu đúng)</strong> và trải qua ít nhất 1 ngày rèn luyện để mở khóa bài <strong>Đo Sau can thiệp (Đợt 02)</strong>!
           </div>
           <span style="font-size:10.5px;font-weight:800;background:var(--forest);color:var(--lime);padding:3px 10px;border-radius:20px;white-space:nowrap">BƯỚC 2 / 3</span>
         </div>
         
-        <!-- 📊 THANH TIẾN TRÌNH LUYỆN TẬP SINH ĐỘNG -->
+        <!-- THANH TIẾN TRÌNH LUYỆN TẬP -->
         <div class="arena-progress-wrap" title="Tiến trình làm bài trong lượt">
           <div class="arena-progress-bar" id="arenaProgressBar"></div>
         </div>
@@ -148,7 +148,7 @@
 
         <h2 class="sr-only" id="practiceTitle">Câu hỏi tình huống</h2>
 
-        <!-- 🚀 CONTAINER CÂU HỎI VỚI HIỆU ỨNG SLIDE TRANSITION -->
+        <!-- CONTAINER CÂU HỎI -->
         <div class="question-slide-box" id="questionSlideBox">
           <p class="practice-question-number" id="practiceQuestionNumber"></p>
           <p class="quote" id="practiceQuote"></p>
@@ -164,7 +164,7 @@
         <div class="practice-actions">
           <span class="muted" id="practiceScore" style="font-size:11px">Chọn kết luận và cách kiểm chứng</span>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <button type="button" class="button button-outline" id="btnPracticeHint" style="padding:8px 13px;font-size:11px;font-weight:700" title="Bấm để mở trợ giúp và gợi ý tra cứu">💡 Trợ giúp / Gợi ý</button>
+            <button type="button" class="button button-outline" id="btnPracticeHint" style="padding:8px 13px;font-size:11px;font-weight:700" title="Bấm để mở trợ giúp và gợi ý tra cứu">Trợ giúp / Gợi ý</button>
             <button class="button button-dark" id="practiceAction">Kiểm tra đáp án →</button>
           </div>
         </div>
@@ -183,7 +183,7 @@
         <!-- VÍ DỤ BỔ SUNG ĐƯỢC ĐƯA VÀO CỘT PHỤ ĐỂ KHÔNG GÂY PHÂN TÂM KHI LÀM BÀI -->
         <details style="margin-top:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px 12px">
           <summary style="font-size:11.5px;font-weight:700;color:var(--lime);cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px">
-            💡 Ví dụ kiểm chứng mẫu (Sức khỏe, Lịch sử) ▾
+            Ví dụ kiểm chứng mẫu (Sức khỏe, Lịch sử) ▾
           </summary>
           <div class="example-row" style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
             <article class="example" style="font-size:11px;background:rgba(0,0,0,0.25);border-left:3px solid var(--lime);padding:8px 10px;border-radius:4px;color:#e2e8f0">
@@ -197,19 +197,19 @@
 
         <div style="margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,0.15);text-align:center">
           <a id="feedbackLink" href="resources.html#formConfig" style="font-size:11.5px;color:#94a3b8;text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:color 0.15s">
-            💬 Đóng góp tình huống / Báo lỗi ↗
+            Đóng góp tình huống / Báo lỗi ↗
           </a>
         </div>
       </aside>
     </div>
 
-    <!-- 💡 THƯ VIỆN 1.060 TÌNH HUỐNG KIỂM CHỨNG (BẢO VỆ CHỐNG TRA CỨU ĐÁP ÁN TRONG LÚC LÀM BÀI) -->
+    <!-- THƯ VIỆN 1.060 TÌNH HUỐNG KIỂM CHỨNG (BẢO VỆ CHỐNG TRA CỨU ĐÁP ÁN TRONG LÚC LÀM BÀI) -->
     <details class="scenario-library" id="scenarioLibrary">
-      <summary id="libraryTitle">🔒 Thư viện tra cứu 1.060 tình huống (Tạm khóa trong khi làm bài)</summary>
+      <summary id="libraryTitle">Thư viện tra cứu 1.060 tình huống (Tạm khóa trong khi làm bài)</summary>
       <div class="scenario-library-content">
         <!-- Thông báo bảo vệ tính khách quan thực nghiệm khi đang làm 10 câu -->
         <div id="libraryLockedNotice" style="background:#fef3c7;border:1.5px solid #f59e0b;border-radius:12px;padding:16px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px">
-          <div style="font-size:28px;line-height:1">🔒</div>
+          <div style="font-size:13px;font-weight:700;color:#64748b;padding:4px 0">BẢO MẬT PHÒNG LUYỆN</div>
           <div>
             <strong style="color:#92400e;font-size:13.5px;display:block;margin-bottom:4px">
               Thư viện tra cứu đang được bảo vệ trong lúc làm bài
@@ -224,9 +224,9 @@
         <div id="scenarioLibraryContentBody" style="display:none">
           <p class="panel-copy">Gợi ý dành cho bạn: Bạn có thể tra cứu nhanh theo từ khóa, chủ đề hoặc xem các tình huống tương tự để tìm phương pháp kiểm chứng chuẩn xác.</p>
 
-          <!-- 🔍 THANH TÌM KIẾM TỨC THÌ -->
+          <!-- THANH TÌM KIẾM TỨC THÌ -->
           <div class="scenario-search-box">
-            <span class="scenario-search-icon">🔍</span>
+            <span class="scenario-search-icon">Tìm kiếm:</span>
             <input type="text" id="scenarioSearchInput" class="scenario-search-input" placeholder="Tìm kiếm nhanh trong 1.060 tình huống (ví dụ: Deepfake, Fansipan, Định luật Ohm, Phân số, ChatGPT...)">
           </div>
 
@@ -244,16 +244,16 @@
 
   <footer class="site-footer">AI CHECK THĐ · Thực hành và thư viện tình huống</footer>
 
-  <!-- 💡 MODAL GỢI Ý PHƯƠNG PHÁP KIỂM CHỨNG (HƯỚNG DẪN TƯ DUY - KHÔNG LỘ ĐÁP ÁN) -->
+  <!-- MODAL GỢI Ý PHƯƠNG PHÁP KIỂM CHỨNG (HƯỚNG DẪN TƯ DUY - KHÔNG LỘ ĐÁP ÁN) -->
   <div class="modal" id="hintModal" role="dialog" aria-modal="true" aria-labelledby="hintModalTitle">
     <div class="modal-content" style="max-width:540px">
       <div class="modal-top">
-        <span class="tag-topic" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0">💡 HƯỚNG DẪN TƯ DUY PHẢN BIỆN</span>
+        <span class="tag-topic" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0">HƯỚNG DẪN TƯ DUY PHẢN BIỆN</span>
         <button class="modal-close" id="closeHintModal" aria-label="Đóng">×</button>
       </div>
       <h2 id="hintModalTitle" style="font-size:16px;margin:8px 0 12px;color:var(--forest)">Gợi ý cách tiếp cận tình huống này</h2>
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:12.5px;line-height:1.6">
-        <p style="margin:0 0 6px"><strong>📌 Định hướng kiểm chứng:</strong></p>
+        <p style="margin:0 0 6px"><strong>Định hướng kiểm chứng:</strong></p>
         <p id="hintContextQuestion" style="margin:0;color:#1e293b;font-weight:600"></p>
       </div>
       <div style="font-size:12px;line-height:1.6;color:#475569">
@@ -271,7 +271,7 @@
     </div>
   </div>
 
-  <!-- 🪟 MODAL CHI TIẾT TÌNH HUỐNG -->
+  <!-- MODAL CHI TIẾT TÌNH HUỐNG -->
   <div class="modal" id="scenarioModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
       <div class="modal-top">
@@ -306,7 +306,7 @@
     let currentFilter = "Tất cả";
     let currentSearchTerm = "";
 
-    // 🎮 Cập nhật giao diện Gamification HUD
+    // Cập nhật giao diện Gamification HUD
     function updateGamifyHud() {
       if (!window.AICheckGamification) return;
       const stats = window.AICheckGamification.getStats();
@@ -315,10 +315,10 @@
       const xpEl = document.getElementById("hudXpBadge");
       const streakEl = document.getElementById("hudStreakBadge");
       const audioBtn = document.getElementById("hudAudioToggle");
-      if (levelEl) levelEl.textContent = `${stats.levelIcon} Lv.${stats.level} ${stats.levelTitle}`;
-      if (xpEl) xpEl.textContent = `⭐ ${stats.xp} XP`;
-      if (streakEl) streakEl.innerHTML = `<span class="flame-icon">🔥</span> ${isEn ? "Streak:" : "Chuỗi:"} ${stats.streak} ${isEn ? (stats.streak > 1 ? "Days" : "Day") : "Ngày"}`;
-      if (audioBtn) audioBtn.textContent = stats.soundEnabled ? (isEn ? "🔊 Sound: On" : "🔊 Âm thanh: Bật") : (isEn ? "🔇 Sound: Off" : "🔇 Âm thanh: Tắt");
+      if (levelEl) levelEl.textContent = `Lv.${stats.level} ${stats.levelTitle}`;
+      if (xpEl) xpEl.textContent = `${stats.xp} XP`;
+      if (streakEl) streakEl.textContent = `${isEn ? "Streak:" : "Chuỗi:"} ${stats.streak} ${isEn ? (stats.streak > 1 ? "Days" : "Day") : "Ngày"}`;
+      if (audioBtn) audioBtn.textContent = stats.soundEnabled ? (isEn ? "Sound: On" : "Âm thanh: Bật") : (isEn ? "Sound: Off" : "Âm thanh: Tắt");
     }
 
     function showFloatingXp(amount) {
@@ -358,9 +358,9 @@
         notice.style.display = "flex";
         notice.innerHTML = `
           <div style="font-size:12px;color:var(--forest);line-height:1.5">
-            🎯 <strong>Giai đoạn Can thiệp Sư phạm:</strong> Bạn đã có điểm đo Trước can thiệp (<strong>${preScore} đ</strong>). <strong>Điều kiện mở khóa Đợt 02:</strong> Hoàn thành tối thiểu <strong>60 câu thực hành</strong> (Tiến trình: <strong>${count}/60 câu</strong>) HOẶC trải qua <strong>3 ngày rèn luyện</strong>.
+            <strong>Giai đoạn Can thiệp Sư phạm:</strong> Bạn đã có điểm đo Trước can thiệp (<strong>${preScore} đ</strong>). <strong>Điều kiện mở khóa Đợt 02:</strong> Hoàn thành tối thiểu <strong>60 câu thực hành</strong> (Tiến trình: <strong>${count}/60 câu</strong>) HOẶC trải qua <strong>3 ngày rèn luyện</strong>.
           </div>
-          <span style="font-size:10.5px;font-weight:800;background:var(--forest);color:var(--lime);padding:3px 10px;border-radius:20px;white-space:nowrap">${count >= 60 ? 'ĐÃ ĐẠT 60 CÂU ✅' : `${count}/60 CÂU`}</span>
+          <span style="font-size:10.5px;font-weight:800;background:var(--forest);color:var(--lime);padding:3px 10px;border-radius:20px;white-space:nowrap">${count >= 60 ? 'ĐÃ ĐẠT 60 CÂU (HOÀN THÀNH)' : `${count}/60 CÂU`}</span>
         `;
       } else {
         notice.style.display = "none";
@@ -408,10 +408,10 @@
         
         let icon = "";
         let hint = "";
-        if (label === "Đúng") { icon = "✅ "; hint = " (Khẳng định đúng)"; }
-        else if (label === "Sai") { icon = "❌ "; hint = " (AI ảo giác / Sai kiến thức)"; }
-        else if (label === "Chưa đủ căn cứ") { icon = "⚖️ "; hint = " (Thiếu số liệu / chưa rõ)"; }
-        else if (label === "Cần kiểm chứng thêm") { icon = "🔍 "; hint = " (Cần tra cứu thêm SGK)"; }
+        if (label === "Đúng") { icon = ""; hint = " (Khẳng định đúng)"; }
+        else if (label === "Sai") { icon = ""; hint = " (AI ảo giác / Sai kiến thức)"; }
+        else if (label === "Chưa đủ căn cứ") { icon = ""; hint = " (Thiếu số liệu / chưa rõ)"; }
+        else if (label === "Cần kiểm chứng thêm") { icon = ""; hint = " (Cần tra cứu thêm SGK)"; }
 
         button.innerHTML = `<span><strong>${icon}${label}</strong><small style="opacity:0.75;font-size:11px">${hint}</small></span>`; 
         button.addEventListener("click", () => { 
@@ -560,20 +560,20 @@
         feedbackEl.innerHTML = `
           <div style="background:${isBothCorrect ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.08)'};border:1.5px solid ${isBothCorrect ? '#10b981' : '#f87171'};border-radius:12px;padding:12px 16px;margin-top:12px;animation:fadeIn 0.2s ease-out">
             <div style="font-weight:800;font-size:13.5px;color:${isBothCorrect ? '#047857' : '#b91c1c'};margin-bottom:6px">
-              ${isBothCorrect ? '🎯 Chính xác xuất sắc! Bạn đã chọn đúng kết luận và cách kiểm chứng.' : '⚠️ Hãy chú ý đối chiếu lại với kiến thức chuẩn:'}
+              ${isBothCorrect ? 'Chính xác! Bạn đã chọn đúng kết luận và cách kiểm chứng.' : 'Lưu ý đối chiếu lại với kiến thức chuẩn:'}
             </div>
             <div style="font-size:12.5px;line-height:1.6;color:var(--text);margin-bottom:8px">
               <strong>Kết luận đúng:</strong> <span class="tag" style="background:${item.verdict === 'Đúng' ? '#10b981' : '#ef4444'};color:#fff;font-weight:700">${item.verdict}</span> · ${item.explain}
             </div>
             <div style="font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin-top:6px">
-              📖 <strong>Nguồn đối chứng thực tế:</strong> <span style="color:var(--forest);font-weight:600">${item.source}</span>
+              <strong>Nguồn đối chứng thực tế:</strong> <span style="color:var(--forest);font-weight:600">${item.source}</span>
             </div>
           </div>
         `;
         document.getElementById("practiceScore").textContent = `Đúng cả hai lựa chọn: ${correct} / ${set.length}`; 
         document.getElementById("practiceAction").textContent = index === set.length - 1 ? "Xem kết quả →" : "Câu tiếp theo →"; 
         
-        // 🎮 Ghi nhận Gamification: XP & Streak & Sound
+        // Ghi nhận Gamification: XP & Streak & Sound
         if (window.AICheckGamification) {
           const gamifyRes = window.AICheckGamification.recordPracticeAnswer(trustCorrect, methodCorrect);
           updateGamifyHud();
@@ -622,7 +622,7 @@
         updateGamifyHud();
       }
 
-      document.getElementById("practiceQuote").textContent = `🎉 Hoàn thành lượt luyện tập! Kết quả: ${correct}/${set.length} tình huống chính xác (${score}/100)${roundBonus ? ` · +${roundBonus} XP thưởng!` : ""}`; 
+      document.getElementById("practiceQuote").textContent = `Hoàn thành lượt luyện tập! Kết quả: ${correct}/${set.length} tình huống chính xác (${score}/100)${roundBonus ? ` · +${roundBonus} XP thưởng!` : ""}`; 
       document.getElementById("practiceQuestionNumber").textContent = "Đã hoàn thành lượt thực hành"; 
       document.getElementById("trustChoices").replaceChildren(); 
       document.getElementById("methodChoices").replaceChildren(); 
@@ -632,14 +632,14 @@
           document.getElementById("practiceFeedback").innerHTML = `
             <div style="background:rgba(217,242,108,0.22);border:1.5px solid #286947;border-radius:10px;padding:14px 16px;margin-top:10px;text-align:left">
               <strong style="color:var(--forest);font-size:13px;display:block;margin-bottom:4px">
-                🎉 XUẤT SẮC! BẠN ĐÃ HOÀN THÀNH ĐỦ ${totalQuestions}/60 CÂU THỰC HÀNH!
+                XUẤT SẮC! BẠN ĐÃ HOÀN THÀNH ĐỦ ${totalQuestions}/60 CÂU THỰC HÀNH!
               </strong>
               <span style="font-size:12px;color:#1e4d35;line-height:1.5;display:block">
                 Bạn đã đạt tiêu chuẩn <strong>tối thiểu 60 câu thực hành</strong> (hoặc sau 3 ngày rèn luyện). Bài <strong>Đo Sau can thiệp (Đợt 02)</strong> đã chính thức được <strong>MỞ KHÓA</strong> để ghi nhận sự tiến bộ vượt bậc của bạn!
               </span>
               <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap">
                 <a href="assessment.html?phase=post" class="button button-lime" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:800;text-decoration:none">
-                  🚀 Tiến hành Đo Sau can thiệp (Đợt 02) ngay →
+                  Tiến hành Đo Sau can thiệp (Đợt 02) ngay →
                 </a>
                 <a href="javascript:void(0)" onclick="startRound()" class="button button-outline" style="padding:7px 14px;font-size:11.5px;font-weight:700">
                   Luyện thêm đề mới ↻
@@ -651,14 +651,14 @@
           document.getElementById("practiceFeedback").innerHTML = `
             <div style="background:rgba(217,242,108,0.18);border:1.5px solid #286947;border-radius:10px;padding:12px 14px;margin-top:10px;text-align:left">
               <strong style="color:var(--forest);font-size:12.5px;display:block;margin-bottom:4px">
-                🎯 Tiến trình rèn luyện: Đã hoàn thành ${totalQuestions} / 60 câu (${score}/100 đ lượt này)!
+                Tiến trình rèn luyện: Đã hoàn thành ${totalQuestions} / 60 câu (${score}/100 đ lượt này)!
               </strong>
               <span style="font-size:11.5px;color:#1e4d35;line-height:1.5;display:block">
                 Theo quy trình nghiên cứu KHKT, bài <strong>Đo Sau can thiệp (Đợt 02)</strong> sẽ tự động mở khóa khi bạn <strong>hoàn thành đủ 60 câu thực hành</strong> (còn <strong>${Math.max(0, 60 - totalQuestions)} câu nữa</strong>) HOẶC <strong>sau 3 ngày rèn luyện sư phạm</strong>.
               </span>
               <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap">
                 <a href="javascript:void(0)" onclick="startRound()" class="button button-lime" style="padding:7px 14px;font-size:11.5px;font-weight:800;text-decoration:none">
-                  ⚡ Luyện tiếp lượt mới (+10 câu) ↻
+                  Luyện tiếp lượt mới (+10 câu) ↻
                 </a>
                 <a href="assessment.html" class="button button-outline" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:11.5px;font-weight:700;text-decoration:none">
                   ⏱️ Xem tiến trình mở khóa Đợt 02 →
@@ -759,11 +759,11 @@
       document.getElementById("modalTask").textContent = item.task; 
       document.getElementById("modalSource").textContent = item.source; 
 
-      // 🛡️ BẢO VỆ TÍNH KHÁCH QUAN THỰC NGHIỆM: Nếu tình huống này đang nằm trong 10 câu mà học sinh chưa hoàn thành lượt
+      // BẢO VỆ TÍNH KHÁCH QUAN THỰC NGHIỆM: Nếu tình huống này đang nằm trong 10 câu mà học sinh chưa hoàn thành lượt
       const isCurrentlyInActiveExam = !complete && (set || []).some(q => q.quote === item.quote);
 
       if (isCurrentlyInActiveExam) {
-        document.getElementById("modalVerdict").innerHTML = `<span style="color:#b91c1c;font-weight:700">🔒 [Đang trong lượt làm bài]</span>`; 
+        document.getElementById("modalVerdict").innerHTML = `<span style="color:#b91c1c;font-weight:700">[Đang trong lượt làm bài - Bảo mật]</span>`; 
         document.getElementById("modalExplanation").innerHTML = `<span style="color:#64748b;font-style:italic">Tình huống này đang nằm trong 10 câu của lượt thực hành bạn đang làm. Hãy hoàn thành lượt làm bài ở trên để mở khóa kết luận và phân tích chuyên gia!</span>`; 
       } else {
         document.getElementById("modalVerdict").textContent = item.verdict; 
@@ -788,7 +788,7 @@
       }
     }
 
-    // 🔒 HÀM QUẢN LÝ TRẠNG THÁI KHÓA / MỞ KHÓA THƯ VIỆN TRA CỨU
+    // HÀM QUẢN LÝ TRẠNG THÁI KHÓA / MỞ KHÓA THƯ VIỆN TRA CỨU
     function updateLibraryLockState() {
       const lib = document.getElementById("scenarioLibrary");
       const libTitle = document.getElementById("libraryTitle");
@@ -799,14 +799,14 @@
       if (!complete) {
         // Đang trong lượt làm bài: Khóa tra cứu để đảm bảo tính trung thực thực nghiệm
         if (libTitle) {
-          libTitle.innerHTML = `🔒 Thư viện tra cứu ${total.toLocaleString("vi-VN")} tình huống <span class="tag" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;font-size:10.5px;font-weight:700;margin-left:6px">Tạm khóa khi đang làm bài</span>`;
+          libTitle.innerHTML = `Thư viện tra cứu ${total.toLocaleString("vi-VN")} tình huống <span class="tag" style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;font-size:10.5px;font-weight:700;margin-left:6px">Tạm khóa khi đang làm bài</span>`;
         }
         if (lockNotice) lockNotice.style.display = "flex";
         if (libContent) libContent.style.display = "none";
       } else {
         // Đã hoàn thành 10 câu: Tự động mở khóa toàn diện
         if (libTitle) {
-          libTitle.innerHTML = `🔓 Thư viện tra cứu & giải thích chi tiết (${total.toLocaleString("vi-VN")} tình huống) <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-size:10.5px;font-weight:700;margin-left:6px">Đã mở khóa toàn bộ</span>`;
+          libTitle.innerHTML = `Thư viện tra cứu & giải thích chi tiết (${total.toLocaleString("vi-VN")} tình huống) <span class="tag" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-size:10.5px;font-weight:700;margin-left:6px">Đã mở khóa toàn bộ</span>`;
         }
         if (lockNotice) lockNotice.style.display = "none";
         if (libContent) libContent.style.display = "block";
@@ -823,7 +823,7 @@
       });
     }
 
-    // 💡 BẤM NÚT TRỢ GIÚP / GỢI Ý: MỞ MODAL ĐỊNH HƯỚNG TƯ DUY (KHÔNG LỘ ĐÁP ÁN)
+    // BẤM NÚT TRỢ GIÚP / GỢI Ý: MỞ MODAL ĐỊNH HƯỚNG TƯ DUY (KHÔNG LỘ ĐÁP ÁN)
     document.getElementById("btnPracticeHint")?.addEventListener("click", () => {
       window.AICheckAudio?.playClick();
       const currentItem = set[index];
@@ -834,13 +834,13 @@
       
       let contextTip = "";
       if (currentItem.group === "AI" || (currentItem.topic && currentItem.topic.includes("Ảo giác"))) {
-        contextTip = "🤖 Đặc tính AI: AI thường tạo văn phong rất tự tin nhưng dễ 'ảo giác' tự bịa ra đường link, danh ngôn hoặc tên nghiên cứu giả. Hãy tìm xem tài liệu gốc có thực sự tồn tại độc lập trên Google Scholar hoặc các trang báo khoa học uy tín không.";
+        contextTip = "Đặc tính AI: AI thường tạo văn phong rất tự tin nhưng dễ 'ảo giác' tự bịa ra đường link, danh ngôn hoặc tên nghiên cứu giả. Hãy tìm xem tài liệu gốc có thực sự tồn tại độc lập trên Google Scholar hoặc các trang báo khoa học uy tín không.";
       } else if (currentItem.topic && (currentItem.topic.includes("Sức khỏe") || currentItem.topic.includes("Y tế"))) {
-        contextTip = "🏥 Tính an toàn y tế: Các mẹo vặt sức khỏe truyền miệng chưa kiểm chứng có thể gây hại nghiêm trọng. Hãy xem nguồn dẫn có phải từ cơ quan y tế uy tín (Bộ Y tế, WHO, bệnh viện) hay chỉ là quảng cáo thực phẩm chức năng.";
+        contextTip = "Tính an toàn y tế: Các mẹo vặt sức khỏe truyền miệng chưa kiểm chứng có thể gây hại nghiêm trọng. Hãy xem nguồn dẫn có phải từ cơ quan y tế uy tín (Bộ Y tế, WHO, bệnh viện) hay chỉ là quảng cáo thực phẩm chức năng.";
       } else if (currentItem.topic && (currentItem.topic.includes("Lịch sử") || currentItem.topic.includes("Địa lí"))) {
-        contextTip = "📚 Mốc thời gian & dữ liệu: Các khẳng định mang tính tuyệt đối (100%, tất cả) hoặc mốc năm thường dễ bị nhầm lẫn. Hãy đối chiếu với Sách giáo khoa và tài liệu lịch sử chuẩn mực.";
+        contextTip = "Mốc thời gian & dữ liệu: Các khẳng định mang tính tuyệt đối (100%, tất cả) hoặc mốc năm thường dễ bị nhầm lẫn. Hãy đối chiếu với Sách giáo khoa và tài liệu lịch sử chuẩn mực.";
       } else {
-        contextTip = `🔍 Nhiệm vụ kiểm chứng: "${currentItem.task}". Hãy phân tích xem nguồn đối chiếu nào độc lập và có thẩm quyền cao nhất để kiểm chứng phát biểu này.`;
+        contextTip = `Nhiệm vụ kiểm chứng: "${currentItem.task}". Hãy phân tích xem nguồn đối chiếu nào độc lập và có thẩm quyền cao nhất để kiểm chứng phát biểu này.`;
       }
 
       if (qBox) qBox.textContent = contextTip;

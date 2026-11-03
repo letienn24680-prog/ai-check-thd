@@ -17,12 +17,43 @@
     return null;
   }
 
-  function writeSessions(sessions) {
+  function writeSessions(sessions, syncCloud = true) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+      if (syncCloud && typeof window !== "undefined" && window.AICheckCloud?.updateCloudSharedData) {
+        window.AICheckCloud.updateCloudSharedData(d => {
+          d.activity_sessions = (sessions || []).slice(0, 500);
+          return d;
+        }).then(() => {
+          if (window.AICheckCloud?.broadcastGlobalRealtime) {
+            window.AICheckCloud.broadcastGlobalRealtime("ACTIVITY_SESSIONS_SYNCED", { count: sessions.length });
+          }
+        }).catch(() => {});
+      }
     } catch (e) {
       console.warn("Lỗi ghi activity_sessions:", e);
     }
+  }
+
+  async function fetchCloudSessions() {
+    if (typeof window === "undefined" || !window.AICheckCloud?.fetchCloudSharedData) return null;
+    try {
+      const shared = await window.AICheckCloud.fetchCloudSharedData();
+      if (shared && Array.isArray(shared.activity_sessions) && shared.activity_sessions.length > 0) {
+        const local = readSessions() || [];
+        const map = new Map();
+        shared.activity_sessions.forEach(s => s && s.id && map.set(s.id, s));
+        local.forEach(s => s && s.id && map.set(s.id, s));
+        const merged = Array.from(map.values()).sort((a,b) => (b.startedTimestamp || 0) - (a.startedTimestamp || 0));
+        if (merged.length > 500) merged.length = 500;
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(merged)); } catch {}
+        window.dispatchEvent(new CustomEvent("aicheck:sessions-updated", { detail: merged }));
+        return merged;
+      }
+    } catch (e) {
+      console.warn("Lỗi tải activity_sessions từ Cloud:", e);
+    }
+    return null;
   }
 
   // Khởi tạo dữ liệu mẫu chuẩn thực nghiệm nếu máy chưa có dữ liệu
@@ -242,7 +273,7 @@
         level: null,
         violations: 0,
         passed: null,
-        resultSummary: "Đang thực hiện bài làm ⏳"
+        resultSummary: "Đang thực hiện bài làm"
       };
 
       let sessions = this.getSessions();
@@ -481,8 +512,31 @@
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-    }
+    },
+
+    fetchFromCloud: fetchCloudSessions
   };
+
+  // Khởi động đồng bộ đám mây và lắng nghe Realtime đa thiết bị
+  if (typeof window !== "undefined") {
+    setTimeout(() => {
+      fetchCloudSessions();
+    }, 250);
+
+    function setupRealtimeListener() {
+      if (window.AICheckCloud?.getRealtimeChannel) {
+        const ch = window.AICheckCloud.getRealtimeChannel();
+        if (ch && typeof ch.on === "function") {
+          ch.on("broadcast", { event: "ACTIVITY_SESSIONS_SYNCED" }, () => {
+            fetchCloudSessions();
+          });
+        }
+      } else {
+        setTimeout(setupRealtimeListener, 800);
+      }
+    }
+    setTimeout(setupRealtimeListener, 600);
+  }
 
   window.AICheckTracker = Tracker;
 })();
