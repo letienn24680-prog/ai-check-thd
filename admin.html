@@ -290,16 +290,12 @@
        LƯỚI CHỈ SỐ THỐNG KÊ (STAT GRID & STAT BOXES) - XUẤT HIỆN TRÊN MỘT HÀNG THÔI
        ========================================================================== */
     .stat-grid {
-      display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 12px;
       margin-top: 14px;
       margin-bottom: 16px;
-      padding-bottom: 6px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: #cbd5e1 transparent;
+      width: 100%;
     }
 
     .stat-grid::-webkit-scrollbar {
@@ -1144,27 +1140,40 @@
         border-radius: 10px;
       }
       .stat-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        gap: 8px;
-        padding-bottom: 6px;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        overflow-x: visible !important;
+        width: 100% !important;
+        padding-bottom: 0 !important;
         margin-top: 10px;
         margin-bottom: 14px;
-        -webkit-overflow-scrolling: touch;
       }
       .stat-box {
-        flex: 0 0 auto;
-        min-width: 135px;
-        max-width: 165px;
-        padding: 10px 12px;
-        min-height: 68px;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        flex: none !important;
+        padding: 9px 8px !important;
+        min-height: 60px !important;
+        box-sizing: border-box !important;
+        border-radius: 8px !important;
       }
       .stat-box span {
-        font-size: 9.5px;
+        font-size: 9.5px !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: break-word !important;
       }
       .stat-box strong {
-        font-size: 20px;
+        font-size: 20px !important;
+      }
+      .admin-btn-row {
+        flex-wrap: wrap !important;
+        overflow-x: visible !important;
+        gap: 6px !important;
       }
       .score-activity-tabs {
         gap: 6px;
@@ -1215,23 +1224,31 @@
 
     @media (max-width: 440px) {
       .stat-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        gap: 8px;
-        padding-bottom: 6px;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+        overflow-x: visible !important;
+        width: 100% !important;
+        padding-bottom: 0 !important;
       }
       .stat-box {
-        flex: 0 0 auto;
-        min-width: 125px;
-        padding: 8px 10px;
-        min-height: 62px;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        flex: none !important;
+        padding: 8px 6px !important;
+        min-height: 56px !important;
+        box-sizing: border-box !important;
       }
       .stat-box span {
-        font-size: 9px;
+        font-size: 9px !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
+        overflow: visible !important;
+        word-break: break-word !important;
       }
       .stat-box strong {
-        font-size: 18px;
+        font-size: 18px !important;
       }
       .score-activity-tabs {
         gap: 6px;

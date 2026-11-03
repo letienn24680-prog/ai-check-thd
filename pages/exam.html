@@ -1881,10 +1881,10 @@
               <h3>${escapeHtml(exam.title)}</h3>
               <p>${escapeHtml(exam.description || "Bài thi trắc nghiệm trực tuyến chuẩn hóa năng lực kiểm chứng AI.")}</p>
               <div class="exam-card-badges">
-                <span class="exam-card-badge-item">📚 ${qCount} câu hỏi</span>
-                <span class="exam-card-badge-item">⏱️ ${duration} phút</span>
-                <span class="exam-card-badge-item">🎯 ${pointsPerQ} đ/câu</span>
-                <span class="exam-card-badge-item badge-pass-score">🏆 Đạt: ≥ ${passingScore}/${maxScore}đ</span>
+                <span class="exam-card-badge-item">${qCount} câu hỏi</span>
+                <span class="exam-card-badge-item">${duration} phút</span>
+                <span class="exam-card-badge-item">${pointsPerQ} đ/câu</span>
+                <span class="exam-card-badge-item badge-pass-score">Đạt: ≥ ${passingScore}/${maxScore}đ</span>
               </div>
             </div>
             ${isEnded 
