@@ -3860,10 +3860,9 @@
 
           if (kName === name && kAct === act) {
             if (act === 'assessment') {
-              // Cùng giai đoạn (pre hoặc post)
+              // Cùng giai đoạn (pre hoặc post): chỉ lọc trùng click đúp cùng điểm trong vòng 15 giây
               if (kPhase === phase) {
-                // Trùng điểm hoặc cách nhau dưới 15 phút (900,000 ms)
-                if (kScore === score || Math.abs(kTimeMs - timeMs) < 900000) {
+                if (kScore === score && Math.abs(kTimeMs - timeMs) < 15000) {
                   isDup = true;
                   if (s.id && !deletedScoreIds.includes(s.id)) {
                     deletedScoreIds.push(s.id);
@@ -3873,8 +3872,8 @@
                 }
               }
             } else {
-              // Rubric hoặc Practice: cùng hoạt động, cùng điểm trong vòng 10 phút
-              if (kScore === score && Math.abs(kTimeMs - timeMs) < 600000) {
+              // Rubric hoặc Practice: cùng hoạt động, cùng điểm trong vòng 15 giây
+              if (kScore === score && Math.abs(kTimeMs - timeMs) < 15000) {
                 isDup = true;
                 if (s.id && !deletedScoreIds.includes(s.id)) {
                   deletedScoreIds.push(s.id);
@@ -4017,14 +4016,18 @@
           const preScores = totalAssess.filter(s => s.phase === "pre");
           const postScores = totalAssess.filter(s => s.phase === "post");
 
-          // Tính cặp đối sánh theo từng thí sinh
+          // Tính cặp đối sánh theo từng thí sinh (Lấy kết quả mới nhất thay thế kết quả cũ)
           const studentMap = new Map();
           totalAssess.forEach(s => {
             const name = (s.display_name || "Thí sinh THĐ").trim();
             if (!studentMap.has(name)) studentMap.set(name, { pre: null, post: null });
             const item = studentMap.get(name);
-            if (s.phase === "pre" && (!item.pre || s.score > item.pre.score)) item.pre = s;
-            if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
+            if (s.phase === "pre") {
+              if (!item.pre || new Date(s.created_at || 0) >= new Date(item.pre.created_at || 0)) item.pre = s;
+            }
+            if (s.phase === "post") {
+              if (!item.post || new Date(s.created_at || 0) >= new Date(item.post.created_at || 0)) item.post = s;
+            }
           });
           const pairedCount = Array.from(studentMap.values()).filter(p => p.pre && p.post).length;
 
@@ -4176,8 +4179,13 @@
             if (!studentMap.has(name)) studentMap.set(name, { name, pre: null, post: null, records: [] });
             const item = studentMap.get(name);
             item.records.push(s);
-            if (s.phase === "pre" && (!item.pre || s.score > item.pre.score)) item.pre = s;
-            if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
+            // Khi thí sinh làm lại, kết quả mới nhất sẽ THAY THẾ kết quả cũ
+            if (s.phase === "pre") {
+              if (!item.pre || new Date(s.created_at || 0) >= new Date(item.pre.created_at || 0)) item.pre = s;
+            }
+            if (s.phase === "post") {
+              if (!item.post || new Date(s.created_at || 0) >= new Date(item.post.created_at || 0)) item.post = s;
+            }
           });
           const list = Array.from(studentMap.values());
           // Sắp xếp thứ tự: Gần sát cuối tháng 10 lên đầu, mốc thời gian trước (đầu tháng 10) xuống cuối cùng
@@ -4296,8 +4304,15 @@
           </table>`;
           initScrollFade(container);
         } else if (assessmentSubTab === "pre") {
-          // BẢNG ĐỢT 01: TRƯỚC CAN THIỆP
-          const preList = tabScores.filter(s => s.phase === "pre");
+          // BẢNG ĐỢT 01: TRƯỚC CAN THIỆP (Lấy kết quả mới nhất thay thế kết quả cũ)
+          const preMap = new Map();
+          tabScores.filter(s => s.phase === "pre").forEach(s => {
+            const name = (s.display_name || "Thí sinh THĐ").trim();
+            if (!preMap.has(name) || new Date(s.created_at || 0) >= new Date(preMap.get(name).created_at || 0)) {
+              preMap.set(name, s);
+            }
+          });
+          const preList = Array.from(preMap.values());
           preList.sort((a, b) => {
             const timesA = getAssessmentTimestamps(a.display_name, a, null);
             const timesB = getAssessmentTimestamps(b.display_name, b, null);
@@ -4347,8 +4362,15 @@
           </table>`;
           initScrollFade(container);
         } else if (assessmentSubTab === "post") {
-          // BẢNG ĐỢT 02: SAU CAN THIỆP
-          const postList = tabScores.filter(s => s.phase === "post");
+          // BẢNG ĐỢT 02: SAU CAN THIỆP (Lấy kết quả mới nhất thay thế kết quả cũ)
+          const postMap = new Map();
+          tabScores.filter(s => s.phase === "post").forEach(s => {
+            const name = (s.display_name || "Thí sinh THĐ").trim();
+            if (!postMap.has(name) || new Date(s.created_at || 0) >= new Date(postMap.get(name).created_at || 0)) {
+              postMap.set(name, s);
+            }
+          });
+          const postList = Array.from(postMap.values());
           postList.sort((a, b) => {
             const timesA = getAssessmentTimestamps(a.display_name, null, a);
             const timesB = getAssessmentTimestamps(b.display_name, null, b);
@@ -5736,8 +5758,13 @@
             const name = (s.display_name || "Thí sinh THĐ").trim();
             if (!studentMap.has(name)) studentMap.set(name, { name, pre: null, post: null });
             const item = studentMap.get(name);
-            if (s.phase === "pre" && (!item.pre || s.score > item.pre.score)) item.pre = s;
-            if (s.phase === "post" && (!item.post || s.score > item.post.score)) item.post = s;
+            // Khi làm lại, kết quả mới nhất thay thế kết quả cũ
+            if (s.phase === "pre") {
+              if (!item.pre || new Date(s.created_at || 0) >= new Date(item.pre.created_at || 0)) item.pre = s;
+            }
+            if (s.phase === "post") {
+              if (!item.post || new Date(s.created_at || 0) >= new Date(item.post.created_at || 0)) item.post = s;
+            }
           });
 
           const list = Array.from(studentMap.values());
@@ -5785,7 +5812,14 @@
         } else if (assessmentSubTab === "pre") {
           fileName = `AI_CHECK_THD_KhaoSat_Dot01_TruocCanThiep_${today}.csv`;
           csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát,Điểm số (Thang 100),Xếp loại năng lực đầu vào,Thời gian đo Trước can thiệp\n";
-          const preList = tabScores.filter(s => s.phase === "pre");
+          const preMap = new Map();
+          tabScores.filter(s => s.phase === "pre").forEach(s => {
+            const name = (s.display_name || "Thí sinh THĐ").trim();
+            if (!preMap.has(name) || new Date(s.created_at || 0) >= new Date(preMap.get(name).created_at || 0)) {
+              preMap.set(name, s);
+            }
+          });
+          const preList = Array.from(preMap.values());
           preList.sort((a, b) => {
             const timesA = getAssessmentTimestamps(a.display_name, a, null);
             const timesB = getAssessmentTimestamps(b.display_name, b, null);
@@ -5802,7 +5836,14 @@
         } else if (assessmentSubTab === "post") {
           fileName = `AI_CHECK_THD_DanhGia_Dot02_SauCanThiep_${today}.csv`;
           csvContent = "\uFEFFSTT,Họ và tên thí sinh,Đợt khảo sát,Điểm số (Thang 100),Xếp loại năng lực sau can thiệp,Thời gian đo Sau can thiệp\n";
-          const postList = tabScores.filter(s => s.phase === "post");
+          const postMap = new Map();
+          tabScores.filter(s => s.phase === "post").forEach(s => {
+            const name = (s.display_name || "Thí sinh THĐ").trim();
+            if (!postMap.has(name) || new Date(s.created_at || 0) >= new Date(postMap.get(name).created_at || 0)) {
+              postMap.set(name, s);
+            }
+          });
+          const postList = Array.from(postMap.values());
           postList.sort((a, b) => {
             const timesA = getAssessmentTimestamps(a.display_name, null, a);
             const timesB = getAssessmentTimestamps(b.display_name, null, b);

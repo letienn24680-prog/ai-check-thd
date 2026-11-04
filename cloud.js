@@ -1172,12 +1172,25 @@
     for (const row of data || []) {
       const key = row.display_name.trim().toLocaleLowerCase();
       const current = bestByName.get(key);
-      if (!current || row.score > current.score) {
-        bestByName.set(key, {
-          name: row.display_name,
-          score: row.score,
-          date: row.created_at?.slice(0, 10) || ""
-        });
+      if (activity === "assessment") {
+        // Đối với đánh giá năng lực, kết quả mới nhất sẽ THAY THẾ kết quả cũ
+        if (!current || new Date(row.created_at || 0) > new Date(current.created_at || 0)) {
+          bestByName.set(key, {
+            name: row.display_name,
+            score: row.score,
+            date: row.created_at?.slice(0, 10) || "",
+            created_at: row.created_at
+          });
+        }
+      } else {
+        if (!current || row.score > current.score) {
+          bestByName.set(key, {
+            name: row.display_name,
+            score: row.score,
+            date: row.created_at?.slice(0, 10) || "",
+            created_at: row.created_at
+          });
+        }
       }
     }
     return {

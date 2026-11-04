@@ -360,8 +360,9 @@
       const records = read("records",[]);
       let row = records.find(item => item.name.toLowerCase() === name.toLowerCase());
       if(!row){row = {name}; records.push(row)}
-      row[type] = Math.max(row[type]||0, score);
-      if(type === "assessment" && phase) row[`${phase}Assessment`] = Math.max(row[`${phase}Assessment`]||0, score);
+      // Khi làm lại, kết quả mới sẽ THAY THẾ LUÔN kết quả cũ đã làm
+      row[type] = score;
+      if(type === "assessment" && phase) row[`${phase}Assessment`] = score;
       row.date = new Date().toISOString().slice(0,10);
       write("records", records);
       const cloud = window.AICheckCloud, status = document.getElementById("syncStatus");
