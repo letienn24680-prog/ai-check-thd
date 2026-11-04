@@ -1226,7 +1226,7 @@
 
     <!-- Trường Email -->
     <div class="flex-column">
-      <label for="email">Tài khoản hoặc Địa chỉ Email</label>
+      <label for="email" id="emailLabel">Tài khoản hoặc Địa chỉ Email</label>
       <div class="inputForm">
         <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
           <g id="Layer_3" data-name="Layer 3">
@@ -1239,7 +1239,7 @@
 
     <!-- Trường Password -->
     <div class="flex-column">
-      <label for="password">Mật khẩu</label>
+      <label for="password" id="passwordLabel">Mật khẩu</label>
       <div class="inputForm">
         <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
           <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
@@ -1426,17 +1426,38 @@
     function updateAuthMode(loginMode) {
       isLogin = loginMode;
       errorMsg.textContent = '';
+      const displayNameInput = document.getElementById('displayName');
+      const emailInput = document.getElementById('email');
+      const emailLabel = document.getElementById('emailLabel');
+      const passwordLabel = document.getElementById('passwordLabel');
+      const passwordInput = document.getElementById('password');
 
       if (isLogin) {
         nameGroup.style.display = 'none';
+        if (displayNameInput) displayNameInput.required = false;
+        if (emailLabel) emailLabel.innerHTML = 'Tài khoản hoặc Địa chỉ Email';
+        if (emailInput) {
+          emailInput.placeholder = 'Email hoặc tài khoản (VD: adminthd)';
+          emailInput.setAttribute('type', 'text');
+        }
+        if (passwordLabel) passwordLabel.innerHTML = 'Mật khẩu';
+        if (passwordInput) passwordInput.placeholder = 'Nhập mật khẩu của bạn';
         formHeading.textContent = 'Đăng nhập';
         formDesc.textContent = 'Đăng nhập tài khoản để đồng bộ thành tích học tập và BXH.';
         submitBtn.textContent = 'Đăng nhập';
         switchAuthPrompt.innerHTML = 'Chưa có tài khoản? <span class="span" id="switchAuthBtn">Đăng ký ngay</span>';
       } else {
         nameGroup.style.display = 'flex';
+        if (displayNameInput) displayNameInput.required = true;
+        if (emailLabel) emailLabel.innerHTML = 'Địa chỉ Email / Gmail <span style="color:#ef4444">*</span>';
+        if (emailInput) {
+          emailInput.placeholder = 'Nhập Gmail của bạn (VD: hocsinh@gmail.com)';
+          emailInput.setAttribute('type', 'email');
+        }
+        if (passwordLabel) passwordLabel.innerHTML = 'Mật khẩu <span style="color:#ef4444">*</span>';
+        if (passwordInput) passwordInput.placeholder = 'Tạo mật khẩu (tối thiểu 6 ký tự)';
         formHeading.textContent = 'Đăng ký tài khoản';
-        formDesc.textContent = 'Tạo tài khoản để lưu thành tích vào BXH toàn trường.';
+        formDesc.textContent = 'Bắt buộc nhập đủ Họ tên, Gmail và Mật khẩu (không được để trống).';
         submitBtn.textContent = 'Đăng ký tài khoản';
         switchAuthPrompt.innerHTML = 'Đã có tài khoản? <span class="span" id="switchAuthBtn">Đăng nhập ngay</span>';
       }
@@ -1703,14 +1724,54 @@
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
-      if (!email || !password) {
-        errorMsg.style.color = '#c84f36';
-        errorMsg.textContent = 'Vui lòng nhập đầy đủ Email và Mật khẩu!';
-        return;
-      }
+      if (!isLogin) {
+        const displayName = document.getElementById('displayName').value.trim();
 
-      if (isLogin && !checkLoginRateLimit()) {
-        return;
+        // Bắt buộc nhập đủ cả 3 trường: Họ tên, Email/Gmail và Mật khẩu (không được để trống ô nào)
+        if (!displayName || !email || !password) {
+          errorMsg.style.color = '#c84f36';
+          if (!displayName && !email && !password) {
+            errorMsg.textContent = 'Vui lòng điền đầy đủ Họ và tên, Email/Gmail và Mật khẩu (không được để trống ô nào)!';
+            document.getElementById('displayName')?.focus();
+          } else if (!displayName) {
+            errorMsg.textContent = 'Vui lòng nhập Họ và tên thí sinh (bắt buộc)!';
+            document.getElementById('displayName')?.focus();
+          } else if (!email) {
+            errorMsg.textContent = 'Vui lòng nhập Địa chỉ Email / Gmail (bắt buộc)!';
+            document.getElementById('email')?.focus();
+          } else {
+            errorMsg.textContent = 'Vui lòng nhập Mật khẩu (bắt buộc)!';
+            document.getElementById('password')?.focus();
+          }
+          return;
+        }
+
+        // Kiểm tra định dạng Email / Gmail
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorMsg.style.color = '#c84f36';
+          errorMsg.textContent = 'Địa chỉ Email / Gmail không đúng định dạng (Ví dụ: tenban@gmail.com)!';
+          document.getElementById('email')?.focus();
+          return;
+        }
+
+        // Kiểm tra độ dài mật khẩu tối thiểu 6 ký tự
+        if (password.length < 6) {
+          errorMsg.style.color = '#c84f36';
+          errorMsg.textContent = 'Mật khẩu phải có ít nhất 6 ký tự!';
+          document.getElementById('password')?.focus();
+          return;
+        }
+      } else {
+        if (!email || !password) {
+          errorMsg.style.color = '#c84f36';
+          errorMsg.textContent = 'Vui lòng nhập đầy đủ Email và Mật khẩu!';
+          return;
+        }
+
+        if (!checkLoginRateLimit()) {
+          return;
+        }
       }
 
       errorMsg.style.color = '#123e35';

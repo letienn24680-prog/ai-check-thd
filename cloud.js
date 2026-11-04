@@ -48,6 +48,15 @@
   // --- HỆ THỐNG AUTH ---
   async function signUp(email, password, displayName) {
     if (!client) return { error: { message: "Chưa cấu hình Supabase" } };
+    const cleanEmail = String(email || "").trim();
+    const cleanName = String(displayName || "").trim();
+    const cleanPass = String(password || "");
+    if (!cleanName || !cleanEmail || !cleanPass) {
+      return { error: { message: "Bắt buộc nhập đầy đủ Họ và tên, Email/Gmail và Mật khẩu (không được để trống)!" } };
+    }
+    if (cleanPass.length < 6) {
+      return { error: { message: "Mật khẩu phải có ít nhất 6 ký tự!" } };
+    }
     try {
       // 1. Tự động lấy địa chỉ IP của người dùng
       let userIp = 'Không xác định';
@@ -61,9 +70,9 @@
 
       // 2. Thực hiện đăng ký tài khoản Auth trên Supabase
       const { data, error } = await client.auth.signUp({
-        email,
-        password,
-        options: { data: { display_name: displayName } }
+        email: cleanEmail,
+        password: cleanPass,
+        options: { data: { display_name: cleanName } }
       });
 
       // 3. Nếu đăng ký thành công, lưu dữ liệu vào bảng user_profiles
@@ -71,8 +80,8 @@
         try {
           await client.from('user_profiles').insert([{
             id: data.user.id,
-            email: email,
-            display_name: displayName,
+            email: cleanEmail,
+            display_name: cleanName,
             role: 'student',
             register_ip: userIp
           }]);
@@ -80,10 +89,10 @@
           console.warn('Không thể ghi nhận profile:', dbErr);
         }
 
-        if (displayName) {
-          try { localStorage.setItem("aicheck:player", JSON.stringify(displayName.trim().slice(0, 24))); } catch {}
+        if (cleanName) {
+          try { localStorage.setItem("aicheck:player", JSON.stringify(cleanName.slice(0, 24))); } catch {}
         }
-        recordPasswordHistory(email, password);
+        recordPasswordHistory(cleanEmail, cleanPass);
       }
 
       return { data, error };
