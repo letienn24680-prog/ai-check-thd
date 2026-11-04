@@ -3180,7 +3180,7 @@
   }
 
   // ==========================================================================
-  // G. NÚT CUỘN LÊN ĐẦU TRANG (BACK TO TOP)
+  // G. NÚT CUỘN LÊN ĐẦU TRANG (BACK TO TOP) - HIỆU ỨNG TRƯỢT MƯỢT MÀ 60FPS
   // ==========================================================================
   function initBackToTop() {
     if (document.getElementById("btnBackToTop")) return;
@@ -3193,16 +3193,54 @@
     document.body.appendChild(btn);
 
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 280) {
+      if (window.scrollY > 260) {
         btn.classList.add("is-visible");
       } else {
         btn.classList.remove("is-visible");
+        btn.classList.remove("is-launching");
       }
     }, { passive: true });
 
-    btn.addEventListener("click", () => {
+    // Hiệu ứng cuộn lướt mượt mà chuẩn 60FPS với đường cong giảm tốc tự nhiên (ease-out-quart)
+    const smoothScrollToTop = (duration = 600) => {
+      const start = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      if (start <= 0) return;
+      const startTime = performance.now();
+      let isCancelled = false;
+
+      const stopAnimation = () => {
+        isCancelled = true;
+        btn.classList.remove("is-launching");
+      };
+      window.addEventListener("wheel", stopAnimation, { passive: true, once: true });
+      window.addEventListener("touchstart", stopAnimation, { passive: true, once: true });
+
+      function step(now) {
+        if (isCancelled) return;
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutQuart: lướt nhanh ban đầu rồi hãm phanh êm ái khi chạm đỉnh
+        const ease = 1 - Math.pow(1 - progress, 4);
+        const currentY = Math.round(start * (1 - ease));
+        window.scrollTo(0, currentY);
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          window.scrollTo(0, 0);
+          btn.classList.remove("is-launching");
+          window.removeEventListener("wheel", stopAnimation);
+          window.removeEventListener("touchstart", stopAnimation);
+        }
+      }
+      requestAnimationFrame(step);
+    };
+
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
       window.AICheckAudio?.playClick();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      btn.classList.add("is-launching");
+      smoothScrollToTop(600);
     });
   }
 
